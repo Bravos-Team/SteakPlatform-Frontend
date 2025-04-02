@@ -10,6 +10,11 @@ pinia.use(persist);
 
 const app = createApp(App)
 
+
 app.use(router).use(pinia)
+
+router.afterEach((to) =>{
+  document.title = to.meta.title
+})
 
 app.mount('#app')
