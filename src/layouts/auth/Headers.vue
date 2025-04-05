@@ -1,30 +1,30 @@
-<template>
-  <div>
-    <header class="logo-headers" aria-label="Website Header">
-      <!-- Logo + Line -->
-      <div class="logo-container">
-        <img :src="'src/assets/images/auth/logo_steak.svg'" alt="Logo" />
-        <div class="vertical-line"></div>
-      </div>
+<script setup>
 
-      <!-- Language Selection -->
-      <div class="language-container">
-        <img :src="'src/assets/images/auth/icon-language.svg'" alt="Language Icon" />
-        <div class="text-language">
-          <div class="text">
-            <p>Tiếng Việt</p>
-          </div>
-          <div class="language-dropdown">
-            <img :src="'src/assets/images/auth/down-line.svg'" alt="Dropdown Icon" />
-          </div>
+</script>
+
+<template>
+  <header class="logo-headers" aria-label="Website Header">
+    <!-- Logo + Line -->
+    <div class="logo-container">
+      <img :src="'src/assets/images/auth/logo_steak.svg'" alt="Logo" />
+      <div class="vertical-line"></div>
+    </div>
+
+    <!-- Language Selection -->
+    <div class="language-container">
+      <img :src="'src/assets/images/auth/icon-language.svg'" alt="Language Icon" />
+      <div class="text-language">
+        <div class="text">
+          <p>Tiếng Việt</p>
+        </div>
+        <div class="language-dropdown">
+          <img :src="'src/assets/images/auth/down-line.svg'" alt="Dropdown Icon" />
         </div>
       </div>
-    </header>
-    <main>
-      <slot></slot>
-    </main>
-  </div>
+    </div>
+  </header>
 </template>
+
 <style >
 * {
   padding: 0;
