@@ -1,10 +1,8 @@
 <template>
   <div>
-  <span> HELLO, WE ARE BRAVOS TEAM!</span>
+    <span class="mau-xanh"> HELLO, WE ARE BRAVOS TEAM!</span>
     <router-view />
   </div>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
