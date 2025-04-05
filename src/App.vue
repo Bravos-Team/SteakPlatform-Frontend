@@ -1,10 +1,6 @@
 <template>
-  <div>
-  <span> HELLO, WE ARE BRAVOS TEAM!</span>
-    <router-view />
-  </div>
+  <div class="mau-xanh">HELLO I'M NATIVE CSS VARIABLES</div>
+  <router-view />
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>

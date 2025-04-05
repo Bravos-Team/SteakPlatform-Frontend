@@ -3,7 +3,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 const baseRouer = {
   path: '/',
   component: () => import('../views/store/base.vue'),
-  children: [],
+  children: [ 
+    
+  ],
+  path:'/login',
+  component: () => import('../views/auth/LoginPage.vue'),
+  meta:{ title :'Đăng Nhập'}
 }
 
 const routes = [baseRouer]
