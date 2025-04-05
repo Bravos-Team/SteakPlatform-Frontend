@@ -87,3 +87,13 @@ URL: @assest/styles/auth/auth.css
 @import @assets/variables/auth/_auth.css // đã import vào nên auth.css có thể dùng biến --mau-den
 @import "@/assets/styles/auth/auth.css" // import nó vào tailwind.css auto có thể .header-black hoặc class="header-black" ở bất cứ nơi nào
 ```
+
+### 5. Tránh coding css trong `<styles scoped></scoped>`
+- Vì nó là 1 **`styles blocks`** nên khi mỗi lần build hay thay đổi ứng dụng vite sẽ phải build riêng biệt cho từng **`styles block`**, nó là cơ chế giúp tách biệt các *`css`* ra khỏi các **`component`** khác, nhưng rất tốn hiệu năng gây giật tugn c*c khi có quá nhiều css. 
+- Ngoài ra *`Css module`* cũng có cơ chế tương tự `<styles scoped></styles>`, tránh sài *`Css module`*
+
+<span style="color: yellow">resolve: </span>
+* Coding file *`css`* riêng rồi *`import`* vào **`tailwind.css`**, **`tailwindCss`** có cơ chết **`JIT (Just In Time compile)`**, cái nào dùng thì nó build, và build 1 lần.
+* Dùng **`Native Css Variables`** toàn cục, có tốt hiệu năng nhưng ko đáng kể
+
+- Đọc ở đây sẽ chi tiết hơn: [Tương thích trong TailwindCss](https://tailwindcss.com/docs/compatibility#explicit-context-sharing)
