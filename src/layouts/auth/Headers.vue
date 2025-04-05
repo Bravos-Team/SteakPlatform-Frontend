@@ -3,6 +3,7 @@
 </script>
 
 <template>
+
   <header class="logo-headers" aria-label="Website Header">
     <!-- Logo + Line -->
     <div class="logo-container">

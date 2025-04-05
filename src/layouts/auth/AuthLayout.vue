@@ -10,4 +10,5 @@ import Headers from '@/layouts/auth/Headers.vue'
 
 <style scoped>
 
+
 </style>
