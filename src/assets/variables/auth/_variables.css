@@ -1,3 +1,4 @@
 :root {
   --mau-xanh: #00f7ff;
+  --test-test-test: var(--mau-xanh);
 }
