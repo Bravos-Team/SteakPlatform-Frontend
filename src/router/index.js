@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import AuthLayout from '@/layouts/auth/AuthLayout.vue'
 import LoginPage from '@/views/auth/LoginPage.vue'
 import BaseLayout from '@/views/store/base.vue'
 
@@ -8,27 +7,25 @@ const routes = [
   {
     path: '/',
     component: BaseLayout,
-    children: [
-    ]
+    children: [],
   },
   {
     path: '/login',
-    component: AuthLayout,
+    component: LoginPage,
     children: [
       {
         path: '',
         name: 'Login',
         component: LoginPage,
-        meta: { title: 'Đăng Nhập' }
-      }
-    ]
-  }
+        meta: { title: 'Đăng Nhập' },
+      },
+    ],
+  },
 ]
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
+  routes,
 })
 
 export default router
