@@ -1,5 +1,6 @@
-@import 'tailwindcss/preflight';
-@import 'tailwindcss/utilities';
+/* Josefin Sans Font */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
 @import 'tailwindcss';
 
 @import '@/assets/css/auth/layout.css';
