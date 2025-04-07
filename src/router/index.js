@@ -1,17 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const baseRouer = {
-  path: '/',
-  component: () => import('../views/store/base.vue'),
-  children: [ 
-    
-  ],
-  path:'/login',
-  component: () => import('../views/auth/LoginPage.vue'),
-  meta:{ title :'Đăng Nhập'}
-}
+import LoginPage from '@/views/auth/LoginPage.vue'
+import BaseLayout from '@/views/store/base.vue'
 
-const routes = [baseRouer]
+const routes = [
+  {
+    path: '/',
+    component: BaseLayout,
+    children: [],
+  },
+  {
+    path: '/login',
+    component: LoginPage,
+    children: [
+      {
+        path: '',
+        name: 'Login',
+        component: LoginPage,
+        meta: { title: 'Đăng Nhập' },
+      },
+    ],
+  },
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

@@ -1,4 +1,7 @@
-# CODING, CẤU TRÚC DỰ ÁN VÀ Ý NGHĨA TRONG VUEJS VỚI VITE LÀ BUILD TOOL
+# <span style="color:yellow">(update mới mục 4. về *`CSS`*)</span> CODING, CẤU TRÚC DỰ ÁN VÀ Ý NGHĨA TRONG VUEJS VỚI VITE LÀ BUILD TOOL
+- Cách **`import file`** cấp thư mục **`src`** trở đi, anh em dùng *`@`* + *`đường dẫn`*
+* <span style="color:yellow">EX: </span> **`@/assets/styles/auth/auth.css`** nó sẽ biết bắt đầu từ *`src`* trở đi <- *`vite`* tự cấu hình *`alias`* từ lúc tạo dự án
+---
 ### 1. Cấu trúc dự án
 - Như **`java`** các file chứa biến môi trường nằm ở **`root`**.
 * Cấu trúc thư mục bắt đầu từ **`src`**, một vài trường hợp đặt biệt, ví dụ như thư mục **`public`** chứa tài nguyên tĩnh, và các file cấu hình sẽ nằm ngoài **`src`**.
@@ -58,3 +61,39 @@ const getUsers = async () => {
 </script>
 ```
 - Hầu hết đều giống với việ code Backend nên không có gì đáng nói, có thể trong tương lai sẽ bổ sung sau
+
+### 4. Cấu trúc file css global, native css variables với TailwindCss
+- Anh em sẽ tải [Extension TailwindCss IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) về để code bổ trợ **`Tailwindcss`**
+- **`assets/config/tailind.ss`** thư mục này chứa <span style="color:yellow">file cấu hình, biến css native và Css toàn cục</span>, bất kì file *`css`* hay *`Native Css Variables`* nào anh em muốn **`global`** cứ *`@import`* nó vào nhé
+
+<span style="color:yellow">EX: </span>
+```vue
+URL: @assets/variables/auth/_auth.css  // quy ước chung file chứa biến toàn cục đặt tên có tiền tố _ trước tên
+
+:root{ // root ở cấp html ngang hàng
+  --mau-den: #000;  // Đây là Native Css Varibles
+}
+```
+```vue
+URL: @assest/styles/auth/auth.css
+
+.header-black{
+  color: var(--mau-den); // ví dụ trong auth.css có khai báo 1 css chỉnh header màu đen
+}
+```
+```vue
+@assest/config/tailwind.css
+
+@import @assets/variables/auth/_auth.css // đã import vào nên auth.css có thể dùng biến --mau-den
+@import "@/assets/styles/auth/auth.css" // import nó vào tailwind.css auto có thể .header-black hoặc class="header-black" ở bất cứ nơi nào
+```
+
+### 5. Tránh coding css trong `<styles scoped></scoped>`
+- Vì nó là 1 **`styles blocks`** nên khi mỗi lần build hay thay đổi ứng dụng vite sẽ phải build riêng biệt cho từng **`styles block`**, nó là cơ chế giúp tách biệt các *`css`* ra khỏi các **`component`** khác, nhưng rất tốn hiệu năng gây giật tugn c*c khi có quá nhiều css. 
+- Ngoài ra *`Css module`* cũng có cơ chế tương tự `<styles scoped></styles>`, tránh sài *`Css module`*
+
+<span style="color: yellow">resolve: </span>
+* Coding file *`css`* riêng rồi *`import`* vào **`tailwind.css`**, **`tailwindCss`** có cơ chết **`JIT (Just In Time compile)`**, cái nào dùng thì nó build, và build 1 lần.
+* Dùng **`Native Css Variables`** toàn cục, có tốt hiệu năng nhưng ko đáng kể
+
+- Đọc ở đây sẽ chi tiết hơn: [Tương thích trong TailwindCss](https://tailwindcss.com/docs/compatibility#explicit-context-sharing)

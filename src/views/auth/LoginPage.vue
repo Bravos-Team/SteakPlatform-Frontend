@@ -1,10 +1,9 @@
 <script setup>
-import Layout from '@/components/auth/Layout.vue'
+import HeaderBase from '@/components/auth/HeaderBase.vue'
 import LoginForm from '@/components/auth/LoginForm.vue'
 </script>
 
 <template>
-  <Layout>
-    <LoginForm></LoginForm>
-  </Layout>
+  <header-base></header-base>
+  <LoginForm></LoginForm>
 </template>
