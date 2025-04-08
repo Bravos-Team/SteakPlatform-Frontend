@@ -10,7 +10,7 @@
         <p class="text-sm font-bold text-gray-400 mb-0.5">Email hoặc Tên đăng nhập</p>
         <input
           type="email"
-          class="sm:w-70 xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
+          class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
         <label for="email" class="invisible peer-invalid:visible text-red-500">
           Vui lòng nhập email hợp lệ
@@ -24,7 +24,7 @@
             id="password"
             type="password"
             required
-            class="peer sm:w-70 xl:w-full h-12 px-4 pr-12 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
+            class="peer xl:w-full h-12 px-4 pr-12 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
           />
           <img
             :src="'src/assets/images/auth/logo-on.svg'"
