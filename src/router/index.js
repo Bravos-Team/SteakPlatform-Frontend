@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 const storeRoutes = {
   path: '/',
-  name: 'Store',
+  name: 'Home',
   component: () => import('@/layouts/store/StoreLayout.vue'),
   meta: {
     title: 'Trang chủ',
@@ -34,7 +34,7 @@ const authRoutes = {
   ],
 }
 
-const routes = [authRoutes]
+const routes = [authRoutes, storeRoutes]
 
 const router = createRouter({
   history: createWebHistory(),
