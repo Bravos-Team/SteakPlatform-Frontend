@@ -5,10 +5,10 @@
       aria-label="Website Header"
     >
       <!-- Logo + Line -->
-      <div class="flex items-center gap-x-2">
-        <img :src="'src/assets/images/auth/logo_steak.svg'" class="h-12" alt="Logo" />
+      <router-link :to="{ name: 'Home' }" class="flex items-center gap-x-2">
+        <img :src="'src/assets/images/auth/logo_steak.svg'" class="xl:h-12 h-9" alt="Logo" />
         <div class="bg-white w-0.5 h-8 ms-3"></div>
-      </div>
+      </router-link>
 
       <!-- Language Selection -->
       <div class="flex absolute right-10 ms-2 items-center gap-x-2">
@@ -42,7 +42,7 @@
               <template v-for="(language, index) in languages" :key="index">
                 <li
                   class="px-4 py-2 hover:bg-gray-100 hover:text-black cursor-pointer"
-                  @click="(handleSelectedLanguage(language.code), (showDropdown = !showDropdown))"
+                  @click="handleSelectedLanguage(language.code), (showDropdown = !showDropdown)"
                 >
                   {{ language.name }}
                 </li>
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <span class="text-white text-[18px]">{{ headerTitle }}</span>
+      <span class="text-white xl:text-[18px] text-[14px]">{{ headerTitle }}</span>
     </header>
   </div>
 </template>

@@ -67,8 +67,8 @@
           type="text"
           :placeholder="'Xác nhận mật khẩu của bạn'"
           required
-          name="password"
-          id="password"
+          name="verifyPassword"
+          id="verifyPassword"
           v-model="account.verifyPassword"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
@@ -82,9 +82,25 @@
       </div>
 
       <div>
-        <label class="inline-flex items-center cursor-pointer">
-          <input v-model="account.agreeNotification" type="checkbox" class="sr-only peer" />
-          <div class="w-6 h-5 bg-[#202024] rounded-[3px]"></div>
+        <label class="inline-flex items-start cursor-pointer relative">
+          <input
+            v-model="account.agreeNotification"
+            type="checkbox"
+            class="sr-only peer/notification"
+          />
+          <div
+            class="min-w-5 min-h-5 bg-[#202024] rounded-[3px] peer-checked/notification:bg-gray-700 transition-all duration-300 peer-checked/notification:ring-1 peer-checked/notification:ring-[#0af] peer"
+          ></div>
+
+          <svg
+            class="w-5 h-5 text-white absolute left-0 top-0 transition-all duration-300 peer-checked/notification:block hidden"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="3"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
           <span class="ml-2 text-gray-400 font-bold"
             >gửi cho tôi tin tức mới mất, khảo sát và ưu đãi đặc biệt từ steak store</span
           >
@@ -92,12 +108,31 @@
       </div>
 
       <div>
-        <label class="inline-flex items-center cursor-pointer">
-          <input v-model="account.termsOfServices" type="checkbox" class="sr-only peer" />
-          <div class="w-6 h-5 bg-[#202024] rounded-[3px]"></div>
-          <span class="ml-2 text-gray-400 font-bold"
-            >Tôi đã đọc và đồng ý với <span class="underline">Điều khoản Dịch vụ</span> và
-            <span class="underline">Thỏa thuận Cấp phép Người dùng cuối của Steak Store.</span>
+        <label class="inline-flex items-start cursor-pointer relative">
+          <input
+            v-model="account.termsOfServices"
+            type="checkbox"
+            class="sr-only peer/terms shrink-0"
+          />
+
+          <!-- CHECKBOX -->
+          <div
+            class="min-w-5 relative min-h-5 bg-[#202024] rounded-[3px] peer-checked/terms:bg-gray-700 transition-all duration-300 peer-checked/terms:ring-1 peer-checked/terms:ring-[#0af]"
+          ></div>
+          <svg
+            class="w-5 h-5 text-white absolute left-0 top-0 transition-all duration-300 peer-checked/terms:block hidden"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="3"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <!-- TEXT -->
+          <span class="ml-2 text-gray-400 font-bold leading-snug">
+            Tôi đã đọc và đồng ý với
+            <span class="underline">Điều khoản Dịch vụ</span> và
+            <span class="underline"> Thỏa thuận Cấp phép Người dùng cuối của Steak Store. </span>
           </span>
         </label>
       </div>
@@ -105,9 +140,9 @@
       <div>
         <button class="h-12 bg-[#A9A9A9] rounded-[5px] w-full">Tiếp tục</button>
       </div>
-      <span class="flex flex-row justify-center"
-        >Đã có tài khoản?
-        <a href="#" class="text-[#0af] italic underline">Đăng nhập"</a>
+      <span class="flex flex-row justify-center">
+        <span class="me-1">Đã có tài khoản?</span>
+        <a href="/login" class="text-[#0af] italic underline">Đăng nhập"</a>
       </span>
     </form>
   </div>
@@ -115,7 +150,6 @@
 
 <script setup>
 import { ref } from 'vue'
-
 const account = ref({
   email: '',
   username: '',

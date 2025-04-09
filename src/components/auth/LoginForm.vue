@@ -64,7 +64,7 @@
     </form>
 
     <footer class="mt-10 mb-10 flex flex-col items-center space-y-3">
-      <a href="#" class="text-[#0af] italic underline">Tạo tài khoản</a>
+      <a href="/register" class="text-[#0af] italic underline">Tạo tài khoản</a>
       <a href="#" class="text-[#0af] italic underline">Chính sách Bảo mật</a>
     </footer>
   </div>

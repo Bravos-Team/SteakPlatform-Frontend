@@ -1,9 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 const storeRoutes = {
-  path: '',
-  name: 'Home',
+  path: '/',
+  name: 'Store',
   component: () => import('@/layouts/store/StoreLayout.vue'),
+  meta: {
+    title: 'Trang chủ',
+  },
+}
+const authRoutes = {
+  path: '/auth',
+  name: 'Auth',
+  component: () => import('@/layouts/auth/AuthLayout.vue'),
   meta: {
     title: 'Trang chủ',
   },
@@ -27,7 +34,7 @@ const storeRoutes = {
   ],
 }
 
-const routes = [storeRoutes]
+const routes = [authRoutes]
 
 const router = createRouter({
   history: createWebHistory(),
