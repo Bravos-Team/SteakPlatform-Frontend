@@ -1,7 +1,7 @@
 <template>
   <div class="text-white flex flex-col items-center justify-center px-4 min-h-screen">
     <div class="flex flex-col items-center mb-10">
-      <img :src="'src/assets/images/auth/logo_steak.svg'" class="h-22" />
+      <logo-steak class="h-22" />
       <p class="text-2xl font-extrabold mt-2">Đăng Nhập</p>
     </div>
 
@@ -10,9 +10,10 @@
         <p class="text-sm font-bold text-gray-400 mb-0.5">Email hoặc Tên đăng nhập</p>
         <input
           type="email"
+          placeholder="Nhập email hoặc tên đăng nhập"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
-        <label for="email" class="invisible peer-invalid:visible text-red-500">
+        <label for="email" class="hidden peer-invalid:block text-red-500">
           Vui lòng nhập email hợp lệ
         </label>
       </div>
@@ -23,6 +24,7 @@
           <input
             id="password"
             type="password"
+            placeholder="Nhập mật khẩu"
             required
             class="peer xl:w-full h-12 px-4 pr-12 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
           />
@@ -41,7 +43,7 @@
       <div>
         <button
           type="button"
-          class="w-full h-12 bg-gray-500 text-black font-medium italic rounded-lg cursor-not-allowed"
+          class="w-full h-12 bg-gray-500 text-white font-medium italic rounded-lg cursor-pointer hover:ring-3 hover:bg-blue-300 hover:text-black hover:ring-blue-400 transition duration-300"
         >
           Đăng nhập
         </button>
@@ -69,3 +71,6 @@
     </footer>
   </div>
 </template>
+<script setup>
+import LogoSteak from '@/assets/images/auth/logo_steak.svg'
+</script>

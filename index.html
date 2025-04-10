@@ -8,9 +8,14 @@
   <title>Vite App</title>
 </head>
 
+<script type="module" src="src/main.js"></script>
+
 <body class="p-0 m-0 bg-[#101014]">
-  <div id="app"></div>
-  <script type="module" src="src/main.js"></script>
+  <div id="app" class="not-noscript:block hidden"></div>
+
+  <div class="hidden noscript:block dark:text-white text-white">
+    <p>This experience requires JavaScript to function. Please enable JavaScript in your browser settings.</p>
+  </div>
 </body>
 
 </html>

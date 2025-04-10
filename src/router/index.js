@@ -31,6 +31,14 @@ const authRoutes = {
         title: 'Đăng nhập',
       },
     },
+    {
+      path: '/verify-email',
+      name: 'VeridyEmail',
+      component: () => import('@/views/auth/EmailAuthenticationRequirement.vue'),
+      meta: {
+        title: 'Xác thực email',
+      },
+    },
   ],
 }
 
