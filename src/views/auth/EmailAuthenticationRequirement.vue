@@ -1,7 +1,7 @@
 <template>
   <div class="@container">
     <div class="flex flex-col justify-center items-center px-4">
-      <logo-steak class="w-full xl:h-22" />
+      <img src="https://cdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="text-white xl:text-2xl font-extrabold mt-3 tracking-wide mb-10">
         Vui lòng xác thực Email
       </p>
@@ -35,8 +35,6 @@
   </div>
 </template>
 <script setup>
-import LogoSteak from '@/assets/images/auth/logo_steak.svg'
-
 const tempEmail = 'cuongdolalolol@gmail.com'
 const handleShowEmail = (email) => {
   const atIndex = email.indexOf('@')
