@@ -6,14 +6,14 @@
     >
       <!-- Logo + Line -->
       <router-link :to="{ name: 'Home' }" class="flex items-center gap-x-2">
-        <img :src="'src/assets/images/auth/logo_steak.svg'" class="xl:h-12 h-9" alt="Logo" />
+        <img :src="'https://cdn.steak.io.vn/logo_steak.svg'" class="xl:h-12 h-9" alt="Logo" />
         <div class="bg-white w-0.5 h-8 ms-3"></div>
       </router-link>
 
       <!-- Language Selection -->
       <div class="flex absolute right-10 ms-2 items-center gap-x-2">
         <img
-          :src="'src/assets/images/auth/icon-language.svg'"
+          :src="'https://cdn.steak.io.vn/icon-language.svg'"
           class="content-start"
           alt="Language Icon"
         />
@@ -27,7 +27,7 @@
             >
               <span>{{ selectedLanguage != '' ? selectedLanguage : 'Tiếng Việt' }}</span>
               <img
-                :src="'src/assets/images/auth/down-line.svg'"
+                :src="'https://cdn.steak.io.vn/down-line.svg'"
                 alt="Dropdown Icon"
                 class="w-4 h-4"
               />

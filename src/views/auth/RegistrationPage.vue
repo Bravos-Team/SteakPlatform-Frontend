@@ -1,7 +1,7 @@
 <template>
   <div class="text-white flex flex-col items-center justify-center px-4 min-h-screen">
     <div class="flex flex-col items-center mb-10">
-      <logo-steak class="h-22" />
+      <img src="https://cdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="text-2xl font-extrabold mt-2">Đăng ký</p>
     </div>
 
@@ -153,7 +153,6 @@
 </template>
 
 <script setup>
-import LogoSteak from '@/assets/images/auth/logo_steak.svg'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
