@@ -1,11 +1,11 @@
 <template>
   <div class="text-white flex flex-col items-center justify-center px-4 min-h-screen">
     <div class="flex flex-col items-center mb-10">
-      <img src="@/assets/images/auth/logo_steak.svg" class="h-22" alt="" />
+      <logo-steak class="h-22" />
       <p class="text-2xl font-extrabold mt-2">Đăng ký</p>
     </div>
 
-    <form action="" class="w-full max-w-md max-auto space-y-4 mb-10">
+    <form @submit.prevent="handleSubmit" class="w-full max-w-md max-auto space-y-4 mb-10">
       <div>
         <p class="text-sm font-bold text-gray-400 mb-0.5">Email</p>
         <input
@@ -138,7 +138,11 @@
       </div>
 
       <div>
-        <button class="h-12 bg-[#A9A9A9] rounded-[5px] w-full">Tiếp tục</button>
+        <button
+          class="h-12 hover:ring-3 hover:bg-blue-400 hover:text-black cursor-pointer hover:ring-blue-300 transition-all duration-300 bg-[#A9A9A9] rounded-[5px] w-full"
+        >
+          Tiếp tục
+        </button>
       </div>
       <span class="flex flex-row justify-center">
         <span class="me-1">Đã có tài khoản?</span>
@@ -149,7 +153,10 @@
 </template>
 
 <script setup>
+import LogoSteak from '@/assets/images/auth/logo_steak.svg'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 const account = ref({
   email: '',
   username: '',
@@ -167,4 +174,10 @@ const accountErrors = ref({
   agreeNotification: '',
   termsOfServices: '',
 })
+
+const router = useRouter()
+
+const handleSubmit = () => {
+  router.push('/verify-email')
+}
 </script>
