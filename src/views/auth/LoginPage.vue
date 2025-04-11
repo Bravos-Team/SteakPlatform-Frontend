@@ -1,5 +1,7 @@
 <template>
-  <div class="text-white flex flex-col items-center justify-center px-4 min-h-screen">
+  <div
+    class="text-black dark:text-white flex flex-col items-center justify-center px-4 min-h-screen"
+  >
     <div class="flex flex-col items-center mb-10">
       <img src="https://cdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="text-2xl font-extrabold mt-2">Đăng Nhập</p>
@@ -7,12 +9,14 @@
 
     <form class="w-full max-w-md mx-auto space-y-4">
       <div>
-        <p class="text-sm font-bold text-gray-400 mb-0.5">Email hoặc Tên đăng nhập</p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">
+          Email hoặc Tên đăng nhập
+        </p>
         <input
           type="email"
           autocomplete="username"
           placeholder="Nhập email hoặc tên đăng nhập"
-          class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
+          class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
         <label for="email" class="hidden peer-invalid:block text-red-500">
           Vui lòng nhập email hợp lệ
@@ -20,7 +24,7 @@
       </div>
 
       <div>
-        <p class="text-sm font-bold text-gray-400 mb-1">Mật khẩu</p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-1">Mật khẩu</p>
         <div class="relative">
           <input
             id="password"
@@ -28,7 +32,7 @@
             type="password"
             placeholder="Nhập mật khẩu"
             required
-            class="peer xl:w-full h-12 px-4 pr-12 rounded-lg bg-[#1a1a1a] border border-gray-600 text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
+            class="peer xl:w-full h-12 px-4 pr-12 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
           />
           <img
             :src="'https://cdn.steak.io.vn/logo-on.svg'"
@@ -45,23 +49,27 @@
       <div>
         <button
           type="button"
-          class="w-full h-12 bg-gray-500 text-white font-medium italic rounded-lg cursor-pointer hover:ring-3 hover:bg-blue-300 hover:text-black hover:ring-blue-400 transition duration-300"
+          class="w-full h-12 bg-white dark:bg-gray-500 dark:text-white border border-black dark:border-none font-medium italic rounded-lg cursor-pointer hover:bg-[#464646] hover:text-white hover:ring-2 hover:ring-gray-800 hover:dark:ring-3 hover:dark:bg-blue-300 hover:dark:text-black hover:dark:ring-blue-400 transition duration-300"
         >
           Đăng nhập
         </button>
       </div>
 
-      <div class="flex items-center text-sm font-bold text-white">
+      <div class="flex items-center text-sm font-bold text-black dark:text-white">
         <hr class="flex-1 border-gray-600" />
         <span class="px-4">hoặc bằng cách khác</span>
         <hr class="flex-1 border-gray-600" />
       </div>
 
       <div class="flex flex-col space-y-4">
-        <button class="flex items-center justify-center h-12 w-full bg-white rounded-lg">
+        <button
+          class="flex items-center justify-center h-12 w-full border border-black dark:border-none bg-white rounded-lg"
+        >
           <img :src="'https://cdn.steak.io.vn/logo-google.svg'" class="h-6" />
         </button>
-        <button class="flex items-center justify-center h-12 w-full bg-[#1877f2] rounded-lg">
+        <button
+          class="flex items-center justify-center h-12 border border-black w-full bg-[#65a8ff] dark:bg-[#1877f2] rounded-lg"
+        >
           <img :src="'https://cdn.steak.io.vn/logos_facebook.svg'" class="h-6" />
         </button>
       </div>
