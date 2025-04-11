@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="" class="dark">
 
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="src/assets/favicon.ico">
+  <link rel="icon" href="https://cdn.steak.io.vn/logo_steak.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vite App</title>
 </head>
 
-<body class="p-0 m-0 bg-[#101014]">
-  <div id="app"></div>
-  <script type="module" src="src/main.js"></script>
+<script type="module" src="src/main.js"></script>
+
+<body class="p-0 m-0 bg-white dark:bg-[#101014]  transition-all duration-350">
+  <div id="app" class="not-noscript:block hidden"></div>
+
+  <div class="hidden noscript:block dark:text-white text-white">
+    <p>This experience requires JavaScript to function. Please enable JavaScript in your browser settings.</p>
+  </div>
 </body>
 
 </html>

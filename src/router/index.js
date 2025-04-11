@@ -1,30 +1,51 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-import LoginPage from '@/views/auth/LoginPage.vue'
-import BaseLayout from '@/views/store/base.vue'
-
-const routes = [
-  {
-    path: '/',
-    component: BaseLayout,
-    children: [],
+const storeRoutes = {
+  path: '/',
+  name: 'Home',
+  component: () => import('@/layouts/store/StoreLayout.vue'),
+  meta: {
+    title: 'Trang chủ',
   },
-  {
-    path: '/login',
-    component: LoginPage,
-    children: [
-      {
-        path: '',
-        name: 'Login',
-        component: LoginPage,
-        meta: { title: 'Đăng Nhập' },
+}
+const authRoutes = {
+  path: '/auth',
+  name: 'Auth',
+  component: () => import('@/layouts/auth/AuthLayout.vue'),
+  meta: {
+    title: 'Trang chủ',
+  },
+  children: [
+    {
+      path: '/register',
+      name: 'Register',
+      component: () => import('@/views/auth/RegistrationPage.vue'),
+      meta: {
+        title: 'Đăng ký tài khoản',
       },
-    ],
-  },
-]
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/auth/LoginPage.vue'),
+      meta: {
+        title: 'Đăng nhập',
+      },
+    },
+    {
+      path: '/verify-email',
+      name: 'VeridyEmail',
+      component: () => import('@/views/auth/EmailAuthenticationRequirement.vue'),
+      meta: {
+        title: 'Xác thực email',
+      },
+    },
+  ],
+}
+
+const routes = [authRoutes, storeRoutes]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 })
 
