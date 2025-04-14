@@ -52,7 +52,7 @@
         <button
           type="button"
           class="w-full h-12 bg-white dark:bg-gray-500 dark:text-white border border-black dark:border-none font-medium italic rounded-lg cursor-pointer hover:bg-[#464646] hover:text-white hover:ring-2 hover:ring-gray-800 hover:dark:ring-3 hover:dark:bg-blue-300 hover:dark:text-black hover:dark:ring-blue-400 transition duration-300"
-        @click="onSubmit"
+          @click="onSubmit"
         >
           Đăng nhập
         </button>
@@ -89,6 +89,7 @@
 import { reactive, onMounted } from 'vue'
 import { LoginRequest } from '@/types/auth'
 import { useAuthStore } from '@/stores/authStore'
+import {genderDeviceId} from '@/util/fingerprint'
 
 const authStore = useAuthStore()
 
@@ -98,18 +99,22 @@ const loginRequest = reactive<LoginRequest>({
   deviceId: '',
 })
 
-
-
 onMounted(async () => {
   try {
-    const deviceId = await authStore.genderDeviceId()
+    const deviceId = await genderDeviceId()
     console.log('deviceId:', deviceId)
     loginRequest.deviceId = deviceId
   } catch (err) {
     console.error('Lỗi khi lấy deviceId:', err)
   }
 })
-function onSubmit(){
-  console.log(authStore.login(loginRequest))
+
+async function onSubmit() {
+  try {
+    const result = await authStore.login(loginRequest)
+    console.log('Login thành công:', result)
+  } catch (err) {
+    console.error('Đăng nhập lỗi:', err)
+  }
 }
 </script>

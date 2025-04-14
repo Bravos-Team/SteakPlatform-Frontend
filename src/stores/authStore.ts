@@ -1,39 +1,26 @@
 import { defineStore } from 'pinia'
 import { loginApi } from '@/services/auth/authService'
-import type { LoginRequest, LoginResponse } from '@/types/auth'
+import type { LoginRequest } from '@/types/auth'
 
-import FingerprintJS from '@fingerprintjs/fingerprintjs';
-
-
-
- export const useAuthStore = defineStore('authStore', () => {
-
-
-    async function login(loginRequest: LoginRequest): Promise<LoginResponse> {
-      try {
-        return  loginApi(loginRequest)
-      } catch (error) {
-
-        throw error
+export const useAuthStore = defineStore('authStore', () => {
+  async function login(loginRequest: LoginRequest): Promise<string> {
+    try {
+      const apiResult = await loginApi(loginRequest)
+      const statusMessageMap: Record<number, string> = {
+        200: 'Đăng nhập thành công',
+        400: 'Lỗi cú pháp',
+        401: 'Sai tài khoản hoặc mật khẩu',
+        403: 'Tài khoản đã bị khoá',
       }
-    }
 
-     async function genderDeviceId() {
-      try {
-        console.log("Đang load fingerprint...");
-        const fp = await FingerprintJS.load();
-        console.log("FingerprintJS load xong rồi!");
-        const result = await fp.get();
-        return result.visitorId
-      } catch (error) {
-        console.error('Lỗi khi tạo device ID:', error)
-        return ''
-      }
-    }
-    return {
-      login,
-      genderDeviceId,
+      return statusMessageMap[apiResult.status] || 'Lỗi server'
+    } catch (error) {
+      console.error('Lỗi trong login:', error)
+      throw error
     }
   }
-)
 
+  return {
+    login,
+  }
+})
