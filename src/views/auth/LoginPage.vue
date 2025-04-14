@@ -14,6 +14,7 @@
         </p>
         <input
           type="email"
+          v-model="loginRequest.username"
           autocomplete="username"
           placeholder="Nhập email hoặc tên đăng nhập"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
@@ -28,6 +29,7 @@
         <div class="relative">
           <input
             id="password"
+            v-model="loginRequest.password"
             autocomplete="current-password"
             type="password"
             placeholder="Nhập mật khẩu"
@@ -50,6 +52,7 @@
         <button
           type="button"
           class="w-full h-12 bg-white dark:bg-gray-500 dark:text-white border border-black dark:border-none font-medium italic rounded-lg cursor-pointer hover:bg-[#464646] hover:text-white hover:ring-2 hover:ring-gray-800 hover:dark:ring-3 hover:dark:bg-blue-300 hover:dark:text-black hover:dark:ring-blue-400 transition duration-300"
+        @click="onSubmit"
         >
           Đăng nhập
         </button>
@@ -82,4 +85,31 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+import { reactive, onMounted } from 'vue'
+import { LoginRequest } from '@/types/auth'
+import { useAuthStore } from '@/stores/authStore'
+
+const authStore = useAuthStore()
+
+const loginRequest = reactive<LoginRequest>({
+  username: '',
+  password: '',
+  deviceId: '',
+})
+
+
+
+onMounted(async () => {
+  try {
+    const deviceId = await authStore.genderDeviceId()
+    console.log('deviceId:', deviceId)
+    loginRequest.deviceId = deviceId
+  } catch (err) {
+    console.error('Lỗi khi lấy deviceId:', err)
+  }
+})
+function onSubmit(){
+  console.log(authStore.login(loginRequest))
+}
+</script>
