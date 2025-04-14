@@ -19,7 +19,7 @@
 
 - **`views`** chứa các *`components`* của trang đó và <span style="color:yellow">coding</span> dữ liệu. *`Component`* và **`view`** giao tiếp với nhau qua *`props`* và *`emit`*.
 
-- **`main.js`** file khởi động *`vue application`* dùng để cấu hình plugin nếu có dùng plugin mới
+- **`main.ts`** file khởi động *`vue application`* dùng để cấu hình plugin nếu có dùng plugin mới
 
 
 ### 2. <span style="color: yellow">Coding code</span> with <span style="color:green">Composition API</span>
@@ -47,7 +47,7 @@ const message =ref("") // muốn reactive bọc vào ref/reactive
 ```
 
 ### 3. Chuẩn code chung của team
-- Dùng lớp service *`api.js`* để code với **`axios`** nhé
+- Dùng lớp service *`api.ts`* để code với **`axios`** nhé
 ```vue
 <script setup>
 import {base_api} from "@services/api"
