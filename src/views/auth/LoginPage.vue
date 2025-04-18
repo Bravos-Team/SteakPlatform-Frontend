@@ -90,8 +90,8 @@ import { reactive, onMounted } from 'vue'
 import { LoginRequest } from '@/types/auth'
 import { useAuthStore } from '@/stores/authStore'
 import {genderDeviceId} from '@/util/fingerprint'
+const {login} =useAuthStore()
 
-const authStore = useAuthStore()
 
 const loginRequest = reactive<LoginRequest>({
   username: '',
@@ -110,11 +110,11 @@ onMounted(async () => {
 })
 
 async function onSubmit() {
-  try {
-    const result = await authStore.login(loginRequest)
-    console.log('Login thành công:', result)
-  } catch (err) {
-    console.error('Đăng nhập lỗi:', err)
+ const result =await login(loginRequest)
+  if (result.success){
+    console.log(result.message)
+  }else {
+    alert(result.message)
   }
 }
 </script>
