@@ -3,7 +3,7 @@
     class="text-black dark:text-white flex flex-col items-center justify-center px-4 min-h-screen"
   >
     <div class="flex flex-col items-center mb-10">
-      <img src="https://cdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
+      <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="text-2xl font-extrabold mt-2">Đăng Nhập</p>
     </div>
 
@@ -36,11 +36,19 @@
             required
             class="peer xl:w-full h-12 px-4 pr-12 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
           />
-          <img
-            :src="'https://cdn.steak.io.vn/logo-on.svg'"
-            class="absolute right-3 top-3 w-6 h-6 cursor-pointer"
-            alt="Toggle Password"
-          />
+          <div class="toggle-hide-pw">
+            <img
+              :src="'https://ccdn.steak.io.vn/eye-on-black.svg'"
+              class="absolute right-3 top-3 w-6 block dark:hidden h-6 cursor-pointer"
+              alt="Toggle Password"
+            />
+
+            <img
+              :src="'https://ccdn.steak.io.vn/eye-on-white.svg.svg'"
+              class="absolute hidden dark:block right-3 top-3 w-6 h-6 cursor-pointer"
+              alt="Toggle Password"
+            />
+          </div>
         </div>
       </div>
 
@@ -68,28 +76,28 @@
         <button
           class="flex items-center justify-center h-12 w-full border border-black dark:border-none bg-white rounded-lg"
         >
-          <img :src="'https://cdn.steak.io.vn/logo-google.svg'" class="h-6" />
+          <img :src="'https://ccdn.steak.io.vn/google-ico.svg'" class="h-6" />
         </button>
         <button
           class="flex items-center justify-center h-12 border border-black w-full bg-[#65a8ff] dark:bg-[#1877f2] rounded-lg"
         >
-          <img :src="'https://cdn.steak.io.vn/logos_facebook.svg'" class="h-6" />
+          <img :src="'https://ccdn.steak.io.vn/facebook-ico.svg'" class="h-6" />
         </button>
       </div>
     </form>
 
     <footer class="mt-10 mb-10 flex flex-col items-center space-y-3">
-      <a href="/register" class="text-[#0af] italic underline">Tạo tài khoản</a>
+      <a href="register" class="text-[#0af] italic underline">Tạo tài khoản</a>
       <a href="#" class="text-[#0af] italic underline">Chính sách Bảo mật</a>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
-import { LoginRequest } from '@/types/auth'
 import { useAuthStore } from '@/stores/authStore'
-import {genderDeviceId} from '@/util/fingerprint'
+import { LoginRequest } from '@/types/auth'
+import { genderDeviceId } from '@/util/fingerprint'
+import { onMounted, reactive } from 'vue'
 
 const authStore = useAuthStore()
 
