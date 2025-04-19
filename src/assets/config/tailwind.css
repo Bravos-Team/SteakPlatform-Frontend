@@ -8,4 +8,13 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-
+@theme {
+  --test-config: red;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
