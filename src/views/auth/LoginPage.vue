@@ -87,9 +87,10 @@
 
 <script setup lang="ts">
 import { reactive, onMounted } from 'vue'
-import { LoginRequest } from '@/types/auth'
+import { LoginRequest } from '@/types/auth/auth'
 import { useAuthStore } from '@/stores/authStore'
 import {genderDeviceId} from '@/util/fingerprint'
+import { validateLoginRequest } from '../../../validators/auth/LoginValidator'
 const {login} =useAuthStore()
 
 
@@ -110,11 +111,16 @@ onMounted(async () => {
 })
 
 async function onSubmit() {
- const result =await login(loginRequest)
-  if (result.success){
-    console.log(result.message)
-  }else {
-    alert(result.message)
+  const result = validateLoginRequest(loginRequest);
+
+  if (!result.success){
+    console.log('Form lỗi' , result.error.format())
+    return;
+  }
+ const validData = result.data
+ const res =await login(validData)
+  if (res.error){
+    console.log(res.error)
   }
 }
 </script>
