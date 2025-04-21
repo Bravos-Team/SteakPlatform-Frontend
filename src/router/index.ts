@@ -1,22 +1,48 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
+
+const homeRoutes = {
+  path: "/",
+  name: "Home",
+  component: () => import("@/layouts/home/HomeLayout.vue"),
+  meta: {
+    title: "Home",
+  },
+  children: [
+    {
+      path: ""
+      ,name: "HomePage",
+      component: () => import ("@/views/home/HomePage.vue")
+      ,meta: {
+        title: 'HomePage',
+      }
+    }
+  ]
+}
+
 const storeRoutes = {
-  path: '/',
-  name: 'Home',
+  path: '/store',
+  name: 'store',
   component: () => import('@/layouts/store/StoreLayout.vue'),
   meta: {
-    title: 'Trang chủ',
+    title: 'Store',
   },
+  children: [
+    {
+      path: "home",
+      component: () => import('@/views/store/StoreHomePage.vue'),
+      meta: {
+        title: 'Trang chủ',
+      },
+    }
+  ]
 }
 const authRoutes = {
   path: '/auth',
   name: 'Auth',
   component: () => import('@/layouts/auth/AuthLayout.vue'),
-  meta: {
-    title: 'Trang chủ',
-  },
   children: [
     {
-      path: '/register',
+      path: 'register',
       name: 'Register',
       component: () => import('@/views/auth/RegistrationPage.vue'),
       meta: {
@@ -24,7 +50,7 @@ const authRoutes = {
       },
     },
     {
-      path: '/login',
+      path: 'login',
       name: 'Login',
       component: () => import('@/views/auth/LoginPage.vue'),
       meta: {
@@ -32,7 +58,7 @@ const authRoutes = {
       },
     },
     {
-      path: '/verify-email',
+      path: 'verify-email',
       name: 'VeridyEmail',
       component: () => import('@/views/auth/EmailAuthenticationRequirement.vue'),
       meta: {
@@ -42,7 +68,7 @@ const authRoutes = {
   ],
 }
 
-const routes = [authRoutes, storeRoutes]
+const routes: RouteRecordRaw[] = [homeRoutes,authRoutes, storeRoutes]
 
 const router = createRouter({
   history: createWebHistory(),

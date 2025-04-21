@@ -8,4 +8,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-
+@theme {
+  --test-config: red;
+}

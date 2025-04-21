@@ -1,7 +1,7 @@
 <template>
   <div class="text-white flex flex-col items-center justify-center px-4 min-h-screen">
     <div class="flex flex-col items-center mb-10">
-      <img src="https://cdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
+      <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="text-2xl text-black dark:text-white font-extrabold mt-2">Đăng ký</p>
     </div>
 
@@ -148,7 +148,7 @@
       </div>
       <span class="flex flex-row justify-center">
         <span class="me-1 text-black dark:text-white">Đã có tài khoản?</span>
-        <a href="/login" class="text-[#0af] italic underline">Đăng nhập"</a>
+        <a href="login" class="text-[#0af] italic underline">Đăng nhập"</a>
       </span>
     </form>
   </div>
@@ -179,6 +179,6 @@ const accountErrors = ref({
 const router = useRouter()
 
 const handleSubmit = () => {
-  router.push('/verify-email')
+  router.push('verify-email')
 }
 </script>
