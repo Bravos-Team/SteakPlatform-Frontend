@@ -1,4 +1,8 @@
 <template>
+  <!-- SLIDER -->
+  <store-sliders></store-sliders>
+  <!-- END SLIDER -->
+
   <div class="flex flex-col gap-y-[64px] my-[64px]">
     <!-- game by category -->
     <category-base-bar
@@ -53,6 +57,8 @@ import CategoryBaseBar from '@/components/common/CategoryBaseBar.vue'
 import CollaboratorsBar from '@/components/common/CollaboratorsBar.vue'
 import FreeGameBar from '@/components/common/FreeGameBar.vue'
 import GameCardHorizontal from '@/components/store/GameCardHorizontal.vue'
+
+import StoreSliders from '@/components/store/StoreSliders.vue'
 import { ref } from 'vue'
 const gameByCategoryList = ref([
   {

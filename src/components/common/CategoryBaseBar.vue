@@ -41,7 +41,10 @@
     <!-- CATEGORY CONTENT LIST-->
     <div class="w-[{{ width }}] flex gap-x-[20px]">
       <div class="w-[211px] h-[422px] shrink-0" v-for="game in gameByCategoryList" :key="game.id">
-        <router-link to="#" class="w-[211px] h-[369px] cursor-pointer">
+        <router-link
+          :to="{ name: 'game-details', params: { id: game.id } }"
+          class="w-[211px] h-[369px] cursor-pointer"
+        >
           <game-card :game="game"></game-card>
         </router-link>
       </div>
