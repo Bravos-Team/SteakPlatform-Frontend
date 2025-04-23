@@ -1,26 +1,41 @@
 import { defineStore } from 'pinia'
-import { loginApi } from '@/services/auth/authService'
-import type { LoginRequest } from '@/types/auth'
+import { loginApi, registerApi } from '@/services/auth/authService'
+
+import type {
+  LoginRequest,
+  LoginResponse,
+  RegisterRequest,
+  RegisterResponse
+} from '@/types/auth/auth'
+import { ApiResult } from '@/types/apiResult'
+
+enum StatusCode {
+  SUCCESS = 200,
+}
 
 export const useAuthStore = defineStore('authStore', () => {
-  async function login(loginRequest: LoginRequest): Promise<string> {
-    try {
-      const apiResult = await loginApi(loginRequest)
-      const statusMessageMap: Record<number, string> = {
-        200: 'Đăng nhập thành công',
-        400: 'Lỗi cú pháp',
-        401: 'Sai tài khoản hoặc mật khẩu',
-        403: 'Tài khoản đã bị khoá',
-      }
+  async function login(loginRequest: LoginRequest): Promise<ApiResult<LoginResponse>> {
+    return handleApiCall(() => loginApi(loginRequest))
+  }
 
-      return statusMessageMap[apiResult.status] || 'Lỗi server'
-    } catch (error) {
-      console.error('Lỗi trong login:', error)
-      throw error
-    }
+  async function register(registerRequest: RegisterRequest): Promise<ApiResult<RegisterResponse>> {
+    return handleApiCall(() => registerApi(registerRequest))
   }
 
   return {
     login,
+    register,
   }
 })
+
+async function handleApiCall<T>(apiFn: () => Promise<ApiResult<T>>): Promise<ApiResult<T>> {
+  const res =await apiFn()
+
+  if (res.status === StatusCode.SUCCESS && res.data)
+    return { status: res.status, data: res.data }
+
+  return {
+    status: res.status ?? 500,
+    error: res.error ?? undefined
+  }
+}
