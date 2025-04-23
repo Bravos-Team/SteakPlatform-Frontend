@@ -9,6 +9,4 @@ export interface ApiResult<T>{
     type?: string;
     errors? : string[];
   };
-
-
 }
