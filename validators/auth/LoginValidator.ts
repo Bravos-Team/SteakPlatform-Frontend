@@ -14,4 +14,5 @@ export const loginRequestSchema =z.object({
 })
 export const validateLoginRequest=(data :unknown) =>{
   return loginRequestSchema.safeParse(data)
+
 }

@@ -14,6 +14,7 @@ enum StatusCode {
 }
 
 
+
 export const useAuthStore = defineStore('authStore', () => {
   async function login(loginRequest: LoginRequest): Promise<ApiResult<LoginResponse>> {
     return handleApiCall(() => loginApi(loginRequest))
