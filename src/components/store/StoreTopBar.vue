@@ -3,7 +3,7 @@
     <teleport to="header">
       <div class="lg:relative z-[999]">
         <div
-          class="flex justify-between items-center peer/header lg:mx-auto w-full text-white px-4 gap-x-[20px] h-[72px]"
+          class="flex justify-between items-center peer/header lg:mx-auto lg:w-full text-white px-4 gap-x-[20px] h-[72px]"
         >
           <!-- LOGO -->
           <div class="flex items-center justify-between peer/hover h-full">

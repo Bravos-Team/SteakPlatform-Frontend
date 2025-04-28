@@ -2,7 +2,7 @@
   <div>
     <store-top-bar></store-top-bar>
     <store-searching-bar></store-searching-bar>
-    <div class="lg:w-[1135px] mx-[189px]">
+    <div class="lg:w-[1135px] xl:w-[1423px] xl:mx-[237px] lg:mx-[189px]">
       <router-view></router-view>
     </div>
   </div>

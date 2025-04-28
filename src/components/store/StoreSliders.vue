@@ -1,14 +1,14 @@
 <template>
-  <div class="lg:w-[1135px] lg:h-[526px]">
+  <div class="lg:w-[1135px] xl:w-[1423px] xl:h-[638px] shrink-0 lg:h-[526px]">
     <div class="flex flex-row gap-x-5">
-      <div class="lg:w-[935px] lg:h-[525px] overflow-hidden rounded-3xl bg-gray-200/5">
+      <div class="lg:w-[935px] xl:w-[1134px] xl:h-[638px] lg:h-[525px] overflow-hidden rounded-3xl bg-gray-200/5">
         <div v-for="game in gameSliders" :key="game.id">
           <img :src="game.background" alt="" />
         </div>
       </div>
       <div class="lg:w-[180px] lg:h-[526px] flex flex-col">
         <div
-          class="lg:w-[180px] lg:h-[85px] flex flex-row justify-center items-center hover:bg-[#404044]/40 mb-[3px] rounded-md"
+          class="lg:w-[180px] xl:w-[256px] xl:h-[125px] shrink-0 lg:h-[85px] flex flex-row justify-center items-center hover:bg-[#404044]/40 mb-[3px] rounded-md"
           v-for="game in gameSliders"
           :key="game.id"
         >

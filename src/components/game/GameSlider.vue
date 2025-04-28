@@ -1,9 +1,9 @@
 <template>
   <!-- CAROUSELS BAR -->
-  <div class="flex shrink-0 flex-col overflow-hidden h-[499px] gap-y-[20px]">
+  <div class="flex shrink-0 flex-col overflow-hidden xl:w-[1039px] xl:h-[663px]  lg:h-[499px] gap-y-[20px]">
     <!-- MAIN IMAGES SLIDERS -->
     <div
-      class="bg-gray-400 group/img-slider relative flex flex-row rounded-xl overflow-hidden h-[422px] shrink-0"
+      class="bg-gray-400 group/img-slider relative flex flex-row rounded-xl overflow-hidden xl:h-[584px] lg:h-[422px] shrink-0"
     >
       <template v-for="(image, index) in game.details.images" :key="index">
         <img :src="image.url" class="w-full shrink-0" />
@@ -38,7 +38,7 @@
           />
         </button>
       </div>
-      <div class="h-[57px] flex gap-x-[10px] w-full overflow-x-scroll no-scrollbar">
+      <div class="h-[57px] flex gap-x-[10px] justify-center w-full overflow-x-scroll no-scrollbar">
         <div
           class="border-[1px] border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100 overflow-hidden shrink-0 rounded-sm"
           v-for="(image, index) in game.details.images"
