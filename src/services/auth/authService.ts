@@ -1,3 +1,4 @@
+
 import axios from '@/libs/axiosInstance'
 import type {
   LoginRequest,
@@ -11,6 +12,7 @@ export async function loginApi(loginData: LoginRequest): Promise<LoginResponse> 
     loginData,
   )
   return res.data
+
 }
 
 export async function registerApi(registerData: RegisterRequest): Promise<RegisterResponse> {

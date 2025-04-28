@@ -13,6 +13,7 @@ export const loginRequestSchema =z.object({
   deviceId : z.string().nonempty('Thiếu deviceId'),
 })
 export const validateLoginRequest=(data :unknown) =>{
+
   const result = loginRequestSchema.safeParse(data)
 
   if(!result.success){
@@ -25,5 +26,6 @@ export const validateLoginRequest=(data :unknown) =>{
   }
 
   return {success : true ,data : result.data}
+
 
 }

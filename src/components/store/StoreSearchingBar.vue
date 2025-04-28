@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky z-10 top-0 p-0 lg:px-[189.1px] h-[100px] w-[1135px] lg:w-full">
+  <div class="sticky z-10 top-0 bottom-0 p-0 lg:px-[189.1px] h-[100px] w-[1135px] lg:w-full">
     <div class="flex flex-row bg-[#101014] items-center h-full">
       <div class="flex justify-center items-center">
         <input type="text" placeholder="Search..." class="sr-only shrink-0" />
