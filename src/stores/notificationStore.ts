@@ -19,6 +19,9 @@ export const useNotificationStore = defineStore('notificationStore', {
       this.type = 'error'
       this.visible = true
     },
+    hide(){
+      this.visible =false
+    }
   }
 
 

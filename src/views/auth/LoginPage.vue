@@ -2,7 +2,6 @@
   <div
     class="text-black dark:text-white flex flex-col items-center justify-center px-4 min-h-screen"
   >
-
     <div class="flex flex-col items-center mb-10">
       <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="text-2xl font-extrabold mt-2">Đăng Nhập</p>
@@ -15,13 +14,13 @@
         </p>
         <input
           type="email"
-          v-model="loginRequest.username"
+          v-model="form.username"
           autocomplete="username"
           placeholder="Nhập email hoặc tên đăng nhập"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
         <label for="email" class="hidden peer-invalid:block text-red-500">
-          <span>{{ usernameError }}</span>
+          <span>{{ errors.username }}</span>
         </label>
       </div>
 
@@ -30,7 +29,7 @@
         <div class="relative">
           <input
             id="password"
-            v-model="loginRequest.password"
+            v-model="form.password"
             autocomplete="current-password"
             type="password"
             placeholder="Nhập mật khẩu"
@@ -43,8 +42,8 @@
             alt="Toggle Password"
           />
         </div>
-        <label v-if="passwordError" class="peer-invalid:block text-red-500">
-          {{ passwordError }}
+        <label v-if="errors.password" class="peer-invalid:block text-red-500">
+          {{ errors.password }}
         </label>
       </div>
 
@@ -90,56 +89,51 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, ref } from 'vue'
-import { LoginRequest } from '@/types/auth/auth'
+import {  onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { genderDeviceId } from '@/util/fingerprint'
-import { validateLoginRequest } from '../../../validators/auth/LoginValidator'
+import { LoginForm, loginSchema } from '../../../validators/auth/LoginValidator'
 
 import { useNotificationStore } from '@/stores/notificationStore'
+import { validationForm } from '../../../validators/auth/parseZodError'
+
 
 const { login } = useAuthStore()
 const notificationStore = useNotificationStore()
-const loginRequest = reactive<LoginRequest>({
+const form = ref<LoginForm>({
   username: '',
   password: '',
-  deviceId: '',
+  deviceId: ''
 })
 
 onMounted(async () => {
   try {
     const deviceId = await genderDeviceId()
     console.log('deviceId:', deviceId)
-    loginRequest.deviceId = deviceId
+    form.value.deviceId = deviceId
   } catch (err) {
     console.error('Lỗi khi lấy deviceId:', err)
   }
 })
-const usernameError = ref('')
-const passwordError = ref('')
-async function onSubmit() {
-  const result = validateLoginRequest(loginRequest)
-  if (!result.success) {
-    usernameError.value = ''
-    passwordError.value = ''
-    result.errros?.forEach((err) => {
-      if (err.field === 'username') usernameError.value = err.message
-      if (err.field === 'password') {
-        passwordError.value = err.message
-        console.log(err.message)
-      }
-    })
 
+const errors = ref<Record<string, string>>({});
+
+async function onSubmit() {
+  errors.value = {}
+  const { valid, errors: validationErrors } = validationForm(loginSchema, form.value)
+  if (!valid) {
+    errors.value = validationErrors || {};
     return
   }
 
- const res = await login(loginRequest)
-  console.log(res)
- if (res.success){
-   notificationStore.showSuccess(res.message)
- }
- else {
-   notificationStore.showError(res.message)
- }
 }
+
+const res = await login(form.value)
+console.log(res)
+if (res.success) {
+  notificationStore.showSuccess(res.message)
+} else {
+  notificationStore.showError(res.message)
+}
+setTimeout(notificationStore.hide,5000)
 </script>

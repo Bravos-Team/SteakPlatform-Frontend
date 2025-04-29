@@ -35,7 +35,7 @@ import { computed } from 'vue'
 const props = defineProps<{
   message: string
   type: keyof typeof notificationConfig
-  visible: boolean
+   visible: boolean
 }>()
 
 const typeConfig = computed(() => notificationConfig[props.type])
