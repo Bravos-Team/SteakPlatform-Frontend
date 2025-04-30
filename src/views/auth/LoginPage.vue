@@ -3,7 +3,7 @@
     class="text-black dark:text-white flex flex-col items-center justify-center px-4 min-h-screen"
   >
     <div class="flex flex-col items-center mb-10">
-      <img src="https://cdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
+      <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="text-2xl font-extrabold mt-2">Đăng Nhập</p>
     </div>
 
@@ -14,13 +14,13 @@
         </p>
         <input
           type="email"
-          v-model="loginRequest.username"
+          v-model="form.username"
           autocomplete="username"
           placeholder="Nhập email hoặc tên đăng nhập"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
         <label for="email" class="hidden peer-invalid:block text-red-500">
-          Vui lòng nhập email hợp lệ
+          <span>{{ errors.username }}</span>
         </label>
       </div>
 
@@ -29,7 +29,7 @@
         <div class="relative">
           <input
             id="password"
-            v-model="loginRequest.password"
+            v-model="form.password"
             autocomplete="current-password"
             type="password"
             placeholder="Nhập mật khẩu"
@@ -37,11 +37,14 @@
             class="peer xl:w-full h-12 px-4 pr-12 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
           />
           <img
-            :src="'https://cdn.steak.io.vn/logo-on.svg'"
+            :src="'https://cdn.steak.ico.vn/logo-on.svg'"
             class="absolute right-3 top-3 w-6 h-6 cursor-pointer"
             alt="Toggle Password"
           />
         </div>
+        <label v-if="errors.password" class="peer-invalid:block text-red-500">
+          {{ errors.password }}
+        </label>
       </div>
 
       <div class="text-right">
@@ -68,12 +71,12 @@
         <button
           class="flex items-center justify-center h-12 w-full border border-black dark:border-none bg-white rounded-lg"
         >
-          <img :src="'https://cdn.steak.io.vn/logo-google.svg'" class="h-6" />
+          <img :src="'https://ccdn.steak.io.vn/google-ico.svg'" class="h-6" />
         </button>
         <button
           class="flex items-center justify-center h-12 border border-black w-full bg-[#65a8ff] dark:bg-[#1877f2] rounded-lg"
         >
-          <img :src="'https://cdn.steak.io.vn/logos_facebook.svg'" class="h-6" />
+          <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6" />
         </button>
       </div>
     </form>
@@ -86,43 +89,51 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
-import { LoginRequest } from '@/types/auth/auth'
+import {  onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
-import {genderDeviceId} from '@/util/fingerprint'
-import { validateLoginRequest } from '../../../validators/auth/LoginValidator'
-const {login} =useAuthStore()
+import { genderDeviceId } from '@/util/fingerprint'
+import { LoginForm, loginSchema } from '../../../validators/auth/LoginValidator'
+
+import { useNotificationStore } from '@/stores/notificationStore'
+import { validationForm } from '../../../validators/auth/parseZodError'
 
 
-const loginRequest = reactive<LoginRequest>({
+const { login } = useAuthStore()
+const notificationStore = useNotificationStore()
+const form = ref<LoginForm>({
   username: '',
   password: '',
-  deviceId: '',
+  deviceId: ''
 })
 
 onMounted(async () => {
   try {
     const deviceId = await genderDeviceId()
     console.log('deviceId:', deviceId)
-    loginRequest.deviceId = deviceId
+    form.value.deviceId = deviceId
   } catch (err) {
     console.error('Lỗi khi lấy deviceId:', err)
   }
 })
 
-async function onSubmit() {
-  const result = validateLoginRequest(loginRequest);
+const errors = ref<Record<string, string>>({});
 
-  if (!result.success){
-    console.log('Form lỗi' , result.error.format())
-    return;
+async function onSubmit() {
+  errors.value = {}
+  const { valid, errors: validationErrors } = validationForm(loginSchema, form.value)
+  if (!valid) {
+    errors.value = validationErrors || {};
+    return
   }
- const validData = result.data
- const res =await login(validData)
-  if (res.error){
-    console.log(res.error)
-  }
+
 }
 
-
+const res = await login(form.value)
+console.log(res)
+if (res.success) {
+  notificationStore.showSuccess(res.message)
+} else {
+  notificationStore.showError(res.message)
+}
+setTimeout(notificationStore.hide,5000)
 </script>

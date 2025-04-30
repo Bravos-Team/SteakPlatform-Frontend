@@ -1,8 +1,25 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 
-import authRoutes from "@/router/routes/AuthRoutes";
-import homeRoutes from "@/router/routes/HomeRoutes";
-import storeRoutes from "@/router/routes/StoreRoutes";
+
+const homeRoutes = {
+  path: "/",
+  name: "Home",
+  component: () => import("@/layouts/home/HomeLayout.vue"),
+  meta: {
+    title: "Home",
+  },
+  children: [
+    {
+      path: ""
+      ,name: "HomePage",
+      component: () => import ("@/views/home/HomePage.vue")
+      ,meta: {
+        title: 'HomePage',
+      }
+    }
+  ]
+}
+
 
 
 
