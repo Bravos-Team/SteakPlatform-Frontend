@@ -126,7 +126,6 @@ async function onSubmit() {
     return
   }
 
-}
 
 const res = await login(form.value)
 console.log(res)
@@ -135,5 +134,7 @@ if (res.success) {
 } else {
   notificationStore.showError(res.message)
 }
-setTimeout(notificationStore.hide,5000)
+  setTimeout(notificationStore.hide,5000)
+}
+
 </script>
