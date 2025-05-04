@@ -6,20 +6,16 @@
           <img :src="game.background" alt="" />
         </div>
       </div>
+      <!-- SUB SLIDER BAR-->
       <div class="lg:w-[180px] lg:h-[526px] flex flex-col">
         <div
-          class="lg:w-[180px] xl:w-[256px] xl:h-[125px] shrink-0 lg:h-[85px] flex flex-row justify-center items-center hover:bg-[#404044]/40 mb-[3px] rounded-md"
-          v-for="game in gameSliders"
-          :key="game.id"
-        >
-          <img
-            :src="game.img"
-            alt=""
-            class="w-10 rounded-md mx-5 flex justify-center items-center"
-          />
+          class="lg:w-[180px] xl:w-[256px] xl:h-[101px] shrink-0 lg:h-[85px] flex flex-row justify-center items-center hover:bg-[#404044]/40 mb-[3px] rounded-md"
+          v-for="game in gameSliders" :key="game.id">
+          <img :src="game.img" alt="" class="w-10 rounded-md mx-5 flex justify-center items-center" />
           <p class="text-white w-[120px]">{{ game.name }}</p>
         </div>
       </div>
+      <!-- END SUB SLIDER BAR -->
     </div>
   </div>
 </template>

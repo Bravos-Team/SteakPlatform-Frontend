@@ -1,11 +1,7 @@
 import { defineStore } from 'pinia'
-import { loginApi, registerApi } from '@/services/auth/authService'
+import { loginApi } from '@/services/auth/authService'
 
-import type {
-  LoginRequest,
-  RegisterRequest,
-
-} from '@/types/auth/auth'
+import type { LoginRequest } from '@/types/auth/auth'
 
 import { parseApiError } from '@/types/auth/parseApiError'
 
@@ -20,17 +16,7 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
-  async function register(registerRequest: RegisterRequest) {
-    try {
-      return await registerApi(registerRequest)
-    } catch (error) {
-      const parseError = parseApiError(error)
-      return { success: false, message: parseError.message }
-    }
-  }
-
   return {
     login,
-    register,
   }
 })
