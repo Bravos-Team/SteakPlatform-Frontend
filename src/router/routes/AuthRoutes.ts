@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 const authRoutes: RouteRecordRaw = {
   path: '/auth',
@@ -8,7 +8,7 @@ const authRoutes: RouteRecordRaw = {
     {
       path: 'register',
       name: 'Register',
-      component: () => import('@/views/auth/RegistrationPage.vue'),
+      component: () => import('@/views/auth/registration/RegistrationPage.vue'),
       meta: {
         title: 'Đăng ký tài khoản',
       },
@@ -23,11 +23,21 @@ const authRoutes: RouteRecordRaw = {
     },
     {
       path: 'verify-email',
-      name: 'VeridyEmail',
-      component: () => import('@/views/auth/EmailAuthenticationRequirement.vue'),
+      name: 'VerifyEmail',
+      component: () => import('@/views/auth/registration/EmailAuthenticationRequirement.vue'),
       meta: {
         title: 'Xác thực email',
       },
+    },
+    {
+      path: '/register-success',
+      name: 'RegisterSuccess',
+      component: () => import('@/views/auth/registration/SuccessResponsePage.vue'),
+    },
+    {
+      path: '/register-failed',
+      name: 'RegisterError',
+      component: () => import('@/views/auth/registration/ErrorResponsePage.vue'),
     },
   ],
 }

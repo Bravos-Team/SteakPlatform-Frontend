@@ -21,4 +21,5 @@ import Notification from '@/components/notification/Notification.vue'
 import { useNotificationStore } from '@/stores/notificationStore.js'
 
 const notificationStore = useNotificationStore()
+
 </script>

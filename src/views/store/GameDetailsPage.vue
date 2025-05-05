@@ -26,7 +26,7 @@
     <div class="lg:w-full flex flex-row justify-between">
       <!-- LEFT CONTENT -->
       <div
-        class="flex flex-col h-[1412px] overflow-hidden w-[751px] gap-y-[50px] relative"
+        class="flex flex-col h-[1412px] overflow-hidden xl:w-[1039px] lg:w-[751px] gap-y-[50px] relative"
         :class="showMore ? 'h-full' : ''"
       >
         <!-- CAROUSEL -->
@@ -75,7 +75,7 @@
 
     <!-- SUB DETAILS -->
     <div class="text-white">
-      <div class="w-[751px] flex flex-col justify-around">
+      <div class="xl:w-[1039px] lg:w-[751px] flex flex-col justify-around">
         <div class="mt-[50px] mr-[0px] mb-[0px] shrink-0 flex flex-col h-[141px] justify-between">
           <span class="text-[18px] font-bold">FOLLOW US</span>
           <div class="py-[35px] px-[60px] rounded-[12px] bg-[#202024]">
