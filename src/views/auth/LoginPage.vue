@@ -53,7 +53,23 @@
         <a href="#" class="text-sm text-[#0af] italic underline">Quên mật khẩu?</a>
       </div>
 
-      <div>
+      <div v-if="loginStore.isLoading">
+        <div
+          class="h-12 hover:ring-3 hover:bg-blue-400 overflow-hidden hover:text-black cursor-not-allowed hover:ring-blue-300 transition-all duration-300 bg-[#A9A9A9] rounded-[5px] w-full"
+        >
+          <div class="flex space-x-2 animate-pulse justify-center items-center bg-blue-400 h-full">
+            <span class="sr-only">Loading...</span>
+            <div
+              class="h-2 w-2 bg-black dark:bg-white rounded-full animate-bounce [animation-delay:-0.3s]"
+            ></div>
+            <div
+              class="h-2 w-2 bg-black dark:bg-white rounded-full animate-bounce [animation-delay:-0.15s]"
+            ></div>
+            <div class="h-2 w-2 bg-black dark:bg-white rounded-full animate-bounce"></div>
+          </div>
+        </div>
+      </div>
+      <div v-else>
         <button
           type="submit"
           class="w-full h-12 bg-white dark:bg-gray-500 dark:text-white border border-black dark:border-none font-medium italic rounded-lg cursor-pointer hover:bg-[#464646] hover:text-white hover:ring-2 hover:ring-gray-800 hover:dark:ring-3 hover:dark:bg-blue-300 hover:dark:text-black hover:dark:ring-blue-400 transition duration-300"
@@ -91,20 +107,18 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { useAuthStore } from '@/stores/authStore'
-import { genderDeviceId, generateDeviceId } from '@/util/fingerprint'
-import {
-  isEmail,
-  loginByEmailSchema,
-  loginByUserNameSchema,
-} from '../../../validators/auth/LoginValidator'
+
+import { useAuthStore } from '@/stores/auth/LoginStore'
+import { genderDeviceId, generateDeviceId } from '@/utils/fingerprint'
+import { isEmail, loginByEmailSchema, loginByUserNameSchema } from '@/types/auth/AuthType'
 
 import { useNotificationStore } from '@/stores/notificationStore'
 import { validationForm } from '../../../validators/auth/parseZodError'
 
+const loginStore = useAuthStore()
 import { ZodSchema } from 'zod'
+import { extractErrors } from '@/utils/zod/HanldeZodErrors'
 
-const { loginUserName, loginEmail } = useAuthStore()
 const notificationStore = useNotificationStore()
 const form = reactive({
   usernameOrEmail: '',
@@ -161,10 +175,14 @@ async function onSubmit() {
     }
   }
 
-  let res
   const { schema, payload, type } = getSchemaAndPayLoad(form)
   errors.value = validationForms(schema, payload)
-
+  const { success, error } = schema.safeParse(payload)
+  if (!success) {
+    errors.value = extractErrors(error)
+  } else {
+    errors.value = {}
+  }
   if (type === 'email' && errors.value.email) errors.value.usernameOrEmail = errors.value.email
   if (type === 'username' && errors.value.username) {
     errors.value.usernameOrEmail = errors.value.username
@@ -174,12 +192,12 @@ async function onSubmit() {
     return
   }
 
-  res = type === 'email' ? await loginEmail(payload) : await loginUserName(payload)
+  type === 'email' ? await loginStore.loginEmail(payload) : await loginStore.loginUserName(payload)
 
-  if (res.success) {
-    notificationStore.showSuccess(res.message)
+  if (!loginStore.loginError) {
+    notificationStore.showSuccess(loginStore.loginMessage || 'Dang nhap thanh cong')
   } else {
-    notificationStore.showError(res.message)
+    notificationStore.showError(loginStore.loginError || 'Dang nhap khong thanh cong')
   }
   setTimeout(notificationStore.hide, 5000)
 }
