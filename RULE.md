@@ -1,4 +1,4 @@
-# <span style="color:yellow">(update mới mục 4. về *`CSS`*)</span> CODING, CẤU TRÚC DỰ ÁN VÀ Ý NGHĨA TRONG VUEJS VỚI VITE LÀ BUILD TOOL
+ya# <span style="color:yellow">(update mới mục 4. về *`CSS`*)</span> CODING, CẤU TRÚC DỰ ÁN VÀ Ý NGHĨA TRONG VUEJS VỚI VITE LÀ BUILD TOOL
 - Cách **`import file`** cấp thư mục **`src`** trở đi, anh em dùng *`@`* + *`đường dẫn`*
 * <span style="color:yellow">EX: </span> **`@/assets/styles/auth/auth.css`** nó sẽ biết bắt đầu từ *`src`* trở đi <- *`vite`* tự cấu hình *`alias`* từ lúc tạo dự án
 ---

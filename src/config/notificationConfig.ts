@@ -6,7 +6,7 @@ export const notificationConfig = {
     iconURL: 'https://ccdn.steak.io.vn/assets-error-ico.svg',
   },
   warning: {
-    iconURL: '⚠️',
+    iconURL: 'https://ccdn.steak.io.vn/warning-ico.svg',
   },
   wellDone: {
     iconURL: 'https://ccdn.steak.io.vn/assets-well-done-ico.svg',
