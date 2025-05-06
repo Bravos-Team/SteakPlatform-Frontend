@@ -1,6 +1,6 @@
 
-import LoginRequest from '../../../validators/auth/LoginValidator'
 import api from '@/libs/axios'
+import LoginRequest from '@/types/auth/AuthType'
 export async function loginApiUserName(loginData: LoginRequest) {
   const res = await api.post(
     '/api/v1/user/auth/username-login',
