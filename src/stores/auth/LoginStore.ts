@@ -35,6 +35,11 @@ export const useAuthStore = defineStore('loginStore', () => {
     }
   }
 
+  const resetLoginState = function() {
+    loginError.value = null;
+    loginMessage.value = '';
+  }
+
   return {
     loginUserName,
     loginEmail,
@@ -42,5 +47,6 @@ export const useAuthStore = defineStore('loginStore', () => {
     loginMessage,
     loginResult,
     isLoading,
+    resetLoginState
   }
 })

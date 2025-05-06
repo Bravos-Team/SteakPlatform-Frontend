@@ -2,7 +2,7 @@
 
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 
-export async function genderDeviceId(): Promise<string> {
+export async function generateDeviceId(): Promise<string> {
   try {
     const fp = await FingerprintJS.load()
     const result = await fp.get()
@@ -13,7 +13,7 @@ export async function genderDeviceId(): Promise<string> {
   }
 }
 
-export async function generateDeviceId(): Promise<string> {
+export async function generateDeviceInfo(): Promise<string> {
   try {
     const ua = navigator.userAgent;
 
@@ -49,7 +49,6 @@ export async function generateDeviceId(): Promise<string> {
 
     return `Browser ${browser} ${version} in ${platform}`;
   } catch (error) {
-    console.error('Lỗi khi tạo fingerprint:', error)
-    return ''
+    return 'Hacker device'
   }
 }

@@ -109,7 +109,7 @@
 import { onMounted, reactive, ref } from 'vue'
 
 import { useAuthStore } from '@/stores/auth/LoginStore'
-import { genderDeviceId, generateDeviceId } from '@/utils/fingerprint'
+import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
 import { isEmail, loginByEmailSchema, loginByUserNameSchema } from '@/types/auth/AuthType'
 
 import { useNotificationStore } from '@/stores/notificationStore'
@@ -130,8 +130,8 @@ const isPassword = ref(true)
 
 onMounted(async () => {
   try {
-    form.deviceInfo = await generateDeviceId()
-    form.deviceId = await genderDeviceId()
+    form.deviceInfo = await generateDeviceInfo()
+    form.deviceId = await generateDeviceId()
   } catch (err) {
     console.error('Lỗi khi lấy deviceId:', err)
   }
@@ -175,30 +175,35 @@ async function onSubmit() {
     }
   }
 
+  loginStore.resetLoginState()
+
   const { schema, payload, type } = getSchemaAndPayLoad(form)
   errors.value = validationForms(schema, payload)
+
   const { success, error } = schema.safeParse(payload)
   if (!success) {
     errors.value = extractErrors(error)
-  } else {
-    errors.value = {}
-  }
-  if (type === 'email' && errors.value.email) errors.value.usernameOrEmail = errors.value.email
-  if (type === 'username' && errors.value.username) {
-    errors.value.usernameOrEmail = errors.value.username
-  }
-
-  if (Object.keys(errors.value).length > 0) {
+    if (type === 'email' && errors.value.email) {
+      errors.value.usernameOrEmail = errors.value.email
+    }
+    if (type === 'username' && errors.value.username) {
+      errors.value.usernameOrEmail = errors.value.username
+    }
     return
   }
 
-  type === 'email' ? await loginStore.loginEmail(payload) : await loginStore.loginUserName(payload)
+  errors.value = {}
+
+  await (type === 'email'
+    ? loginStore.loginEmail(payload)
+    : loginStore.loginUserName(payload))
 
   if (!loginStore.loginError) {
-    notificationStore.showSuccess(loginStore.loginMessage || 'Dang nhap thanh cong')
+    notificationStore.showSuccess(loginStore.loginMessage || 'Đăng nhập thành công')
   } else {
-    notificationStore.showError(loginStore.loginError || 'Dang nhap khong thanh cong')
+    notificationStore.showError(loginStore.loginError || 'Đăng nhập không thành công')
   }
+
   setTimeout(notificationStore.hide, 5000)
 }
 </script>
