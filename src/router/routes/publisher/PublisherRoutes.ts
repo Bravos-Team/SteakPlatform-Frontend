@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
 import publisher from '@/router/middlewares/publisher'
+
 const publisherRoutes: RouteRecordRaw = {
   path: '/publisher',
   name: 'Publisher',
@@ -12,6 +13,11 @@ const publisherRoutes: RouteRecordRaw = {
       path: 'register',
       name: 'PublisherAuthRegister',
       component: () => import('@/views/publisher/auth/registry/RegistrationPage.vue'),
+    },
+    {
+      path: 'login',
+      name: 'PublisherAuthLogin',
+      component: () => import('@/views/publisher/auth/login/LoginPage.vue'),
     },
   ],
 }

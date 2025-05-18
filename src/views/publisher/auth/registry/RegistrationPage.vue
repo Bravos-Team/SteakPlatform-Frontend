@@ -1,16 +1,16 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
     <img
-      src="../../../../assets/images/auth/pexels-andrew-3178786.jpg"
+      src="../../../../assets/images/auth/desert-doom-sand.webp"
       class="relative shrink-0"
       alt=""
     />
-    <div class="absolute inset-0 bg-black/60 shrink-0"></div>
+    <div class="absolute inset-0 bg-black/65 shrink-0"></div>
   </div>
 
   <div class="flex justify-center items-center h-screen">
     <div
-      class="backdrop-blur-[4px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-3 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
+      class="backdrop-blur-[4px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-5 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
     >
       <div class="flex flex-col justify-center items-center gap-y-2 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
@@ -94,16 +94,18 @@
       </div>
       <div class="flex justify-center">
         <button
-          class="rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] flex items-center bg-[#ffffff26] transition-all"
+          class="w-4/12 rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] flex items-center bg-[#ffffff26] transition-all"
         >
-          create account
+          Create Account
         </button>
       </div>
 
       <div class="flex justify-center">
-        <router-link to="#" class="text-blue-400/80 hover:text-blue-400 transition-all duration-400"
-          >Already have an account?</router-link
-        >
+        <router-link
+          to="login"
+          class="text-blue-400/80 hover:text-blue-400 transition-all duration-400 text-center text-[14px] underline"
+          >Already have an account?
+        </router-link>
       </div>
     </div>
   </div>
