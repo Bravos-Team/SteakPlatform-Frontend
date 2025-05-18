@@ -30,9 +30,11 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.path.startsWith('/publisher')) {
-    if (to.name !== 'PublisherAuthRegister') {
-      return next({ name: 'PublisherAuthRegister' })
-    } else {
+    if (to.name !== 'PublisherAuthLogin' && to.name !== 'PublisherAuthRegister') {
+      return next({ name: 'PublisherAuthLogin' })
+    }
+
+    else {
       return next()
     }
   }
