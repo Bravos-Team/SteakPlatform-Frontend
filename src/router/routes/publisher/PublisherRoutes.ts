@@ -7,7 +7,13 @@ const publisherRoutes: RouteRecordRaw = {
   meta: {
     middleware: [publisher],
   },
-  children: [],
+  children: [
+    {
+      path: 'register',
+      name: 'PublisherAuthRegister',
+      component: () => import('@/views/publisher/auth/registry/RegistrationPage.vue'),
+    },
+  ],
 }
 
 export default publisherRoutes

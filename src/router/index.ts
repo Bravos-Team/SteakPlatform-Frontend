@@ -29,6 +29,14 @@ router.beforeEach((to, from, next) => {
     return next()
   }
 
+  if (to.path.startsWith('/publisher')) {
+    if (to.name !== 'PublisherAuthRegister') {
+      return next({ name: 'PublisherAuthRegister' })
+    } else {
+      return next()
+    }
+  }
+
   console.log('start authentication...')
   console.log('middleware type: ' + to.meta.middleware)
   // const middleware: any[] = to.meta.middleware
