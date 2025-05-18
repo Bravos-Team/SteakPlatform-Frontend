@@ -3,20 +3,20 @@ import { RouteRecordRaw } from 'vue-router'
 const authRoutes: RouteRecordRaw = {
   path: '/auth',
   name: 'Auth',
-  component: () => import('@/layouts/auth/AuthLayout.vue'),
+  component: () => import('@/layouts/store/auth/AuthLayout.vue'),
   children: [
     {
-      path: 'register',
+      path: '/register',
       name: 'Register',
-      component: () => import('@/views/auth/registration/RegistrationPage.vue'),
+      component: () => import('@/views/store/auth/registration/RegistrationPage.vue'),
       meta: {
         title: 'Đăng ký tài khoản',
       },
     },
     {
-      path: 'login',
+      path: '/login',
       name: 'Login',
-      component: () => import('@/views/auth/LoginPage.vue'),
+      component: () => import('@/views/store/auth/login/LoginPage.vue'),
       meta: {
         title: 'Đăng nhập',
       },
@@ -24,7 +24,7 @@ const authRoutes: RouteRecordRaw = {
     {
       path: 'verify-email',
       name: 'VerifyEmail',
-      component: () => import('@/views/auth/registration/EmailAuthenticationRequirement.vue'),
+      component: () => import('@/views/store/auth/registration/EmailAuthenticationRequirement.vue'),
       meta: {
         title: 'Xác thực email',
       },
@@ -32,12 +32,12 @@ const authRoutes: RouteRecordRaw = {
     {
       path: '/register-success',
       name: 'RegisterSuccess',
-      component: () => import('@/views/auth/registration/SuccessResponsePage.vue'),
+      component: () => import('@/views/store/auth/registration/SuccessResponsePage.vue'),
     },
     {
       path: '/register-failed',
       name: 'RegisterError',
-      component: () => import('@/views/auth/registration/ErrorResponsePage.vue'),
+      component: () => import('@/views/store/auth/registration/ErrorResponsePage.vue'),
     },
   ],
 }

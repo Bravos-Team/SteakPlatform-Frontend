@@ -12,10 +12,10 @@
         v-if="game.achievements != null"
         class="flex w-full flex-row items-center mx-[0px] me-[20px] ms-[0px] gap-x-[30px]"
       >
-        <router-link class="pt-0 pr-0 pb-2 pl-0 border-b-3 border-[#00a6ff]" :class="''"
+        <router-link to="#" class="pt-0 pr-0 pb-2 pl-0 border-b-3 border-[#00a6ff]" :class="''"
           >Overview</router-link
         >
-        <router-link class="pt-0 pr-0 pb-2 pl-0 text-[#fff]/50 hover:text-white" :class="''"
+        <router-link to="#" class="pt-0 pr-0 pb-2 pl-0 text-[#fff]/50 hover:text-white" :class="''"
           >Achievements</router-link
         >
       </div>
@@ -225,7 +225,7 @@
                     Digital Sun Games (2025) and Hooded Horse Inc.™ (2025). All Rights
                     Reserved.</span
                   >
-                  <router-link to="#" class="text-white flex text-[16px] hover:underline"
+                  <router-link to="/" class="text-white flex text-[16px] hover:underline"
                     >Privacy Policy
                     <img
                       class="w-[18px]"

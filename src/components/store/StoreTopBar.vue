@@ -64,21 +64,30 @@
                       />
                       <button class="">Fortnite</button>
                     </div>
+
                     <!-- END PLAY -->
                   </div>
                 </div>
 
                 <div
-                  class="m-[0px 0px opacity-0 group-hover/logo:opacity-100 duration-300 ease-in-out transition-all 10px] p-[32px] w-[345px] h-[505px]"
+                  class="m-[0px 0px 10px] opacity-0 group-hover/logo:opacity-100 duration-300 ease-in-out transition-all px-[60px] py-[32px] w-[345px] h-[505px]"
                 >
                   <p class="font-bold text-2xl pb-3">Create</p>
                   <!-- PLAY OPTION -->
                   <div
-                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start pl-5 w-[228px] h-[40px]"
+                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start w-[248px] h-[40px]"
                   >
                     <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
                     <button class="">Fortnite</button>
                   </div>
+
+                  <router-link
+                    to="/publisher"
+                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start w-[248px] h-[40px]"
+                  >
+                    <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
+                    <button class="">Publish on Steak Game Store</button>
+                  </router-link>
                   <!-- END PLAY -->
                 </div>
               </div>
@@ -143,7 +152,7 @@
             <div
               class="loginOption hidden w-full lg:block lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full"
             >
-              <router-link to="/auth/login" class="flex justify-center items-center mx-auto"
+              <router-link to="/login" class="flex justify-center items-center mx-auto"
                 >Login</router-link
               >
             </div>
@@ -155,6 +164,4 @@
   </header>
 </template>
 
-
-<script setup>
-</script>
+<script setup></script>

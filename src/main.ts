@@ -3,7 +3,6 @@ import persist from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-
 import { RouteLocationNormalized } from 'vue-router'
 import './assets/config/tailwind.css'
 
