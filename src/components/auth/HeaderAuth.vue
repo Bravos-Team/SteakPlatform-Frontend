@@ -81,7 +81,7 @@
               <template v-for="(language, index) in languages" :key="index">
                 <li
                   class="px-4 py-2 hover:bg-gray-100 text-black dark:text-white hover:text-black cursor-pointer"
-                  @click="handleSelectedLanguage(language.code), (showDropdown = !showDropdown)"
+                  @click="(handleSelectedLanguage(language.code), (showDropdown = !showDropdown))"
                 >
                   {{ language.name }}
                 </li>

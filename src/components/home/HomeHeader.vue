@@ -55,6 +55,13 @@
                 <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
                 <button class="">Fortnite</button>
               </div>
+
+              <div
+                class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start pl-5 w-[228px] h-[40px]"
+              >
+                <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
+                <button class="">Publish on Steak Game Store</button>
+              </div>
               <!-- END PLAY -->
             </div>
           </div>
@@ -107,7 +114,7 @@
         <div
           class="loginOption w-full flex group backdrop-blur-md duration-300 transition-all hover:bg-gray-800/80 h-full"
         >
-          <router-link to="auth/login" class="flex justify-center items-center mx-auto"
+          <router-link to="/login" class="flex justify-center items-center mx-auto"
             >Login</router-link
           >
         </div>

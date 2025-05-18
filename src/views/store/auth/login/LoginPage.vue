@@ -99,8 +99,10 @@
     </form>
 
     <footer class="mt-10 mb-10 flex flex-col items-center space-y-3">
-      <a href="/register" class="text-[#0af] italic underline">Tạo tài khoản</a>
-      <a href="#" class="text-[#0af] italic underline">Chính sách Bảo mật</a>
+      <router-link to="/register" class="text-[#0af] italic underline">Tạo tài khoản</router-link>
+      <a :href="decodePrivateUrl(privateUrl)" class="text-[#0af] italic underline"
+        >Chính sách Bảo mật</a
+      >
     </footer>
   </div>
 </template>
@@ -113,7 +115,6 @@ import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
 import { isEmail, loginByEmailSchema, loginByUserNameSchema } from '@/types/auth/AuthType'
 
 import { useNotificationStore } from '@/stores/notificationStore'
-import { validationForm } from '../../../validators/auth/parseZodError'
 
 const loginStore = useAuthStore()
 import { ZodSchema } from 'zod'
@@ -139,13 +140,13 @@ onMounted(async () => {
 
 const errors = ref<Record<string, string>>({})
 
-function validationForms(schema: ZodSchema, data: unknown) {
-  const { valid, errors: validationErrors } = validationForm(schema, data)
-  if (!valid) {
-    return typeof validationErrors === 'object' ? validationErrors : {}
-  }
-  return {}
-}
+// function validationForms(schema: ZodSchema, data: unknown) {
+//   const { valid, errors: validationErrors } = validationForm(schema, data)
+//   if (!valid) {
+//     return typeof validationErrors === 'object' ? validationErrors : {}
+//   }
+//   return {}
+// }
 
 async function onSubmit() {
   function getSchemaAndPayLoad(formData: typeof form) {
@@ -178,7 +179,7 @@ async function onSubmit() {
   loginStore.resetLoginState()
 
   const { schema, payload, type } = getSchemaAndPayLoad(form)
-  errors.value = validationForms(schema, payload)
+  // errors.value = validationForms(schema, payload)
 
   const { success, error } = schema.safeParse(payload)
   if (!success) {
@@ -194,9 +195,7 @@ async function onSubmit() {
 
   errors.value = {}
 
-  await (type === 'email'
-    ? loginStore.loginEmail(payload)
-    : loginStore.loginUserName(payload))
+  await (type === 'email' ? loginStore.loginEmail(payload) : loginStore.loginUserName(payload))
 
   if (!loginStore.loginError) {
     notificationStore.showSuccess(loginStore.loginMessage || 'Đăng nhập thành công')
@@ -205,5 +204,10 @@ async function onSubmit() {
   }
 
   setTimeout(notificationStore.hide, 5000)
+}
+
+const privateUrl = 'aHR0cHM6Ly95b3V0dS5iZS94dkZaam81UGdHMD9zaT1JV3lFNTZlX3hYN3k0dXJu'
+const decodePrivateUrl = (url: string): string => {
+  return decodeURIComponent(atob(url))
 }
 </script>

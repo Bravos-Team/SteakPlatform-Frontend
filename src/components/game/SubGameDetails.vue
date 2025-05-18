@@ -33,7 +33,7 @@
 
     <div class="flex flex-col gap-y-[10px]">
       <router-link
-        to="#"
+        to="/payment"
         class="py-[12px] px-[20px] align-middle bg-[#26bbff] hover:bg-[#61cdff] text-black rounded-[10px] flex justify-center items-center"
         >Buy Now</router-link
       >
