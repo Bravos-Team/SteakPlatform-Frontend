@@ -15,8 +15,8 @@
         background: {
           color: {
             // value: '#0d0d0de9',
-            // value: '#0d0d0dec',
-            value: '#050505ec',
+            value: '#0d0d0dec',
+            // value: '#050505ec',
           },
           mask: {
             enable: true,

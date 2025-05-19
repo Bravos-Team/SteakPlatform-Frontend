@@ -175,6 +175,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { setCookie } from '@/utils/cookies/cookie-utils'
 import { RegisterRequest, RegisterRequestSchema } from '@/types/auth/AuthType'
 import { extractErrors } from '@/utils/zod/HanldeZodErrors'
 import { registrationStore } from '@/stores/auth/RegistrationStore'
@@ -200,15 +201,7 @@ const handleSubmitRegistry = async () => {
     accountErrors.value = extractErrors(error)
   } else {
     await registerStore.register(account.value)
-
-    accountErrors.value = {
-      username: '',
-      email: '',
-      password: '',
-      verifyPassword: '',
-      agreeNotification: '',
-      agreeTermsOfServices: '',
-    }
+    accountErrors.value = {}
   }
 }
 

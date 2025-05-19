@@ -1,10 +1,8 @@
 const publisher = ({ next, authPublisherStore }: any) => {
-  if (authPublisherStore.isLogin) {
-    return next({
-      name: 'PublisherHome',
-    })
-  }
-  return next()
+  console.log('NEXT:', next)
+  return next({
+    name: 'PublisherAuthLogin',
+  })
 }
 
 export default publisher

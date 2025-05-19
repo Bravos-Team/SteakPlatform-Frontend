@@ -4,8 +4,9 @@ import authRoutes from '@/router/routes/store/AuthRoutes'
 import homeRoutes from '@/router/routes/store/HomeRoutes'
 import storeRoutes from '@/router/routes/store/StoreRoutes'
 import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
+// import middlewarePipeline from '@/router/middlewares/middlewarePipeLine'
 
-const routes: RouteRecordRaw[] = [homeRoutes, authRoutes, storeRoutes, publisherRoutes]
+const routes: RouteRecordRaw[] = [homeRoutes, authRoutes, storeRoutes, ...publisherRoutes]
 
 routes.push({
   path: '/:pathMatch(.*)*',
@@ -23,28 +24,41 @@ const router = createRouter({
   },
 })
 
-router.beforeEach((to, from, next) => {
+const resolveMiddleware = (to: any) => {
+  const matched = to.matched.slice().reverse()
+  for (const record of matched) {
+    if (record.meta && record.meta.middleware) {
+      return record.meta.middleware
+    }
+  }
+  return null
+}
+
+router.beforeEach((to: any, from, next) => {
   if (!to.meta.middleware) {
     console.log('this page is not requires authentication')
     return next()
   }
 
-  if (to.path.startsWith('/publisher')) {
-    if (to.name !== 'PublisherAuthLogin' && to.name !== 'PublisherAuthRegister') {
-      return next({ name: 'PublisherAuthLogin' })
-    }
-
-    else {
-      return next()
-    }
+  if (to.name === 'PublisherHome') {
+    return next({
+      name: 'PublisherAuthLogin',
+    })
   }
 
-  console.log('start authentication...')
-  console.log('middleware type: ' + to.meta.middleware)
+  return next()
   // const middleware: any[] = to.meta.middleware
+
   // const context = {
-  //   to, from, next,
+  //   to,
+  //   from,
+  //   next,
   // }
+
+  // return middleware[0]({
+  //   ...context,
+  //   next: middlewarePipeline(context, middleware, 1),
+  // })
 })
 
 export default router
