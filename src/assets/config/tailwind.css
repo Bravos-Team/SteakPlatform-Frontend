@@ -18,3 +18,20 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.input-base {
+  @apply  border-gray-500/50 bg-white/10 placeholder-white/80 outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2;
+}
+
+.input-base:focus {
+  @apply focus:ring-1  focus:ring-white;
+}
+.select2-dropdown {
+  @apply rounded-b-lg shadow-md;
+}
+.select2-search {
+  @apply rounded border border-gray-300;
+}
+.select2-results__group {
+  @apply text-lg font-bold text-gray-900;
+}

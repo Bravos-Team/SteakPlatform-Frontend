@@ -1,125 +1,258 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
-    <img
-      src="../../../../assets/images/auth/pexels-andrew-3178786.jpg"
-      class="relative shrink-0"
-      alt=""
-    />
-    <div class="absolute inset-0 bg-black/60 shrink-0"></div>
+    <particles-base />
+    <div class="bg-[#050505ec]"></div>
   </div>
 
   <div class="flex justify-center items-center h-screen">
     <div
-      class="backdrop-blur-[4px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-3 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
+      class="backdrop-blur-[8px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[100vh] p-3 mx-auto rounded-md flex flex-col gap-[10px] border-1 border-gray-500/50"
     >
       <div class="flex flex-col justify-center items-center gap-y-2 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
         <span class="font-bold text-3xl">Create An Company Account</span>
       </div>
       <div class="flex justify-between">
-        <form action="" class="flex border-r-1 border-white/50 p-5 w-6/12">
-          <div class="flex flex-col gap-y-[20px] w-full">
-            <span class="font-bold text-center text-white">Master account</span>
-            <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Email</span>
-              <input
-                v-model="publisher.email"
-                type="text"
-                autocomplete="off"
-                class="bg-white/10 placeholder-white/80 outline-0 focus:ring-1 focus:ring-white backdrop-blur-xl border-1 border-gray-500/50 w-full rounded-md p-2"
-                placeholder="Enter your email"
-              />
-            </div>
-
-            <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Username</span>
-              <input
-                type="text"
-                v-model="publisher.username"
-                autocomplete="off"
-                class="bg-white/10 placeholder-white/80 outline-0 focus:ring-1 focus:ring-white backdrop-blur-xl border-1 border-gray-500/50 w-full rounded-md p-2"
-                placeholder="Enter your Username"
-              />
-            </div>
-
-            <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Password</span>
-              <input
-                type="text"
-                v-model="publisher.password"
-                autocomplete="off"
-                class="bg-white/10 placeholder-white/80 outline-0 focus:ring-1 focus:ring-white backdrop-blur-xl border-1 border-gray-500/50 w-full rounded-md p-2"
-                placeholder="Enter your Password"
-              />
-            </div>
-
-            <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Confirm Password</span>
-              <input
-                type="text"
-                v-model="publisher.verifyPassword"
-                autocomplete="off"
-                class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                placeholder="Enter Password Again"
-              />
-            </div>
-          </div>
-        </form>
-        <form action="" class="flex border-0 p-5 w-6/12">
-          <div class="flex flex-col gap-y-[20px] w-full">
-            <span class="font-bold text-center text-white">Company Informations</span>
-            <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Company Email</span>
-              <input
-                type="text"
-                v-model="publisher.companyInformation.email"
-                autocomplete="off"
-                class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                placeholder="Enter Company Informations"
-              />
-            </div>
-
-            <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Company Name</span>
-              <input
-                type="text"
-                v-model="publisher.companyInformation.name"
-                autocomplete="off"
-                class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                placeholder="Enter Company Name"
-              />
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="flex justify-center">
-        <button
-          class="rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] flex items-center bg-[#ffffff26] transition-all"
+        <form
+          @submit.prevent="handlePublisherRegister"
+          action=""
+          class="flex flex-col p-5 w-full gap-5"
         >
-          create account
-        </button>
+          <div class="flex justify-between w-full gap-x-5">
+            <div class="flex flex-col gap-y-[20px] w-full">
+              <span class="font-bold text-center text-white">Master account</span>
+              <div class="flex text-white gap-2 flex-col w-full">
+                <span class="font-black">Email</span>
+                <input
+                  v-model="publisher.masterEmail"
+                  type="text"
+                  name="email"
+                  autocomplete="off"
+                  class="input-base"
+                  placeholder="Enter your email"
+                />
+                <label v-if="publisherErrors.masterEmail" for="email" class="text-red-500">
+                  {{ publisherErrors.masterEmail }}
+                </label>
+              </div>
+
+              <div class="flex text-white gap-2 flex-col w-full">
+                <span class="font-black">Username</span>
+                <input
+                  type="text"
+                  v-model="publisher.masterUsername"
+                  autocomplete="off"
+                  name="masterUsername"
+                  class="input-base"
+                  placeholder="Enter your Username"
+                />
+
+                <label
+                  v-if="publisherErrors.masterUsername"
+                  for="masterUsername"
+                  class="text-red-500"
+                >
+                  {{ publisherErrors.masterUsername }}
+                </label>
+              </div>
+
+              <div class="flex text-white gap-2 flex-col w-full">
+                <span class="font-black">Password</span>
+                <div class="relative">
+                  <input
+                    :type="isPassword ? 'Password' : 'text'"
+                    name="masterPassword"
+                    v-model="publisher.masterPassword"
+                    autocomplete="off"
+                    class="input-base"
+                    placeholder="Enter your Password"
+                  />
+                  <eye
+                    @click="togglePasswordVisibility"
+                    v-if="!isPassword"
+                    class="absolute right-2 top-2 cursor-pointer"
+                  />
+                  <eye-closed
+                    @click="togglePasswordVisibility"
+                    v-if="isPassword"
+                    class="absolute right-2 top-2.5 cursor-pointer"
+                  />
+                </div>
+                <label
+                  v-if="publisherErrors.masterPassword"
+                  for="masterPassword"
+                  class="text-red-500"
+                >
+                  {{ publisherErrors.masterPassword }}
+                </label>
+              </div>
+
+              <div class="flex text-white gap-2 flex-col w-full">
+                <span class="font-black">Confirm Password</span>
+                <input
+                  type="password"
+                  v-model="publisher.verifyMasterPassword"
+                  name="verifyMasterPassword"
+                  autocomplete="off"
+                  class="input-base"
+                  placeholder="Enter Password Again"
+                />
+
+                <label
+                  v-if="publisherErrors.verifyMasterPassword"
+                  for="verifyMasterPassword"
+                  class="text-red-500"
+                >
+                  {{ publisherErrors.verifyMasterPassword }}
+                </label>
+              </div>
+            </div>
+
+            <div class="border-r-1 border-white/50"></div>
+
+            <div class="flex flex-col gap-y-[20px] w-full">
+              <span class="font-bold text-center text-white">Company Informations</span>
+              <div class="flex text-white gap-2 flex-col w-full">
+                <span class="font-black">Company Email</span>
+                <input
+                  type="text"
+                  v-model="publisher.businessEmail"
+                  name="businessEmail"
+                  autocomplete="off"
+                  class="input-base"
+                  placeholder="Enter Company Informations"
+                />
+
+                <label
+                  v-if="publisherErrors.businessEmail"
+                  for="businessEmail"
+                  class="text-red-500"
+                >
+                  {{ publisherErrors.businessEmail }}
+                </label>
+              </div>
+
+              <div class="flex text-white gap-2 flex-col w-full">
+                <span class="font-black">Company Name</span>
+                <input
+                  type="text"
+                  name="name"
+                  v-model="publisher.name"
+                  autocomplete="off"
+                  class="input-base"
+                  placeholder="Enter Company Name"
+                />
+
+                <label
+                  v-if="publisherErrors.name"
+                  for="name"
+                  class="text-red-500 text-ellipsis"
+                  :title="publisherErrors.name"
+                >
+                  {{ publisherErrors.name }}
+                </label>
+              </div>
+
+              <div class="flex text-white gap-2 flex-col w-full">
+                <span class="font-black">Company Phone Number</span>
+                <input
+                  type="text"
+                  name="name"
+                  v-model="publisher.phone"
+                  autocomplete="off"
+                  class="input-base"
+                  placeholder="Enter Company Phone Number"
+                />
+
+                <label
+                  v-if="publisherErrors.phone"
+                  for="name"
+                  class="text-red-500 text-ellipsis"
+                  :title="publisherErrors.phone"
+                >
+                  {{ publisherErrors.phone }}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col w-6/12 mx-auto items-center">
+            <button
+              class="rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] flex items-center bg-[#ffffff26] transition-all"
+            >
+              create account
+            </button>
+
+            <!-- <label v-if="errorPublisherRegister" class="text-red-500">{{
+              errorPublisherRegister
+            }}</label> -->
+            <label v-if="registerMessage" :class="statusSubmitMessage">{{ registerMessage }}</label>
+          </div>
+        </form>
       </div>
 
-      <div class="flex justify-center">
+      <div class="flex flex-col items-center">
         <router-link to="#" class="text-blue-400/80 hover:text-blue-400 transition-all duration-400"
           >Already have an account?</router-link
+        >
+
+        <router-link
+          :to="{ name: 'Home' }"
+          class="text-blue-400/80 hover:text-blue-400 transition-all duration-400"
+          >Continue exploring Steak</router-link
         >
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
+import { Eye, EyeClosed } from 'lucide-vue-next'
+import { usePublisherRegister } from '@/hooks/publisher/usePublisher'
+import { extractErrors } from '@/utils/zod/HanldeZodErrors'
+import { PublisherRegisterRequestSchema } from '@/types/publisher/AuthType'
+import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'
+
+const {
+  mutate: mutatePublisherRegister,
+  isPending: isPendingPublisherRegister,
+  error: errorPublisherRegister,
+} = usePublisherRegister()
 
 const publisher = ref({
-  username: '',
-  email: '',
-  password: '',
-  verifyPassword: '',
-  companyInformation: {
-    email: '',
-    name: '',
-  },
+  name: '',
+  businessEmail: '',
+  masterPassword: '',
+  phone: '',
+  masterUsername: '',
+  masterEmail: '',
+  verifyMasterPassword: '',
 })
+
+const publisherErrors = ref<Record<string, string>>({})
+const registerMessage = ref('')
+const statusSubmitMessage = ref('')
+const handlePublisherRegister = () => {
+  const { success, error } = PublisherRegisterRequestSchema.safeParse(publisher.value)
+
+  if (!success) publisherErrors.value = extractErrors(error)
+  else {
+    mutatePublisherRegister(publisher.value, {
+      onSuccess: () => {
+        statusSubmitMessage.value = 'text-green-500'
+        registerMessage.value = 'register successfully'
+      },
+      onError: () => {
+        registerMessage.value = 'register failed'
+        statusSubmitMessage.value = 'text-red-500'
+      },
+    })
+  }
+}
 </script>
+
+<!-- <style scoped lang="postcss">
+
+</style> -->

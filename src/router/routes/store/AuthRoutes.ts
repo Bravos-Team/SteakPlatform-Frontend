@@ -22,7 +22,7 @@ const authRoutes: RouteRecordRaw = {
       },
     },
     {
-      path: 'verify-email',
+      path: '/verify-email',
       name: 'VerifyEmail',
       component: () => import('@/views/store/auth/registration/EmailAuthenticationRequirement.vue'),
       meta: {

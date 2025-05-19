@@ -13,6 +13,11 @@ const publisherRoutes: RouteRecordRaw = {
       name: 'PublisherAuthRegister',
       component: () => import('@/views/publisher/auth/registry/RegistrationPage.vue'),
     },
+    {
+      path: 'login',
+      name: 'PublisherAuthLogin',
+      component: () => import('@/views/publisher/auth/login/LoginPage.vue'),
+    },
   ],
 }
 

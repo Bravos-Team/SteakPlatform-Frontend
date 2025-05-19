@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-
 export const isUsername = (value: string) => {
   return /^[a-zA-Z0-9_]{3,12}$/.test(value)
 }
@@ -68,10 +67,6 @@ export type RegisterRequest = z.infer<typeof RegisterRequestSchema>
 const RegisterResponseSchema = z.object({
   message: z.coerce.string({ message: 'Cannot receive response message from server' }),
 })
-
-
-
-
 
 export const baseLoginShema = z.object({
   password: z
