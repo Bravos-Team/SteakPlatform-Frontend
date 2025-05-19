@@ -1,7 +1,9 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
+
     <particles-base />
     <div class="bg-[#050505ec]"></div>
+
   </div>
 
   <div class="flex justify-center items-center h-screen">
@@ -190,7 +192,6 @@
           </div>
         </form>
       </div>
-
       <div class="flex flex-col items-center">
         <router-link to="#" class="text-blue-400/80 hover:text-blue-400 transition-all duration-400"
           >Already have an account?</router-link
