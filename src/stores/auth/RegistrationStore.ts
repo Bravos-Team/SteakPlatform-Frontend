@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ref } from 'vue'
 import { z } from 'zod'
 import { useRouter } from 'vue-router'
+import { setCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 
 const registerSchema = z.function().args(RegisterRequestSchema).returns(z.void())
 
@@ -34,7 +35,8 @@ export const registrationStore = defineStore(
           registryError.value = 'Đăng ký không thành công'
         }
         registryMessage.value = 'Đăng ký thành công'
-        registryResult.value = response.data
+        removeCookie('emailUserRegister')
+        setCookie('emailUserRegister', registerRequest.email)
 
         router.push('verify-email')
       } catch (error) {

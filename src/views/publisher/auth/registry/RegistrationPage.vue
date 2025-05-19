@@ -1,14 +1,12 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
-
     <particles-base />
-    <div class="bg-[#050505ec]"></div>
-
+    <!-- <div class="bg-[#050505ec]"></div> -->
   </div>
 
   <div class="flex justify-center items-center h-screen">
     <div
-      class="backdrop-blur-[8px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[100vh] p-3 mx-auto rounded-md flex flex-col gap-[10px] border-1 border-gray-500/50"
+      class="backdrop-blur-[10px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[100vh] p-3 mx-auto rounded-md flex flex-col gap-[10px] border-1 border-gray-500/50"
     >
       <div class="flex flex-col justify-center items-center gap-y-2 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
@@ -182,7 +180,8 @@
             <button
               class="rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] flex items-center bg-[#ffffff26] transition-all"
             >
-              create account
+              <span v-if="!isPendingPublisherRegister"> create account </span>
+              <loader-circle v-if="isPendingPublisherRegister" class="animate-spin ml-2" />
             </button>
 
             <!-- <label v-if="errorPublisherRegister" class="text-red-500">{{
@@ -208,19 +207,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, toRaw } from 'vue'
+import { setCookie } from '@/utils/cookies/cookie-utils'
 import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
-import { Eye, EyeClosed } from 'lucide-vue-next'
+import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next'
 import { usePublisherRegister } from '@/hooks/publisher/usePublisher'
 import { extractErrors } from '@/utils/zod/HanldeZodErrors'
 import { PublisherRegisterRequestSchema } from '@/types/publisher/AuthType'
 import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'
+import { useRouter } from 'vue-router'
 
-const {
-  mutate: mutatePublisherRegister,
-  isPending: isPendingPublisherRegister,
-  error: errorPublisherRegister,
-} = usePublisherRegister()
+const { mutateAsync: mutateAsyncPublisherRegister, isPending: isPendingPublisherRegister } =
+  usePublisherRegister()
 
 const publisher = ref({
   name: '',
@@ -232,28 +230,26 @@ const publisher = ref({
   verifyMasterPassword: '',
 })
 
+const router = useRouter()
 const publisherErrors = ref<Record<string, string>>({})
 const registerMessage = ref('')
 const statusSubmitMessage = ref('')
-const handlePublisherRegister = () => {
+const handlePublisherRegister = async () => {
   const { success, error } = PublisherRegisterRequestSchema.safeParse(publisher.value)
 
   if (!success) publisherErrors.value = extractErrors(error)
   else {
-    mutatePublisherRegister(publisher.value, {
-      onSuccess: () => {
-        statusSubmitMessage.value = 'text-green-500'
-        registerMessage.value = 'register successfully'
-      },
-      onError: () => {
-        registerMessage.value = 'register failed'
-        statusSubmitMessage.value = 'text-red-500'
-      },
-    })
+    publisherErrors.value = {}
+    try {
+      const response = await mutateAsyncPublisherRegister(publisher.value)
+      if (response.status === 200) {
+        setCookie('masterEmailRegister', publisher.value.masterEmail)
+        router.push({ name: 'VerifyEmail' })
+      }
+    } catch (err: any) {
+      statusSubmitMessage.value = 'text-red-500'
+      registerMessage.value = err?.response?.data?.detail ?? 'Something went wrong'
+    }
   }
 }
 </script>
-
-<!-- <style scoped lang="postcss">
-
-</style> -->

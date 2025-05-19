@@ -28,16 +28,6 @@ const publisherRoutes: RouteRecordRaw[] = [
     name: 'PublisherAuthVerifyEmail',
     component: () => import('@/views/publisher/auth/registry/EmailAuthenticationRequirement.vue'),
   },
-  {
-    path: '/publisher/register-success',
-    name: 'PublisherAuthRegisterSuccess',
-    component: () => import('@/views/publisher/auth/registry/SuccessResponsePage.vue'),
-  },
-  {
-    path: '/publisher/register-failed',
-    name: 'PublisherAuthRegisterFailed',
-    component: () => import('@/views/publisher/auth/registry/ErrorResponsePage.vue'),
-  },
 ]
 
 export default publisherRoutes

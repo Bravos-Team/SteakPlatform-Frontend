@@ -1,16 +1,21 @@
 <template>
-  <div class="@container">
-    <div class="flex text-black dark:text-white flex-col justify-center items-center px-4">
+  <div class="@container relative">
+    <div class="absolute top-0 h-screen">
+      <particles-base />
+    </div>
+    <div
+      class="flex text-black dark:text-white flex-col justify-center items-center px-4 backdrop-blur-sm h-screen"
+    >
       <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="dark:text-white xl:text-2xl font-extrabold mt-3 tracking-wide mb-10">
-        Vui lòng xác thực Email
+        Vui lòng xác thực Master Email
       </p>
 
       <div class="mb-70">
         <p class="text-sm text-center mb-10 text-gray-600 dark:text-gray-300">
-          Để hoàn thành xác thực tài khoản, bạn cần xác thực
+          Để hoàn thành xác thực tài khoản của nhà phát triển, bạn cần xác thực
           <b class="font-bold text-gray-800 dark:text-white text-[18px]"
-            >{{ handleShowEmail(getCookie('userEmailRegister')) }}.</b
+            >{{ handleShowEmail(getCookie('masterEmailRegister')) }}.</b
           >
           <br />
           Vui lòng kiểm tra tài khoản email của bạn để hoàn thành việc tạo tài khoản
@@ -26,13 +31,13 @@
         <span class="block">
           <router-link to="#" class="underline text-blue-400">Gửi lại yêu cầu</router-link>
           hoặc
-          <router-link :to="{ name: 'Register' }" class="underline text-blue-400"
+          <router-link :to="{ name: 'PublisherAuthRegister' }" class="underline text-blue-400"
             >đổi email</router-link
           >
         </span>
         <span class="block">
           Đã có tài khoản?
-          <router-link :to="{ name: 'Home' }" class="underline text-blue-400 ms-1"
+          <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-blue-400 ms-1"
             >Đăng nhập</router-link
           >
         </span>
@@ -42,6 +47,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
+import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
 import { getCookie } from '@/utils/cookies/cookie-utils'
 const router = useRouter()
 
