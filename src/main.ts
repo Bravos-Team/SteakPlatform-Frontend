@@ -1,17 +1,19 @@
 import { createPinia } from 'pinia'
 import persist from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 import App from './App.vue'
 import router from './router'
+import Particles from 'vue3-particles'
 import { RouteLocationNormalized } from 'vue-router'
+// import { VueReCaptcha } from 'vue-recaptcha-v3'
 import './assets/config/tailwind.css'
-
 const pinia = createPinia()
 pinia.use(persist)
 
-const app = createApp(App)
+const app = createApp(App).use(Particles)
 
-app.use(router).use(pinia)
+app.use(router).use(pinia).use(VueQueryPlugin)
 
 router.afterEach((to: RouteLocationNormalized) => {
   if (to.meta?.title) {

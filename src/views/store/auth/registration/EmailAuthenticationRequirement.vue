@@ -9,8 +9,9 @@
       <div class="mb-70">
         <p class="text-sm text-center mb-10 text-gray-600 dark:text-gray-300">
           Để hoàn thành xác thực tài khoản, bạn cần xác thực
-          <b class="font-bold text-gray-800 dark:text-white text-[18px]">{{
-            handleShowEmail(registerStore.registryResult) }}.</b>
+          <b class="font-bold text-gray-800 dark:text-white text-[18px]"
+            >{{ handleShowEmail(registerStore.registryResult) }}.</b
+          >
           <br />
           Vui lòng kiểm tra tài khoản email của bạn để hoàn thành việc tạo tài khoản
         </p>
@@ -37,7 +38,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
-import { registrationStore } from '../../../stores/auth/RegistrationStore';
+import { registrationStore } from '@/stores/auth/RegistrationStore'
 
 const registerStore = registrationStore()
 const router = useRouter()
