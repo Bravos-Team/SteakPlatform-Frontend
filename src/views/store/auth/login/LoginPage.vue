@@ -112,13 +112,14 @@ import { onMounted, reactive, ref } from 'vue'
 
 import { useAuthStore } from '@/stores/auth/LoginStore'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
-import { isEmail, loginByEmailSchema, loginByUserNameSchema } from '@/types/auth/AuthType'
+import { loginByEmailSchema, loginByUserNameSchema } from '@/types/auth/AuthType'
 
 import { useNotificationStore } from '@/stores/notificationStore'
 
 const loginStore = useAuthStore()
 import { ZodSchema } from 'zod'
 import { extractErrors } from '@/utils/zod/HanldeZodErrors'
+import { isEmail } from '@/services/common/CurrencyUtils'
 
 const notificationStore = useNotificationStore()
 const form = reactive({

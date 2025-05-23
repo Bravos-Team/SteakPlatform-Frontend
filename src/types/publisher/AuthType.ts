@@ -1,11 +1,6 @@
 import { z } from 'zod'
-
-export const isUsername = (value: string) => {
-  return /^[a-zA-Z0-9_]{3,12}$/.test(value)
-}
-export const isEmail = (value: string) => {
-  return z.string().email().safeParse(value).success
-}
+import { baseLoginShema } from '@/types/auth/AuthType'
+import { isEmail, isUsername } from '@/services/common/CurrencyUtils'
 
 export const PublisherRegisterRequestSchema = z
   .object({
@@ -79,3 +74,34 @@ const PublisherRegisterResponseSchema = z.object({
 })
 
 export type PublisherRegisterResponse = z.infer<typeof PublisherRegisterResponseSchema>
+
+export const BasePublisherLoginShema = z.object({
+  password: z
+    .string()
+    .regex(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\s:])(\S){8,32}$/, {
+      message:
+        'Password must be 8-32 characters long, include at least one uppercase letter,  one number, and one special character (@$!%*?&).',
+    })
+    .nonempty('Password cannot be empty'),
+  deviceId: z.string().nonempty('DeviceId cannot be empty'),
+  deviceInfo: z.string().nonempty('DeviceInfo cannot be empty'),
+})
+export const LoginByUserNameSchema = BasePublisherLoginShema.extend({
+  username: z
+    .string()
+    .min(1, { message: 'Username or email cannot be empty' })
+    .refine((val) => val.length === 0 || isUsername(val), {
+      message: 'Username must be 3-12 characters long',
+    }),
+})
+export const LoginByEmailSchema = BasePublisherLoginShema.extend({
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Username or email cannot be empty')
+    .refine((val) => isEmail(val), { message: 'Please enter a valid email address' }),
+})
+
+export type PublisherLoginRequest =
+  | z.infer<typeof LoginByUserNameSchema>
+  | z.infer<typeof LoginByEmailSchema>
