@@ -8,7 +8,7 @@ export async function generateDeviceId(): Promise<string> {
     const result = await fp.get()
     return result.visitorId
   } catch (error) {
-    console.error('Lỗi khi tạo device ID:', error)
+    console.error('Error generating device ID', error)
     return ''
   }
 }

@@ -1,11 +1,5 @@
 import { z } from 'zod'
-
-export const isUsername = (value: string) => {
-  return /^[a-zA-Z0-9_]{3,12}$/.test(value)
-}
-export const isEmail = (value: string) => {
-  return z.string().email().safeParse(value).success
-}
+import { isEmail, isUsername } from '@/services/common/CurrencyUtils'
 
 export const RegisterRequestSchema = z
   .object({
@@ -97,7 +91,9 @@ export const loginByEmailSchema = baseLoginShema.extend({
     .refine((val) => isEmail(val), { message: 'Username phải là email' }),
 })
 
-type LoginRequest = z.infer<typeof loginByUserNameSchema> | z.infer<typeof loginByEmailSchema>
+export type LoginRequest =
+  | z.infer<typeof loginByUserNameSchema>
+  | z.infer<typeof loginByEmailSchema>
 
 export default LoginRequest
 

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/vue-query'
-import { register } from '@/apis/publisher/auth/authPublisher'
-import { type PublisherRegisterRequest } from '@/types/publisher/AuthType'
+import { loginEmail, loginUserName, register } from '@/apis/publisher/auth/authPublisher'
+import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
 
 export const usePublisherRegister = () => {
   const { isPending, isError, error, isSuccess, mutateAsync, data } = useMutation({
@@ -9,6 +9,38 @@ export const usePublisherRegister = () => {
     },
   })
 
+  return {
+    isPending,
+    isError,
+    error,
+    isSuccess,
+    mutateAsync,
+    data,
+  }
+}
+
+export const usePublisherLoginUserName = () => {
+  const { isPending, isError, error, isSuccess, mutateAsync, data } = useMutation({
+    mutationFn: async (data: PublisherLoginRequest) => {
+      return await loginUserName(data)
+    },
+  })
+  return {
+    isPending,
+    isError,
+    error,
+    isSuccess,
+    mutateAsync,
+    data,
+  }
+}
+
+export const usePublisherLoginEmail = () => {
+  const { isPending, isError, error, isSuccess, mutateAsync, data } = useMutation({
+    mutationFn: async (data: PublisherLoginRequest) => {
+      return await loginEmail(data)
+    },
+  })
   return {
     isPending,
     isError,
