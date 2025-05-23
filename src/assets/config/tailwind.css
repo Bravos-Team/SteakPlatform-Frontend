@@ -10,6 +10,7 @@
 
 @theme {
   --test-config: red;
+  --blue-hello: @apply bg-red-300;
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
