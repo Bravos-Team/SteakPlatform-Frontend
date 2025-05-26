@@ -75,7 +75,7 @@
                   <p class="font-bold text-2xl pb-3">Create</p>
                   <!-- PLAY OPTION -->
                   <div
-                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start w-[248px] h-[40px]"
+                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start px-1 w-[248px] h-[40px]"
                   >
                     <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
                     <button class="">Fortnite</button>
@@ -83,7 +83,7 @@
 
                   <router-link
                     :to="{ name: 'PublisherHome' }"
-                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start w-[248px] h-[40px]"
+                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start px-1 w-[248px] h-[40px]"
                   >
                     <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
                     <button class="">Publish on Steak Game Store</button>

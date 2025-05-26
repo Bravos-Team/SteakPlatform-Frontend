@@ -1,22 +1,33 @@
-import { RouteLocationNormalizedTypedList, RouteRecordRaw } from 'vue-router'
+import { type RouteLocationNormalizedTypedList, type RouteRecordRaw } from 'vue-router'
+
 import publisher from '@/router/middlewares/publisher'
 
 const publisherRoutes: RouteRecordRaw[] = [
   {
-    path: '/publisher/login',
-    name: 'PublisherAuthLogin',
-    component: () => import('@/views/publisher/auth/login/LoginPage.vue'),
+    path: '/publisher',
+    name: 'PublisherHome',
+    component: () => import('@/layouts/publisher/main/PublisherLayout.vue'),
+    redirect: { name: 'PublisherDashboard' },
     children: [
       {
-        path: '/publisher',
-        name: 'PublisherHome',
-        component: () => import('@/layouts/publisher/main/PublisherLayout.vue'),
-        children: [],
+        path: 'dashboard',
+        name: 'PublisherDashboard',
+        component: () => import('@/views/publisher/home/dashboard/PublisherDashboard.vue'),
+      },
+      {
+        path: '/game-management',
+        name: 'PublisherGameManagement',
+        component: () => import('@/views/publisher/home/game/PublisherGameManagement.vue'),
       },
     ],
     meta: {
       middleware: [publisher],
     },
+  },
+  {
+    path: '/publisher/login',
+    name: 'PublisherAuthLogin',
+    component: () => import('@/views/publisher/auth/login/LoginPage.vue'),
   },
   {
     path: '/publisher/register',

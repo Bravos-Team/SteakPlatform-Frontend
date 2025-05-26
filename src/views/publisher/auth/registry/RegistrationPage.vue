@@ -1,25 +1,35 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
-    <particles-base />
-    <!-- <div class="bg-[#050505ec]"></div> -->
+    <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
+    <particles-base class="absolute opacity-80" />
+    <div class="bg-black absolute inset-0 opacity-35"></div>
   </div>
 
-  <div class="flex justify-center items-center h-screen">
+  <div class="flex justify-center items-center py-25 px-5">
+    <!-- FORM BOXED -->
     <div
-      class="backdrop-blur-[10px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[100vh] p-3 mx-auto rounded-md flex flex-col gap-[10px] border-1 border-gray-500/50"
+      class="backdrop-blur-[7px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[100vh] p-3 mx-auto rounded-md flex flex-col gap-[10px] border-1 border-gray-500/50"
     >
+      <!-- LOGO AND FORM TITLE -->
       <div class="flex flex-col justify-center items-center gap-y-2 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
-        <span class="font-bold text-3xl">Create An Company Account</span>
+        <span class="font-bold text-xl lg:text-3xl">Create An Company Account</span>
       </div>
-      <div class="flex justify-between">
+      <!-- END LOGO END FORM TITLE -->
+
+      <!-- FORM -->
+      <div class="flex flex-col lg:flex-row lg:justify-between">
+        <!-- FORM INPUTS -->
         <form
           @submit.prevent="handlePublisherRegister"
           action=""
           class="flex flex-col p-5 w-full gap-5"
         >
-          <div class="flex justify-between w-full gap-x-5">
-            <div class="flex flex-col gap-y-[20px] w-full">
+          <!-- MASTER INPUTS  -->
+          <div class="flex flex-col lg:flex-row justify-between w-full gap-x-5 gap-y-5">
+            <div
+              class="flex flex-col lg:border-none gap-y-[5px] border-b-1 border-b-gray-500 border-t-1 border-t-gray-500 py-3 lg:gap-y-[20px] w-full"
+            >
               <span class="font-bold text-center text-white">Master account</span>
               <div class="flex text-white gap-2 flex-col w-full">
                 <span class="font-black">Email</span>
@@ -108,9 +118,11 @@
               </div>
             </div>
 
-            <div class="border-r-1 border-white/50"></div>
+            <div class="border-r-1 hidden lg:block border-white/50"></div>
 
-            <div class="flex flex-col gap-y-[20px] w-full">
+            <div
+              class="flex flex-col gap-y-[5px] lg:gap-y-[20px] w-full border-b-1 border-b-gray-500 py-3 lg:border-none"
+            >
               <span class="font-bold text-center text-white">Company Informations</span>
               <div class="flex text-white gap-2 flex-col w-full">
                 <span class="font-black">Company Email</span>
@@ -175,12 +187,14 @@
               </div>
             </div>
           </div>
+          <!-- END MASTER INPUTS -->
 
+          <!-- COMPANY INPUTS -->
           <div class="flex flex-col w-6/12 mx-auto items-center">
             <button
               class="rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] flex items-center bg-[#ffffff26] transition-all"
             >
-              <span v-if="!isPendingPublisherRegister"> create account </span>
+              <span v-if="!isPendingPublisherRegister" class="capitalize"> create account </span>
               <loader-circle v-if="isPendingPublisherRegister" class="animate-spin ml-2" />
             </button>
 
@@ -189,10 +203,17 @@
             }}</label> -->
             <label v-if="registerMessage" :class="statusSubmitMessage">{{ registerMessage }}</label>
           </div>
+          <!-- END COMPANY INPUTS -->
         </form>
+        <!-- END FORM INPUTS -->
       </div>
+      <!-- END FORM -->
+
+      <!-- BUTTON AND DIRECTLY LINKS -->
       <div class="flex flex-col items-center">
-        <router-link to="#" class="text-blue-400/80 hover:text-blue-400 transition-all duration-400"
+        <router-link
+          :to="{ name: 'PublisherAuthLogin' }"
+          class="text-blue-400/80 hover:text-blue-400 transition-all duration-400"
           >Already have an account?</router-link
         >
 
@@ -202,7 +223,9 @@
           >Continue exploring Steak</router-link
         >
       </div>
+      <!-- END BUTTON AND DIRECTLY LINKS -->
     </div>
+    <!-- END FORM BOXED -->
   </div>
 </template>
 
@@ -253,3 +276,5 @@ const handlePublisherRegister = async () => {
   }
 }
 </script>
+
+<style scoped></style>
