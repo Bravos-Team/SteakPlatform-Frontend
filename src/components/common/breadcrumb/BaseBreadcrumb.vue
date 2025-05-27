@@ -6,6 +6,18 @@
         <breadcrumb-link as-child>
           <router-link :to="{ name: route.name }"> {{ route?.meta?.baseName }} </router-link>
         </breadcrumb-link>
+
+        <template
+          v-if="route.children"
+          v-for="(childRoute, childIndex) in route.children"
+          :key="childIndex"
+        >
+          <breadcrumb-link as-child>
+            <router-link :to="{ name: childRoute.name }">
+              {{ childRoute?.meta?.baseName }}
+            </router-link>
+          </breadcrumb-link>
+        </template>
       </breadcrumb-item>
     </breadcrumb-list>
   </breadcrumb>

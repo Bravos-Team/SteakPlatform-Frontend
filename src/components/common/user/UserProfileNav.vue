@@ -5,7 +5,7 @@
         <dropdown-menu-trigger asChild>
           <sidebar-menu-button
             size="lg"
-            class="gap-3 hover:bg-gray-300/10 cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground p-2 rounded-lg flex items-center"
+            class="gap-3 hover:bg-gray-300/10 cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground p-2 py-7 rounded-lg flex items-center"
           >
             <avatar class="size-12 rounded-full overflow-hidden">
               <avatar-image class="object-fit" :src="user.avatar" :alt="user.name" />

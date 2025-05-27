@@ -24,6 +24,25 @@ export const publisherRoutes: RouteRecordRaw[] = [
         meta: {
           baseName: 'Game Manage',
         },
+        redirect: { name: 'PublisherGameManagementOverview' },
+        children: [
+          {
+            path: 'overview',
+            name: 'PublisherGameManagementOverview',
+            component: () => import('@/views/publisher/home/game/features/GameOverviewManage.vue'),
+            meta: {
+              baseName: 'Game Overview',
+            },
+          },
+          {
+            path: 'pending',
+            name: 'PublisherGameManagementPending',
+            component: () => import('@/views/publisher/home/game/features/GamePendingManage.vue'),
+            meta: {
+              baseName: 'Game Pending',
+            },
+          },
+        ],
       },
     ],
     meta: {

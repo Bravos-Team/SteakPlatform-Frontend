@@ -1,4 +1,11 @@
-import { LayoutDashboard, ChartNoAxesGantt, LogOut, Gamepad2 } from 'lucide-vue-next'
+import {
+  LayoutDashboard,
+  SquareDashedKanban,
+  ChartNoAxesGantt,
+  HardDriveUpload,
+  LogOut,
+  Gamepad2,
+} from 'lucide-vue-next'
 import { ref } from 'vue'
 export const data = ref({
   teams: [
@@ -56,6 +63,18 @@ export const navItemsData = [
         title: 'Game Manage',
         name: 'PublisherGameManagement',
         icon: Gamepad2,
+        subItems: [
+          {
+            title: 'Game Overview',
+            name: 'PublisherGameManagementOverview',
+            icon: SquareDashedKanban,
+          },
+          {
+            title: 'Game Pending',
+            name: 'PublisherGameManagementPending',
+            icon: HardDriveUpload,
+          },
+        ],
       },
     ],
   },

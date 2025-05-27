@@ -1,12 +1,25 @@
 <template>
-  <sidebar id="publisher-main-sidebar" variant="sidebar" side="left" collapsible="icon">
-    <sidebar-header>
+  <sidebar
+    id="publisher-main-sidebar"
+    variant="sidebar"
+    side="left"
+    collapsible="icon"
+    class="bg-transparent/20"
+  >
+    <spark
+      :colorChanges="'#64403b'"
+      class="!left-10"
+      :bottom="'-200'"
+      :colorFirst="'#422277'"
+      :idSpark="'sidebar-spark'"
+    />
+    <sidebar-header class="bg-[#101014]/50 backdrop-blur-2xl">
       <user-profile-nav :user="userData?.data" />
     </sidebar-header>
-    <sidebar-content class="no-scrollbar">
+    <sidebar-content class="bg-[#101014]/50 backdrop-blur-2xl no-scrollbar">
       <publisher-navmain :items="navItemsData" />
     </sidebar-content>
-    <sidebar-footer />
+    <sidebar-footer class="bg-[#101014]/50 backdrop-blur-2xl" />
     <sidebar-rail />
   </sidebar>
 </template>
@@ -19,6 +32,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar'
+import Spark from '@/components/common/sparks/Spark.vue'
 import PublisherNavmain from '@/components/publisher/common/sidebar/PublisherNavmain.vue'
 import { userData, navItemsData } from '@/components/publisher/common/sidebar/SidebarItems'
 import UserProfileNav from '@/components/common/user/UserProfileNav.vue'
