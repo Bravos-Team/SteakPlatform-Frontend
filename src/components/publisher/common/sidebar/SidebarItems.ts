@@ -61,7 +61,7 @@ export const navItemsData = [
   },
   {
     title: 'Logout',
-    name: 'Home',
+    name: 'PublisherAuthLogin',
     icon: LogOut,
   },
 ]

@@ -19,17 +19,17 @@
 
                 <img
                   src="https://ccdn.steak.io.vn/down-line-white.svg"
-                  class="lg:group-hover/logo:rotate-180 w-[8px] mt-2 lg:mt-0 object-cover lg:w-3 lg:ms-2 lg:mt-3 lg:relative transition-all"
+                  class="lg:group-hover/logo:rotate-180 w-[8px] mt-2 object-cover lg:w-3 lg:ms-2 lg:mt-3 lg:relative transition-all"
                   alt=""
                 />
               </div>
 
               <!-- DROP DOWN -->
               <div
-                class="rounded-2xl lg:group-focus:/logo:invisible shadow-2xl transition-all duration-300 ease-int-out lg:group-hover/logo:visible hidden lg:invisible lg:group-hover/logo:h-[506px] lg:group-hover/logo:w-[620px] lg:flex lg:flex-row h-[0px] absolute top-17 border-gray-500/50 backdrop-blur-lg z-[1000] border-1 w-[0px] bg-black/30 group/after"
+                class="rounded-2xl delay-300 lg:group-focus:/logo:invisible shadow-2xl transition-all duration-400 ease-int-out lg:group-hover/logo:visible hidden lg:invisible lg:group-hover/logo:h-[506px] lg:group-hover/logo:w-[620px] lg:flex lg:flex-row h-[0px] absolute top-17 border-gray-500/50 backdrop-blur-lg z-[1000] border-1 w-[0px] bg-black/30 group/after"
               >
                 <div
-                  class="flex flex-col opacity-0 group-hover/logo:opacity-100 h-full w-[620px] transition-all duration-300 ease-in-out"
+                  class="flex flex-col delay-200 opacity-0 group-hover/logo:opacity-100 h-full w-[620px] transition-all duration-300 ease-in-out"
                 >
                   <div
                     class="p-[32px] m-[0px 0px 10px] border-r-1 border-gray-600/50 w-[284px] h-[225px]"
@@ -70,7 +70,7 @@
                 </div>
 
                 <div
-                  class="m-[0px 0px 10px] opacity-0 group-hover/logo:opacity-100 duration-300 ease-in-out transition-all px-[60px] py-[32px] w-[345px] h-[505px]"
+                  class="delay-200 m-[0px 0px 10px] opacity-0 group-hover/logo:opacity-100 duration-300 ease-in-out transition-all px-[60px] py-[32px] w-[345px] h-[505px]"
                 >
                   <p class="font-bold text-2xl pb-3">Create</p>
                   <!-- PLAY OPTION -->
@@ -98,7 +98,7 @@
             <div class="ms-5 hidden lg:block lg:flex lg:items-center lg:h-full">
               <router-link
                 to="/store/home"
-                class="flex items-center px-3 hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
+                class="flex items-center hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
               >
                 Store
               </router-link>

@@ -7,7 +7,7 @@
         >
           <span class="relative text-white font-black skew-90">
             JUMP SCARE ALERT! DON'T HOVER
-            <di class="inline-block">
+            <div class="inline-block">
               <div class="text-yellow-400 inline-block animate-bounce [animation-delay:-0.17s]">
                 !
               </div>
@@ -23,7 +23,7 @@
               <div class="text-yellow-400 inline-block animate-bounce [animation-delay:-0.05s]">
                 !
               </div>
-            </di>
+            </div>
           </span>
 
           <img

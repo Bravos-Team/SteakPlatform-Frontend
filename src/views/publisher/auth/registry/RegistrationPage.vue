@@ -38,7 +38,7 @@
                   type="text"
                   name="email"
                   autocomplete="off"
-                  class="input-base"
+                  class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
                   placeholder="Enter your email"
                 />
                 <label v-if="publisherErrors.masterEmail" for="email" class="text-red-500">
@@ -53,7 +53,7 @@
                   v-model="publisher.masterUsername"
                   autocomplete="off"
                   name="masterUsername"
-                  class="input-base"
+                  class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
                   placeholder="Enter your Username"
                 />
 
@@ -74,7 +74,7 @@
                     name="masterPassword"
                     v-model="publisher.masterPassword"
                     autocomplete="off"
-                    class="input-base"
+                    class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
                     placeholder="Enter your Password"
                   />
                   <eye
@@ -104,7 +104,7 @@
                   v-model="publisher.verifyMasterPassword"
                   name="verifyMasterPassword"
                   autocomplete="off"
-                  class="input-base"
+                  class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
                   placeholder="Enter Password Again"
                 />
 
@@ -131,7 +131,7 @@
                   v-model="publisher.businessEmail"
                   name="businessEmail"
                   autocomplete="off"
-                  class="input-base"
+                  class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
                   placeholder="Enter Company Informations"
                 />
 
@@ -151,7 +151,7 @@
                   name="name"
                   v-model="publisher.name"
                   autocomplete="off"
-                  class="input-base"
+                  class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
                   placeholder="Enter Company Name"
                 />
 
@@ -172,7 +172,7 @@
                   name="name"
                   v-model="publisher.phone"
                   autocomplete="off"
-                  class="input-base"
+                  class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
                   placeholder="Enter Company Phone Number"
                 />
 

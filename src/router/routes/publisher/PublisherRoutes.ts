@@ -1,8 +1,8 @@
-import { type RouteLocationNormalizedTypedList, type RouteRecordRaw } from 'vue-router'
+import { type RouteRecordRaw } from 'vue-router'
 
 import publisher from '@/router/middlewares/publisher'
 
-const publisherRoutes: RouteRecordRaw[] = [
+export const publisherRoutes: RouteRecordRaw[] = [
   {
     path: '/publisher',
     name: 'PublisherHome',
@@ -13,14 +13,21 @@ const publisherRoutes: RouteRecordRaw[] = [
         path: 'dashboard',
         name: 'PublisherDashboard',
         component: () => import('@/views/publisher/home/dashboard/PublisherDashboard.vue'),
+        meta: {
+          baseName: 'Dashboard',
+        },
       },
       {
         path: '/game-management',
         name: 'PublisherGameManagement',
         component: () => import('@/views/publisher/home/game/PublisherGameManagement.vue'),
+        meta: {
+          baseName: 'Game Manage',
+        },
       },
     ],
     meta: {
+      baseName: 'Publisher',
       middleware: [publisher],
     },
   },

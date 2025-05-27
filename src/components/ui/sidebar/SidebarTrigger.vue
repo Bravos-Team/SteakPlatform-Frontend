@@ -18,6 +18,7 @@ const { toggleSidebar } = useSidebar()
     data-slot="sidebar-trigger"
     variant="ghost"
     size="icon"
+    class="flex flex-col items-center justify-center p-1"
     :class="cn('h-7 w-7', props.class)"
     @click="toggleSidebar"
   >
