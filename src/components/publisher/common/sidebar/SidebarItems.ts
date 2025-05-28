@@ -59,22 +59,39 @@ export const navItemsData = [
         name: 'PublisherDashboard',
         icon: ChartNoAxesGantt,
       },
+      // {
+      //   title: 'Game Manage',
+      //   name: 'PublisherGameManagement',
+      //   icon: Gamepad2,
+      //   subItems: [
+      //     {
+      //       title: 'Game Overview',
+      //       name: 'PublisherGameManagementOverview',
+      //       icon: SquareDashedKanban,
+      //     },
+      //     {
+      //       title: 'Game Pending',
+      //       name: 'PublisherGameManagementPending',
+      //       icon: HardDriveUpload,
+      //     },
+      //   ],
+      // },
+    ],
+  },
+  {
+    title: 'Game Manage',
+    name: 'PublisherGameManagement',
+    icon: Gamepad2,
+    items: [
       {
-        title: 'Game Manage',
-        name: 'PublisherGameManagement',
-        icon: Gamepad2,
-        subItems: [
-          {
-            title: 'Game Overview',
-            name: 'PublisherGameManagementOverview',
-            icon: SquareDashedKanban,
-          },
-          {
-            title: 'Game Pending',
-            name: 'PublisherGameManagementPending',
-            icon: HardDriveUpload,
-          },
-        ],
+        title: 'Game Overview',
+        name: 'PublisherGameManagementOverview',
+        icon: SquareDashedKanban,
+      },
+      {
+        title: 'Game Pending',
+        name: 'PublisherGameManagementPending',
+        icon: HardDriveUpload,
       },
     ],
   },

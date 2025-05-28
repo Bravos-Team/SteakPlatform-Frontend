@@ -27,7 +27,7 @@ export const publisherRoutes: RouteRecordRaw[] = [
         redirect: { name: 'PublisherGameManagementOverview' },
         children: [
           {
-            path: 'overview',
+            path: '',
             name: 'PublisherGameManagementOverview',
             component: () => import('@/views/publisher/home/game/features/GameOverviewManage.vue'),
             meta: {

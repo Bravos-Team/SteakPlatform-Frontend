@@ -8,8 +8,12 @@
             class="gap-3 hover:bg-gray-300/10 cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground p-2 py-7 rounded-lg flex items-center"
           >
             <avatar class="size-12 rounded-full overflow-hidden">
-              <avatar-image class="object-fit" :src="user.avatar" :alt="user.name" />
-              <avatar-fallback>CP</avatar-fallback>
+              <avatar-image
+                class="object-fit group-data-[collapsible=icon]:-translate-x-1.5"
+                :src="user.avatar"
+                :alt="user.name"
+              />
+              <avatar-fallback>...</avatar-fallback>
             </avatar>
             <div class="grid flex-1 text-left text-sm leading-tight">
               <span class="truncate font-semibold">{{ user.name }}</span>
@@ -28,7 +32,7 @@
             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage :src="user.avatar" :alt="user.name" />
-                <!-- <AvatarFallback className="rounded-lg">CN</AvatarFallback> -->
+                <AvatarFallback className="rounded-lg">...</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{{ user.name }}</span>

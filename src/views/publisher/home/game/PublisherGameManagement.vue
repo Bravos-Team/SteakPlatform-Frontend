@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="z-11">
     <router-view></router-view>
   </div>
 </template>
