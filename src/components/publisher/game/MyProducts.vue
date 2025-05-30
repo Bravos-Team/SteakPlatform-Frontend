@@ -4,18 +4,13 @@
       <!-- PRODUCT COUNT AND ACTIONS BUTTON -->
       <div class="flex flex-col lg:flex-row justify-between">
         <div class="flex flex-col">
-          <span class="font-bold text-2xl">Your Products({{ productsCount }})</span>
+          <span class="font-bold text-2xl">Your Products({{ games.length }})</span>
           <span class="font-normal text-md text-gray-400"
             >Manage products for the Steak Games Store and Steak Online Services.</span
           >
         </div>
         <div class="flex items-center">
-          <button
-            class="flex bg-[#343437]/70 hover:bg-[#343437]/90 cursor-pointer items-center rounded-md px-2 h-9/12 gap-x-1"
-          >
-            <plus class="w-5 h-5" />
-            Create Product
-          </button>
+          <create-product-button />
         </div>
       </div>
       <!-- END  PRODUCT COUNT AND ACTIONS BUTTON -->
@@ -28,21 +23,30 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import CreateProductButton from '@/components/publisher/game/CreateProductButton.vue'
 import { Plus } from 'lucide-vue-next'
 import UploadGameBar from './UploadGameBar.vue'
-import { Card, CardAction, CardContent } from '@/components/ui/card'
-const productsCount = ref(0)
+import { Card, CardContent } from '@/components/ui/card'
 const games = ref([
   {
     name: 'Clash of Clan',
+    descriptions: 'stupid game',
   },
 
   {
     name: 'Spider man 2 Remastered',
+
+    descriptions: 'GOTY 2023',
   },
 
   {
-    name: 'Grant Thief Auto ',
+    name: 'Grant Thief Auto VI ',
+
+    descriptions: 'seventh awards ',
+  },
+  {
+    name: 'Super Ultra Gay Deluxe Edition',
+    descriptions: 'anbatocom',
   },
 ])
 </script>

@@ -44,7 +44,11 @@
 
       <card-footer>
         <card-action as-child>
-          <Button variant="destructive" class="text-md font-black">Clear All</Button>
+          <Button
+            variant="outline"
+            class="text-md !border-red-200/20 hover:!bg-red-400/10 cursor-pointer font-black"
+            >Clear All</Button
+          >
         </card-action>
       </card-footer>
     </card-content>
