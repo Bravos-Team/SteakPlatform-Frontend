@@ -176,6 +176,8 @@
 
   --card: oklch(0.141 0.005 285.823);
   --bg-base: rgba(16, 16, 20, 0.6);
+  --bg-card-base: #101014;
+  --bg-card-game-base: #28282C;
   --card-foreground: oklch(0.985 0 0);
 
   --popover: oklch(0.141 0.005 285.823);

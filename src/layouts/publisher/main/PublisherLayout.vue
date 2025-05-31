@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Toaster } from '@/components/ui/sonner'
-import 'vue-sonner/style.css'
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import Spark from '@/components/common/sparks/Spark.vue'
 import BaseBreadcrumb from '@/components/common/breadcrumb/BaseBreadcrumb.vue'
@@ -13,7 +11,6 @@ const toggleNav = () => {
 </script>
 
 <template>
-  <toaster :toastOptions="{}" />
   <sidebar-provider class="no-scrollbar" :defaultOpen="defaultOpen">
     <publisher-sidebar />
     <sidebar-inset class="relative overflow-hidden">

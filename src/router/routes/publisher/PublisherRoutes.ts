@@ -35,6 +35,11 @@ export const publisherRoutes: RouteRecordRaw[] = [
             },
           },
           {
+            path: 'game-edited/:id',
+            name: 'PublisherEditGame',
+            component: () => import('@/views/publisher/home/game/gameDetails/EditGameDetails.vue'),
+          },
+          {
             path: 'pending',
             name: 'PublisherGameManagementPending',
             component: () => import('@/views/publisher/home/game/features/GamePendingManage.vue'),

@@ -29,22 +29,26 @@ import UploadGameBar from './UploadGameBar.vue'
 import { Card, CardContent } from '@/components/ui/card'
 const games = ref([
   {
+    id: '1',
     name: 'Clash of Clan',
     descriptions: 'stupid game',
   },
 
   {
+    id: '2',
     name: 'Spider man 2 Remastered',
 
     descriptions: 'GOTY 2023',
   },
 
   {
+    id: '3',
     name: 'Grant Thief Auto VI ',
 
     descriptions: 'seventh awards ',
   },
   {
+    id: '4',
     name: 'Super Ultra Gay Deluxe Edition',
     descriptions: 'anbatocom',
   },

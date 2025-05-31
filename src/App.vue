@@ -1,10 +1,5 @@
 <template>
-  <Notification
-    :message="notificationStore.messages"
-    :type="notificationStore.type"
-    :visible="notificationStore.visible"
-  />
-
+  <toaster />
   <Suspense>
     <template #default>
       <router-view></router-view>
@@ -16,9 +11,8 @@
 </template>
 
 <script setup>
+import { onMounted, onUnmounted, ref } from 'vue'
+import { Toaster } from '@/components/ui/sonner'
+import 'vue-sonner/style.css'
 import { Suspense } from 'vue'
-import Notification from '@/components/notification/Notification.vue'
-import { useNotificationStore } from '@/stores/notificationStore.js'
-
-const notificationStore = useNotificationStore()
 </script>
