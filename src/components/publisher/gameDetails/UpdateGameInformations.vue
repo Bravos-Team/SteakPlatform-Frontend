@@ -26,28 +26,13 @@
       </span>
     </div>
     <div class="flex lg:w-5/12 justify-center items-center">
-      <button
-        class="bg-white/10 hover:bg-white/20 cursor-pointer px-5 py-3 rounded-md flex gap-x-2"
-      >
-        <square-dot />
-        <span> Update your game informations </span>
-      </button>
+      <update-game-informations-button />
     </div>
   </card>
 </template>
 
 <script setup lang="ts">
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogClose,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-
 import { Card } from '@/components/ui/card'
-import { SquareArrowUpRight, SquareDot } from 'lucide-vue-next'
+import UpdateGameInformationsButton from './UpdateGameInformationsButton.vue'
+import { SquareArrowUpRight } from 'lucide-vue-next'
 </script>
