@@ -31,6 +31,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import UpdateGameDetailsForm from './UpdateGameDetailsForm.vue'
+import { SquareDot } from 'lucide-vue-next'
 import { ref } from 'vue'
 
 const showDialog = ref(false)

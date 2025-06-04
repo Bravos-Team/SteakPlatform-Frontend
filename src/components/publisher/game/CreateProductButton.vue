@@ -22,7 +22,7 @@
         </DialogHeader>
 
         <form id="productNameForm" @submit.prevent="handleSubmit(onSubmit)">
-          <FormField v-slot="{ componentField }" name="name">
+          <FormField v-slot="{ componentField }"  name="name">
             <FormItem>
               <FormLabel>Product Name</FormLabel>
               <FormControl>
