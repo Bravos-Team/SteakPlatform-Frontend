@@ -4,6 +4,15 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --breakpoint-mobile: 325px;
+	--breakpoint-tablet: 640px;
+	--breakpoint-laptop: 1025px;
+	--breakpoint-desktop: 1281px;
+	--breakpoint-desktop-xl: 1500px;
+
+}
+
 @theme inline {
 
   --color-background: var(--background);

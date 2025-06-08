@@ -26,7 +26,7 @@
 
               <!-- DROP DOWN -->
               <div
-                class="rounded-2xl delay-300 lg:group-focus:/logo:invisible shadow-2xl transition-all duration-400 ease-int-out lg:group-hover/logo:visible hidden lg:invisible lg:group-hover/logo:h-[506px] lg:group-hover/logo:w-[620px] lg:flex lg:flex-row h-[0px] absolute top-17 border-gray-500/50 backdrop-blur-lg z-[1000] border-1 w-[0px] bg-black/30 group/after"
+                class="rounded-2xl delay-100 lg:group-focus:/logo:invisible shadow-2xl transition-all duration-300 ease-int-out lg:group-hover/logo:visible hidden lg:invisible lg:group-hover/logo:h-[506px] lg:group-hover/logo:w-[620px] lg:flex lg:flex-row h-[0px] absolute top-17 border-gray-500/50 backdrop-blur-lg z-[1000] border-1 w-[0px] bg-black/30 group/after"
               >
                 <div
                   class="flex flex-col delay-200 opacity-0 group-hover/logo:opacity-100 h-full w-[620px] transition-all duration-300 ease-in-out"

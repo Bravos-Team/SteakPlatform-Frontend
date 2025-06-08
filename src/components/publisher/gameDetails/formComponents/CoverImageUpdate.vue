@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-y-2">
+  <div class="flex flex-col gap-y-2 w-full">
     <span class="text-lg font-bold text-gray-400">Cover Image</span>
     <!-- DEFAULT IMAGE -->
     <div

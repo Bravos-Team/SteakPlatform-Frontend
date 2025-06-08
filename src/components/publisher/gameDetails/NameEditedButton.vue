@@ -84,8 +84,9 @@ type updateType = z.infer<typeof updateNameSchema>
 const onSubmitUpdateName = (name: updateType) => {
   showDialog.value = false
   toast.success(
-    h('span', { class: 'text-white text-lg z-999' }, `"${name.name}" has been updated`),
+    h('span', { class: 'text-white  text-lg z-999' }, `"${name.name}" has been updated`),
     {
+      class: 'z-[9999] flex  w-full ',
       description: h('div', { class: 'text-white' }, new Date().toLocaleString()),
       action: {
         label: 'Undos',
