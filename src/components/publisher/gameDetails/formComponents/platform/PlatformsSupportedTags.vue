@@ -1,16 +1,16 @@
 <template>
   <Combobox v-model="modalValue" v-model:open="open" :ignore-filter="true">
     <combobox-anchor as-child>
-      <label for="languages">
+      <label for="platforms">
         <tags-input
           v-model="modalValue"
           class="px-2 gap-2 w-full flex flex-col items-start bg-black/70 hover:bg-black/20 transition-colors duration-300 cursor-pointer"
         >
           <div class="flex gap-2 items-center flex-wrap">
             <tags-input-item
-              v-for="language in modalValue"
-              :key="language"
-              :value="language"
+              v-for="platform in modalValue"
+              :key="platform"
+              :value="platform"
               class=""
             >
               <tags-input-item-text />
@@ -20,28 +20,28 @@
 
           <combobox-input v-model="searchItem" as-child>
             <tags-input-input
-              id="languages"
-              placeholder="Language..."
-              class="w-full p-0 border-none focus-visible:ring-0 h-auto"
+              id="platforms"
+              placeholder="Platforms..."
+              class="min-w-full p-0 border-none focus-visible:ring-0 h-auto"
               @keydown.enter.prevent
             />
           </combobox-input>
         </tags-input>
       </label>
 
-      <combobox-list class="w-[--reka-popper-anchor-width]">
+      <combobox-list align="end" side="top" class="w-[--reka-popper-anchor-width]">
         <combobox-empty />
         <combobox-group>
           <scroll-area
             :class="{
-              'h-[20rem]': filteredLanguages.length > 6,
-              'h-[10rem]': filteredLanguages.length <= 6,
+              'h-[20rem]': filteredPlatforms.length > 6,
+              'h-[10rem]': filteredPlatforms.length <= 6,
             }"
           >
             <combobox-item
-              v-for="(language, index) in filteredLanguages"
+              v-for="(platform, index) in filteredPlatforms"
               :key="index"
-              :value="language"
+              :value="platform"
               @select.prevent="
                 (event: any) => {
                   if (typeof event.detail.value === 'string') {
@@ -49,13 +49,13 @@
                     modalValue.push(event.detail.value)
                   }
 
-                  if (filteredLanguages.length === 0) {
+                  if (filteredPlatforms.length === 0) {
                     open = false
                   }
                 }
               "
             >
-              {{ language }}
+              {{ platform }}
             </combobox-item>
           </scroll-area>
         </combobox-group>
@@ -83,34 +83,37 @@ import {
   TagsInputItemText,
 } from '@/components/ui/tags-input'
 import { ScrollArea } from '@/components/ui/scroll-area'
-
 import { computed, ref } from 'vue'
-import { queryGetCountriesList } from '@/hooks/common/countries/useCountries'
-const filters = ref(['languages'])
-const { data, isLoading } = queryGetCountriesList(filters)
+const gamingPlatforms = [
+  'PC (Windows)',
+  'macOS',
+  'Linux',
+  'Steam Deck',
+  'PlayStation 5',
+  'Xbox Series X/S',
+  'Nintendo Switch',
+  'Nintendo Switch 2 (upcoming)',
+  'Android',
+  'iOS',
+  'NVIDIA GeForce Now',
+  'Xbox Cloud Gaming',
+  'Google Stadia (legacy)',
+  'PlayStation Now',
+  'Meta Quest 5',
+  'Apple VisionPlay',
+  'Steam Deck',
+  'Asus ROG Xbox Ally',
+  'Xbox Infinity (cloud hybrid)',
+]
+
 const modalValue = ref<string[]>([])
 const open = ref(false)
 const searchItem = ref('')
 
 const { contains } = useFilter({ sensitivity: 'base' })
 
-const flattenedLanguages = computed(() => {
-  const langs = new Set<string>()
-
-  data?.value?.forEach((country: any) => {
-    if (country.languages) {
-      Object.values(country.languages).forEach((lang) => {
-        langs.add(lang as string)
-      })
-    }
-  })
-
-  return Array.from(langs)
-})
-
-const filteredLanguages = computed(() => {
-  const options = flattenedLanguages.value.filter((lang) => !modalValue.value.includes(lang))
-
-  return searchItem.value ? options.filter((lang) => contains(lang, searchItem.value)) : options
+const filteredPlatforms = computed(() => {
+  const options = gamingPlatforms?.filter((platform) => !modalValue.value.includes(platform))
+  return searchItem.value ? options.filter((option) => contains(option, searchItem.value)) : options
 })
 </script>

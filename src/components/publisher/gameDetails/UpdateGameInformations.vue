@@ -26,7 +26,7 @@
       </span>
     </div>
     <div class="flex lg:w-5/12 justify-center items-center">
-      <update-game-informations-button />
+      <update-game-informations-button :game-informations="gameDetails" />
     </div>
   </card>
 </template>
@@ -35,4 +35,16 @@
 import { Card } from '@/components/ui/card'
 import UpdateGameInformationsButton from './UpdateGameInformationsButton.vue'
 import { SquareArrowUpRight } from 'lucide-vue-next'
+import { onMounted, nextTick } from 'vue'
+
+const props = defineProps<{
+  gameDetails: {
+    id: string
+    name: string
+    descriptions: string
+  }
+}>()
+onMounted(async () => {
+  await nextTick()
+})
 </script>

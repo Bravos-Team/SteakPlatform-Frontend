@@ -19,24 +19,10 @@
       </div>
     </div>
     <!-- END ESTIMATED RELEASE DATE -->
-
-    <!-- START SUBTITLE -->
-    <div class="flex col-span-2 flex-col justify-center">
-      <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
-        >Subtitle</span
-      >
-      <Textarea
-        name="subtitle"
-        placeholder="Enter your subtitle..."
-        class="w-full border-2 border-double rounded-sm"
-      ></Textarea>
-    </div>
-    <!-- END SUBTITLE -->
   </div>
 </template>
 
 <script setup lang="ts">
 import StatusPicker from '@/components/publisher/gameDetails/formComponents/status/StatusPicker.vue'
 import EstimatedReleaseDate from '@/components/publisher/gameDetails/formComponents/date/EstimatedReleaseDate.vue'
-import { Textarea } from '@/components/ui/textarea'
 </script>

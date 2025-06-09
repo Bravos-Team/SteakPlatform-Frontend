@@ -2,13 +2,13 @@
   <div class="p-4">
     <div class="grid grid-rows-1 md:grid-rows-2 lg:grid-cols-6 xl:grid-cols-12 gap-2">
       <name-and-background-edit :game-details="gameDetails" />
-      <update-game-informations />
+      <update-game-informations :game-details="gameDetails" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import NameAndBackgroundEdit from '@/components/publisher/gameDetails/NameAndBackgroundEdit.vue'
 import UpdateGameInformations from '@/components/publisher/gameDetails/UpdateGameInformations.vue'
 import { useRoute } from 'vue-router'
