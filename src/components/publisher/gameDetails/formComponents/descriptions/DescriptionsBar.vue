@@ -38,9 +38,12 @@
       ></Textarea>
     </div>
     <!-- END LONG DESCRIPTIONS -->
+
+    <text-editor />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Textarea } from '@/components/ui/textarea'
+import TextEditor from '@/components/common/texteditor/TextEditor.vue'
 </script>
