@@ -7,7 +7,7 @@ import router from './router'
 import Particles from 'vue3-particles'
 import { RouteLocationNormalized } from 'vue-router'
 // import { VueReCaptcha } from 'vue-recaptcha-v3'
-import './assets/config/tailwind.css'
+import './assets/index.css'
 const pinia = createPinia()
 pinia.use(persist)
 

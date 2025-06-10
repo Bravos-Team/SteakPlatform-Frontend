@@ -35,16 +35,16 @@ const resolveMiddleware = (to: any) => {
 }
 
 router.beforeEach((to: any, from, next) => {
-  if (!to.meta.middleware) {
-    console.log('this page is not requires authentication')
-    return next()
-  }
+  // if (!to.meta.middleware) {
+  //   console.log('this page is not requires authentication')
+  //   return next()
+  // }
 
-  if (to.name === 'PublisherHome') {
-    return next({
-      name: 'PublisherAuthLogin',
-    })
-  }
+  // if (to.name === 'PublisherHome' && to.meta.middleware) {
+  //   return next({
+  //     name: 'PublisherAuthLogin',
+  //   })
+  // }
 
   return next()
   // const middleware: any[] = to.meta.middleware

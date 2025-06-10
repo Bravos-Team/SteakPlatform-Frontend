@@ -14,7 +14,6 @@ const route = useRoute()
 const isHiddenSearchingBar = ref(false)
 
 watchEffect(() => {
-  // force đọc lại meta mỗi lần route thay đổi
   isHiddenSearchingBar.value = !!route.meta?.isHiddenSearchingBar
 })
 </script>

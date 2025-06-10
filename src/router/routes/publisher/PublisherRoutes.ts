@@ -1,22 +1,64 @@
-import { RouteLocationNormalizedTypedList, RouteRecordRaw } from 'vue-router'
+import { type RouteRecordRaw } from 'vue-router'
+
 import publisher from '@/router/middlewares/publisher'
 
-const publisherRoutes: RouteRecordRaw[] = [
+export const publisherRoutes: RouteRecordRaw[] = [
+  {
+    path: '/publisher',
+    name: 'PublisherHome',
+    component: () => import('@/layouts/publisher/main/PublisherLayout.vue'),
+    redirect: { name: 'PublisherDashboard' },
+    children: [
+      {
+        path: 'dashboard',
+        name: 'PublisherDashboard',
+        component: () => import('@/views/publisher/home/dashboard/PublisherDashboard.vue'),
+        meta: {
+          baseName: 'Dashboard',
+        },
+      },
+      {
+        path: '/game-management',
+        name: 'PublisherGameManagement',
+        component: () => import('@/views/publisher/home/game/PublisherGameManagement.vue'),
+        meta: {
+          baseName: 'Game Manage',
+        },
+        redirect: { name: 'PublisherGameManagementOverview' },
+        children: [
+          {
+            path: '',
+            name: 'PublisherGameManagementOverview',
+            component: () => import('@/views/publisher/home/game/features/GameOverviewManage.vue'),
+            meta: {
+              baseName: 'Game Overview',
+            },
+          },
+          {
+            path: 'game-edited/:id',
+            name: 'PublisherEditGame',
+            component: () => import('@/views/publisher/home/game/gameDetails/EditGameDetails.vue'),
+          },
+          {
+            path: 'pending',
+            name: 'PublisherGameManagementPending',
+            component: () => import('@/views/publisher/home/game/features/GamePendingManage.vue'),
+            meta: {
+              baseName: 'Game Pending',
+            },
+          },
+        ],
+      },
+    ],
+    meta: {
+      baseName: 'Publisher',
+      middleware: [publisher],
+    },
+  },
   {
     path: '/publisher/login',
     name: 'PublisherAuthLogin',
     component: () => import('@/views/publisher/auth/login/LoginPage.vue'),
-    children: [
-      {
-        path: '/publisher',
-        name: 'PublisherHome',
-        component: () => import('@/layouts/publisher/main/PublisherLayout.vue'),
-        children: [],
-      },
-    ],
-    meta: {
-      middleware: [publisher],
-    },
   },
   {
     path: '/publisher/register',

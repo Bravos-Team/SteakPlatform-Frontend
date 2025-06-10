@@ -1,9 +1,11 @@
-/** @type {import('tailwindcss').Config} */
-
 export default {
   darkMode: ['class'],
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  safeList: ['bg-white/10'],
+  prefix: '',
+  content: [
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
+    './src/components/ui/**/*.{vue,js,ts,jsx,tsx}',
+  ],
   theme: { extend: {} },
   plugins: [],
 }

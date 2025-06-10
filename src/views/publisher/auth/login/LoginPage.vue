@@ -1,23 +1,25 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
-    <particles-base />
+    <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
+    <particles-base class="absolute opacity-80" />
+    <div class="bg-black absolute inset-0 opacity-35"></div>
   </div>
 
-  <div class="flex justify-center items-center h-screen">
+  <div class="flex justify-center items-center h-screen px-5">
     <div
-      class="backdrop-blur-[4px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-5 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
+      class="backdrop-blur-[6px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-5 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
     >
       <div class="flex flex-col justify-center items-center gap-y-3 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
         <span class="font-bold text-3xl">Sign In</span>
       </div>
-      <div class="flex justify-center">
+      <div class="flex w-full">
         <form
           @submit.prevent="handlePublisherLogin"
           action=""
-          class="flex flex-col gap-y-[10px] border-0 p-5 w-6/12"
+          class="flex flex-col gap-y-[10px] border-0 p-5 w-full items-center"
         >
-          <div class="flex flex-col gap-y-[20px] w-full">
+          <div class="flex flex-col gap-y-[20px] w-full lg:w-8/12">
             <div class="flex text-white gap-2 flex-col w-full">
               <span class="font-black">Email</span>
               <input
@@ -63,17 +65,17 @@
                 />
               </div>
             </div>
-            <div class="flex justify-end">
+            <div class="flex justify-center">
               <a href="" class="underline italic text-blue-400 hover:text-blue-500 text-[12px]"
                 >Forgot Password ?</a
               >
             </div>
           </div>
 
-          <div class="flex justify-center">
+          <div class="flex justify-center w-8/12 lg:w-4/12">
             <button
               type="submit"
-              class="w-6/12 rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] m-2 flex items-center bg-[#ffffff26] transition-all"
+              class="w-full rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] m-2 flex items-center bg-[#ffffff26] transition-all"
             >
               <span v-if="!isPendingPublisherLoginEmail || !isPendingPublisherLoginUserName">
                 Login
@@ -88,11 +90,19 @@
       </div>
       <div class="flex justify-center">
         <div class="flex flex-col gap-y-2 w-full">
-          <router-link
-            :to="{name : 'PublisherAuthRegister'}"
-            class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
-            >Create Account ?
-          </router-link>
+          <div class="flex gap-x-3 text-white justify-center">
+            <router-link
+              :to="{ name: 'PublisherAuthRegister' }"
+              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
+              >Create Account ?
+            </router-link>
+            <!-- <span>or</span>
+            <router-link
+              :to="{ name: 'Home' }"
+              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
+              >Countinue exploring Steak?
+            </router-link> -->
+          </div>
           <router-link
             to="#"
             class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"

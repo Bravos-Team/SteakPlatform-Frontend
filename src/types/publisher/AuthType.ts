@@ -4,9 +4,12 @@ import { isEmail, isUsername } from '@/services/common/CurrencyUtils'
 
 export const PublisherRegisterRequestSchema = z
   .object({
-    name: z.coerce.string({ required_error: 'Name cannot be empty' }).regex(/^[a-zA-Z\s]{3,32}$/, {
-      message: 'Name cannot contain special characters and between 3 and 32 characters',
-    }),
+    name: z.coerce
+      .string({ required_error: 'Name cannot be empty' })
+      .regex(/^[a-zA-Z\s]{3,32}$/, {
+        message: 'Name cannot contain special characters and between 3 and 32 characters',
+      })
+      .describe('Master name'),
     masterUsername: z.coerce
       .string({
         required_error: 'Username cannot be empty',
@@ -14,6 +17,7 @@ export const PublisherRegisterRequestSchema = z
       .regex(/^[a-zA-Z0-9]{6,32}$/, {
         message: 'Username cannot contain special characters and between 6 and 32 characters',
       })
+      .describe('Master username')
       .min(6, { message: 'Username must be at least 6 characters long' })
       .max(32, { message: 'Username must be at most 32 characters long' })
       .default(''),
@@ -21,22 +25,27 @@ export const PublisherRegisterRequestSchema = z
       .string({
         required_error: 'Phone number cannot be empty',
       })
+      .describe('Business phone number')
       .min(9, { message: 'Phone number must be at least 10 digits long' }),
     businessEmail: z
       .string({
         required_error: 'Email cannot be empty',
       })
+      .describe('Business email')
       .email({ message: 'Please enter a valid email address' }),
     masterEmail: z
       .string({
         required_error: 'Email cannot be empty',
       })
-      .email({ message: 'Please enter a valid email address' }),
+      .email({ message: 'Please enter a valid email address' })
+      .default('')
+      .describe('Master email'),
 
     masterPassword: z.coerce
       .string({
         required_error: 'Password cannot be empty',
       })
+      .describe('Master password')
       .regex(/^(?=\S{6,32})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/, {
         message:
           'Password must be 6-32 characters long, include at least one uppercase letter,' +
@@ -45,7 +54,11 @@ export const PublisherRegisterRequestSchema = z
       .min(6, { message: 'Password must be at least 6 characters long' })
       .max(32, { message: 'Password must be at most 32 characters long' }),
 
-    verifyMasterPassword: z.string().nonempty({ message: 'Verify password cannot be empty' }),
+    verifyMasterPassword: z
+      .string()
+      .min(1, 'Required')
+      .nonempty({ message: 'Verify password cannot be empty' })
+      .describe('Verify master password'),
   })
   .superRefine((data, ctx) => {
     if (
