@@ -31,15 +31,9 @@
       <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
         >Long Descriptions</span
       >
-      <Textarea
-        name="longDescriptions"
-        placeholder="Enter your long descriptions..."
-        class="w-full border-2 border-double rounded-sm"
-      ></Textarea>
+      <text-editor name="longDescriptions" />
     </div>
     <!-- END LONG DESCRIPTIONS -->
-
-    <text-editor />
   </div>
 </template>
 

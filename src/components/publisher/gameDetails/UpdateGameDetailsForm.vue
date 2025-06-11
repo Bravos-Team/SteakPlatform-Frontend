@@ -15,6 +15,10 @@
     <media-bar />
     <!-- END MEDIAS & IMAGES BAR -->
 
+    <!-- START DEVELOPER TEAM INPUTS -->
+    <your-developer-teams />
+    <!-- END DEVELOPER TEAM INPUTS -->
+
     <!-- RELEASE DATE & ESTIMATED MONTH-->
     <release-estimated-date />
     <!-- END RELEASE DATE & ESTIMATED MONTH-->
@@ -56,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+import YourDeveloperTeams from '@/components/publisher/gameDetails/formComponents/developerTeam/YourDeveloperTeams.vue'
 import RegionTagsPicker from '@/components/publisher/gameDetails/formComponents/region/RegionTagsPicker.vue'
 import ReleaseEstimatedDate from '@/components/publisher/gameDetails/formComponents/ReleaseEstimatedDate.vue'
 import ConsiderTermsOfService from '@/components/publisher/gameDetails/formComponents/ConsiderTermsOfService.vue'
