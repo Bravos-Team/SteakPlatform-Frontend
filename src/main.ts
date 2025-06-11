@@ -1,5 +1,6 @@
 import { createPinia } from 'pinia'
 import persist from 'pinia-plugin-persistedstate'
+
 import { createApp } from 'vue'
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import App from './App.vue'
