@@ -1,13 +1,21 @@
 <template>
-  <div class="p-4">
-    <div class="grid grid-rows-1 md:grid-rows-2 lg:grid-cols-6 xl:grid-cols-12 gap-2">
+  <div class="p-4 flex flex-col gap-y-3 @container">
+    <div class="grid grid-rows-1 h-full lg:grid-cols-6 xl:grid-cols-12 gap-2">
       <name-and-background-edit :game-details="gameDetails" />
-      <update-game-informations :game-details="gameDetails" />
+      <update-game-informations
+        :game-details="gameDetails"
+        v-model:get-data-from-update-game-details-form="previewFormData"
+      />
+    </div>
+    <div class="w-full @container">
+      <span v-if="previewFormData" v-html="previewFormData"></span>
+      <skeleton-preview-form v-else />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPreviewForm.vue'
 import { ref, watch, onMounted } from 'vue'
 import NameAndBackgroundEdit from '@/components/publisher/gameDetails/NameAndBackgroundEdit.vue'
 import UpdateGameInformations from '@/components/publisher/gameDetails/UpdateGameInformations.vue'
@@ -54,6 +62,7 @@ const games = ref([
 ])
 
 const route = useRoute()
+const previewFormData = ref('')
 onMounted(() => {
   gameDetails.value = games.value.find((game) => game.id === route.params.id)
 })

@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import { BadgeAlert, Upload, Trash2 } from 'lucide-vue-next'
 const fileInput = ref<HTMLInputElement | null>(null)

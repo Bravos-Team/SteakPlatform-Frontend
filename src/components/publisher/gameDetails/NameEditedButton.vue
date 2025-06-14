@@ -55,7 +55,6 @@ import { PenLine } from 'lucide-vue-next'
 import {
   Dialog,
   DialogDescription,
-  DialogTrigger,
   DialogTitle,
   DialogContent,
   DialogFooter,
@@ -89,7 +88,8 @@ const onSubmitUpdateName = (name: updateType) => {
       class: 'z-[9999] flex  w-full ',
       description: h('div', { class: 'text-white' }, new Date().toLocaleString()),
       action: {
-        label: 'Undos',
+        class: '!bg-yellow-500',
+        label: 'Undo',
       },
     },
   )

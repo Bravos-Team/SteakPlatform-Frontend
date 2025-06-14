@@ -4,49 +4,59 @@
       class="flex flex-col @container border-2 rounded-sm overflow-hidden w-full col-span-2 p-2 bg-linear-120 from-violet-200/10 to-violet-400/10"
       v-if="editor"
     >
-      <div class="flex gap-x-3 w-full justify-end">
-        <!-- START CHARS COUNTS -->
-        <div
-          :class="{
-            'character-count': true,
-            'character-count--warning': editor.storage.characterCount.characters() === charsLimit,
-          }"
-        >
-          <svg height="20" width="20" viewBox="0 0 20 20">
-            <circle r="10" cx="10" cy="10" fill="gray" />
-            <circle
-              r="5"
-              cx="10"
-              cy="10"
-              fill="white"
-              stroke="greenyellow"
-              stroke-width="10"
-              :stroke-dasharray="`${(percentage / 100) * 31.4} 31.4`"
-              transform="rotate(-90) translate(-20)"
-            />
-            <circle r="6" cx="10" cy="10" fill="#2B2A34" />
-          </svg>
-
-          {{ editor.storage.characterCount.characters() }} / {{ charsLimit }} characters
-          <br />
-          {{ editor.storage.characterCount.words() }} words
+      <div class="flex gap-x-3 w-full justify-between">
+        <div class="flex items-center">
+          <button
+            @click="previewLongDescriptions"
+            class="px-3 bg-gray-200/10 py-1 font-medium rounded-sm cursor-pointer"
+          >
+            Preview
+          </button>
         </div>
-        <!-- END CHARS COUNTS -->
-        <!-- START INVERT COLOR -->
-        <div class="flex gap-x-1 items-center shrink-0">
-          <span>Invert color</span>
-          <Switch @update:model-value="invertDarkMode = $event" />
-        </div>
-        <!-- END INVERT COLOR -->
+        <div class="flex gap-x-3 w-full justify-end">
+          <!-- START CHARS COUNTS -->
+          <div
+            :class="{
+              'character-count': true,
+              'character-count--warning': editor.storage.characterCount.characters() === charsLimit,
+            }"
+          >
+            <svg height="20" width="20" viewBox="0 0 20 20">
+              <circle r="10" cx="10" cy="10" fill="gray" />
+              <circle
+                r="5"
+                cx="10"
+                cy="10"
+                fill="white"
+                stroke="greenyellow"
+                stroke-width="10"
+                :stroke-dasharray="`${(percentage / 100) * 31.4} 31.4`"
+                transform="rotate(-90) translate(-20)"
+              />
+              <circle r="6" cx="10" cy="10" fill="#2B2A34" />
+            </svg>
 
-        <!-- START TEXTEDITOR HELPS -->
-        <Helps />
-        <!-- END TEXTEDITOR HELPS -->
+            {{ editor.storage.characterCount.characters() }} / {{ charsLimit }} characters
+            <br />
+            {{ editor.storage.characterCount.words() }} words
+          </div>
+          <!-- END CHARS COUNTS -->
+          <!-- START INVERT COLOR -->
+          <div class="flex gap-x-1 items-center shrink-0">
+            <span>Invert color</span>
+            <Switch @update:model-value="invertDarkMode = $event" />
+          </div>
+          <!-- END INVERT COLOR -->
+
+          <!-- START TEXTEDITOR HELPS -->
+          <Helps />
+          <!-- END TEXTEDITOR HELPS -->
+        </div>
       </div>
       <div class="w-full items-center flex flex-col">
         <section
           id="buttons"
-          class="flex justify-center gap-x-3 gap-y-1 w-full bg-transparent rounded-t-sm py-1"
+          class="flex flex-wrap gap-x-3 gap-y-1 w-full bg-transparent rounded-t-sm py-1"
         >
           <!-- START MARKS DOWN -->
           <div class="border-y-1 border-gray-100/20 flex justify-center items-center py-1">
@@ -1034,7 +1044,7 @@
   </tooltip-provider>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import { onBeforeUnmount } from 'vue'
 import Helps from '@/components/common/texteditor/Helps.vue'
@@ -1070,10 +1080,14 @@ import Youtube from '@tiptap/extension-youtube'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import StarterKit from '@tiptap/starter-kit'
 import { Switch } from '@/components/ui/switch'
-import { ref, watch, computed } from 'vue'
+import { ref, watch, nextTick, computed } from 'vue'
 import { CharacterCount } from '@tiptap/extensions'
 import { TableKit } from '@tiptap/extension-table'
 import Link from '@tiptap/extension-link'
+import { TextStyle, Color } from '@tiptap/extension-text-style'
+import { TextStyleKit } from '@tiptap/extension-text-style'
+import Underline from '@tiptap/extension-underline'
+import DOMPurify from 'dompurify'
 // import Mention from '@tiptap/extension-mention'
 
 const texts = ref('')
@@ -1095,9 +1109,6 @@ const editor = new Editor({
     StarterKit.configure({
       HTMLAttributes: {
         class: 'min-h-[20rem]',
-      },
-      document: {
-        HTMLAttributes: {},
       },
       blockquote: {
         HTMLAttributes: {
@@ -1173,6 +1184,10 @@ const editor = new Editor({
     CharacterCount.configure({
       limit: charsLimit.value,
     }),
+    TextStyleKit,
+    Underline,
+    TextStyle,
+    Color,
   ],
   editorProps: {
     attributes: {
@@ -1229,12 +1244,27 @@ const percentage = computed(() => {
   return Math.round((100 / charsLimit.value) * editor.storage.characterCount.characters())
 })
 
-// watch(
-//   () => editor.getHTML(),
-//   (newVal) => {
-//     console.log(newVal)
-//   },
-// )
+const emitLongDescriptionsData = defineModel<string>('emitLongDescriptionsData')
+
+const dirtyHTMLS = "<img src=x onerror='alert(1)'><p><b>Hello</b></p>"
+const previewLongDescriptions = async () => {
+  await nextTick()
+  const dirtyHTML = editor.getHTML()
+  // console.log(
+  //   DOMPurify.sanitize(dirtyHTMLS),
+  //   DOMPurify.sanitize('\n<img src=x onerror=alert(1)//>\n'),
+  //   DOMPurify.sanitize('<svg><g/onload=alert(2)//<p>\n'),
+  //   DOMPurify.sanitize('<p>abc<iframe//src=jAva&Tab;script:alert(3)>def</p>\n'),
+  //   DOMPurify.sanitize('<math><mi//xlink:href="data:x,<script>alert(4)<script>">\n'),
+  //   DOMPurify.sanitize('<TABLE><tr><td>HELLO</tr></TABL\n>'),
+  //   DOMPurify.sanitize('<UL><li><A HREF=//google.com>click</UL>\n'),
+  // )
+  console.log(dirtyHTML)
+  emitLongDescriptionsData.value = DOMPurify.sanitize(dirtyHTML, {
+    ADD_TAGS: ['iframe'],
+    ADD_ATTR: ['allowfullscreen', 'frameborder', 'src', 'width', 'height'],
+  })
+}
 
 onBeforeUnmount(() => {
   editor.value?.destroy()
@@ -1256,7 +1286,7 @@ onBeforeUnmount(() => {
 
     td,
     th {
-      border: 1px solid var(--gray-3);
+      border: 10px solid var(--gray-3);
       box-sizing: border-box;
       min-width: 1em;
       padding: 6px 8px;

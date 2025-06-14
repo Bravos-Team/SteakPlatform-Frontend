@@ -31,7 +31,7 @@
       <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
         >Long Descriptions</span
       >
-      <text-editor name="longDescriptions" />
+      <text-editor v-model:emit-long-descriptions-data="getLongDescriptionsHTML" />
     </div>
     <!-- END LONG DESCRIPTIONS -->
   </div>
@@ -40,4 +40,6 @@
 <script setup lang="ts">
 import { Textarea } from '@/components/ui/textarea'
 import TextEditor from '@/components/common/texteditor/TextEditor.vue'
+
+const getLongDescriptionsHTML = defineModel<string>('getPreviewLongDescriptionsData')
 </script>

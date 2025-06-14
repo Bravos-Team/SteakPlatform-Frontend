@@ -1329,6 +1329,11 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-table/-/extension-table-3.0.0-beta.7.tgz#ea3b001805a299d65ce9f145717a2d5d122c2354"
   integrity sha512-Jrm31Yzl7XfZGPxS6ssGW5jaiyXls/MsIS8Ll9MPrFO/a2ncNv1bSw72ckseUtZb9hCZ520tmJ+KdFjpHwZhTQ==
 
+"@tiptap/extension-text-style@^3.0.0-beta.7":
+  version "3.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-text-style/-/extension-text-style-3.0.0-beta.7.tgz#83a3d409b2ff7165847d279f7903bd05a49a827c"
+  integrity sha512-dQyyILA2kEDrVi+AZd/ZdtV5jusD3Lo4D/YLs5dyluvschkVSvIIEfl3ILnxmX/qSewcL6xV1yDR9BEGK8WRAA==
+
 "@tiptap/extension-text@^2.14.0":
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-text/-/extension-text-2.14.0.tgz#2b57f47917e97b6c06774b7eaf8598973536a29e"
@@ -1338,6 +1343,11 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-text/-/extension-text-3.0.0.tgz#697b845ab79d91aceee5d30030eb1bf01ca345eb"
   integrity sha512-7C+vD1Co7TqKnab4KMHhltR7FDSEIrHHKl4feGdrI/UuvIarjPsyaShl6UU7PqCv3r8Gt4A/knQ2ANyGhxl7iw==
+
+"@tiptap/extension-underline@^3.0.0-beta.7":
+  version "3.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-underline/-/extension-underline-3.0.0-beta.7.tgz#f4388bf2d93b7dfe9a6cce63dfd22facd5687ed1"
+  integrity sha512-RMqiCc4DPvuVbaH9tb3tet4fR6GSAwCEhM/qSeWUrhwolk14UrsQfeGV0xfgRg1xZqnWcvijW1j998g1esXtTQ==
 
 "@tiptap/extension-youtube@^3.0.0-beta.7":
   version "3.0.0-beta.7"

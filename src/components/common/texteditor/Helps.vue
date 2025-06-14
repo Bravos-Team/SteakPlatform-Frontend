@@ -167,6 +167,7 @@ const nodesTutorial = [
       macOs: ['Shift', 'Enter', Command, 'Enter'],
     },
   },
+
   {
     id: 4,
     title: 'Heading{level}',
@@ -214,6 +215,7 @@ Type **two asterisks** or __two underlines__ and it will magically transform to 
       `,
     },
   },
+
   {
     id: 7,
     title: 'Highlight',
@@ -228,6 +230,7 @@ Type ==two equal signs== and it will magically transform to highlighted text whi
       `,
     },
   },
+
   {
     id: 8,
     title: 'Italic',
@@ -257,6 +260,7 @@ Type ~~ text between tildes ~~ and it will be magically striked through while yo
       `,
     },
   },
+
   {
     id: 10,
     title: 'Subscript',

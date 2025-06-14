@@ -5,10 +5,12 @@
       class="bg-white/10 hover:bg-white/20 cursor-pointer px-5 py-3 rounded-md flex gap-x-2"
     >
       <square-dot />
-      <span class="lg:text-md xl:text-[17px] flex gap-x-1">
+      <span class="lg:text-md xl:text-[17px] flex gap-x-1 flex-wrap">
         <span>Update</span>
-        <span class="font-bold"> '{{ gameInformations?.name }}' </span>
-        <span>informations</span>
+        <div class="flex gap-x-1">
+          <span class="font-bold text-nowrap"> '{{ gameInformations?.name }}' </span>
+          <span>informations</span>
+        </div>
       </span>
     </button>
     <dialog-scroll-content
@@ -26,7 +28,10 @@
         >
       </dialog-header>
       <!-- START <update-game-details-form /> -->
-      <update-game-details-form :game-details-form="gameInformations" />
+      <update-game-details-form
+        :game-details-form="gameInformations"
+        v-model:get-data-from-descriptions-bar="getDataFromUpdateGameDetailsForm"
+      />
       <!-- END <update-game-details-form /> -->
     </dialog-scroll-content>
   </Dialog>
@@ -50,4 +55,6 @@ const props = defineProps<{
     descriptions: string
   }
 }>()
+
+const getDataFromUpdateGameDetailsForm = defineModel<string>('getDataFromUpdateGameDetailsForm')
 </script>

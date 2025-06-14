@@ -24,7 +24,7 @@
     <!-- END RELEASE DATE & ESTIMATED MONTH-->
 
     <!-- START DESCRIPTIONS BAR -->
-    <descriptions-bar />
+    <descriptions-bar v-model:get-preview-long-descriptions-data="getDataFromDescriptionsBar" />
     <!-- END DESCRIPTIONS BAR -->
 
     <!-- START TAGS SELECTED BAR -->
@@ -71,4 +71,6 @@ import SystemRequirements from '@/components/publisher/gameDetails/formComponent
 import PlatformsSupportedTags from '@/components/publisher/gameDetails/formComponents/platform/PlatformsSupportedTags.vue'
 import DescriptionsBar from '@/components/publisher/gameDetails/formComponents/descriptions/DescriptionsBar.vue'
 import MediaBar from '@/components/publisher/gameDetails/formComponents/MediaBar.vue'
+
+const getDataFromDescriptionsBar = defineModel<string>('getDataFromDescriptionsBar')
 </script>
