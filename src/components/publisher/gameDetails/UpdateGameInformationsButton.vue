@@ -29,8 +29,9 @@
       </dialog-header>
       <!-- START <update-game-details-form /> -->
       <update-game-details-form
-        :game-details-form="gameInformations"
-        v-model:get-data-from-descriptions-bar="getDataFromUpdateGameDetailsForm"
+        :game-preview-details="gamePreviewDetails"
+        @update:game-preview-details-data="gamePreviewDetails = $event"
+        @update:open-dialog-form="showDialog = $event"
       />
       <!-- END <update-game-details-form /> -->
     </dialog-scroll-content>
@@ -41,13 +42,15 @@
 import { Dialog, DialogScrollContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import UpdateGameDetailsForm from './UpdateGameDetailsForm.vue'
 import { SquareDot } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { type GameType, getDefaultGameValue } from '@/types/game/gameDetails/GameDetailsType'
+
 const showDialog = ref(false)
+const gamePreviewDetails = ref<GameType>(getDefaultGameValue())
 
 const hanldeOpenDialog = () => {
   showDialog.value = !showDialog.value
 }
-
 const props = defineProps<{
   gameInformations: {
     id: string
@@ -56,5 +59,15 @@ const props = defineProps<{
   }
 }>()
 
-const getDataFromUpdateGameDetailsForm = defineModel<string>('getDataFromUpdateGameDetailsForm')
+// watch(
+//   gamePreviewDetails,
+//   (newval) => {
+//     console.log('FROM PARENT:')
+//     console.log(newval)
+//   },
+//   {
+//     deep: true,
+//     immediate: true,
+//   },
+// )
 </script>

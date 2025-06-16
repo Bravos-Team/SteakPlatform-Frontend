@@ -1,5 +1,5 @@
 <template>
-  <Select :body-lock="true">
+  <Select v-model:model-value="versionSelectedData" :body-lock="true">
     <select-trigger @keydown.stop.prevent="onSelectKeydown">
       <select-value placeholder="Game version" />
     </select-trigger>
@@ -41,14 +41,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Separator } from '@/components/ui/separator'
 import { ref } from 'vue'
-import { ScrollArea } from '@/components/ui/scroll-area'
 
 const versionInputed = ref('')
 const versions = Array.from({ length: 10 }).map((_, i, a) => {
   return `v${i + 1}.0.0`
 })
+
+const versionSelectedData = defineModel<string>({
+  default: '',
+})
+
 const onSelectKeydown = (e: KeyboardEvent) => {
   if (/^[a-zA-Z0-9]$/.test(e.key)) {
     e.preventDefault()

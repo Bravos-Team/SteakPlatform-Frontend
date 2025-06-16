@@ -12,10 +12,8 @@
       v-if="addMinimunAndRecommended"
     >
       <minimum-and-recommended
-        :system-requirement-suggestions="{
-          minimum: systemRequirementSuggestions,
-          recommend: systemRequirementSuggestions,
-        }"
+        v-model:get-recommended-data="recommededData"
+        v-model:get-minimum-data="minimumData"
       />
     </div>
   </div>
@@ -24,8 +22,21 @@
 <script setup lang="ts">
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { ref, watch } from 'vue'
 import MinimumAndRecommended from '@/components/publisher/gameDetails/formComponents/systemRequirements/MinimumAndRecommended.vue'
-import { systemRequirementSuggestions } from '@/types/game/gameDetails/GameDetailsType'
-const addMinimunAndRecommended = ref(false)
+import {
+  SystemRequirementsType,
+  getDefaultValueRequirements,
+} from '@/types/game/gameDetails/GameDetailsType'
+import { ref, computed } from 'vue'
+import SystemRequirements from '@/components/publisher/gameDetails/formComponents/systemRequirements/SystemRequirementsBar.vue'
+const addMinimunAndRecommended = defineModel<boolean>('isInitSystemRequirements', {
+  default: false,
+})
+
+const minimumData = defineModel<SystemRequirementsType>('emitMinimumData', {
+  default: getDefaultValueRequirements(),
+})
+const recommededData = defineModel<SystemRequirementsType>('emitRecommendedData', {
+  default: getDefaultValueRequirements(),
+})
 </script>

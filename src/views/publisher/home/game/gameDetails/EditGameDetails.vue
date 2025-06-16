@@ -8,13 +8,16 @@
       />
     </div>
     <div class="w-full @container">
-      <span v-if="previewFormData" v-html="previewFormData"></span>
-      <skeleton-preview-form v-else />
+      <card class="bg-[var(--bg-card-base)]/50 lg:px-[4rem] @container">
+        <span v-if="previewFormData" v-html="previewFormData"></span>
+        <skeleton-preview-form v-else />
+      </card>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Card } from '@/components/ui/card'
 import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPreviewForm.vue'
 import { ref, watch, onMounted } from 'vue'
 import NameAndBackgroundEdit from '@/components/publisher/gameDetails/NameAndBackgroundEdit.vue'

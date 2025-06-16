@@ -5,14 +5,6 @@
       v-if="editor"
     >
       <div class="flex gap-x-3 w-full justify-between">
-        <div class="flex items-center">
-          <button
-            @click="previewLongDescriptions"
-            class="px-3 bg-gray-200/10 py-1 font-medium rounded-sm cursor-pointer"
-          >
-            Preview
-          </button>
-        </div>
         <div class="flex gap-x-3 w-full justify-end">
           <!-- START CHARS COUNTS -->
           <div
@@ -1080,7 +1072,7 @@ import Youtube from '@tiptap/extension-youtube'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import StarterKit from '@tiptap/starter-kit'
 import { Switch } from '@/components/ui/switch'
-import { ref, watch, nextTick, computed } from 'vue'
+import { ref, onUnmounted, onMounted, nextTick, computed } from 'vue'
 import { CharacterCount } from '@tiptap/extensions'
 import { TableKit } from '@tiptap/extension-table'
 import Link from '@tiptap/extension-link'
@@ -1161,8 +1153,20 @@ const editor = new Editor({
     }),
     TableKit.configure({
       table: { resizable: true },
-      HTMLAttributes: {
-        class: 'prose-table !border-collapse table-fixed border-x-1',
+      tableHeader: {
+        HTMLAttributes: {
+          class: 'border bg-green-200/70 text-xl px-3 py-0 table-fixed text-white border-white',
+        },
+      },
+      tableRow: {
+        HTMLAttributes: {
+          class: 'border px-3 py-0 table-fixed text-white border-white',
+        },
+      },
+      tableCell: {
+        HTMLAttributes: {
+          class: 'border  px-3 py-0 table-fixed text-white border-white',
+        },
       },
     }),
     Youtube.configure({
@@ -1192,7 +1196,7 @@ const editor = new Editor({
   editorProps: {
     attributes: {
       spellcheck: isSpellCheck.value,
-      class: 'h-full outline-0 prose prose-invert  min-w-full',
+      class: 'h-full outline-0   min-w-full',
     },
   },
   content: `
@@ -1247,27 +1251,18 @@ const percentage = computed(() => {
 const emitLongDescriptionsData = defineModel<string>('emitLongDescriptionsData')
 
 const dirtyHTMLS = "<img src=x onerror='alert(1)'><p><b>Hello</b></p>"
-const previewLongDescriptions = async () => {
-  await nextTick()
-  const dirtyHTML = editor.getHTML()
-  // console.log(
-  //   DOMPurify.sanitize(dirtyHTMLS),
-  //   DOMPurify.sanitize('\n<img src=x onerror=alert(1)//>\n'),
-  //   DOMPurify.sanitize('<svg><g/onload=alert(2)//<p>\n'),
-  //   DOMPurify.sanitize('<p>abc<iframe//src=jAva&Tab;script:alert(3)>def</p>\n'),
-  //   DOMPurify.sanitize('<math><mi//xlink:href="data:x,<script>alert(4)<script>">\n'),
-  //   DOMPurify.sanitize('<TABLE><tr><td>HELLO</tr></TABL\n>'),
-  //   DOMPurify.sanitize('<UL><li><A HREF=//google.com>click</UL>\n'),
-  // )
-  console.log(dirtyHTML)
-  emitLongDescriptionsData.value = DOMPurify.sanitize(dirtyHTML, {
-    ADD_TAGS: ['iframe'],
-    ADD_ATTR: ['allowfullscreen', 'frameborder', 'src', 'width', 'height'],
-  })
-}
 
 onBeforeUnmount(() => {
-  editor.value?.destroy()
+  editor.destroy()
+})
+
+onMounted(() => {
+  editor.on('blur', () => {
+    emitLongDescriptionsData.value = DOMPurify.sanitize(editor.getHTML(), {
+      ADD_TAGS: ['iframe'],
+      ADD_ATTR: ['allowfullscreen', 'frameborder', 'src', 'width', 'height'],
+    })
+  })
 })
 </script>
 
@@ -1277,60 +1272,60 @@ onBeforeUnmount(() => {
     margin-top: 0;
   }
 
-  table {
-    border-collapse: collapse !important;
-    margin: 0;
-    overflow: hidden;
-    table-layout: fixed;
-    width: 100%;
+  // table {
+  //   border-collapse: collapse !important;
+  //   margin: 0;
+  //   overflow: hidden;
+  //   table-layout: fixed;
+  //   width: 100%;
 
-    td,
-    th {
-      border: 10px solid var(--gray-3);
-      box-sizing: border-box;
-      min-width: 1em;
-      padding: 6px 8px;
-      position: relative;
-      vertical-align: top;
+  //   td,
+  //   th {
+  //     border: 10px solid var(--gray-3) !important;
+  //     box-sizing: border-box;
+  //     min-width: 1em;
+  //     padding: 6px 8px;
+  //     position: relative;
+  //     vertical-align: top;
 
-      > * {
-        margin-bottom: 0;
-      }
-    }
+  //     > * {
+  //       margin-bottom: 0;
+  //     }
+  //   }
 
-    th {
-      background-color: var(--gray-1);
-      font-weight: bold;
-      text-align: left;
-    }
+  //   th {
+  //     background-color: var(--gray-1);
+  //     font-weight: bold;
+  //     text-align: left;
+  //   }
 
-    .selectedCell:after {
-      background: var(--gray-2);
-      content: '';
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      pointer-events: none;
-      position: absolute;
-      z-index: 2;
-    }
+  //   .selectedCell:after {
+  //     background: var(--gray-2);
+  //     content: '';
+  //     left: 0;
+  //     right: 0;
+  //     top: 0;
+  //     bottom: 0;
+  //     pointer-events: none;
+  //     position: absolute;
+  //     z-index: 2;
+  //   }
 
-    .column-resize-handle {
-      background-color: var(--purple);
-      bottom: -2px;
-      pointer-events: none;
-      position: absolute;
-      right: -2px;
-      top: 0;
-      width: 4px;
-    }
-  }
+  //   .column-resize-handle {
+  //     background-color: var(--purple);
+  //     bottom: -2px;
+  //     pointer-events: none;
+  //     position: absolute;
+  //     right: -2px;
+  //     top: 0;
+  //     width: 4px;
+  //   }
+  // }
 
-  .tableWrapper {
-    margin: 1.5rem 0;
-    overflow-x: auto;
-  }
+  // .tableWrapper {
+  //   margin: 1.5rem 0;
+  //   overflow-x: auto;
+  // }
 
   &.resize-cursor {
     cursor: ew-resize;

@@ -24,7 +24,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CreateProductButton from '@/components/publisher/game/CreateProductButton.vue'
-import { Plus } from 'lucide-vue-next'
 import UploadGameBar from './UploadGameBar.vue'
 import { Card, CardContent } from '@/components/ui/card'
 const games = ref([

@@ -1,5 +1,5 @@
 <template>
-  <Combobox v-model="modalValue" v-model:open="open" :ignore-filter="true">
+  <Combobox v-model:model-value="modalValue" v-model:open="open" :ignore-filter="true">
     <combobox-anchor as-child>
       <label for="regions">
         <tags-input
@@ -82,8 +82,8 @@ import { watch, computed, onMounted, ref, toRaw } from 'vue'
 import { queryGetCountriesList } from '@/hooks/common/countries/useCountries'
 import { type Country } from '@/apis/common/countries/countries'
 const filters = ref(['name', 'flags'])
-const { data, isLoading } = queryGetCountriesList(filters)
-const modalValue = ref<string[]>([])
+const { data } = queryGetCountriesList(filters)
+const modalValue = defineModel<string[]>('getRegionsData', { default: [] })
 const open = ref(false)
 const searchItem = ref('')
 

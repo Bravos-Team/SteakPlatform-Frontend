@@ -16,17 +16,15 @@
         <span class="ml-6">Require Internet Connection</span>
       </Label>
     </div>
-    <Switch
-      @update:model-value="isInternetConnectedRequired = $event"
-      id="internet_connected_switcher"
-    />
+    <Switch v-model:model-value="isInternetConnectedRequired" id="internet_connected_switcher" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { ref } from 'vue'
 import { WifiOff, Wifi } from 'lucide-vue-next'
-const isInternetConnectedRequired = ref(false)
+const isInternetConnectedRequired = defineModel<boolean>({
+  default: false,
+})
 </script>
