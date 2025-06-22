@@ -26,7 +26,10 @@
       </span>
     </div>
     <div class="flex lg:w-5/12 justify-center items-center">
-      <update-game-informations-button :game-informations="gameDetails" />
+      <update-game-informations-button
+        :game-informations="gameDetails"
+        v-model:get-data-from-update-game-details-form="getDataFromUpdateGameDetailsForm"
+      />
     </div>
   </card>
 </template>
@@ -35,7 +38,7 @@
 import { Card } from '@/components/ui/card'
 import UpdateGameInformationsButton from './UpdateGameInformationsButton.vue'
 import { SquareArrowUpRight } from 'lucide-vue-next'
-import { onMounted, nextTick } from 'vue'
+import { onMounted, nextTick, ref, watch } from 'vue'
 
 const props = defineProps<{
   gameDetails: {
@@ -47,4 +50,6 @@ const props = defineProps<{
 onMounted(async () => {
   await nextTick()
 })
+
+const getDataFromUpdateGameDetailsForm = defineModel<string>('getDataFromUpdateGameDetailsForm')
 </script>

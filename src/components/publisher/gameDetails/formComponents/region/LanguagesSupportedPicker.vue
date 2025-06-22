@@ -1,5 +1,5 @@
 <template>
-  <Combobox v-model="modalValue" v-model:open="open" :ignore-filter="true">
+  <Combobox v-model:model-value="modalValue" v-model:open="open" :ignore-filter="true">
     <combobox-anchor as-child>
       <label for="languages">
         <tags-input
@@ -88,7 +88,7 @@ import { computed, ref } from 'vue'
 import { queryGetCountriesList } from '@/hooks/common/countries/useCountries'
 const filters = ref(['languages'])
 const { data, isLoading } = queryGetCountriesList(filters)
-const modalValue = ref<string[]>([])
+const modalValue = defineModel<string[]>('getLanguagesSupportedData', { default: [] })
 const open = ref(false)
 const searchItem = ref('')
 

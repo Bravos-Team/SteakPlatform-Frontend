@@ -1,11 +1,15 @@
 <template>
   <!-- START MINIMUM SYS -->
-  <minimum-requirements-form :minimum-requirements="systemRequirementSuggestions?.minimum" />
+  <minimum-requirements-form
+    v-model:minimum-requirements-model="minimum"
+    :minimum-requirements="minimum"
+  />
   <!-- END MINIMUM SYS -->
 
   <!-- START RECOMMENDED SYS -->
   <recommended-requirements-form
-    :recommended-requirements="systemRequirementSuggestions?.recommend"
+    v-model:recommended-requirements-model="recommended"
+    :recommended-requirements="recommended"
   />
   <!-- END RECOMMENDED SYS -->
 </template>
@@ -13,9 +17,16 @@
 <script setup lang="ts">
 import MinimumRequirementsForm from '@/components/publisher/gameDetails/formComponents/systemRequirements/MinimumRequirementsForm.vue'
 import RecommendedRequirementsForm from '@/components/publisher/gameDetails/formComponents/systemRequirements/RecommendedRequirementsForm.vue'
-import { type SYSTEM_REQUIREMENTS_SUGGESTIONS_TYPE } from '@/types/game/gameDetails/GameDetailsType'
+import {
+  SystemRequirementsType,
+  getDefaultValueRequirements,
+} from '@/types/game/gameDetails/GameDetailsType'
 
-const props = defineProps<{
-  systemRequirementSuggestions?: SYSTEM_REQUIREMENTS_SUGGESTIONS_TYPE
-}>()
+const minimum = defineModel<SystemRequirementsType>('getMinimumData', {
+  default: getDefaultValueRequirements(),
+})
+
+const recommended = defineModel<SystemRequirementsType>('getRecommendedData', {
+  default: getDefaultValueRequirements(),
+})
 </script>

@@ -5,10 +5,12 @@
       class="bg-white/10 hover:bg-white/20 cursor-pointer px-5 py-3 rounded-md flex gap-x-2"
     >
       <square-dot />
-      <span class="lg:text-md xl:text-[17px] flex gap-x-1">
+      <span class="lg:text-md xl:text-[17px] flex gap-x-1 flex-wrap">
         <span>Update</span>
-        <span class="font-bold"> '{{ gameInformations?.name }}' </span>
-        <span>informations</span>
+        <div class="flex gap-x-1">
+          <span class="font-bold text-nowrap"> '{{ gameInformations?.name }}' </span>
+          <span>informations</span>
+        </div>
       </span>
     </button>
     <dialog-scroll-content
@@ -26,7 +28,11 @@
         >
       </dialog-header>
       <!-- START <update-game-details-form /> -->
-      <update-game-details-form :game-details-form="gameInformations" />
+      <update-game-details-form
+        :game-preview-details="gamePreviewDetails"
+        @update:game-preview-details-data="gamePreviewDetails = $event"
+        @update:open-dialog-form="showDialog = $event"
+      />
       <!-- END <update-game-details-form /> -->
     </dialog-scroll-content>
   </Dialog>
@@ -36,13 +42,15 @@
 import { Dialog, DialogScrollContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import UpdateGameDetailsForm from './UpdateGameDetailsForm.vue'
 import { SquareDot } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { ref, watch, toRaw } from 'vue'
+import { type GameType, getDefaultGameValue } from '@/types/game/gameDetails/GameDetailsType'
+
 const showDialog = ref(false)
+const gamePreviewDetails = ref<GameType>(getDefaultGameValue())
 
 const hanldeOpenDialog = () => {
   showDialog.value = !showDialog.value
 }
-
 const props = defineProps<{
   gameInformations: {
     id: string

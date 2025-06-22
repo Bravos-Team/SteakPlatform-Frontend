@@ -65,16 +65,22 @@ const items = [
 ]
 
 const value = ref<DateValue | undefined | DateValue[]>()
+const emitEstimatedReleaseDate = defineModel<string>('emitEstimatedReleaseDate')
 
 watch(
   () => value.value,
   (newVal) => {
     if (newVal) {
+      const isoDate = newVal.toString() // => YYYY-MM-DD (ISO)
+      const formatted = dateFormatter.format(newVal.toDate(getLocalTimeZone()))
+
+      emitEstimatedReleaseDate.value = isoDate
+
       toast(
         h(
           'pre',
           { class: 'text-white text-sm z-999 flex text-wrap' },
-          h('code', `"This game will be released on (${newVal})"`),
+          h('code', `"Game sẽ phát hành ngày ${formatted} (ISO: ${isoDate})"`),
         ),
         {
           class: 'z-[9999] max-w-[20rem]',

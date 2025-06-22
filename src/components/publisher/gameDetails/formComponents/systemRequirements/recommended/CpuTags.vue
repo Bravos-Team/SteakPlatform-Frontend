@@ -1,12 +1,12 @@
 <template>
-  <Select>
+  <Select v-model:model-value="cpuData">
     <select-trigger class="w-full !bg-transparent rounded-none border-none py-0 cursor-pointer">
-      <select-value placeholder="Select Memory" />
+      <select-value placeholder="Select CPU" />
     </select-trigger>
     <select-content>
       <select-group>
-        <select-item v-for="memory in memories" :key="memory" :value="memory">
-          <select-item-text>{{ memory }}</select-item-text>
+        <select-item v-for="cpu in cpus" :key="cpu" :value="cpu">
+          <select-item-text>{{ cpu }}</select-item-text>
         </select-item>
       </select-group>
     </select-content>
@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 const props = defineProps<{
-  memories?: string[]
+  cpus?: string[]
 }>()
+const cpuData = defineModel<string>('emitCpuData')
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex laptop:flex-row flex-col w-full gap-y-2 justify-between gap-x-2">
     <!-- START INTERNET CONNECTED SWITCHER -->
-    <internet-connected-switcher />
+    <internet-connected-switcher v-model:model-value="getInternetConnectedRequiredData" />
     <!-- END INTERNET CONNECTED SWITCHER -->
 
     <div class="flex gap-x-2 w-full justify-between laptop:justify-end">
@@ -10,7 +10,7 @@
       <!-- END UPDATE AT INFORMATION -->
 
       <!-- START VERSION SELECTED -->
-      <version-selected-and-status />
+      <version-selected-and-status v-model:model-value="getVersionSelected" />
       <!-- END VERSION SELECTED -->
     </div>
   </div>
@@ -20,4 +20,8 @@
 import InternetConnectedSwitcher from '@/components/publisher/gameDetails/formComponents/updateStatus/InternetConnectedSwitcher.vue'
 import UpdateAtInformation from '@/components/publisher/gameDetails/formComponents/updateStatus/UpdateAtInformation.vue'
 import VersionSelectedAndStatus from '@/components/publisher/gameDetails/formComponents/version/VersionSelectedAndStatus.vue'
+import { watch, ref } from 'vue'
+
+const getVersionSelected = defineModel<string>('getVersionSelected')
+const getInternetConnectedRequiredData = defineModel<boolean>('getInternetConnectedRequiredData')
 </script>

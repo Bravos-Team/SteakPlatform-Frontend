@@ -9,7 +9,10 @@
         class="flex hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
       >
         <span class="text-sm font-bold">OS</span>
-        <OsVersionTags :os-version="minimumRequirements?.osVersion" />
+        <OsVersionTags
+          v-model:emit-minimum-os-versions="minimumRequirements.osVersion"
+          :os-version="systemRequirementSuggestions?.osVersion"
+        />
       </div>
       <!-- END OS -->
 
@@ -18,7 +21,10 @@
         class="flex hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
       >
         <span class="text-sm font-bold">CPU</span>
-        <cpu-tags :cpus="minimumRequirements?.cpu" />
+        <cpu-tags
+          v-model:emit-cpu-data="minimumRequirements.cpu"
+          :cpus="systemRequirementSuggestions?.cpu"
+        />
       </div>
       <!-- END CPU-->
 
@@ -27,7 +33,10 @@
         class="flex gap-x-1 items-center border-1 px-2 border-white/20 hover:bg-gray-200/10 transition-colors duration-300 text-gray-200/70"
       >
         <span class="text-sm font-bold">GPU</span>
-        <gpu-tags :gpus="minimumRequirements?.gpu" />
+        <gpu-tags
+          v-model:emit-gpu-data="minimumRequirements.gpu"
+          :gpus="systemRequirementSuggestions?.gpu"
+        />
       </div>
       <!-- END GPU-->
 
@@ -36,7 +45,10 @@
         class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
         <span class="text-sm font-bold">MEMORY</span>
-        <memory-tags :memories="minimumRequirements?.memory" />
+        <memory-tags
+          v-model:emit-memory-data="minimumRequirements.memory"
+          :memories="systemRequirementSuggestions?.memory"
+        />
       </div>
       <!-- END MEMORY-->
 
@@ -44,8 +56,11 @@
       <div
         class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
-        <span class="text-sm font-bold">MEMORY</span>
-        <direct-x-tags :directxs="minimumRequirements?.directX" />
+        <span class="text-sm font-bold">DIRECTX</span>
+        <direct-x-tags
+          v-model:emit-directx-data="minimumRequirements.directX"
+          :directxs="systemRequirementSuggestions?.directX"
+        />
       </div>
       <!-- END DIRECTX-->
 
@@ -54,7 +69,10 @@
         class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
         <span class="text-sm font-bold">STORAGE</span>
-        <storage-tags :storages="minimumRequirements?.storage" />
+        <storage-tags
+          v-model:emit-storage-data="minimumRequirements.storage"
+          :storages="systemRequirementSuggestions?.storage"
+        />
       </div>
       <!-- END STORAGE -->
     </div>
@@ -62,15 +80,32 @@
 </template>
 
 <script setup lang="ts">
-import OsVersionTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/OsVersionTags.vue'
-import CpuTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/CpuTags.vue'
-import GpuTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/GpuTags.vue'
-import MemoryTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/MemoryTags.vue'
-import StorageTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/StorageTags.vue'
-import DirectXTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/DirectXTags.vue'
-import { type MINIMUM_REQUIREMENTS_SUGGESTIONS_TYPE } from '@/types/game/gameDetails/GameDetailsType'
-
+import OsVersionTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/OsVersionTags.vue'
+import CpuTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/CpuTags.vue'
+import GpuTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/GpuTags.vue'
+import MemoryTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/MemoryTags.vue'
+import StorageTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/StorageTags.vue'
+import DirectXTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/DirectXTags.vue'
+import {
+  SystemRequirementsType,
+  systemRequirementSuggestions,
+  getDefaultValueRequirements,
+} from '@/types/game/gameDetails/GameDetailsType'
+import { ref, watch } from 'vue'
 const props = defineProps<{
-  minimumRequirements?: MINIMUM_REQUIREMENTS_SUGGESTIONS_TYPE
+  minimumRequirements: SystemRequirementsType
 }>()
+
+const minimumRequirements = ref<SystemRequirementsType>(props.minimumRequirements)
+const minimumRequirementsModel = defineModel<SystemRequirementsType>('minimumRequirementsModel', {
+  default: getDefaultValueRequirements(),
+})
+
+watch(
+  minimumRequirements,
+  (val) => {
+    minimumRequirementsModel.value = val
+  },
+  { deep: true, immediate: true },
+)
 </script>

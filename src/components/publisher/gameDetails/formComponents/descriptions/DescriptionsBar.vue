@@ -6,7 +6,8 @@
         >Subtitle</span
       >
       <Textarea
-        name="subtitle"
+        v-model:model-value="getSubtitles"
+        name="subtitles"
         placeholder="Enter your subtitle..."
         class="w-full border-2 border-double rounded-sm"
       ></Textarea>
@@ -19,6 +20,7 @@
         >Short Descriptions</span
       >
       <Textarea
+        v-model:model-value="getShortDescriptions"
         name="shortDescriptions"
         placeholder="Enter your short descriptions..."
         class="w-full border-2 border-double rounded-sm"
@@ -31,7 +33,7 @@
       <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
         >Long Descriptions</span
       >
-      <text-editor name="longDescriptions" />
+      <text-editor v-model:emit-long-descriptions-data="getLongDescriptionsHTML" />
     </div>
     <!-- END LONG DESCRIPTIONS -->
   </div>
@@ -40,4 +42,8 @@
 <script setup lang="ts">
 import { Textarea } from '@/components/ui/textarea'
 import TextEditor from '@/components/common/texteditor/TextEditor.vue'
+
+const getSubtitles = defineModel<string>('getSubtitles')
+const getShortDescriptions = defineModel<string>('getShortDescriptions')
+const getLongDescriptionsHTML = defineModel<string>('getPreviewLongDescriptionsData')
 </script>

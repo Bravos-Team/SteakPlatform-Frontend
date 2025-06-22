@@ -1,5 +1,5 @@
 <template>
-  <Combobox v-model="modalValue" v-model:open="open" :ignore-filter="true">
+  <Combobox v-model:model-value="modalValue" v-model:open="open" :ignore-filter="true">
     <combobox-anchor as-child>
       <label for="platforms">
         <tags-input
@@ -106,7 +106,7 @@ const gamingPlatforms = [
   'Xbox Infinity (cloud hybrid)',
 ]
 
-const modalValue = ref<string[]>([])
+const modalValue = defineModel<string[]>('getPlatformsSupportedData', { default: [] })
 const open = ref(false)
 const searchItem = ref('')
 
