@@ -9,6 +9,7 @@
       <div class="h-full flex justify-center p-5 bg-[#29292D]">
         <img
           src="https://ccdn.steak.io.vn/assets-guts-profile-pic.png"
+          ref="gameImage"
           class="object-contain w-full md:h-50 lg:h-full"
           alt=""
         />
@@ -44,10 +45,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
-import { BadgeAlert, Upload, Trash2 } from 'lucide-vue-next'
+import { Upload, Trash2 } from 'lucide-vue-next'
 const fileInput = ref<HTMLInputElement | null>(null)
+const gameImage = ref<HTMLInputElement | null>(null)
 const unShowImageUploaded = ref(false)
 
 const isDragging = ref(false)
@@ -55,14 +57,16 @@ const handleDrop = (e: DragEvent) => {
   isDragging.value = false
   const files = e.dataTransfer?.files
   if (files && files.length) {
-    console.log('Dropped file:', files[0])
+    unShowImageUploaded.value = false
+    gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
   }
 }
 
 const handleFileChange = (e: Event) => {
   const files = (e.target as HTMLInputElement).files
   if (files && files.length) {
-    console.log('Selected file:', files[0])
+    unShowImageUploaded.value = false
+    gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
   }
 }
 </script>

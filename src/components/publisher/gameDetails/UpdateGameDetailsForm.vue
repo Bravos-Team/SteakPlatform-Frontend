@@ -70,6 +70,7 @@
 
     <!-- START SYSTEM REQUIREMENTS BAR -->
     <system-requirements
+      v-model:emit-recommended-data="gamePreviewDetails.systemRequirements.recommend"
       v-model:emit-minimum-data="gamePreviewDetails.systemRequirements.minimum"
       v-model:is-init-system-requirements="isInitSystemRequirements"
     />
@@ -83,7 +84,7 @@
           <span class="text-white/80 font-black">Price:</span>
           <input
             type="text"
-            v-model="gamePreviewDetails.price"
+            v-model.lazy="gamePreviewDetails.price"
             placeholder="0"
             class="w-full outline-1 outline-white/30 bg-white/10 rounded-sm px-2 py-1 focus:outline-gray-400 focus:outline-2"
           />
@@ -143,7 +144,7 @@ import PlatformsSupportedTags from '@/components/publisher/gameDetails/formCompo
 import DescriptionsBar from '@/components/publisher/gameDetails/formComponents/descriptions/DescriptionsBar.vue'
 import MediaBar from '@/components/publisher/gameDetails/formComponents/MediaBar.vue'
 import { type GameType, getDefaultGameValue } from '@/types/game/gameDetails/GameDetailsType'
-import { watch, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const isInitSystemRequirements = ref<boolean>(false)
 const getDataFromDescriptionsBar = computed({
@@ -170,13 +171,4 @@ const pricePreview = computed(() => {
     currency: 'VND',
   })
 })
-
-watch(
-  props.gamePreviewDetails,
-  (newVal) => {
-    console.log('FROM CHILD:')
-    console.log(newVal)
-  },
-  { deep: true, immediate: true },
-)
 </script>

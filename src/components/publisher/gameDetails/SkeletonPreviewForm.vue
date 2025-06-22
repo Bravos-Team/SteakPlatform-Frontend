@@ -28,9 +28,7 @@
       class="flex w-full items-start mobile:flex-col-reverse laptop:flex-row gap-y-6 gap-x-[5rem]"
     >
       <!-- START LEFT CONTENT -->
-      <div
-        class="flex flex-col gap-y-3 tablet:min-w-100 laptop:min-w-150 desktop:min-w-200 desktop-xl:min-w-260 w-full"
-      >
+      <div class="flex flex-col gap-y-3 @min-[1200px]:!w-[10cqw] @xl:min-w-[70cqw] w-full">
         <!--- PREVIEW MEDIA BAR -->
         <div class="flex items-center flex-col gap-y-8 h-full w-full">
           <!-- START MEDIA -->

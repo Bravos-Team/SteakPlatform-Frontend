@@ -27,8 +27,6 @@ import {
   SystemRequirementsType,
   getDefaultValueRequirements,
 } from '@/types/game/gameDetails/GameDetailsType'
-import { ref, computed } from 'vue'
-import SystemRequirements from '@/components/publisher/gameDetails/formComponents/systemRequirements/SystemRequirementsBar.vue'
 const addMinimunAndRecommended = defineModel<boolean>('isInitSystemRequirements', {
   default: false,
 })

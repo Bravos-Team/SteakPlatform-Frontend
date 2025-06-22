@@ -3,14 +3,12 @@
     <vue-particles
       id="tsparticles"
       :particlesInit="particlesInit"
-      :particlesLoaded="particlesLoaded"
       url="http://foo.bar/particles.json"
     />
 
     <vue-particles
       id="tsparticles"
       :particlesInit="particlesInit"
-      :particlesLoaded="particlesLoaded"
       :options="{
         background: {
           color: {
@@ -139,7 +137,7 @@ const particlesInit = async (engine) => {
   await loadSlim(engine)
 }
 
-const particlesLoaded = async (container) => {
-  console.log('Particles container loaded', container)
-}
+// const particlesLoaded = async (container) => {
+//   console.log('Particles container loaded', container)
+// }
 </script>

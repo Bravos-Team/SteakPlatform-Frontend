@@ -80,8 +80,11 @@ const updateNameSchema = z.object({
 const formSchema = toTypedSchema(updateNameSchema)
 type updateType = z.infer<typeof updateNameSchema>
 
+const emit = defineEmits(['update:gameNameData'])
+
 const onSubmitUpdateName = (name: updateType) => {
   showDialog.value = false
+  emit('update:gameNameData', name.name)
   toast.success(
     h('span', { class: 'text-white  text-lg z-999' }, `"${name.name}" has been updated`),
     {

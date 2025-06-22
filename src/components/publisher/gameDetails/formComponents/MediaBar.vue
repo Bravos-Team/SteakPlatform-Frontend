@@ -11,17 +11,35 @@
             <span> Media Input {{ index + 1 }}</span>
             <cloud-upload :size="20" />
           </span>
-          <div class="w-full relative">
-            <input
-              type="file"
-              class="w-full border-2 focus:border-white/50 focus:outline-none rounded-sm bg-white/5 px-2 py-1 font-medium relative"
-              placeholder="image url..."
-            />
-            <div
-              class="absolute -top-2 -right-2 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
-              @click="handleDeleteMediaInput(index)"
-            >
-              <X class="size-3" />
+          <div class="w-full relative flex focus:border-white/50 focus:outline-none">
+            <div class="h-full flex justify-center bg-white/10 border-2">
+              <img
+                v-if="media.imagePreview && media.type === 'image'"
+                :src="media.imagePreview"
+                class="object-contain w-full lg:h-20"
+                alt=""
+              />
+              <video
+                v-if="media.imagePreview && media.type === 'video'"
+                :src="media.imagePreview"
+                class="object-contain w-full lg:h-40"
+                autoplay
+              ></video>
+            </div>
+            <div class="w-full h-full">
+              <input
+                type="file"
+                class="w-full h-full rounded-none bg-white/5 px-2 py-1 font-medium relative"
+                placeholder="image url..."
+                @change="handleSelectFile(index, $event)"
+              />
+
+              <div
+                class="absolute -top-2 -right-2 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
+                @click="handleDeleteMediaInput(index)"
+              >
+                <X class="size-3" />
+              </div>
             </div>
           </div>
         </div>
@@ -54,10 +72,12 @@ import { ref, h } from 'vue'
 type MediaType = {
   type: string
   url: string
+  imagePreview?: string | null
 }
 const media_files = ref<MediaType[]>([
   {
     type: '',
+    imagePreview: null,
     url: '',
   },
 ])
@@ -65,6 +85,7 @@ const media_files = ref<MediaType[]>([
 const handleCreateMediaInput = () => {
   media_files.value.push({
     type: '',
+    imagePreview: null,
     url: '',
   })
 }
@@ -73,6 +94,19 @@ const handleDeleteMediaInput = (index: number) => {
   media_files.value.splice(index, 1)
 }
 
+const handleSelectFile = (index: number, event: Event) => {
+  const files = (event.target as HTMLInputElement).files
+  if (files && files.length > 0) {
+    if (files[0].type.startsWith('image')) {
+      media_files.value[index].type = 'image'
+    } else if (files[0].type.startsWith('video')) {
+      media_files.value[index].type = 'video'
+    }
+
+    const previewUrl = URL.createObjectURL(files[0])
+    media_files.value[index].imagePreview = previewUrl
+  }
+}
 const handleClearAll = () => {
   media_files.value = []
 }

@@ -29,12 +29,14 @@ const gameDetails = ref<
       id: string
       name: string
       descriptions: string
+      image: string
     }
   | any
 >({
   id: '',
   name: '',
   descriptions: '',
+  image: 'https://ccdn.steak.io.vn/assets-desert.png',
 })
 
 const games = ref([
