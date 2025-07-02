@@ -85,6 +85,13 @@
           <input
             type="text"
             v-model.lazy="gamePreviewDetails.price"
+            @blur="
+              () => {
+                gamePreviewDetails.price = isNaN(Number(gamePreviewDetails.price))
+                  ? 0
+                  : Number(gamePreviewDetails.price)
+              }
+            "
             placeholder="0"
             class="w-full outline-1 outline-white/30 bg-white/10 rounded-sm px-2 py-1 focus:outline-gray-400 focus:outline-2"
           />

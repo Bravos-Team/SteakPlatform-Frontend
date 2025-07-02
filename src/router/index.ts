@@ -4,9 +4,15 @@ import authRoutes from '@/router/routes/store/AuthRoutes'
 import homeRoutes from '@/router/routes/store/HomeRoutes'
 import storeRoutes from '@/router/routes/store/StoreRoutes'
 import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
-// import middlewarePipeline from '@/router/middlewares/middlewarePipeLine'
+import supportCenterRoutes from '@/router/routes/help/SupportCenterRoutes'
 
-const routes: RouteRecordRaw[] = [homeRoutes, authRoutes, storeRoutes, ...publisherRoutes]
+const routes: RouteRecordRaw[] = [
+  homeRoutes,
+  authRoutes,
+  storeRoutes,
+  ...publisherRoutes,
+  ...supportCenterRoutes,
+]
 
 routes.push({
   path: '/:pathMatch(.*)*',

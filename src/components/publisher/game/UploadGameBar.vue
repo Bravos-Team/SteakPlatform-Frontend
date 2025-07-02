@@ -8,20 +8,49 @@
     <card
       v-for="(game, index) in games"
       :key="index"
-      class="bg-[var(--bg-card-game-base)]/60 transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem]"
+      class="bg-[var(--bg-card-game-base)]/60 transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem] relative"
     >
       <router-link
         :to="{ name: 'PublisherEditGame', params: { id: game.id } }"
         class="w-full h-full"
       >
         <div class="flex flex-col gap-y-2 w-full h-full">
-          <!-- GAME IMAGE -->
-          <div class="overflow-hidden rounded-t-sm w-full h-full">
-            <img
-              class="object-contain w-full -translate-y-15"
-              src="https://ccdn.steak.io.vn/assets-guts-profile-pic.png"
-              alt=""
-            />
+          <div
+            class="w-full h-full overflow-hidden rounded-t-sm"
+            :class="{
+              'bg-red-300/10': game.status === 2,
+              'bg-green-300/30': game.status === 3,
+              'bg-white/20': game.status === 0,
+              'bg-sky-300/20': game.status === 1,
+            }"
+          >
+            <!-- GAME IMAGE -->
+            <div
+              class="inverted-radius !rounded-none"
+              :style="{
+                '--x': xValueComputed(game.status) + 'px',
+              }"
+            >
+              <img
+                class="object-contain w-full -translate-y-15"
+                src="https://ccdn.steak.io.vn/assets-guts-profile-pic.png"
+                alt=""
+              />
+            </div>
+            <div
+              class="font-black text-white z-2 absolute p-1 px-2 m-0 top-0 flex items-center right-2"
+            >
+              <span
+                :class="{
+                  'text-red-500/90': game.status === 2,
+                  'text-green-500/90': game.status === 3,
+                  'text-gray-300/90': game.status === 0,
+                  'text-sky-300/90': game.status === 1,
+                }"
+                class="w-full h-full"
+                >{{ statusComputed(game.status) }}</span
+              >
+            </div>
           </div>
           <!-- END GAME IMAGE-->
 
@@ -92,7 +121,6 @@
 <script setup lang="ts">
 import { ChartSpline, UserRoundCog, Gamepad2, ShoppingCart, Settings } from 'lucide-vue-next'
 import { Card, CardAction, CardDescription } from '@/components/ui/card'
-
 const props = defineProps<{
   isCollaped: {
     type: boolean
@@ -102,6 +130,37 @@ const props = defineProps<{
     id: string
     name: string
     descriptions: string
+    status: number
   }[]
 }>()
+
+const xValueComputed = (status: number) => {
+  switch (status) {
+    case 0:
+      return 70
+    case 1:
+      return 110
+    case 2:
+      return 100
+    case 3:
+      return 90
+    default:
+      return 100
+  }
+}
+
+const statusComputed = (status: number) => {
+  switch (status) {
+    case 0:
+      return 'DRAFT'
+    case 1:
+      return 'PUBLISHED'
+    case 2:
+      return 'REJECTED'
+    case 3:
+      return 'VERIFIED'
+    default:
+      return 'UNDIFINE'
+  }
+}
 </script>

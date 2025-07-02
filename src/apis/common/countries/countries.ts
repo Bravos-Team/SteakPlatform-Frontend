@@ -69,10 +69,13 @@ export type Language = {
 
 export type Countries = Country[]
 
-export const getCountries = async (filters?: string[]) => {
-  return await axios.get('https://restcountries.com/v3.1/all', { params: filters })
+export const getCountries = async (filters?: string[], signal?: AbortSignal) => {
+  return await axios.get('https://restcountries.com/v3.1/all', { params: filters, signal: signal })
 }
 
-export const getCountriesIndependent = async (filters?: string[]) => {
-  return await axios.get(`https://restcountries.com/v3.1/independent?fields=${filters?.join(',')}`)
+export const getCountriesIndependent = async (filters?: string[], signal?: AbortSignal) => {
+  return await axios.get(
+    `https://restcountries.com/v3.1/independent?fields=${filters?.join(',')}`,
+    { signal: signal },
+  )
 }

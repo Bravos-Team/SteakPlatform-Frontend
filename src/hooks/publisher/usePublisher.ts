@@ -3,50 +3,47 @@ import { loginEmail, loginUserName, register } from '@/apis/publisher/auth/authP
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
 
 export const usePublisherRegister = () => {
-  const { isPending, isError, error, isSuccess, mutateAsync, data } = useMutation({
+  const { isPending, mutateAsync, reset } = useMutation({
     mutationFn: async (data: PublisherRegisterRequest) => {
       return await register(data)
+    },
+    onSuccess: () => {
+      reset()
     },
   })
 
   return {
     isPending,
-    isError,
-    error,
-    isSuccess,
     mutateAsync,
-    data,
   }
 }
 
 export const usePublisherLoginUserName = () => {
-  const { isPending, isError, error, isSuccess, mutateAsync, data } = useMutation({
+  const { isPending, mutateAsync, reset } = useMutation({
     mutationFn: async (data: PublisherLoginRequest) => {
       return await loginUserName(data)
+    },
+    onSuccess: () => {
+      reset()
     },
   })
   return {
     isPending,
-    isError,
-    error,
-    isSuccess,
     mutateAsync,
-    data,
   }
 }
 
 export const usePublisherLoginEmail = () => {
-  const { isPending, isError, error, isSuccess, mutateAsync, data } = useMutation({
+  const { isPending, mutateAsync, reset } = useMutation({
     mutationFn: async (data: PublisherLoginRequest) => {
       return await loginEmail(data)
+    },
+    onSuccess: () => {
+      reset()
     },
   })
   return {
     isPending,
-    isError,
-    error,
-    isSuccess,
     mutateAsync,
-    data,
   }
 }

@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { Card } from '@/components/ui/card'
 import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPreviewForm.vue'
-import { ref, watch, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import NameAndBackgroundEdit from '@/components/publisher/gameDetails/NameAndBackgroundEdit.vue'
 import UpdateGameInformations from '@/components/publisher/gameDetails/UpdateGameInformations.vue'
 import { useRoute } from 'vue-router'

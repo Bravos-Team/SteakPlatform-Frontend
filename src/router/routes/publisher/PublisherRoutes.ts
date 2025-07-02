@@ -18,7 +18,7 @@ export const publisherRoutes: RouteRecordRaw[] = [
         },
       },
       {
-        path: '/game-management',
+        path: 'game-management',
         name: 'PublisherGameManagement',
         component: () => import('@/views/publisher/home/game/PublisherGameManagement.vue'),
         meta: {

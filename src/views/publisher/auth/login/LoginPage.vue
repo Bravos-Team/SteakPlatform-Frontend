@@ -85,6 +85,7 @@
                 class="animate-spin ml-2"
               />
             </button>
+            <span class="text-danger">{{ loginMessage }}</span>
           </div>
         </form>
       </div>
@@ -95,6 +96,12 @@
               :to="{ name: 'PublisherAuthRegister' }"
               class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
               >Create Account ?
+            </router-link>
+            or
+            <router-link
+              :to="{ name: 'Login' }"
+              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
+              >Login as User Account
             </router-link>
             <!-- <span>or</span>
             <router-link
@@ -140,7 +147,7 @@ const form = reactive({
   deviceId: '',
   deviceInfo: '',
 })
-
+const loginMessage = ref('')
 onMounted(async () => {
   try {
     form.deviceInfo = await generateDeviceInfo()
@@ -192,6 +199,8 @@ const handlePublisherLogin = async () => {
       }
     } catch (err: any) {
       notificationStore.showError(err?.response?.data?.detail ?? 'Something went wrong')
+      loginMessage.value = err?.response?.data?.detail
+      console.log('loginMessage: ', loginMessage.value)
     } finally {
       setTimeout(notificationStore.hide, 3000)
     }

@@ -95,6 +95,11 @@
         >
           <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6" />
         </button>
+        <div class="flex items-center justify-center">
+          <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-sky-400"
+            >Login as Publisher</router-link
+          >
+        </div>
       </div>
     </form>
 
@@ -199,7 +204,7 @@ async function onSubmit() {
   await (type === 'email' ? loginStore.loginEmail(payload) : loginStore.loginUserName(payload))
 
   if (!loginStore.loginError) {
-    notificationStore.showSuccess(loginStore.loginMessage || 'Đăng nhập thành công')
+    window?.electronAPI.loginWindowHandle(res?.data.username)
   } else {
     notificationStore.showError(loginStore.loginError || 'Đăng nhập không thành công')
   }
