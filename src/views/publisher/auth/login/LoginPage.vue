@@ -128,18 +128,20 @@ import { extractErrors } from '@/utils/zod/HanldeZodErrors.js'
 import { LoginByEmailSchema, LoginByUserNameSchema } from '@/types/publisher/AuthType.js'
 import { isEmail } from '@/services/common/CurrencyUtils.js'
 import { usePublisherLoginEmail, usePublisherLoginUserName } from '@/hooks/publisher/usePublisher'
-import { useNotificationStore } from '@/stores/notificationStore'
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next'
 import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'
 import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
 
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
 const { mutateAsync: mutateAsyncPublisherLoginEmail, isPending: isPendingPublisherLoginEmail } =
   usePublisherLoginEmail()
 const {
   mutateAsync: mutateAsyncPublisherLoginUserName,
   isPending: isPendingPublisherLoginUserName,
 } = usePublisherLoginUserName()
-const notificationStore = useNotificationStore()
 const publisherErrors = ref<Record<string, string>>({})
 const form = reactive({
   usernameOrEmail: '',
@@ -195,14 +197,16 @@ const handlePublisherLogin = async () => {
         ? mutateAsyncPublisherLoginEmail(payload)
         : mutateAsyncPublisherLoginUserName(payload))
       if (res.status === 200) {
-        notificationStore.showSuccess('Login successfully')
+        toastSuccessNotificationPopup('Login successfully', `Welcome ${res.data.username}`)
       }
     } catch (err: any) {
-      notificationStore.showError(err?.response?.data?.detail ?? 'Something went wrong')
+      console.error('Login failed:', err)
+      toastErrorNotificationPopup(
+        'Login failed',
+        err?.response?.data?.detail || 'An error occurred',
+      )
       loginMessage.value = err?.response?.data?.detail
       console.log('loginMessage: ', loginMessage.value)
-    } finally {
-      setTimeout(notificationStore.hide, 3000)
     }
   }
 }

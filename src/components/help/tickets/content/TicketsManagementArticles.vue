@@ -112,8 +112,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const redirectToTicketDetails = (params: number) => {
-  router.push({ name: 'TicketDetails', params: { id: params } })
+const redirectToTicketDetails = async (params: number) => {
+  await router.push({ name: 'TicketDetails', params: { id: params } })
 }
 const ticketList = ref([
   {

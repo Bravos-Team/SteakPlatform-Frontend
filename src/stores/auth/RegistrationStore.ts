@@ -38,7 +38,7 @@ export const registrationStore = defineStore(
         removeCookie('emailUserRegister')
         setCookie('emailUserRegister', registerRequest.email)
 
-        router.push('verify-email')
+        await router.push('verify-email')
       } catch (error) {
         if (error instanceof Error && error.message.startsWith('Invalid register parameters')) {
           registryError.value = error.message

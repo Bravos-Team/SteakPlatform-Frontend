@@ -275,7 +275,7 @@ const handlePublisherRegister = async () => {
       const response = await mutateAsyncPublisherRegister(publisher.value)
       if (response.status === 200) {
         setCookie('masterEmailRegister', publisher.value.masterEmail)
-        router.push({ name: 'PublisherAuthVerifyEmail' })
+        await router.push({ name: 'PublisherAuthVerifyEmail' })
       }
     } catch (err: any) {
       statusSubmitMessage.value = 'text-red-500'

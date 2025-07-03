@@ -118,15 +118,15 @@ import { onMounted, reactive, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth/LoginStore'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
 import { loginByEmailSchema, loginByUserNameSchema } from '@/types/auth/AuthType'
-
-import { useNotificationStore } from '@/stores/notificationStore'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
 
 const loginStore = useAuthStore()
-import { ZodSchema } from 'zod'
 import { extractErrors } from '@/utils/zod/HanldeZodErrors'
 import { isEmail } from '@/services/common/CurrencyUtils'
 
-const notificationStore = useNotificationStore()
 const form = reactive({
   usernameOrEmail: '',
   password: '',
@@ -204,12 +204,15 @@ async function onSubmit() {
   await (type === 'email' ? loginStore.loginEmail(payload) : loginStore.loginUserName(payload))
 
   if (!loginStore.loginError) {
-    window?.electronAPI.loginWindowHandle(res?.data.username)
+    // window?.electronAPI.loginWindowHandle(res?.data.username)
+    toastSuccessNotificationPopup(
+      'Login successful',
+      `Welcome back ${loginStore.loginResult?.displayName}`,
+    )
   } else {
-    notificationStore.showError(loginStore.loginError || 'Đăng nhập không thành công')
+    toastErrorNotificationPopup('Login failed', loginStore.loginError)
+    return
   }
-
-  setTimeout(notificationStore.hide, 5000)
 }
 
 const privateUrl = 'aHR0cHM6Ly95b3V0dS5iZS94dkZaam81UGdHMD9zaT1JV3lFNTZlX3hYN3k0dXJu'

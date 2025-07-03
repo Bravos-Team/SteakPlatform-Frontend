@@ -1,8 +1,6 @@
 import axios from 'axios'
-import { onMounted } from 'vue'
 import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import router from '@/router/index'
-import { data } from '../components/publisher/common/sidebar/SidebarItems'
 
 export const SteakApi = axios.create({
   baseURL: import.meta.env.VITE_BASE_API_URL,
@@ -15,13 +13,12 @@ export const SteakApi = axios.create({
 
 SteakApi.interceptors.response.use(
   (response) => response,
-  (error) => {
-    console.log('ERROR: ', error.response)
+  async (error) => {
     const path = router.currentRoute.value.fullPath
-    console.log('PATH:', path)
-    if (error.response?.status === 401) {
+    console.log('path: ', path)
+    if (error.response?.status === 401 && path != '/login' && path != '/publisher/login') {
       if (path.startsWith('/publisher') || path.startsWith('/game')) {
-        router.push({ name: 'PublisherAuthLogin' })
+        await router.push({ name: 'PublisherAuthLogin' })
         if (router.currentRoute.value.name === 'PublisherAuthLogin') {
           return
         } else {
@@ -31,7 +28,7 @@ SteakApi.interceptors.response.use(
           )
         }
       } else {
-        router.push({ name: 'Login' })
+        // router.push({ name: 'Login' })
         return toastErrorNotificationPopup(
           'You need login to access authenication required page!',
           'Steak Game Store Authentication',

@@ -1,10 +1,6 @@
 <template>
   <div>
-    <vue-particles
-      id="tsparticles"
-      :particlesInit="particlesInit"
-      url="http://foo.bar/particles.json"
-    />
+    <vue-particles id="tsparticles" :particlesInit="particlesInit" />
 
     <vue-particles
       id="tsparticles"
