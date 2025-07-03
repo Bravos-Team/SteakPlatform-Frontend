@@ -20,6 +20,12 @@ export const supportCenterRoutes: RouteRecordRaw[] = [
         name: 'TicketsRequest',
         component: () => import('@/views/help/TicketsRequestManagementPage.vue'),
       },
+      {
+        path: 'tickets/details/:id',
+        name: 'TicketDetails',
+        component: () => import('@/views/help/TicketDetailsPage.vue'),
+        props: true,
+      },
     ],
   },
 ]
