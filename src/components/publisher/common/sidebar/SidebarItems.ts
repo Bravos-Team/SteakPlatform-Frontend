@@ -1,5 +1,6 @@
 import {
   LayoutDashboard,
+  BadgeInfo,
   SquareDashedKanban,
   ChartNoAxesGantt,
   HardDriveUpload,
@@ -94,6 +95,11 @@ export const navItemsData = [
         icon: HardDriveUpload,
       },
     ],
+  },
+  {
+    title: 'Support',
+    name: 'SupportCenter',
+    icon: BadgeInfo,
   },
   {
     title: 'Logout',

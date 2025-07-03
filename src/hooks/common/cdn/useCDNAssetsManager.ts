@@ -5,7 +5,12 @@ import {
   getPresignedImageUrls,
   postIntoPresignedUrl,
 } from '@/apis/common/cdn/cdnAssetsManager'
-import { type PresignedUrlType, type PostIntoPresignedURLType } from '@/types/cdn/CdnTypes'
+import {
+  type PresignedUrlType,
+  type PostIntoPresignedURLType,
+  type PresignedUrlResponse,
+} from '@/types/cdn/CdnTypes'
+import { AxiosResponse } from 'axios'
 export const useDeleteImage = () => {
   const { data, isSuccess, isError, mutate, isPending, error } = useMutation({
     mutationFn: async (url: string) => {
@@ -26,19 +31,23 @@ export const useDeleteImage = () => {
 export const useGetPresignedImageUrl = () => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (data: PresignedUrlType) => {
-      const response = await getPresignedImageUrl(data.fileName, data.fileSize)
+      const response: AxiosResponse<PresignedUrlResponse> = await getPresignedImageUrl(
+        data.fileName,
+        data.fileSize,
+      )
       return response.data
     },
   })
   return {
     mutateAsync,
+    isPending,
   }
 }
 
 export const useGetPresignedImageUrls = () => {
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (data: PresignedUrlType[]) => {
-      const response = await getPresignedImageUrls(data)
+    mutationFn: async (data: PresignedUrlType[]): Promise<PresignedUrlResponse[]> => {
+      const response: AxiosResponse<PresignedUrlResponse[]> = await getPresignedImageUrls(data)
       return response.data
     },
   })
@@ -54,5 +63,6 @@ export const usePostIntoPresignedUrl = () => {
   })
   return {
     mutateAsync,
+    isPending,
   }
 }

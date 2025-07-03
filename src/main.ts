@@ -2,7 +2,7 @@ import { createPinia } from 'pinia'
 import persist from 'pinia-plugin-persistedstate'
 
 import { createApp } from 'vue'
-import { VueQueryPlugin } from '@tanstack/vue-query'
+import { VueQueryPlugin, VueQueryPluginOptions } from '@tanstack/vue-query'
 import App from './App.vue'
 import router from './router'
 import Particles from 'vue3-particles'
@@ -12,9 +12,20 @@ import './assets/index.css'
 const pinia = createPinia()
 pinia.use(persist)
 
-const app = createApp(App).use(Particles)
+const vueQueryPluginOptions: VueQueryPluginOptions = {
+  queryClientConfig: {
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    },
+  },
+}
 
-app.use(router).use(pinia).use(VueQueryPlugin)
+const app = createApp(App).use(await Particles)
+
+app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions)
 
 router.afterEach((to: RouteLocationNormalized) => {
   if (to.meta?.title) {

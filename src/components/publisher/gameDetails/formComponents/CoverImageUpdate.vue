@@ -46,8 +46,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
+import {
+  useGetPresignedImageUrl,
+  usePostIntoPresignedUrl,
+} from '@/hooks/common/cdn/useCDNAssetsManager'
 import { Upload, Trash2 } from 'lucide-vue-next'
+
+const { isPending: isGettingPresignedUrl, mutateAsync: mutateGetPresignedImageUrl } =
+  useGetPresignedImageUrl()
+const { isPending: isPosttingIntoPresignedUrl, mutateAsync: mutatePostIntoPresignedUrl } =
+  usePostIntoPresignedUrl()
+
 const fileInput = ref<HTMLInputElement | null>(null)
 const gameImage = ref<HTMLInputElement | null>(null)
 const unShowImageUploaded = ref(false)
@@ -62,11 +71,21 @@ const handleDrop = (e: DragEvent) => {
   }
 }
 
-const handleFileChange = (e: Event) => {
+const handleFileChange = async (e: Event) => {
   const files = (e.target as HTMLInputElement).files
   if (files && files.length) {
     unShowImageUploaded.value = false
     gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
+
+    const response = await mutateGetPresignedImageUrl({
+      fileName: files[0].name,
+      fileSize: files[0].size,
+    })
+
+    await mutatePostIntoPresignedUrl({
+      url: response.signedUrl,
+      file: files[0],
+    })
   }
 }
 </script>

@@ -4,6 +4,7 @@ const homeRoutes: RouteRecordRaw = {
   path: '/',
   name: 'Home',
   component: () => import('@/layouts/store/home/HomeLayout.vue'),
+  redirect: { name: 'HomePage' },
   meta: {
     title: 'Home',
   },

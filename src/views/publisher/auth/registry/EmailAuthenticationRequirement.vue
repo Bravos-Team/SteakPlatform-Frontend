@@ -46,10 +46,8 @@
   </div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router'
 import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
 import { getCookie } from '@/utils/cookies/cookie-utils'
-const router = useRouter()
 
 const handleShowEmail = (email) => {
   const atIndex = email.indexOf('@')

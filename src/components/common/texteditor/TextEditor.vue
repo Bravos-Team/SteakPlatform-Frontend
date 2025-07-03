@@ -1196,7 +1196,7 @@ const editor = new Editor({
   editorProps: {
     attributes: {
       spellcheck: isSpellCheck.value,
-      class: 'h-full outline-0   min-w-full',
+      class: 'h-full outline-0 text-white   min-w-full',
     },
   },
   content: `

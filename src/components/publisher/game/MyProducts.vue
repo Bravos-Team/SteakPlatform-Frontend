@@ -31,25 +31,27 @@ const games = ref([
     id: '1',
     name: 'Clash of Clan',
     descriptions: 'stupid game',
+    status: 1,
   },
 
   {
     id: '2',
     name: 'Spider man 2 Remastered',
-
     descriptions: 'GOTY 2023',
+    status: 2,
   },
 
   {
     id: '3',
     name: 'Grant Thief Auto VI ',
-
     descriptions: 'seventh awards ',
+    status: 3,
   },
   {
     id: '4',
     name: 'Super Ultra Gay Deluxe Edition',
     descriptions: 'anbatocom',
+    status: 0,
   },
 ])
 </script>

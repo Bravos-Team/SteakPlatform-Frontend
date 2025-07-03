@@ -171,6 +171,11 @@
                   type="text"
                   name="name"
                   v-model="publisher.phone"
+                  @blur="
+                    () => {
+                      publisher.phone = phoneFormatter
+                    }
+                  "
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
                   placeholder="Enter Company Phone Number"
@@ -230,7 +235,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRaw } from 'vue'
+import { ref, computed } from 'vue'
 import { setCookie } from '@/utils/cookies/cookie-utils'
 import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next'
@@ -242,7 +247,6 @@ import { useRouter } from 'vue-router'
 
 const { mutateAsync: mutateAsyncPublisherRegister, isPending: isPendingPublisherRegister } =
   usePublisherRegister()
-
 const publisher = ref({
   name: '',
   businessEmail: '',
@@ -251,6 +255,10 @@ const publisher = ref({
   masterUsername: '',
   masterEmail: '',
   verifyMasterPassword: '',
+})
+
+const phoneFormatter = computed(() => {
+  return Number(publisher.value.phone).toString()
 })
 
 const router = useRouter()
@@ -267,7 +275,7 @@ const handlePublisherRegister = async () => {
       const response = await mutateAsyncPublisherRegister(publisher.value)
       if (response.status === 200) {
         setCookie('masterEmailRegister', publisher.value.masterEmail)
-        router.push({ name: 'PublisherAuthVerifyEmail' })
+        await router.push({ name: 'PublisherAuthVerifyEmail' })
       }
     } catch (err: any) {
       statusSubmitMessage.value = 'text-red-500'

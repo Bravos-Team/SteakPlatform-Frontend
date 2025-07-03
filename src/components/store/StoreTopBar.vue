@@ -113,10 +113,10 @@
                 class="hover:text-gray-300 flex items-center h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
                 >Community</a
               >
-              <a
-                href=""
+              <router-link
+                :to="{ name: 'SupportCenter' }"
                 class="px-3 hover:text-gray-300 flex items-center duration-300 h-full transition-all hover:bg-gray-800/80"
-                >Help</a
+                >Help</router-link
               >
               <a
                 href=""

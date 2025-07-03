@@ -7,3 +7,8 @@ export type PostIntoPresignedURLType = {
   url: string
   file: File
 }
+
+export type PresignedUrlResponse = {
+  fileName: string
+  signedUrl: string
+}

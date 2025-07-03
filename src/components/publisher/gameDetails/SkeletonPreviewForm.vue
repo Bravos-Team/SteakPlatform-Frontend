@@ -131,11 +131,11 @@
         <div class="flex justify-start w-full font-bold text-[18px] text-white/50">000.000</div>
 
         <div class="flex flex-col gap-y-[10px]">
-          <router-link
-            to="/payment"
+          <button
             class="py-[12px] text-white/30 px-[20px] align-middle bg-[#26bbff]/30 rounded-[10px] flex justify-center items-center"
-            >Buy Now</router-link
           >
+            Buy Now
+          </button>
           <button
             class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center"
           >
