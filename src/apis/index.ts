@@ -15,7 +15,6 @@ SteakApi.interceptors.response.use(
   (response) => response,
   async (error) => {
     const path = router.currentRoute.value.fullPath
-    console.log('path: ', path)
     if (error.response?.status === 401 && path != '/login' && path != '/publisher/login') {
       if (path.startsWith('/publisher') || path.startsWith('/game')) {
         await router.push({ name: 'PublisherAuthLogin' })
@@ -28,15 +27,11 @@ SteakApi.interceptors.response.use(
           )
         }
       } else {
-        // router.push({ name: 'Login' })
         return toastErrorNotificationPopup(
           'You need login to access authenication required page!',
           'Steak Game Store Authentication',
         )
       }
-    } else {
-      let errResponse = error.response.data.detail
-      return toastErrorNotificationPopup(`${errResponse}`, 'Error')
     }
     return Promise.reject(error)
   },

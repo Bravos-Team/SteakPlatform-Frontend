@@ -244,7 +244,6 @@ import { extractErrors } from '@/utils/zod/HanldeZodErrors'
 import { PublisherRegisterRequestSchema } from '@/types/publisher/AuthType'
 import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'
 import { useRouter } from 'vue-router'
-
 const { mutateAsync: mutateAsyncPublisherRegister, isPending: isPendingPublisherRegister } =
   usePublisherRegister()
 const publisher = ref({

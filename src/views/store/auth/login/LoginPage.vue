@@ -7,7 +7,7 @@
       <p class="text-2xl font-extrabold mt-2">Đăng Nhập</p>
     </div>
 
-    <form @submit.prevent="onSubmit" novalidate class="w-full max-w-md mx-auto space-y-4">
+    <form @submit.prevent="handleSubmission" novalidate class="w-full max-w-md mx-auto space-y-4">
       <div>
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">
           Email hoặc Tên đăng nhập
@@ -53,7 +53,7 @@
         <a href="#" class="text-sm text-[#0af] italic underline">Quên mật khẩu?</a>
       </div>
 
-      <div v-if="loginStore.isLoading">
+      <div v-if="isLoginByEmailPending || isLoginByUsernamePending">
         <div
           class="h-12 hover:ring-3 hover:bg-blue-400 overflow-hidden hover:text-black cursor-not-allowed hover:ring-blue-300 transition-all duration-300 bg-[#A9A9A9] rounded-[5px] w-full"
         >
@@ -115,17 +115,32 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 
-import { useAuthStore } from '@/stores/auth/LoginStore'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
-import { loginByEmailSchema, loginByUserNameSchema } from '@/types/auth/AuthType'
+import { COMMON_DATA, loginByEmailSchema, loginByUserNameSchema } from '@/types/auth/AuthType'
 import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
 
-const loginStore = useAuthStore()
 import { extractErrors } from '@/utils/zod/HanldeZodErrors'
-import { isEmail } from '@/services/common/CurrencyUtils'
+import { isEmail } from '@/utils/type/typeChecking'
+import {
+  useLoginByEmailMutatetion,
+  useLoginByUsernameMutatetion,
+} from '@/hooks/store/auth/useAuthentications'
+
+const {
+  isPending: isLoginByEmailPending,
+  isSuccess: isLoginByEmailSuccess,
+  mutateAsync: mutateLoginByEmail,
+  data: loginByEmailData,
+} = useLoginByEmailMutatetion()
+const {
+  isPending: isLoginByUsernamePending,
+  isSuccess: isLoginByUsernameSuccess,
+  data: loginByUsernameData,
+  mutateAsync: mutateLoginByUsername,
+} = useLoginByUsernameMutatetion()
 
 const form = reactive({
   usernameOrEmail: '',
@@ -146,75 +161,60 @@ onMounted(async () => {
 
 const errors = ref<Record<string, string>>({})
 
-// function validationForms(schema: ZodSchema, data: unknown) {
-//   const { valid, errors: validationErrors } = validationForm(schema, data)
-//   if (!valid) {
-//     return typeof validationErrors === 'object' ? validationErrors : {}
-//   }
-//   return {}
-// }
-
-async function onSubmit() {
-  function getSchemaAndPayLoad(formData: typeof form) {
-    const commonData = {
-      password: formData.password,
-      deviceId: formData.deviceId,
-      deviceInfo: formData.deviceInfo,
-    }
-    if (isEmail(formData.usernameOrEmail)) {
-      return {
-        schema: loginByEmailSchema,
-        payload: {
-          ...commonData,
-          email: formData.usernameOrEmail,
-        },
-        type: 'email',
-      }
-    } else {
-      return {
-        schema: loginByUserNameSchema,
-        payload: {
-          ...commonData,
-          username: formData.usernameOrEmail,
-        },
-        type: 'username',
-      }
-    }
+const handleSubmission = async () => {
+  const commonData: COMMON_DATA = {
+    password: form.password,
+    deviceId: form.deviceId,
+    deviceInfo: form.deviceInfo,
   }
-
-  loginStore.resetLoginState()
-
-  const { schema, payload, type } = getSchemaAndPayLoad(form)
-  // errors.value = validationForms(schema, payload)
-
-  const { success, error } = schema.safeParse(payload)
-  if (!success) {
-    errors.value = extractErrors(error)
-    if (type === 'email' && errors.value.email) {
+  if (isEmail(form.usernameOrEmail)) {
+    commonData.email = form.usernameOrEmail
+    delete commonData.username
+    const { success, error } = loginByEmailSchema.safeParse(commonData)
+    if (!success) {
+      errors.value = extractErrors(error)
       errors.value.usernameOrEmail = errors.value.email
+      delete errors.value.email
+      return
+    } else {
+      errors.value = {}
+      try {
+        await mutateLoginByEmail({ ...commonData, email: form.usernameOrEmail })
+        if (isLoginByEmailSuccess)
+          toastSuccessNotificationPopup(
+            'Login successful',
+            `Welcome back! ${loginByEmailData.value.data.displayName}`,
+          )
+        else toastErrorNotificationPopup('Login failed', 'Please check your email or password.')
+      } catch (error: any) {
+        toastErrorNotificationPopup('Login failed', `Error: ${error.response.data.detail}`)
+      }
     }
-    if (type === 'username' && errors.value.username) {
-      errors.value.usernameOrEmail = errors.value.username
-    }
-    return
-  }
-
-  errors.value = {}
-
-  await (type === 'email' ? loginStore.loginEmail(payload) : loginStore.loginUserName(payload))
-
-  if (!loginStore.loginError) {
-    // window?.electronAPI.loginWindowHandle(res?.data.username)
-    toastSuccessNotificationPopup(
-      'Login successful',
-      `Welcome back ${loginStore.loginResult?.displayName}`,
-    )
   } else {
-    toastErrorNotificationPopup('Login failed', loginStore.loginError)
-    return
+    commonData.username = form.usernameOrEmail
+    delete commonData.email
+    const { success, error } = loginByUserNameSchema.safeParse(commonData)
+    if (!success) {
+      errors.value = extractErrors(error)
+      errors.value.usernameOrEmail = errors.value.username
+      delete errors.value.username
+      return
+    } else {
+      errors.value = {}
+      try {
+        await mutateLoginByUsername({ ...commonData, username: form.usernameOrEmail })
+        if (isLoginByUsernameSuccess)
+          toastSuccessNotificationPopup(
+            'Login successful',
+            `Welcome back! ${loginByUsernameData.value.data.displayName}`,
+          )
+        else toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
+      } catch (error: any) {
+        toastErrorNotificationPopup('Login failed', `Error: ${error.response.data.detail}`)
+      }
+    }
   }
 }
-
 const privateUrl = 'aHR0cHM6Ly95b3V0dS5iZS94dkZaam81UGdHMD9zaT1JV3lFNTZlX3hYN3k0dXJu'
 const decodePrivateUrl = (url: string): string => {
   return decodeURIComponent(atob(url))
