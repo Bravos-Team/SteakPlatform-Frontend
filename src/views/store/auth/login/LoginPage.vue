@@ -7,7 +7,7 @@
       <p class="text-2xl font-extrabold mt-2">Đăng Nhập</p>
     </div>
 
-    <form @submit.prevent="handleSubmition" novalidate class="w-full max-w-md mx-auto space-y-4">
+    <form @submit.prevent="handleSubmission" novalidate class="w-full max-w-md mx-auto space-y-4">
       <div>
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">
           Email hoặc Tên đăng nhập
@@ -161,7 +161,7 @@ onMounted(async () => {
 
 const errors = ref<Record<string, string>>({})
 
-const handleSubmition = async () => {
+const handleSubmission = async () => {
   const commonData: COMMON_DATA = {
     password: form.password,
     deviceId: form.deviceId,
@@ -174,6 +174,7 @@ const handleSubmition = async () => {
     if (!success) {
       errors.value = extractErrors(error)
       errors.value.usernameOrEmail = errors.value.email
+      delete errors.value.email
       return
     } else {
       errors.value = {}
@@ -196,6 +197,7 @@ const handleSubmition = async () => {
     if (!success) {
       errors.value = extractErrors(error)
       errors.value.usernameOrEmail = errors.value.username
+      delete errors.value.username
       return
     } else {
       errors.value = {}

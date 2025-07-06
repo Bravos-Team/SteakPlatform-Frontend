@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/vue-query'
 
 import { LoginRequest, RegisterRequest } from '@/types/auth/AuthType'
 
-export const useRegisterMutatetion = () => {
+export const useRegisterMutation = () => {
   const { isPending, mutateAsync, isSuccess } = useMutation<any, unknown, RegisterRequest>({
     mutationKey: ['user', 'auth', 'register'],
   })

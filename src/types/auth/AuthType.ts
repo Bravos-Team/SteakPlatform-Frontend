@@ -70,16 +70,16 @@ export const baseLoginShema = z.object({
         'The password must include 8-32 characters, including 1 special character, 1 numeric character, 1 uppercase character, and 1 other character.',
     })
     .nonempty('Password cannot be empty'),
-  deviceId: z.string().nonempty('Thiếu deviceId'),
-  deviceInfo: z.string().nonempty('Thiếu deviceInfo'),
+  deviceId: z.string().nonempty('Device ID cannot be empty'),
+  deviceInfo: z.string().nonempty('Device Infor cannot be empty'),
 })
 
 export const loginByUserNameSchema = baseLoginShema.extend({
   username: z
     .string()
-    .min(1, { message: 'Thiếu username/email' })
+    .min(1, { message: 'Username/Email cannot be empty' })
     .refine((val) => val.length === 0 || isUsername(val), {
-      message: 'Username phải  3-12 ký tự chữ/số',
+      message: 'Username must be alphanumeric and between 3 and 12 characters',
     }),
 })
 
@@ -87,8 +87,8 @@ export const loginByEmailSchema = baseLoginShema.extend({
   email: z
     .string()
     .trim()
-    .nonempty({ message: 'Thiếu username/email' })
-    .refine((val) => isEmail(val), { message: 'Username phải là email' }),
+    .nonempty({ message: 'Username/Email cannot be empty' })
+    .refine((val) => isEmail(val), { message: 'You need to enter an email' }),
 })
 
 export type LoginRequest =

@@ -181,7 +181,7 @@ import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
-import { useRegisterMutatetion } from '@/hooks/store/auth/useAuthentications'
+import { useRegisterMutation } from '@/hooks/store/auth/useAuthentications'
 import { useRouter } from 'vue-router'
 import { setCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 const router = useRouter()
@@ -189,7 +189,7 @@ const {
   isPending: isRegisterPending,
   mutateAsync: registerMutateAsync,
   isSuccess: isRegisterSuccess,
-} = useRegisterMutatetion()
+} = useRegisterMutation()
 
 const account = ref<RegisterRequest>({
   username: '',
