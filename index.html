@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html lang="" class="dark">
+<html lang="en" class="dark no-scrollbar">
 
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="https://cdn.steak.io.vn/logo_steak.svg">
+  <link rel="icon" href="https://ccdn.steak.io.vn/logo_steak.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vite App</title>
 </head>
 
-<script type="module" src="src/main.js"></script>
 
-<body class="p-0 m-0 bg-white dark:bg-[#101014]  transition-all duration-350">
-  <div id="app" class="not-noscript:block hidden"></div>
+<body class="p-0 m-0 bg-white dark:bg-[#101014] transition-all duration-350 no-scrollbar" oncontextmenu="return false;">
+  <!-- Header desertion -->
+  <header></header>
+  <!-- End Header desertion -->
+   
+  <div id="app"></div>
 
-  <div class="hidden noscript:block dark:text-white text-white">
+  <div class="hidden noscript:block dark:!text-white !text-white">
     <p>This experience requires JavaScript to function. Please enable JavaScript in your browser settings.</p>
   </div>
 </body>
 
+
+<script type="module" src="src/main.ts"></script>
 </html>

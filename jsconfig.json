@@ -1,7 +1,24 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      // "@assets/*": ["./src/assets/*"],
+      // "@components/*": ["./src/components/*"],
+      // "@views/*": ["./src/views/*"],
+      // "@store/*": ["./src/store/*"],
+      // "@router/*": ["./src/router/*"],
+      // "@utils/*": ["./src/utils/*"],
+      // "@types/*": ["./src/types/*"],
+      // "@composables/*": ["./src/composables/*"],
+      // "@plugins/*": ["./src/plugins/*"],
+      // "@services/*": ["./src/services/*"],
+      // "@directives/*": ["./src/directives/*"],
+      // "@mixins/*": ["./src/mixins/*"],
+      // "@layouts/*": ["./src/layouts/*"],
+      // "@config/*": ["./src/config/*"],
+      // "@locales/*": ["./src/locales/*"],
+      // "@public/*": ["./public/*"],
+      // "@hooks/*": ["./src/hooks/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

@@ -7,7 +7,7 @@
       <!-- Logo + Line -->
       <router-link :to="{ name: 'Home' }" class="flex items-center gap-x-2">
         <img
-          :src="'https://cdn.steak.io.vn/logo_steak.svg'"
+          :src="'https://ccdn.steak.io.vn/logo_steak.svg'"
           class="xl:h-12 h-9 text-dark dark:text-white"
           alt="Logo header"
         />
@@ -28,7 +28,7 @@
           />
         </svg>
         <label class="relative inline-block w-10 h-5 cursor-pointer">
-          <input type="checkbox" class="peer hidden" @change="toggleDarkTheme" :checked="isDark" />
+          <input type="checkbox" class="peer hidden" @change="toggleDarkTheme" />
           <div
             class="bg-white dark:bg-black ring-2 dark:ring-white rounded-[10px] w-10 h-5 transition-colors duration-300"
           ></div>
@@ -41,9 +41,15 @@
       <!-- Language Selection -->
       <div class="flex absolute right-10 ms-2 items-center gap-x-2">
         <img
-          :src="'https://cdn.steak.io.vn/icon-language.svg'"
-          class="content-start text-black dark:text-white"
-          alt="Language Icon"
+          :src="'https://ccdn.steak.io.vn/language-white.svg'"
+          class="content-start text-black dark:text-white hidden dark:block"
+          alt="language icon"
+        />
+
+        <img
+          :src="'https://ccdn.steak.io.vn/language-black.svg'"
+          class="content-start text-black dark:text-white block dark:hidden"
+          alt="language icon"
         />
         <div class="items-end">
           <div class="relative">
@@ -55,9 +61,14 @@
             >
               <span>{{ selectedLanguage != '' ? selectedLanguage : 'Tiếng Việt' }}</span>
               <img
-                :src="'https://cdn.steak.io.vn/down-line.svg'"
+                :src="'https://ccdn.steak.io.vn/down-line-white.svg'"
                 alt="Dropdown Icon"
-                class="w-4 h-4 text-white"
+                class="mt-1 hidden dark:block text-white"
+              />
+              <img
+                :src="'https://ccdn.steak.io.vn/down-line-black.svg.svg'"
+                alt="Dropdown Icon"
+                class="mt-1 block dark:hidden"
               />
             </button>
 
@@ -70,7 +81,7 @@
               <template v-for="(language, index) in languages" :key="index">
                 <li
                   class="px-4 py-2 hover:bg-gray-100 text-black dark:text-white hover:text-black cursor-pointer"
-                  @click="handleSelectedLanguage(language.code), (showDropdown = !showDropdown)"
+                  @click="(handleSelectedLanguage(language.code), (showDropdown = !showDropdown))"
                 >
                   {{ language.name }}
                 </li>
