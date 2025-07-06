@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { isEmail, isUsername } from '@/services/common/CurrencyUtils'
+import { isEmail, isUsername } from '@/utils/type/typeChecking'
 
 export const RegisterRequestSchema = z
   .object({
@@ -67,9 +67,9 @@ export const baseLoginShema = z.object({
     .string()
     .regex(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\s:])(\S){8,32}$/, {
       message:
-        'Mật khẩu phải bao gồm 8-32 ký tự, bao góp 1 ký tự hóa, 1 ký tự số, 1 ký tự in hóa, 1 ký tự khác',
+        'The password must include 8-32 characters, including 1 special character, 1 numeric character, 1 uppercase character, and 1 other character.',
     })
-    .nonempty('Thiếu password'),
+    .nonempty('Password cannot be empty'),
   deviceId: z.string().nonempty('Thiếu deviceId'),
   deviceInfo: z.string().nonempty('Thiếu deviceInfo'),
 })
@@ -87,14 +87,20 @@ export const loginByEmailSchema = baseLoginShema.extend({
   email: z
     .string()
     .trim()
-    .min(1, 'Thiếu username/email')
+    .nonempty({ message: 'Thiếu username/email' })
     .refine((val) => isEmail(val), { message: 'Username phải là email' }),
 })
 
 export type LoginRequest =
   | z.infer<typeof loginByUserNameSchema>
   | z.infer<typeof loginByEmailSchema>
-
+export type COMMON_DATA = {
+  email?: string
+  username?: string
+  password: string
+  deviceId: string
+  deviceInfo: string
+}
 export default LoginRequest
 
 export type RegisterResponse = z.infer<typeof RegisterResponseSchema>

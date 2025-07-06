@@ -140,7 +140,7 @@
       </div>
 
       <!-- BUTTON SUBMIT -->
-      <div v-if="registerStore.isLoading">
+      <div v-if="isRegisterPending">
         <div
           class="h-12 hover:ring-3 hover:bg-blue-400 overflow-hidden hover:text-black cursor-pointer hover:ring-blue-300 transition-all duration-300 bg-[#A9A9A9] rounded-[5px] w-full"
         >
@@ -175,12 +175,21 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { setCookie } from '@/utils/cookies/cookie-utils'
 import { RegisterRequest, RegisterRequestSchema } from '@/types/auth/AuthType'
 import { extractErrors } from '@/utils/zod/HanldeZodErrors'
-import { registrationStore } from '@/stores/auth/RegistrationStore'
-
-const registerStore = registrationStore()
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
+import { useRegisterMutatetion } from '@/hooks/store/auth/useAuthentications'
+import { useRouter } from 'vue-router'
+import { setCookie, removeCookie } from '@/utils/cookies/cookie-utils'
+const router = useRouter()
+const {
+  isPending: isRegisterPending,
+  mutateAsync: registerMutateAsync,
+  isSuccess: isRegisterSuccess,
+} = useRegisterMutatetion()
 
 const account = ref<RegisterRequest>({
   username: '',
@@ -191,17 +200,30 @@ const account = ref<RegisterRequest>({
   agreeTermsOfServices: false,
 })
 
-// const accountErrors = ref<Record<keyof RegisterRequest, string>>({})
 const accountErrors = ref<Record<string, string>>({})
 
 const handleSubmitRegistry = async () => {
-  // const handleSubmitRegistry = () => {
   const { success, error } = RegisterRequestSchema.safeParse(account.value)
   if (!success) {
     accountErrors.value = extractErrors(error)
   } else {
-    await registerStore.register(account.value)
-    accountErrors.value = {}
+    try {
+      await registerMutateAsync(account.value)
+      if (isRegisterSuccess) {
+        accountErrors.value = {}
+        removeCookie('emailUserRegister')
+        setCookie('emailUserRegister', account.value.email)
+        await router.push({ name: 'VerifyEmail' })
+        return toastSuccessNotificationPopup(
+          'Steak Game Store Authentication',
+          'Registration successful. Please check your email to verify your account.',
+        )
+      }
+    } catch (error: unknown | any) {
+      const errResponse = error?.response?.data?.detail || 'An error occurred during registration.'
+      accountErrors.value = { general: errResponse }
+      return toastErrorNotificationPopup('Steak Game Store Authentication', errResponse)
+    }
   }
 }
 

@@ -10,7 +10,7 @@
         <p class="text-sm text-center mb-10 text-gray-600 dark:text-gray-300">
           Để hoàn thành xác thực tài khoản, bạn cần xác thực
           <b class="font-bold text-gray-800 dark:text-white text-[18px]"
-            >{{ handleShowEmail(getCookie('userEmailRegister')) }}.</b
+            >{{ handleShowEmail(getCookie('emailUserRegister')) }}.</b
           >
           <br />
           Vui lòng kiểm tra tài khoản email của bạn để hoàn thành việc tạo tài khoản
@@ -32,7 +32,7 @@
         </span>
         <span class="block">
           Đã có tài khoản?
-          <router-link :to="{ name: 'Home' }" class="underline text-blue-400 ms-1"
+          <router-link :to="{ name: 'Login' }" class="underline text-blue-400 ms-1"
             >Đăng nhập</router-link
           >
         </span>
@@ -41,9 +41,7 @@
   </div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router'
 import { getCookie } from '@/utils/cookies/cookie-utils'
-const router = useRouter()
 
 const handleShowEmail = (email) => {
   const atIndex = email.indexOf('@')
