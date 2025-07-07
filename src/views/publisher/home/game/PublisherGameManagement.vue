@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import TabsBase from '@/components/common/tabs/TabsBase.vue'
+// import TabsBase from '@/components/common/tabs/TabsBase.vue'
 </script>

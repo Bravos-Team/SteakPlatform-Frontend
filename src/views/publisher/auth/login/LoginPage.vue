@@ -72,7 +72,7 @@
             </div>
           </div>
 
-          <div class="flex justify-center w-8/12 lg:w-4/12">
+          <div class="flex flex-col justify-center w-8/12 lg:w-4/12">
             <button
               type="submit"
               class="w-full rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] m-2 flex items-center bg-[#ffffff26] transition-all"
@@ -85,7 +85,7 @@
                 class="animate-spin ml-2"
               />
             </button>
-            <span class="text-danger">{{ loginMessage }}</span>
+            <span class="text-red-500 text-center">{{ loginMessage }}</span>
           </div>
         </form>
       </div>
@@ -126,7 +126,7 @@ import { onMounted, reactive, ref } from 'vue'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint.js'
 import { extractErrors } from '@/utils/zod/HanldeZodErrors.js'
 import { LoginByEmailSchema, LoginByUserNameSchema } from '@/types/publisher/AuthType.js'
-import { isEmail } from '@/services/common/CurrencyUtils.js'
+import { isEmail } from '@/utils/type/typeChecking.js'
 import { usePublisherLoginEmail, usePublisherLoginUserName } from '@/hooks/publisher/usePublisher'
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next'
 import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'

@@ -35,7 +35,7 @@ export default defineConfig(({ mode }) => {
             'pinia': ['pinia'],
             'lucide': ['lucide-vue-next'],
           },
-        }
+        },
       }
     }
 

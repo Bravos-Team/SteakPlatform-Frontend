@@ -42,7 +42,7 @@
 import { Dialog, DialogScrollContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import UpdateGameDetailsForm from './UpdateGameDetailsForm.vue'
 import { SquareDot } from 'lucide-vue-next'
-import { ref, watch, toRaw } from 'vue'
+import { ref } from 'vue'
 import { type GameType, getDefaultGameValue } from '@/types/game/gameDetails/GameDetailsType'
 
 const showDialog = ref(false)
@@ -53,9 +53,9 @@ const hanldeOpenDialog = () => {
 }
 const props = defineProps<{
   gameInformations: {
-    id: string
-    name: string
-    descriptions: string
+    id?: string
+    name?: string
+    descriptions?: string
   }
 }>()
 </script>

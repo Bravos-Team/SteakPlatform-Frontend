@@ -40,8 +40,12 @@
 </template>
 
 <script setup lang="ts">
+import { defineAsyncComponent } from 'vue'
 import { Textarea } from '@/components/ui/textarea'
-import TextEditor from '@/components/common/texteditor/TextEditor.vue'
+
+const TextEditor = defineAsyncComponent(() => {
+  return import('@/components/common/texteditor/TextEditor.vue')
+})
 
 const getSubtitles = defineModel<string>('getSubtitles')
 const getShortDescriptions = defineModel<string>('getShortDescriptions')

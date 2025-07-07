@@ -1,6 +1,5 @@
 import { z } from 'zod'
-import { baseLoginShema } from '@/types/auth/AuthType'
-import { isEmail, isUsername } from '@/services/common/CurrencyUtils'
+import { isEmail, isUsername } from '@/utils/type/typeChecking'
 
 export const PublisherRegisterRequestSchema = z
   .object({
