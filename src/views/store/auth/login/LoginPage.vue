@@ -125,8 +125,8 @@ import {
 import { extractErrors } from '@/utils/zod/HanldeZodErrors'
 import { isEmail } from '@/utils/type/typeChecking'
 import {
-  useLoginByEmailMutatetion,
-  useLoginByUsernameMutatetion,
+  useLoginByEmailMutation,
+  useLoginByUsernameMutation,
 } from '@/hooks/store/auth/useAuthentications'
 
 const {
@@ -134,13 +134,13 @@ const {
   isSuccess: isLoginByEmailSuccess,
   mutateAsync: mutateLoginByEmail,
   data: loginByEmailData,
-} = useLoginByEmailMutatetion()
+} = useLoginByEmailMutation()
 const {
   isPending: isLoginByUsernamePending,
   isSuccess: isLoginByUsernameSuccess,
   data: loginByUsernameData,
   mutateAsync: mutateLoginByUsername,
-} = useLoginByUsernameMutatetion()
+} = useLoginByUsernameMutation()
 
 const form = reactive({
   usernameOrEmail: '',
