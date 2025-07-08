@@ -9,6 +9,7 @@ export type PostIntoPresignedURLType = {
 }
 
 export type PresignedUrlResponse = {
+  cdnFileName: string
   fileName: string
   signedUrl: string
 }

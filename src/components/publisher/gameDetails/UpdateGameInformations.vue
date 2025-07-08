@@ -1,8 +1,8 @@
 <template>
   <card
-    class="bg-[var(--bg-card-base)]/50 xl:col-span-7 lg:col-span-4 p-4 border-double border-3 inset-shadow-blue-300 flex flex-col lg:flex-row justify-between"
+    class="bg-[var(--bg-card-base)]/50 xl:col-span-7 lg:col-span-4 p-4 border-double border-3 inset-shadow-blue-300 flex flex-col @container desktop-xl::flex-row justify-between"
   >
-    <div class="flex flex-col lg:w-7/12 gap-y-6 h-full w-full">
+    <div class="flex flex-col desktop-xl:w-7/12 gap-y-6 h-full w-full">
       <div class="flex w-full gap-x-2 items-center">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" class="size-10" alt="" />
         <span class="font-bold text-lg lg:text-2xl">FOR DEVELOPER</span>
@@ -25,7 +25,7 @@
         to promising upcoming or recently released indie titles. Let us know about your game!
       </span>
     </div>
-    <div class="flex lg:w-5/12 justify-center items-center">
+    <div class="flex desktop-xl:w-5/12 w-full justify-center items-center">
       <update-game-informations-button
         :game-informations="gameDetails"
         v-model:get-data-from-update-game-details-form="getDataFromUpdateGameDetailsForm"
@@ -38,14 +38,11 @@
 import { Card } from '@/components/ui/card'
 import UpdateGameInformationsButton from './UpdateGameInformationsButton.vue'
 import { SquareArrowUpRight } from 'lucide-vue-next'
-import { onMounted, nextTick, ref, watch } from 'vue'
+import { onMounted, nextTick } from 'vue'
+import { GameType } from '@/types/game/gameDetails/GameDetailsType'
 
 const props = defineProps<{
-  gameDetails: {
-    id: string
-    name: string
-    descriptions: string
-  }
+  gameDetails: GameType
 }>()
 onMounted(async () => {
   await nextTick()

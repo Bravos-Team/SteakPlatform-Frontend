@@ -1,9 +1,9 @@
 <template>
-  <div class="p-4 flex flex-col gap-y-3 @container">
+  <div v-if="!isProjectByIdPending" class="p-4 flex flex-col gap-y-3 @container">
     <div class="grid grid-rows-1 h-full lg:grid-cols-6 xl:grid-cols-12 gap-2">
-      <name-and-background-edit :game-details="gameDetails" />
+      <name-and-background-edit :game-details="projectById?.data" />
       <update-game-informations
-        :game-details="gameDetails"
+        :game-details="projectById?.data"
         v-model:get-data-from-update-game-details-form="previewFormData"
       />
     </div>
@@ -14,61 +14,23 @@
       </card>
     </div>
   </div>
+  <edit-game-details-skeleton v-else />
 </template>
 
 <script setup lang="ts">
+import EditGameDetailsSkeleton from '@/components/publisher/gameDetails/EditGameDetailsSkeleton.vue'
 import { Card } from '@/components/ui/card'
 import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPreviewForm.vue'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import NameAndBackgroundEdit from '@/components/publisher/gameDetails/NameAndBackgroundEdit.vue'
 import UpdateGameInformations from '@/components/publisher/gameDetails/UpdateGameInformations.vue'
 import { useRoute } from 'vue-router'
-
-const gameDetails = ref<
-  | {
-      id: string
-      name: string
-      descriptions: string
-      image: string
-    }
-  | any
->({
-  id: '',
-  name: '',
-  descriptions: '',
-  image: 'https://ccdn.steak.io.vn/assets-desert.png',
-})
-
-const games = ref([
-  {
-    id: '1',
-    name: 'Clash of Clan',
-    descriptions: 'stupid game',
-  },
-
-  {
-    id: '2',
-    name: 'Spider man 2 Remastered',
-
-    descriptions: 'GOTY 2023',
-  },
-
-  {
-    id: '3',
-    name: 'Grant Thief Auto VI ',
-
-    descriptions: 'seventh awards ',
-  },
-  {
-    id: '4',
-    name: 'Super Ultra Gay Deluxe Edition',
-    descriptions: 'anbatocom',
-  },
-])
+import { usePublisherGetPersonalProjectById } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 
 const route = useRoute()
 const previewFormData = ref('')
-onMounted(() => {
-  gameDetails.value = games.value.find((game) => game.id === route.params.id)
-})
+
+const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPersonalProjectById(
+  route?.params?.id as unknown as bigint,
+)
 </script>

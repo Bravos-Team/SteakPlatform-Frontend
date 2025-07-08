@@ -52,6 +52,7 @@ export const useGetPresignedImageUrls = () => {
     },
   })
   return {
+    isPending,
     mutateAsync,
   }
 }

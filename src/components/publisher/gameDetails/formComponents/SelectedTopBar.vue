@@ -6,7 +6,9 @@
 
     <div class="flex gap-x-2 w-full justify-between laptop:justify-end">
       <!-- START UPDATE AT INFORMATION -->
-      <update-at-information />
+      <update-at-information
+        :update-at="new Date(updateAt).toLocaleDateString('vi-VN', { dateStyle: 'full' })"
+      />
       <!-- END UPDATE AT INFORMATION -->
 
       <!-- START VERSION SELECTED -->
@@ -20,8 +22,8 @@
 import InternetConnectedSwitcher from '@/components/publisher/gameDetails/formComponents/updateStatus/InternetConnectedSwitcher.vue'
 import UpdateAtInformation from '@/components/publisher/gameDetails/formComponents/updateStatus/UpdateAtInformation.vue'
 import VersionSelectedAndStatus from '@/components/publisher/gameDetails/formComponents/version/VersionSelectedAndStatus.vue'
-import { watch, ref } from 'vue'
 
 const getVersionSelected = defineModel<string>('getVersionSelected')
 const getInternetConnectedRequiredData = defineModel<boolean>('getInternetConnectedRequiredData')
+const updateAt = defineModel<string | number | Date>('updateAt')
 </script>

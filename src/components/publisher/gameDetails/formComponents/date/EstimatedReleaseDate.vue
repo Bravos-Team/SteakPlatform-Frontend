@@ -65,16 +65,17 @@ const items = [
 ]
 
 const value = ref<DateValue | undefined | DateValue[]>()
-const emitEstimatedReleaseDate = defineModel<string>('emitEstimatedReleaseDate')
+const emitEstimatedReleaseDate = defineModel<string | number>('emitEstimatedReleaseDate')
 
 watch(
   () => value.value,
   (newVal) => {
     if (newVal) {
       const isoDate = newVal.toString() // => YYYY-MM-DD (ISO)
+      const longDate = newVal.toDate(getLocalTimeZone()).getTime()
       const formatted = dateFormatter.format(newVal.toDate(getLocalTimeZone()))
 
-      emitEstimatedReleaseDate.value = isoDate
+      emitEstimatedReleaseDate.value = longDate.toString()
 
       toast(
         h(

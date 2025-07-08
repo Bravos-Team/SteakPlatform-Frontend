@@ -5,7 +5,11 @@
     </select-trigger>
     <select-content>
       <select-group>
-        <select-item v-for="version in osVersion" :key="version" :value="version">
+        <select-item
+          v-for="(version, index) in osVersion"
+          :key="'os-version-' + index"
+          :value="version"
+        >
           <select-item-text>{{ version }}</select-item-text>
         </select-item>
       </select-group>
@@ -26,5 +30,5 @@ const props = defineProps<{
   osVersion?: string[]
 }>()
 
-const minimumOsVersions = defineModel<string>('emitMinimumOsVersions')
+const minimumOsVersions = defineModel<string | any>('emitMinimumOsVersions')
 </script>

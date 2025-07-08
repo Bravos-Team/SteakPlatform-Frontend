@@ -1026,11 +1026,7 @@
         }"
         class="w-full flex col-span-2 min-h-[10rem] overflow-hidden rounded-sm border"
       >
-        <EditorContent
-          v-model="texts"
-          class="!min-w-full p-3 bg-black !prose prose-invert"
-          :editor="editor"
-        />
+        <EditorContent v-model="texts" class="!min-w-full p-3 bg-black" :editor="editor" />
       </section>
     </div>
   </tooltip-provider>
@@ -1196,7 +1192,7 @@ const editor = new Editor({
   editorProps: {
     attributes: {
       spellcheck: isSpellCheck.value,
-      class: 'h-full outline-0 text-white   min-w-full',
+      class: 'h-full outline-0 !text-white  min-w-full',
     },
   },
   content: `
