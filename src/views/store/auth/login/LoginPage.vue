@@ -4,20 +4,20 @@
   >
     <div class="flex flex-col items-center mb-10">
       <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
-      <p class="text-2xl font-extrabold mt-2">Đăng Nhập</p>
+      <p class="text-2xl font-extrabold mt-2">Login</p>
     </div>
 
     <form @submit.prevent="handleSubmission" novalidate class="w-full max-w-md mx-auto space-y-4">
       <div>
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">
-          Email hoặc Tên đăng nhập
+          Username or Email
         </p>
         <input
           type="text"
           required
           v-model="form.usernameOrEmail"
           autocomplete="username"
-          placeholder="Nhập email hoặc tên đăng nhập"
+          placeholder="Username or Email"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
         <label v-if="errors.usernameOrEmail" class="peer-invalid:block text-red-500">
@@ -26,7 +26,7 @@
       </div>
 
       <div>
-        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-1">Mật khẩu</p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-1">Password</p>
         <div class="relative">
           <input
             :type="isPassword ? 'password' : 'text'"
@@ -34,7 +34,7 @@
             v-model="form.password"
             autocomplete="current-password"
             required
-            placeholder="Nhập mật khẩu"
+            placeholder="Password"
             class="peer xl:w-full h-12 px-4 pr-12 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
           />
           <img
@@ -50,7 +50,7 @@
       </div>
 
       <div class="text-right">
-        <a href="#" class="text-sm text-[#0af] italic underline">Quên mật khẩu?</a>
+        <a href="#" class="text-sm text-[#0af] underline">Forgotten password ?</a>
       </div>
 
       <div v-if="isLoginByEmailPending || isLoginByUsernamePending">
@@ -72,15 +72,15 @@
       <div v-else>
         <button
           type="submit"
-          class="w-full h-12 bg-white dark:bg-gray-500 dark:text-white border border-black dark:border-none font-medium italic rounded-lg cursor-pointer hover:bg-[#464646] hover:text-white hover:ring-2 hover:ring-gray-800 hover:dark:ring-3 hover:dark:bg-blue-300 hover:dark:text-black hover:dark:ring-blue-400 transition duration-300"
+          class="w-full h-12 bg-white dark:bg-gray-500 dark:text-white border border-black dark:border-none font-medium rounded-lg cursor-pointer hover:bg-[#464646] hover:text-white hover:ring-2 hover:ring-gray-800 hover:dark:ring-3 hover:dark:bg-blue-300 hover:dark:text-black hover:dark:ring-blue-400 transition duration-300"
         >
-          Đăng nhập
+          Login
         </button>
       </div>
 
       <div class="flex items-center text-sm font-bold text-black dark:text-white">
         <hr class="flex-1 border-gray-600" />
-        <span class="px-4">hoặc bằng cách khác</span>
+        <span class="px-4">Or login with</span>
         <hr class="flex-1 border-gray-600" />
       </div>
 
@@ -93,7 +93,7 @@
         <button
           class="flex items-center justify-center h-12 border border-black w-full bg-[#65a8ff] dark:bg-[#1877f2] rounded-lg"
         >
-          <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6" />
+          <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6"  alt="logo"/>
         </button>
         <div class="flex items-center justify-center">
           <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-sky-400"
@@ -104,10 +104,15 @@
     </form>
 
     <footer class="mt-10 mb-10 flex flex-col items-center space-y-3">
-      <router-link to="/register" class="text-[#0af] italic underline">Tạo tài khoản</router-link>
-      <a :href="decodePrivateUrl(privateUrl)" class="text-[#0af] italic underline"
-        >Chính sách Bảo mật</a
-      >
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Don't have an account?
+        <router-link to="/register" class="text-[#0af] underline">Register</router-link>
+      </p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        By logging in, you agree to our
+        <a href="#" class="text-[#0af] underline">Terms of Service</a> and
+        <a href="#" class="text-[#0af] underline">Privacy Policy</a>.
+      </p>
     </footer>
   </div>
 </template>
