@@ -41,7 +41,7 @@
                 (event: any) => {
                   if (typeof event.detail.value === 'string') {
                     searchItem = ''
-                    modalValue.push(event.detail.value)
+                    modalValue = [...(modalValue || []), event.detail.value]
                   }
 
                   if (filterCountries.length === 0) {
@@ -78,12 +78,12 @@ import {
   TagsInputItemText,
 } from '@/components/ui/tags-input'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { watch, computed, onMounted, ref, toRaw } from 'vue'
+import { computed, ref } from 'vue'
 import { queryGetCountriesList } from '@/hooks/common/countries/useCountries'
 import { type Country } from '@/apis/common/countries/countries'
 const filters = ref(['name', 'flags'])
 const { data } = queryGetCountriesList(filters)
-const modalValue = defineModel<string[]>('getRegionsData', { default: [] })
+const modalValue = defineModel<string[] | null>('getRegionsData', { default: [] })
 const open = ref(false)
 const searchItem = ref('')
 
@@ -98,7 +98,7 @@ const CountryData = computed(() => {
 })
 const filterCountries = computed(() => {
   const options = CountryData?.value?.filter(
-    (i: Country) => !modalValue.value.includes(i.name.common),
+    (i: Country) => !modalValue.value?.includes(i.name.common),
   )
   return searchItem.value
     ? options.filter((option: Country) => contains(option.name.common, searchItem.value))

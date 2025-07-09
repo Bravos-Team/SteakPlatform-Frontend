@@ -4,18 +4,36 @@
     <!-- DEFAULT IMAGE -->
     <div
       :class="{ hidden: unShowImageUploaded }"
-      class="w-full lg:h-40 border-4 border-double rounded-md flex lg:flex-row flex-col overflow-hidden"
+      class="w-full lg:h-40 border-4 border-double rounded-md flex lg:flex-row flex-col overflow-hidden relative"
     >
-      <div class="h-full flex justify-center p-5 bg-[#29292D]">
+      <div
+        class="h-full flex justify-center p-5 bg-[#29292D]"
+        :class="{
+          'blur-xs min-h-50 animate-pulse': isGettingPresignedUrl || isPosttingIntoPresignedUrl,
+        }"
+      >
         <img
-          src="https://ccdn.steak.io.vn/assets-guts-profile-pic.png"
+          :class="{ hidden: isGettingPresignedUrl || isPosttingIntoPresignedUrl }"
+          :src="thumbnailUrl"
           ref="gameImage"
           class="object-contain w-full md:h-50 lg:h-full"
           alt=""
         />
       </div>
+
+      <LoaderCircle
+        :class="{
+          visible: isGettingPresignedUrl || isPosttingIntoPresignedUrl,
+          hidden: !isGettingPresignedUrl && !isPosttingIntoPresignedUrl,
+        }"
+        class="absolute left-[48%] top-[28%] text-gray-500 scale-110 size-10 animate-spin z-2"
+      />
       <div class="w-full bg-[#202024] h-full flex justify-between p-4">
-        <span class="text-white/80 font-mono text-md">guts.jpg</span>
+        <span
+          v-if="isGettingPresignedUrl || isPosttingIntoPresignedUrl"
+          class="animate-pulse min-h-3 max-h-8 rounded-sm bg-white/10 min-w-50"
+        ></span>
+        <span v-else class="text-white/80 font-mono text-md">{{ fileName }}</span>
         <div>
           <button
             @click="unShowImageUploaded = !unShowImageUploaded"
@@ -45,21 +63,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import {
   useGetPresignedImageUrl,
   usePostIntoPresignedUrl,
 } from '@/hooks/common/cdn/useCDNAssetsManager'
-import { Upload, Trash2 } from 'lucide-vue-next'
+import { Upload, Trash2, LoaderCircle } from 'lucide-vue-next'
 
 const { isPending: isGettingPresignedUrl, mutateAsync: mutateGetPresignedImageUrl } =
   useGetPresignedImageUrl()
+
 const { isPending: isPosttingIntoPresignedUrl, mutateAsync: mutatePostIntoPresignedUrl } =
   usePostIntoPresignedUrl()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const gameImage = ref<HTMLInputElement | null>(null)
 const unShowImageUploaded = ref(false)
+const thumbnailUrl = defineModel<string>('thumbnailUrl', {
+  default: '',
+})
+
+const fileName = ref<string>(
+  thumbnailUrl.value ? thumbnailUrl.value.split('images/')[1] : 'example-cover-thumbnail.jpg',
+)
 
 const isDragging = ref(false)
 const handleDrop = (e: DragEvent) => {
@@ -68,6 +94,7 @@ const handleDrop = (e: DragEvent) => {
   if (files && files.length) {
     unShowImageUploaded.value = false
     gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
+    fileName.value = files[0].name
   }
 }
 
@@ -75,6 +102,7 @@ const handleFileChange = async (e: Event) => {
   const files = (e.target as HTMLInputElement).files
   if (files && files.length) {
     unShowImageUploaded.value = false
+    fileName.value = files[0].name
     gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
 
     const response = await mutateGetPresignedImageUrl({
@@ -86,6 +114,10 @@ const handleFileChange = async (e: Event) => {
       url: response.signedUrl,
       file: files[0],
     })
+
+    if (response) {
+      thumbnailUrl.value = 'https://ccdn.steak.io.vn/' + response.cdnFileName
+    }
   }
 }
 </script>

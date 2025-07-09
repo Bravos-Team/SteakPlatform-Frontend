@@ -3,7 +3,9 @@
     class="h-[15rem] xl:h-[20rem] xl:col-span-5 lg:col-span-2 p-0 grid grid-rows-2 relative @container overflow-hidden"
   >
     <img
-      :src="gameDetails.image || 'https://ccdn.steak.io.vn/assets-desert.png'"
+      :src="
+        gameDetails.thumbnail ? gameDetails.thumbnail : 'https://ccdn.steak.io.vn/assets-desert.png'
+      "
       class="w-full h-full absolute object-cover"
       alt=""
     />
@@ -13,7 +15,7 @@
           <span class="xl:text-2xl font-bold px-3 py-2 bg-gray-600/30 rounded-sm">
             {{ gameDetails.name }}
           </span>
-          <name-edited-button v-model:game-name-data="gameDetails.name" />
+          <name-edited-button :game-name="gameDetails.name" :game-id="gameDetails.id" />
         </div>
       </div>
     </div>
@@ -42,21 +44,16 @@
 import { Card } from '@/components/ui/card'
 import { Download } from 'lucide-vue-next'
 
-import NameEditedButton from './NameEditedButton.vue'
+import NameEditedButton from '@/components/publisher/gameDetails/NameEditedButton.vue'
+import { GameType } from '@/types/game/gameDetails/GameDetailsType'
 const props = defineProps<{
-  gameDetails: {
-    id: string
-    name: string
-    descriptions: string
-    image: string
-  }
+  gameDetails: GameType
 }>()
 
 const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement
   const file = target?.files?.[0]
-  if (file?.type.startsWith('image')) props.gameDetails.image = URL.createObjectURL(file as Blob)
-  else {
-  }
+  if (file?.type.startsWith('image'))
+    props.gameDetails.thumbnail = URL.createObjectURL(file as Blob)
 }
 </script>

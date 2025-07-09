@@ -66,7 +66,7 @@ export const GameMediaSchema = z.object({
 })
 
 export const SystemRequirementSchema = z.object({
-  osVersion: z.string().default('').optional(),
+  osVersion: z.string().default(''),
   cpu: z.string().default(''),
   memory: z.string().default(''),
   gpu: z.string().default(''),
@@ -84,19 +84,28 @@ export type MinimumAndrecommendedType = {
   recommend: SystemRequirementsType
 }
 export const GameSchema = z.object({
-  id: z.number().default(0),
+  id: z.bigint().default(0n),
   publisherId: z.number().default(0),
   createdBy: z.number().default(0),
-  subtitles: z.string().default(''),
+  subtitles: z.string().nullable().optional().default(''),
   name: z.string().default(''),
-  price: z.number().default(0),
-  developerTeams: z.array(z.string()).default([]),
-  regions: z.array(z.string()).default([]),
-  thumbnail: z.union([z.string().optional(), z.instanceof(File).optional()]).default(''),
-  media: z.array(GameMediaSchema).default([]),
-  shortDescription: z.string().default(''),
-  longDescription: z.string().default(''),
-  platforms: z.array(z.string()).default([]),
+  price: z.number().optional().nullable().default(0),
+  developerTeams: z.array(z.string()).optional().nullable().default([]),
+  regions: z.array(z.string()).optional().nullable().default([]),
+  thumbnail: z
+    .union(
+      [
+        z.string().optional().nullable(),
+        z.instanceof(File).optional().nullable(),
+        z.undefined().optional(),
+      ],
+      z.undefined(),
+    )
+    .default(''),
+  media: z.array(GameMediaSchema).optional().nullable().default([]),
+  shortDescription: z.string().optional().nullable().default(''),
+  longDescription: z.string().optional().nullable().default(''),
+  platforms: z.array(z.string()).optional().nullable().default([]),
   systemRequirements: z
     .object({
       minimum: SystemRequirementSchema,
@@ -120,22 +129,24 @@ export const GameSchema = z.object({
         storage: '',
       },
     }),
-  internetConnection: z.boolean().default(false),
-  languageSupported: z.array(z.string()).default([]),
-  buildInfo: z
-    .object({
-      versionName: z.string().default(''),
-      execPath: z.string().default(''),
-      downloadUrl: z.string().default(''),
-    })
-    .default({
-      versionName: '',
-      execPath: '',
-      downloadUrl: '',
-    }),
+  internetConnection: z.boolean().optional().default(false),
+  languageSupported: z.array(z.string()).optional().default([]),
+  // buildInfo: z
+  //   .object({
+  //     versionName: z.string().optional().default(''),
+  //     execPath: z.string().optional().default(''),
+  //     downloadUrl: z.string().optional().default(''),
+  //   })
+  //   .optional()
+  //   .nullable()
+  //   .default({
+  //     versionName: '',
+  //     execPath: '',
+  //     downloadUrl: '',
+  //   }),
 
   status: z.enum(['draft', 'published', 'archived']).default('draft'),
-  updatedAt: z.string().default(''),
+  updatedAt: z.union([z.string(), z.date(), z.number()]).optional().nullable().default(''),
   estimatedReleaseDate: z.coerce.string().default(''),
 })
 

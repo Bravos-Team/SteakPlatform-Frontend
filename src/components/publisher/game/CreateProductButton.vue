@@ -77,11 +77,8 @@ import {
 // import { LoaderCircle } from 'lucide-vue-next'
 import { ref } from 'vue'
 
-const {
-  data: publisherCreateProjectData,
-  isPending: isPublisherCreateProjectPending,
-  mutateAsync: mutateAsyncPublisherProject,
-} = usePublisherCreatePersonalProject()
+const { isPending: isPublisherCreateProjectPending, mutateAsync: mutateAsyncPublisherProject } =
+  usePublisherCreatePersonalProject()
 
 const showDialog = ref(false)
 const handleCloseDialog = () => (showDialog.value = false)

@@ -15,7 +15,7 @@
       </div>
       <!-- END  PRODUCT COUNT AND ACTIONS BUTTON -->
       <!-- UPLOAD GAME BAR -->
-      <upload-game-bar :games="games?.data?.content" />
+      <upload-game-bar :games="games?.data.content ?? []" />
       <!-- END UPLOAD GAME BAR -->
     </card-content>
   </card>

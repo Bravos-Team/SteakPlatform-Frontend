@@ -18,9 +18,9 @@
           <div
             class="w-full h-full overflow-hidden rounded-t-sm"
             :class="{
-              'bg-red-300/10': game.status === 'PUBLISHED',
-              'bg-green-300/30': game.status === 'REJECTED',
-              'bg-white/20': game.status === 'VERIFIED',
+              'bg-red-300/10': game.status === 'REJECTED',
+              'bg-green-300/30': game.status === 'VERIFIED',
+              'bg-white/20': game.status === 'PUBLISHED',
               'bg-sky-300/20': game.status === 'DRAFT',
             }"
           >
@@ -42,9 +42,9 @@
             >
               <span
                 :class="{
-                  'text-red-500/90': game.status === 'PUBLISHED',
-                  'text-green-500/90': game.status === 'REJECTED',
-                  'text-gray-300/90': game.status === 'VERIFIED',
+                  'text-red-500/90': game.status === 'REJECTED',
+                  'text-green-500/90': game.status === 'VERIFIED',
+                  'text-gray-300/90': game.status === 'PUBLISHED',
                   'text-sky-300/90': game.status === 'DRAFT',
                 }"
                 class="w-full h-full"
@@ -131,11 +131,11 @@ const props = defineProps<{
 
 const xValueComputed = (status: string) => {
   switch (status) {
-    case 'PUBLISHED':
-      return 70
     case 'REJECTED':
-      return 110
+      return 70
     case 'VERIFIED':
+      return 110
+    case 'PUBLISHED':
       return 100
     case 'DRAFT':
       return 90

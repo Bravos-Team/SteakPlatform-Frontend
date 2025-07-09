@@ -5,6 +5,8 @@ import {
   publisherGetPersonalProjectListApi,
   publisherCreateDraftProjectInformationsApi,
   publisherCreatePersonalProjectApi,
+  publisherGetPersonalProjectByIdApi,
+  publisherUpdateGameNameApi,
 } from '@/apis/publisher/project/publisherPersonalProjects'
 import { Ref } from 'vue'
 import { GameType } from '@/types/game/gameDetails/GameDetailsType'
@@ -19,13 +21,47 @@ export const usePublisherGetPersonalProjects = (
   })
 }
 
+export const usePublisherGetPersonalProjectById = (id: bigint) => {
+  return useQuery({
+    queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(id.toString()),
+    queryFn: async ({ signal }) => await publisherGetPersonalProjectByIdApi(id, signal),
+    retry: 3,
+  })
+}
+
 export const usePublisherCreateDraftProjectInformations = () => {
-  const { mutate, isPending } = useMutation({
+  const queryClient = useQueryClient()
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: GameType) =>
       await publisherCreateDraftProjectInformationsApi(payload),
+    onSuccess: (_data, variables: GameType) => {
+      queryClient.invalidateQueries({
+        queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables.id.toString()),
+      })
+    },
   })
   return {
-    mutate,
+    mutateAsync,
+    isPending,
+  }
+}
+
+export const usePublisherUpdateProjectName = () => {
+  const queryClient = useQueryClient()
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (payload: { id: bigint; name: string }) =>
+      await publisherUpdateGameNameApi(payload),
+    onSuccess: (data, variables: { id: bigint; name: string }) => {
+      if (data.status === 200) {
+        queryClient.invalidateQueries({
+          queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables.id.toString()),
+        })
+      }
+    },
+  })
+
+  return {
+    mutateAsync,
     isPending,
   }
 }

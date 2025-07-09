@@ -10,7 +10,7 @@
       >
         <span class="text-sm font-bold">OS</span>
         <OsVersionTags
-          v-model:emit-recommended-os-version="recommendedRequirements.osVersion"
+          v-model:emit-recommended-os-version="useSystem.recommendRequirement.osVersion"
           :os-version="systemRequirementSuggestions?.osVersion"
         />
       </div>
@@ -22,7 +22,7 @@
       >
         <span class="text-sm font-bold">CPU</span>
         <cpu-tags
-          v-model:emit-cpu-data="recommendedRequirements.cpu"
+          v-model:emit-cpu-data="useSystem.recommendRequirement.cpu"
           :cpus="systemRequirementSuggestions?.cpu"
         />
       </div>
@@ -35,7 +35,7 @@
         <span class="text-sm font-bold">GPU</span>
         <gpu-tags
           :gpus="systemRequirementSuggestions?.gpu"
-          v-model:emit-gpu-data="recommendedRequirements.gpu"
+          v-model:emit-gpu-data="useSystem.recommendRequirement.gpu"
         />
       </div>
       <!-- END GPU-->
@@ -47,7 +47,7 @@
         <span class="text-sm font-bold">MEMORY</span>
         <memory-tags
           :memories="systemRequirementSuggestions?.memory"
-          v-model:emit-memory-data="recommendedRequirements.memory"
+          v-model:emit-memory-data="useSystem.recommendRequirement.memory"
         />
       </div>
       <!-- END MEMORY-->
@@ -59,7 +59,7 @@
         <span class="text-sm font-bold">DIRECTX</span>
         <direct-x-tags
           :directxs="systemRequirementSuggestions?.directX"
-          v-model:emit-directx-data="recommendedRequirements.directX"
+          v-model:emit-directx-data="useSystem.recommendRequirement.directX"
         />
       </div>
       <!-- END DIRECTX-->
@@ -71,7 +71,7 @@
         <span class="text-sm font-bold">STORAGE</span>
         <storage-tags
           :storages="systemRequirementSuggestions?.storage"
-          v-model:emit-storage-data="recommendedRequirements.storage"
+          v-model:emit-storage-data="useSystem.recommendRequirement.storage"
         />
       </div>
       <!-- END STORAGE -->
@@ -87,29 +87,9 @@ import MemoryTags from '@/components/publisher/gameDetails/formComponents/system
 import StorageTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/recommended/StorageTags.vue'
 import DirectXTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/recommended/DirectXTags.vue'
 
-import {
-  SystemRequirementsType,
-  systemRequirementSuggestions,
-  getDefaultValueRequirements,
-} from '@/types/game/gameDetails/GameDetailsType'
-import { ref, watch } from 'vue'
-const props = defineProps<{
-  recommendedRequirements: SystemRequirementsType
-}>()
+import { systemRequirementSuggestions } from '@/types/game/gameDetails/GameDetailsType'
 
-const recommendedRequirements = ref<SystemRequirementsType>(props.recommendedRequirements)
-const recommendedRequirementsModel = defineModel<SystemRequirementsType>(
-  'recommendedRequirementsModel',
-  {
-    default: getDefaultValueRequirements(),
-  },
-)
+import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 
-watch(
-  recommendedRequirements,
-  (val) => {
-    recommendedRequirementsModel.value = val
-  },
-  { deep: true, immediate: true },
-)
+const useSystem = useSystemRequirementsStore()
 </script>

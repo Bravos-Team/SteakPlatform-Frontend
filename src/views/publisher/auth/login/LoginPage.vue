@@ -131,11 +131,12 @@ import { usePublisherLoginEmail, usePublisherLoginUserName } from '@/hooks/publi
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next'
 import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'
 import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
-
+import { useRouter } from 'vue-router'
 import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+const router = useRouter()
 const { mutateAsync: mutateAsyncPublisherLoginEmail, isPending: isPendingPublisherLoginEmail } =
   usePublisherLoginEmail()
 const {
@@ -198,6 +199,7 @@ const handlePublisherLogin = async () => {
         : mutateAsyncPublisherLoginUserName(payload))
       if (res.status === 200) {
         toastSuccessNotificationPopup('Login successfully', `Welcome ${res.data.username}`)
+        router.push({ name: 'PublisherHome' })
       }
     } catch (err: any) {
       console.error('Login failed:', err)
