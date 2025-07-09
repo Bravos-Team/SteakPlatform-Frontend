@@ -4,9 +4,7 @@
   >
     <img
       :src="
-        gameDetails.thumbnail
-          ? 'https://ccdn.steak.io.vn/' + gameDetails.thumbnail
-          : 'https://ccdn.steak.io.vn/assets-desert.png'
+        gameDetails.thumbnail ? gameDetails.thumbnail : 'https://ccdn.steak.io.vn/assets-desert.png'
       "
       class="w-full h-full absolute object-cover"
       alt=""
@@ -46,7 +44,7 @@
 import { Card } from '@/components/ui/card'
 import { Download } from 'lucide-vue-next'
 
-import NameEditedButton from './NameEditedButton.vue'
+import NameEditedButton from '@/components/publisher/gameDetails/NameEditedButton.vue'
 import { GameType } from '@/types/game/gameDetails/GameDetailsType'
 const props = defineProps<{
   gameDetails: GameType
@@ -57,7 +55,5 @@ const handleFileUpload = (event: Event) => {
   const file = target?.files?.[0]
   if (file?.type.startsWith('image'))
     props.gameDetails.thumbnail = URL.createObjectURL(file as Blob)
-  else {
-  }
 }
 </script>

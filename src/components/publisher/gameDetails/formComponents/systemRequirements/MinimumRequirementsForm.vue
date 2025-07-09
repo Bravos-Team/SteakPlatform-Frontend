@@ -86,8 +86,13 @@ import GpuTags from '@/components/publisher/gameDetails/formComponents/systemReq
 import MemoryTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/MemoryTags.vue'
 import StorageTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/StorageTags.vue'
 import DirectXTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/DirectXTags.vue'
-import { systemRequirementSuggestions } from '@/types/game/gameDetails/GameDetailsType'
+import {
+  REQUIREMENTS_TYPE,
+  systemRequirementSuggestions,
+} from '@/types/game/gameDetails/GameDetailsType'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 
 const useSystem = useSystemRequirementsStore()
+
+const props = defineProps<REQUIREMENTS_TYPE>()
 </script>

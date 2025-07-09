@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-2 gap-y-6 tablet:grid-cols-2 gap-x-3 w-full">
     <!-- START SUBTITLE -->
-    <div class="flex col-span-2 tablet:col-span-1 flex-col justify-center">
+    <!-- <div class="flex col-span-2 tablet:col-span-1 flex-col justify-center">
       <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
         >Subtitle</span
       >
@@ -11,11 +11,11 @@
         placeholder="Enter your subtitle..."
         class="w-full border-2 border-double rounded-sm"
       ></Textarea>
-    </div>
+    </div> -->
     <!-- END SUBTITLE -->
 
     <!-- START SHORT DESCRIPTIONS -->
-    <div class="flex col-span-2 tablet:col-span-1 flex-col justify-center">
+    <div class="flex col-span-2 flex-col justify-center">
       <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
         >Short Descriptions</span
       >
@@ -48,7 +48,7 @@ const TextEditor = defineAsyncComponent(() => {
   return import('@/components/common/texteditor/TextEditor.vue')
 })
 
-const getSubtitles = defineModel<string>('getSubtitles')
+// const getSubtitles = defineModel<string>('getSubtitles')
 const getShortDescriptions = defineModel<string>('getShortDescriptions')
 const getLongDescriptionsHTML = defineModel<string>('getPreviewLongDescriptionsData')
 </script>

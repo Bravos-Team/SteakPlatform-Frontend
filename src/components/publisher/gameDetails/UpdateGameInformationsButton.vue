@@ -14,7 +14,7 @@
       </span>
     </button>
     <dialog-scroll-content
-      class="resize-x mobile:p-2 bg-linear-120 border-2 from-gray-200/7 to-indigo-400/10 min-w-full flex flex-col"
+      class="resize-x mobile:p-2 bg-linear-120 border-2 from-gray-200/7 to-indigo-400/10 min-w-full flex flex-col desktop-xl:min-w-[90rem]"
     >
       <dialog-header>
         <dialog-title class="text-2xl"
@@ -29,8 +29,7 @@
       </dialog-header>
       <!-- START <update-game-details-form /> -->
       <update-game-details-form
-        :game-preview-details="gamePreviewDetails"
-        @update:game-preview-details-data="gamePreviewDetails = $event"
+        :game-preview-details="gameInformations"
         @update:open-dialog-form="showDialog = $event"
       />
       <!-- END <update-game-details-form /> -->
@@ -52,7 +51,7 @@ import {
 import UpdateGameDetailsForm from '@/components/publisher/gameDetails/UpdateGameDetailsForm.vue'
 import { SquareDot } from 'lucide-vue-next'
 import { ref } from 'vue'
-import { type GameType, getDefaultGameValue } from '@/types/game/gameDetails/GameDetailsType'
+import { type GameType } from '@/types/game/gameDetails/GameDetailsType'
 
 const showDialog = ref(false)
 
@@ -62,6 +61,4 @@ const hanldeOpenDialog = () => {
 const props = defineProps<{
   gameInformations: GameType
 }>()
-
-const gamePreviewDetails = ref<GameType>(props.gameInformations || getDefaultGameValue())
 </script>

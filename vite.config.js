@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
         // '@': fileURLToPath(new URL('./src', import.meta.url)),
         '@': path.resolve(__dirname, './src'),
       },
+
     },
     build: {
       rollupOptions: {

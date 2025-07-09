@@ -4,7 +4,6 @@
     <selected-top-bar
       v-model:update-at="updateAtStatus"
       v-model:get-internet-connected-required-data="internetRequiredData"
-      v-model:get-version-selected="selectedVersion"
     />
     <!-- END SELECTED TOP BAR ${data}-->
 
@@ -31,7 +30,6 @@
     <!-- START DESCRIPTIONS BAR ${data} -->
     <descriptions-bar
       v-model:get-short-descriptions="shortDescriptionsData"
-      v-model:get-subtitles="subTitleData"
       v-model:get-preview-long-descriptions-data="longDescriptionsData"
     />
 
@@ -146,8 +144,8 @@ import SystemRequirements from '@/components/publisher/gameDetails/formComponent
 import PlatformsSupportedTags from '@/components/publisher/gameDetails/formComponents/platform/PlatformsSupportedTags.vue'
 import DescriptionsBar from '@/components/publisher/gameDetails/formComponents/descriptions/DescriptionsBar.vue'
 import MediaBar from '@/components/publisher/gameDetails/formComponents/MediaBar.vue'
-import { type GameType, getDefaultGameValue } from '@/types/game/gameDetails/GameDetailsType'
-import { computed, onMounted, ref, watch } from 'vue'
+import { type GameType } from '@/types/game/gameDetails/GameDetailsType'
+import { computed, ref } from 'vue'
 import { usePublisherCreateDraftProjectInformations } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 import {
@@ -157,16 +155,18 @@ import {
 const useSystem = useSystemRequirementsStore()
 const { mutateAsync: mutateAsyncCreateDraftProject } = usePublisherCreateDraftProjectInformations()
 
-const isInitSystemRequirements = ref<boolean>(false)
-
 const props = defineProps<{
   gamePreviewDetails: GameType
 }>()
 
-const emit = defineEmits(['update:openDialogForm', 'update:gamePreviewDetailsData'])
+const gameToMutate = ref<GameType>({ ...props.gamePreviewDetails })
+
+const isInitSystemRequirements = ref<boolean>(gameToMutate.value.systemRequirements ? true : false)
+
+const emit = defineEmits(['update:openDialogForm'])
 
 const handleResetForm = () => {
-  emit('update:gamePreviewDetailsData', getDefaultGameValue())
+  // emit('update:gamePreviewDetailsData', getDefaultGameValue())
 }
 const handleCancelForm = () => {
   emit('update:openDialogForm', false)
@@ -178,8 +178,6 @@ const pricePreview = computed(() => {
     currency: 'VND',
   })
 })
-
-const gameToMutate = ref<GameType>({ ...props.gamePreviewDetails })
 
 const internetRequiredData = computed({
   get: () => gameToMutate.value?.internetConnection ?? false,
@@ -199,18 +197,18 @@ const updateAtStatus = computed({
   },
 })
 
-const selectedVersion = computed({
-  get: () => gameToMutate.value?.buildInfo?.versionName ?? '',
-  set: (val) => {
-    if (!gameToMutate.value) return
-    gameToMutate.value.buildInfo ??= {
-      versionName: '',
-      execPath: '',
-      downloadUrl: '',
-    }
-    gameToMutate.value.buildInfo.versionName = val
-  },
-})
+// const selectedVersion = computed({
+//   get: () => gameToMutate.value?.buildInfo?.versionName ?? '',
+//   set: (val) => {
+//     if (!gameToMutate.value) return
+//     gameToMutate.value.buildInfo ??= {
+//       versionName: '',
+//       execPath: '',
+//       downloadUrl: '',
+//     }
+//     gameToMutate.value.buildInfo.versionName = val
+//   },
+// })
 
 const developTeamsData = computed({
   get: () => gameToMutate.value?.developerTeams ?? [],
@@ -239,14 +237,14 @@ const shortDescriptionsData = computed({
   },
 })
 
-const subTitleData = computed({
-  get: () => gameToMutate.value?.subtitles ?? '',
-  set: (val) => {
-    if (gameToMutate.value) {
-      gameToMutate.value.subtitles = val
-    }
-  },
-})
+// const subTitleData = computed({
+//   get: () => gameToMutate.value?.subtitles ?? '',
+//   set: (val) => {
+//     if (gameToMutate.value) {
+//       gameToMutate.value.subtitles = val
+//     }
+//   },
+// })
 
 const longDescriptionsData = computed({
   get: () => gameToMutate.value?.longDescription ?? '',
@@ -267,17 +265,11 @@ const regionsData = computed({
   },
 })
 
-const thumbnailUrlData = computed({
-  get: () =>
-    !gameToMutate.value?.thumbnail
-      ? 'https://ccdn.steak.io.vn/guts-profile-pic.png'
-      : gameToMutate.value.thumbnail,
-  set: (val) => {
-    if (gameToMutate.value) {
-      gameToMutate.value.thumbnail = val
-    }
-  },
-})
+const thumbnailUrlData = ref<string>(
+  gameToMutate.value.thumbnail
+    ? gameToMutate.value.thumbnail
+    : 'https://ccdn.steak.io.vn/assets-desert.png',
+)
 
 const handleSaveAsDraft = async () => {
   if (thumbnailUrlData.value) {
@@ -289,12 +281,15 @@ const handleSaveAsDraft = async () => {
   })
 
   if (system.minimum != null) {
-    system.minimum = useSystem.minimumRequirement
+    gameToMutate.value.systemRequirements = {
+      minimum: useSystem.minimumRequirement,
+      recommend: useSystem.recommendRequirement,
+    }
   }
 
-  if (system.recommend != null) {
-    system.recommend = useSystem.recommendRequirement
-  }
+  // if (system.recommend != null) {
+  //   gameToMutate.value.systemRequirements.recommend = useSystem.recommendRequirement
+  // }
 
   try {
     const response = await mutateAsyncCreateDraftProject(gameToMutate.value)

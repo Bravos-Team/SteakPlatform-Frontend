@@ -8,7 +8,9 @@ import {
 } from '@/components/ui/tags-input'
 import { type DEVELOPTEAMS_TYPE } from '@/components/publisher/gameDetails/formComponents/developerTeam/DevelopTeams'
 
-const emitDevelopTeams = defineModel<DEVELOPTEAMS_TYPE>('developTeams')
+const emitDevelopTeams = defineModel<DEVELOPTEAMS_TYPE>('developTeams', {
+  default: ['Gay', 'UbiSuck', 'SweetBaby'],
+})
 </script>
 
 <template>

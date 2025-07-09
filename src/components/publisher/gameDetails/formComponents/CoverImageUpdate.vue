@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import {
   useGetPresignedImageUrl,
   usePostIntoPresignedUrl,
@@ -77,12 +77,15 @@ const { isPending: isPosttingIntoPresignedUrl, mutateAsync: mutatePostIntoPresig
   usePostIntoPresignedUrl()
 
 const fileInput = ref<HTMLInputElement | null>(null)
-const fileName = ref<string>('example-cover-thumbnail.jpg')
 const gameImage = ref<HTMLInputElement | null>(null)
 const unShowImageUploaded = ref(false)
 const thumbnailUrl = defineModel<string>('thumbnailUrl', {
   default: '',
 })
+
+const fileName = ref<string>(
+  thumbnailUrl.value ? thumbnailUrl.value.split('images/')[1] : 'example-cover-thumbnail.jpg',
+)
 
 const isDragging = ref(false)
 const handleDrop = (e: DragEvent) => {
@@ -94,8 +97,6 @@ const handleDrop = (e: DragEvent) => {
     fileName.value = files[0].name
   }
 }
-
-const localPreviewUrl = ref<string>('')
 
 const handleFileChange = async (e: Event) => {
   const files = (e.target as HTMLInputElement).files
@@ -109,14 +110,14 @@ const handleFileChange = async (e: Event) => {
       fileSize: files[0].size,
     })
 
-    if (response) {
-      thumbnailUrl.value = response.cdnFileName
-    }
-
     await mutatePostIntoPresignedUrl({
       url: response.signedUrl,
       file: files[0],
     })
+
+    if (response) {
+      thumbnailUrl.value = 'https://ccdn.steak.io.vn/' + response.cdnFileName
+    }
   }
 }
 </script>
