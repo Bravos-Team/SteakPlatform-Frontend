@@ -104,7 +104,6 @@ const onSubmit = async (values: { name: string }) => {
       )
     }
   } catch (error: any) {
-    console.log(error)
     toastErrorNotificationPopup(
       'Create Product Error',
       error instanceof Error ? error.message : `An unexpected error occurred. Please try again.`,

@@ -93,7 +93,6 @@ const CountryData = computed(() => {
   if (data) {
     return data.value
   }
-  console.log('NOT HAVE COUNTRIES DATA')
   return []
 })
 const filterCountries = computed(() => {

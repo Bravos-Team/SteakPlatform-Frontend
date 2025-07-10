@@ -11,20 +11,25 @@
             <span> Media Input {{ index + 1 }}</span>
             <cloud-upload :size="20" />
           </span>
-          <div class="w-full relative flex focus:border-white/50 focus:outline-none">
-            <div class="h-full flex justify-center bg-white/10 border-2">
+          <div
+            class="w-full relative flex desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
+          >
+            <div class="h-full flex desktop:flex-row justify-center bg-white/10 border-2">
+              <!-- VIDEO AND IMAGE -->
               <img
                 v-if="media.imagePreview && media.type === 'image'"
                 :src="media.imagePreview"
-                class="object-contain w-full lg:h-20"
+                class="object-contain w-full h-20 tablet:h-40"
                 alt=""
               />
               <video
                 v-if="media.imagePreview && media.type === 'video'"
                 :src="media.imagePreview"
-                class="object-contain w-full lg:h-40"
+                class="object-contain w-full h-full tablet:h-40"
+                loop
                 autoplay
               ></video>
+              <!-- END VIDEO AND IMAGES -->
             </div>
             <div class="w-full h-full">
               <input
@@ -67,18 +72,27 @@
 
 <script setup lang="ts">
 import { X, Shredder, CloudUpload, DiamondPlus } from 'lucide-vue-next'
+import { onMounted, ref, watch } from 'vue'
+import { useImageStored } from '@/stores/image/useImageStored'
+import { type MediaType } from '@/types/image/MediaAndImage'
 
-import { ref, h } from 'vue'
-type MediaType = {
-  type: string
-  url: string
-  imagePreview?: string | null
-}
+const useImageStore = useImageStored()
+
+const props = defineProps<{
+  mediaData:
+    | {
+        type: 'image' | 'video'
+        url: string
+      }[]
+    | null
+}>()
+
 const media_files = ref<MediaType[]>([
   {
     type: '',
     imagePreview: null,
     url: '',
+    file_instance: new File(['content'], 'example-thumbnail.webp', { type: 'image/webp' }),
   },
 ])
 
@@ -92,6 +106,7 @@ const handleCreateMediaInput = () => {
 
 const handleDeleteMediaInput = (index: number) => {
   media_files.value.splice(index, 1)
+  useImageStore.media_files_stored.splice(index, 1)
 }
 
 const handleSelectFile = (index: number, event: Event) => {
@@ -105,9 +120,35 @@ const handleSelectFile = (index: number, event: Event) => {
 
     const previewUrl = URL.createObjectURL(files[0])
     media_files.value[index].imagePreview = previewUrl
+    media_files.value[index].file_instance = files[0]
+    useImageStore.media_files_stored.push({ ...media_files.value[index] })
   }
 }
 const handleClearAll = () => {
   media_files.value = []
+  useImageStore.media_files_stored = []
 }
+
+onMounted(() => {
+  if (props.mediaData && props.mediaData.length > 0) {
+    media_files.value = props.mediaData.map((media) => ({
+      type: media.type,
+      imagePreview: media.url,
+      url: media.url,
+      file_instance: new File(['content'], 'example-thumbnail.webp', { type: 'image/webp' }),
+    }))
+  } else {
+    if (useImageStore.media_files_stored.length > 0) {
+      media_files.value = useImageStore.media_files_stored
+    }
+  }
+})
+
+// watch(
+//   media_files,
+//   () => {
+//     console.log('Media files updated:', media_files.value)
+//   },
+//   { deep: true },
+// )
 </script>

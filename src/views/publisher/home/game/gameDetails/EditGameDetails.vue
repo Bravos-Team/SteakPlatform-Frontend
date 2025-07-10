@@ -44,9 +44,6 @@ watch(
       useSystem.recommendRequirement =
         projectById.value.data.systemRequirements.recommended ?? useSystem.minimumRequirement
     }
-    console.log('Project By Id:', projectById.value?.data)
-    console.log('Minimum Requirement:', useSystem.minimumRequirement)
-    console.log('Recommend Requirement:', useSystem.recommendRequirement)
   },
   { deep: true },
 )

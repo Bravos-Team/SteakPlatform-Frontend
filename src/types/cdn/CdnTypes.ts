@@ -13,3 +13,8 @@ export type PresignedUrlResponse = {
   fileName: string
   signedUrl: string
 }
+
+export type PostIntoPresignedURLsType = {
+  file_instance: File
+  signedUrl: string
+}

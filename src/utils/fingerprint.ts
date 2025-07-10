@@ -51,7 +51,6 @@ export async function generateDeviceInfo(): Promise<string> {
 
     return `Browser ${browser} ${version} in ${platform}`
   } catch (error) {
-    console.log('Error generating device info', error)
     return 'Hacker device'
   }
 }

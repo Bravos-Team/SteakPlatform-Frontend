@@ -16,7 +16,7 @@
     <!-- END COVER IAMGE ${data}-->
 
     <!-- START MEDIAS & IMAGES BAR ${data} -->
-    <media-bar />
+    <media-bar :media-data="gameToMutate.media" />
     <!-- END MEDIAS & IMAGES BAR -->
 
     <!-- START DEVELOPER TEAM INPUTS ${data} -->
@@ -145,14 +145,31 @@ import PlatformsSupportedTags from '@/components/publisher/gameDetails/formCompo
 import DescriptionsBar from '@/components/publisher/gameDetails/formComponents/descriptions/DescriptionsBar.vue'
 import MediaBar from '@/components/publisher/gameDetails/formComponents/MediaBar.vue'
 import { type GameType } from '@/types/game/gameDetails/GameDetailsType'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { usePublisherCreateDraftProjectInformations } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+import { useImageCompressor } from '@/composables/image/useImageCompression'
+import { useImageStored } from '@/stores/image/useImageStored'
+import {
+  useGetPresignedImageUrl,
+  usePostIntoPresignedUrl,
+  useGetPresignedImageUrls,
+  usePostIntoPresignedUrls,
+} from '@/hooks/common/cdn/useCDNAssetsManager'
+import { MediaType } from '@/types/image/MediaAndImage'
+import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/CdnTypes'
 const useSystem = useSystemRequirementsStore()
+const useComporessionImage = useImageCompressor()
+const useImageStore = useImageStored()
+
+const { mutateAsync: mutateGetPresignedImageUrl } = useGetPresignedImageUrl()
+const { mutateAsync: mutateGetPresignedImageUrls } = useGetPresignedImageUrls()
+const { mutateAsync: mutatePostIntoPresignedUrl } = usePostIntoPresignedUrl()
+const { mutateAsync: mutatePostIntoPresignedUrls } = usePostIntoPresignedUrls()
 const { mutateAsync: mutateAsyncCreateDraftProject } = usePublisherCreateDraftProjectInformations()
 
 const props = defineProps<{
@@ -272,25 +289,80 @@ const thumbnailUrlData = ref<string>(
 )
 
 const handleSaveAsDraft = async () => {
-  if (thumbnailUrlData.value) {
-    gameToMutate.value.thumbnail = thumbnailUrlData.value
+  // <-- handle upload cover image
+  if (useImageStore.coverImage_stored) {
+    const files: any = useImageStore.coverImage_stored
+    const fileComporessed = await useComporessionImage.compressImage(files)
+
+    const response = await mutateGetPresignedImageUrl({
+      fileName: fileComporessed.name,
+      fileSize: fileComporessed.size,
+    })
+
+    await mutatePostIntoPresignedUrl({
+      url: response.signedUrl,
+      file: fileComporessed,
+    })
+
+    if (response) {
+      gameToMutate.value.thumbnail = 'https://ccdn.steak.io.vn/' + response.cdnFileName
+    }
   }
+  // end handle upload cover image -->
+
+  // <-- handle upload media files
+  if (useImageStore.media_files_stored.length > 0) {
+    const media_files: any = useImageStore.media_files_stored
+    console.log('Media files to upload:', media_files)
+    const media_files_compressed = await Promise.all(
+      media_files.map((file: MediaType) => useComporessionImage.compressImage(file.file_instance)),
+    )
+
+    const request_datas = media_files_compressed.map((file) => ({
+      fileName: file.name,
+      fileSize: file.size,
+    }))
+
+    const response: PresignedUrlResponse[] = await mutateGetPresignedImageUrls(request_datas)
+
+    const dataPostIntoPresignedUrls: PostIntoPresignedURLsType[] = media_files.map(
+      (file: any, index: number) => {
+        const { signedUrl } = response[index]
+        return {
+          signedUrl,
+          file_instance: file.file_instance,
+        }
+      },
+    )
+    await mutatePostIntoPresignedUrls(dataPostIntoPresignedUrls)
+    if (response) {
+      const data_to_assigned = response.map((file: PresignedUrlResponse, index: number) => {
+        const { cdnFileName } = file
+        return {
+          url: `https://ccdn.steak.io.vn/${cdnFileName}`,
+          type: media_files[index].type,
+        }
+      })
+      gameToMutate.value.media = [...data_to_assigned]
+    }
+  }
+  // end handle upload media files -->
+
+  // <-- handle system requirements
   const system = (gameToMutate.value.systemRequirements ??= {
     minimum: { cpu: '', gpu: '', storage: '', directX: '', memory: '', osVersion: '' },
     recommend: { cpu: '', gpu: '', storage: '', directX: '', memory: '', osVersion: '' },
   })
 
-  if (system.minimum != null) {
+  if (system.minimum != null || system.recommend != null) {
     gameToMutate.value.systemRequirements = {
       minimum: useSystem.minimumRequirement,
       recommend: useSystem.recommendRequirement,
     }
   }
+  // handle system requirements -->
 
-  // if (system.recommend != null) {
-  //   gameToMutate.value.systemRequirements.recommend = useSystem.recommendRequirement
-  // }
-
+  // <-- handle save as draft
   try {
     const response = await mutateAsyncCreateDraftProject(gameToMutate.value)
     if (response.status === 200) {
@@ -307,5 +379,6 @@ const handleSaveAsDraft = async () => {
       `Error: ${error}`,
     )
   }
+  // handle save as draft -->
 }
 </script>
