@@ -16,7 +16,7 @@ defineOptions({
 })
 
 const props = withDefaults(
-  defineProps<TooltipContentProps & { class?: HTMLAttributes['class'] }>(),
+  defineProps<TooltipContentProps & { class?: HTMLAttributes['class']; color?: number }>(),
   {
     sideOffset: 4,
   },
@@ -42,7 +42,14 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     >
       <slot />
 
-      <TooltipArrow class="bg-transparent fill-white/20" />
+      <TooltipArrow
+        class="bg-transparent"
+        :class="{
+          'fill-white': color === 1,
+          'fill-black': color === 2,
+          'fill-white/20': color === 3,
+        }"
+      />
     </TooltipContent>
   </TooltipPortal>
 </template>

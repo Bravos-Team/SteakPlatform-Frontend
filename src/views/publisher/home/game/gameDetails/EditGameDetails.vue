@@ -37,7 +37,7 @@ const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPe
 
 watch(
   projectById,
-  async (newValue) => {
+  async () => {
     await nextTick()
     if (projectById.value?.data.systemRequirements) {
       useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
