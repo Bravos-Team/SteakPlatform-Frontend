@@ -15,7 +15,7 @@
     />
 
     <div
-      class="absolute shrink-0 -bottom-[10px] !left-10 z-0 w-full h-full flex items-center justify-center tablet:hidden"
+      class="absolute shrink-0 -bottom-[10px] !left-10 z-0 w-full h-full flex items-center justify-center mobile:hidden"
     >
       <div class="bg-[#422277] !left-10 w-[55rem] h-[35rem] rounded-full blur-[10rem]"></div>
     </div>
@@ -43,5 +43,6 @@ import PublisherNavmain from '@/components/publisher/common/sidebar/PublisherNav
 import { userData, navItemsData } from '@/components/publisher/common/sidebar/SidebarItems'
 import UserProfileNav from '@/components/common/user/UserProfileNav.vue'
 import { getCookie } from '@/utils/cookies/cookie-utils'
+
 const isOpen: boolean = getCookie('sidebar-open') === 'true'
 </script>

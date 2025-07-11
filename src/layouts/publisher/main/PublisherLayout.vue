@@ -13,7 +13,7 @@ const toggleNav = () => {
 </script>
 
 <template>
-  <sidebar-provider class="no-scrollbar" :defaultOpen="defaultOpen">
+  <sidebar-provider class="no-scrollbar">
     <publisher-sidebar />
     <context-menu>
       <context-menu-trigger class="w-full">

@@ -42,7 +42,6 @@ const router = createRouter({
 
 router.beforeEach((to: any, from, next) => {
   // if (!to.meta.middleware) {
-  //   console.log('this page is not requires authentication')
   //   return next()
   // }
 

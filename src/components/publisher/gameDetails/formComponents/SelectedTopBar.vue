@@ -1,44 +1,42 @@
 <template>
-  <tooltip-provider>
-    <div class="flex w-full gap-y-2 justify-between gap-x-2">
-      <!-- START INTERNET CONNECTED SWITCHER -->
-      <internet-connected-switcher v-model:model-value="getInternetConnectedRequiredData" />
-      <!-- END INTERNET CONNECTED SWITCHER -->
+  <div class="flex w-full gap-y-2 justify-between gap-x-2">
+    <!-- START INTERNET CONNECTED SWITCHER -->
+    <internet-connected-switcher v-model:model-value="getInternetConnectedRequiredData" />
+    <!-- END INTERNET CONNECTED SWITCHER -->
 
-      <div class="flex gap-x-2 w-full justify-between justify-end">
-        <!-- START UPDATE AT INFORMATION -->
-        <div class="flex items-center gap-x-2">
-          <span>Updated at:</span>
-          <tooltip>
-            <tooltip-trigger>
-              <update-at-information
-                :update-at="new Date(updateAt).toLocaleDateString('vi-VN', { dateStyle: 'full' })"
-              />
-            </tooltip-trigger>
-            <tooltip-content>
-              <!-- {{ new Date(updateAt).toLocaleDateString('vi-VN', { dateStyle: 'short' }) }} -->
-              {{
-                new Date(updateAt).toLocaleTimeString('vi-VN') +
-                ' ' +
-                new Date(updateAt).toLocaleString('vi-VN', { dateStyle: 'full' })
-              }}
-            </tooltip-content>
-          </tooltip>
-        </div>
-        <!-- END UPDATE AT INFORMATION -->
-
-        <!-- START VERSION SELECTED -->
-        <!-- <version-selected-and-status v-model:model-value="getVersionSelected" /> -->
-        <!-- END VERSION SELECTED -->
+    <div class="flex gap-x-2 w-full justify-between justify-end">
+      <!-- START UPDATE AT INFORMATION -->
+      <div class="flex items-center gap-x-2">
+        <span>Updated at:</span>
+        <tooltip>
+          <tooltip-trigger>
+            <update-at-information
+              :update-at="new Date(updateAt).toLocaleDateString('vi-VN', { dateStyle: 'full' })"
+            />
+          </tooltip-trigger>
+          <tooltip-content>
+            <!-- {{ new Date(updateAt).toLocaleDateString('vi-VN', { dateStyle: 'short' }) }} -->
+            {{
+              new Date(updateAt).toLocaleTimeString('vi-VN') +
+              ' ' +
+              new Date(updateAt).toLocaleString('vi-VN', { dateStyle: 'full' })
+            }}
+          </tooltip-content>
+        </tooltip>
       </div>
+      <!-- END UPDATE AT INFORMATION -->
+
+      <!-- START VERSION SELECTED -->
+      <!-- <version-selected-and-status v-model:model-value="getVersionSelected" /> -->
+      <!-- END VERSION SELECTED -->
     </div>
-  </tooltip-provider>
+  </div>
 </template>
 
 <script setup lang="ts">
 import InternetConnectedSwitcher from '@/components/publisher/gameDetails/formComponents/updateStatus/InternetConnectedSwitcher.vue'
 import UpdateAtInformation from '@/components/publisher/gameDetails/formComponents/updateStatus/UpdateAtInformation.vue'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 // import VersionSelectedAndStatus from '@/components/publisher/gameDetails/formComponents/version/VersionSelectedAndStatus.vue'
 
 // const getVersionSelected = defineModel<string>('getVersionSelected')

@@ -57,7 +57,7 @@
                             :key="index"
                           >
                             <sidebar-menu-sub-button as-child>
-                              <router-link :to="{ name: valueSub?.name }">
+                              <router-link @click="handleRedirect" :to="{ name: valueSub?.name }">
                                 <component :is="valueSub?.icon" />
                                 <span>{{ valueSub?.title }}</span>
                               </router-link>
@@ -71,7 +71,7 @@
 
                   <!-- IF NOT -->
                   <sidebar-menu-sub-button v-else as-child>
-                    <router-link :to="{ name: subItem?.name }">
+                    <router-link @click="handleRedirect" :to="{ name: subItem?.name }">
                       <component :is="subItem?.icon" />
                       <span>{{ subItem?.title }}</span>
                     </router-link>
@@ -90,7 +90,7 @@
         <collapsible v-else>
           <sidebar-menu-item>
             <collapsible-trigger as-child>
-              <router-link :to="{ name: value?.name }">
+              <router-link @click="handleRedirect" :to="{ name: value?.name }">
                 <sidebar-menu-button :tooltip="value?.title">
                   <component :is="value?.icon" />
                   <span>{{ value?.title }}</span>
@@ -108,15 +108,13 @@
 <script setup lang="ts">
 import { ChevronRight, ChevronsDown, type LucideIcon } from 'lucide-vue-next'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-
+import { useSidebar } from '@/components/ui/sidebar'
+import { nextTick } from 'vue'
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuAction,
-  SidebarMenuBadge,
-  SidebarSeparator,
   SidebarMenuSkeleton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -124,6 +122,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 
+const useSideBarTool = useSidebar()
 const props = defineProps<{
   items: [
     {
@@ -144,4 +143,11 @@ const props = defineProps<{
     },
   ]
 }>()
+
+const handleRedirect = async () => {
+  if (useSideBarTool.isMobile.value) {
+    useSideBarTool.setOpenMobile(false)
+  }
+  await nextTick()
+}
 </script>

@@ -6,34 +6,16 @@
       :class="{ hidden: unShowImageUploaded }"
       class="w-full lg:h-40 border-4 border-double rounded-md flex lg:flex-row flex-col overflow-hidden relative"
     >
-      <div
-        class="h-full flex justify-center p-5 bg-[#29292D]"
-        :class="{
-          'blur-xs min-h-50 animate-pulse': isGettingPresignedUrl || isPosttingIntoPresignedUrl,
-        }"
-      >
+      <div class="h-full flex justify-center p-5 bg-[#29292D]">
         <img
-          :class="{ hidden: isGettingPresignedUrl || isPosttingIntoPresignedUrl }"
           :src="thumbnailUrl"
           ref="gameImage"
           class="object-contain w-full md:h-50 lg:h-full"
           alt=""
         />
       </div>
-
-      <LoaderCircle
-        :class="{
-          visible: isGettingPresignedUrl || isPosttingIntoPresignedUrl,
-          hidden: !isGettingPresignedUrl && !isPosttingIntoPresignedUrl,
-        }"
-        class="absolute left-[48%] top-[28%] text-gray-500 scale-110 size-10 animate-spin z-2"
-      />
       <div class="w-full bg-[#202024] h-full flex justify-between p-4">
-        <span
-          v-if="isGettingPresignedUrl || isPosttingIntoPresignedUrl"
-          class="animate-pulse min-h-3 max-h-8 rounded-sm bg-white/10 min-w-50"
-        ></span>
-        <span v-else class="text-white/80 font-mono text-md">{{ fileName }}</span>
+        <span class="text-white/80 font-mono text-md">{{ fileName }}</span>
         <div>
           <button
             @click="unShowImageUploaded = !unShowImageUploaded"
@@ -63,18 +45,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import {
-  useGetPresignedImageUrl,
-  usePostIntoPresignedUrl,
-} from '@/hooks/common/cdn/useCDNAssetsManager'
+import { onMounted, ref } from 'vue'
 import { Upload, Trash2, LoaderCircle } from 'lucide-vue-next'
+import { useImageStored } from '@/stores/image/useImageStored'
 
-const { isPending: isGettingPresignedUrl, mutateAsync: mutateGetPresignedImageUrl } =
-  useGetPresignedImageUrl()
+import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 
-const { isPending: isPosttingIntoPresignedUrl, mutateAsync: mutatePostIntoPresignedUrl } =
-  usePostIntoPresignedUrl()
+const useImageStore = useImageStored()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const gameImage = ref<HTMLInputElement | null>(null)
@@ -100,24 +77,29 @@ const handleDrop = (e: DragEvent) => {
 
 const handleFileChange = async (e: Event) => {
   const files = (e.target as HTMLInputElement).files
+
   if (files && files.length) {
-    unShowImageUploaded.value = false
-    fileName.value = files[0].name
-    gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
-
-    const response = await mutateGetPresignedImageUrl({
-      fileName: files[0].name,
-      fileSize: files[0].size,
-    })
-
-    await mutatePostIntoPresignedUrl({
-      url: response.signedUrl,
-      file: files[0],
-    })
-
-    if (response) {
-      thumbnailUrl.value = 'https://ccdn.steak.io.vn/' + response.cdnFileName
+    if (files[0].type.startsWith('video/') || !files[0].type.startsWith('image/')) {
+      toastErrorNotificationPopup(
+        'Cannot upload this file as cover image',
+        'Try again with an image file.',
+      )
+    } else {
+      fileName.value = files[0].name
+      gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
+      useImageStore.coverImage_stored = files[0]
+      unShowImageUploaded.value = false
     }
   }
 }
+
+onMounted(() => {
+  if (thumbnailUrl.value) {
+    if (useImageStore.coverImage_stored) {
+      unShowImageUploaded.value = false
+      gameImage.value?.setAttribute('src', URL.createObjectURL(useImageStore.coverImage_stored))
+      fileName.value = useImageStore.coverImage_stored.name
+    }
+  }
+})
 </script>

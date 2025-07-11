@@ -37,16 +37,13 @@ const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPe
 
 watch(
   projectById,
-  async (newValue) => {
+  async () => {
     await nextTick()
     if (projectById.value?.data.systemRequirements) {
       useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
       useSystem.recommendRequirement =
         projectById.value.data.systemRequirements.recommended ?? useSystem.minimumRequirement
     }
-    console.log('Project By Id:', projectById.value?.data)
-    console.log('Minimum Requirement:', useSystem.minimumRequirement)
-    console.log('Recommend Requirement:', useSystem.recommendRequirement)
   },
   { deep: true },
 )

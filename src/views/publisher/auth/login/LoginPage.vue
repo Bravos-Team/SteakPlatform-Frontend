@@ -77,13 +77,11 @@
               type="submit"
               class="w-full rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] m-2 flex items-center bg-[#ffffff26] transition-all"
             >
-              <span v-if="!isPendingPublisherLoginEmail || !isPendingPublisherLoginUserName">
-                Login
-              </span>
               <loader-circle
                 v-if="isPendingPublisherLoginEmail || isPendingPublisherLoginUserName"
                 class="animate-spin ml-2"
               />
+              <span v-else> Login </span>
             </button>
             <span class="text-red-500 text-center">{{ loginMessage }}</span>
           </div>
@@ -202,13 +200,11 @@ const handlePublisherLogin = async () => {
         router.push({ name: 'PublisherHome' })
       }
     } catch (err: any) {
-      console.error('Login failed:', err)
       toastErrorNotificationPopup(
         'Login failed',
         err?.response?.data?.detail || 'An error occurred',
       )
       loginMessage.value = err?.response?.data?.detail
-      console.log('loginMessage: ', loginMessage.value)
     }
   }
 }
