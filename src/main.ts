@@ -38,7 +38,7 @@ const vueQueryPluginOptions: VueQueryPluginOptions = {
   },
 }
 
-const app = createApp(App).use(await Particles)
+const app = createApp(App).use(Particles)
 
 app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions)
 

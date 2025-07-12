@@ -1,141 +1,165 @@
 <template>
-  <form @submit.prevent class="text-md flex flex-col gap-y-4 flex-wrap w-full">
-    <!-- START SELECTED TOP BAR ${data} -->
-    <selected-top-bar
-      v-model:get-internet-connected-required-data="gamePreviewDetails.internetConnection"
-      v-model:get-version-selected="gamePreviewDetails.buildInfo.versionName"
-    />
-    <!-- END SELECTED TOP BAR ${data}-->
+  <TooltipProvider>
+    <form @submit.prevent class="text-md flex flex-col gap-y-4 flex-wrap w-full">
+      <!-- START SELECTED TOP BAR ${data} -->
+      <selected-top-bar
+        v-model:update-at="updateAtStatus"
+        v-model:get-internet-connected-required-data="internetRequiredData"
+      />
+      <!-- END SELECTED TOP BAR ${data}-->
 
-    <!-- CONSIDER TERMS OF SERVICE -->
-    <consider-terms-of-service />
-    <!-- END CONSIDER TERMS OF SERVICE -->
+      <!-- CONSIDER TERMS OF SERVICE -->
+      <consider-terms-of-service />
+      <!-- END CONSIDER TERMS OF SERVICE -->
 
-    <!-- COVER IMAGE ${data}-->
-    <cover-image-update />
-    <!-- END COVER IAMGE ${data}-->
+      <!-- COVER IMAGE ${data}-->
+      <cover-image-update v-model:thumbnail-url="thumbnailUrlData" />
+      <!-- END COVER IAMGE ${data}-->
 
-    <!-- START MEDIAS & IMAGES BAR ${data} -->
-    <media-bar />
-    <!-- END MEDIAS & IMAGES BAR -->
+      <!-- START MEDIAS & IMAGES BAR ${data} -->
+      <media-bar
+        :is-assigned-media-files="isAssignedMediaFiles"
+        @media-deleted-update="handleDeleteMedia"
+        :media-data="gameToMutate.media"
+      />
+      <!-- END MEDIAS & IMAGES BAR -->
 
-    <!-- START DEVELOPER TEAM INPUTS ${data} -->
-    <your-developer-teams v-model:develop-teams="gamePreviewDetails.developerTeams" />
-    <!-- END DEVELOPER TEAM INPUTS -->
+      <!-- START DEVELOPER TEAM INPUTS ${data} -->
+      <your-developer-teams v-model:develop-teams="developTeamsData" />
+      <!-- END DEVELOPER TEAM INPUTS -->
 
-    <!-- RELEASE DATE & ESTIMATED MONTH ${data}-->
-    <release-estimated-date
-      v-model:estimated-release-date="gamePreviewDetails.estimatedReleaseDate"
-    />
-    <!-- END RELEASE DATE & ESTIMATED MONTH ${data}-->
+      <!-- RELEASE DATE & ESTIMATED MONTH ${data}-->
+      <release-estimated-date v-model:estimated-release-date="estimatedReleaseDateData" />
+      <!-- END RELEASE DATE & ESTIMATED MONTH ${data}-->
 
-    <!-- START DESCRIPTIONS BAR ${data} -->
-    <descriptions-bar
-      v-model:get-short-descriptions="gamePreviewDetails.shortDescription"
-      v-model:get-subtitles="gamePreviewDetails.subtitles"
-      v-model:get-preview-long-descriptions-data="getDataFromDescriptionsBar"
-    />
+      <!-- START DESCRIPTIONS BAR ${data} -->
+      <descriptions-bar
+        v-model:get-short-descriptions="shortDescriptionsData"
+        v-model:get-preview-long-descriptions-data="longDescriptionsData"
+      />
 
-    <!-- END DESCRIPTIONS BAR ${data} -->
+      <!-- END DESCRIPTIONS BAR ${data} -->
 
-    <!-- START TAGS SELECTED BAR ${data} -->
-    <div class="grid tablet:grid-cols-2 laptop:grid-cols-3 gap-x-3 w-full flex-wrap gap-y-3">
-      <!-- START AVAILABLE COUNTRIES PICKER -->
-      <div class="flex flex-col justify-center w-full">
-        <span class="flex items-center text-sm">Available Countries</span>
-        <region-tags-picker v-model:get-regions-data="gamePreviewDetails.regions" />
-      </div>
-      <!-- END AVAILABLE COUNTRIES PICKER -->
+      <!-- START TAGS SELECTED BAR ${data} -->
+      <div
+        class="grid tablet:grid-cols-2 laptop:grid-cols-2 desktop:grid-cols-3 gap-x-3 w-full flex-wrap gap-y-3"
+      >
+        <!-- START AVAILABLE COUNTRIES PICKER -->
+        <div class="flex flex-col desktop:col-span-1 justify-center w-full">
+          <span class="flex items-center text-sm">Available Countries</span>
+          <region-tags-picker v-model:get-regions-data="regionsData" />
+        </div>
+        <!-- END AVAILABLE COUNTRIES PICKER -->
 
-      <!-- START LANGUAGES SUPPORTED PICKER -->
-      <div class="flex flex-col justify-center w-full">
-        <span class="flex items-center text-sm">Langagues Supported</span>
-        <languages-supported-picker
-          v-model:get-languages-supported-data="gamePreviewDetails.languageSupported"
-        />
-      </div>
-      <!-- END LANGUAGES SUPPORTED PICKER -->
-
-      <!-- START PLATFORMS SUPPORTED PICKER -->
-
-      <div class="flex flex-col justify-center w-full">
-        <span class="flex items-center text-sm">Platforms</span>
-        <platforms-supported-tags
-          v-model:get-platforms-supported-data="gamePreviewDetails.platforms"
-        />
-      </div>
-      <!-- END PLATFORMS SUPPORTED PICKER -->
-    </div>
-    <!-- END TAGS SELECTED BAR ${data} -->
-
-    <!-- START SYSTEM REQUIREMENTS BAR -->
-    <system-requirements
-      v-model:emit-recommended-data="gamePreviewDetails.systemRequirements.recommend"
-      v-model:emit-minimum-data="gamePreviewDetails.systemRequirements.minimum"
-      v-model:is-init-system-requirements="isInitSystemRequirements"
-    />
-    <!-- END SYSTEM REQUIREMENTS BAR-->
-
-    <!-- START FOOTER FORM -->
-    <div class="flex gap-x-2 flex-wrap gap-y-2 justify-between">
-      <!-- START PRICE -->
-      <div class="flex gap-x-2">
-        <div class="flex gap-y-2 flex-col">
-          <span class="text-white/80 font-black">Price:</span>
-          <input
-            type="text"
-            v-model.lazy="gamePreviewDetails.price"
-            @blur="
-              () => {
-                gamePreviewDetails.price = isNaN(Number(gamePreviewDetails.price))
-                  ? 0
-                  : Number(gamePreviewDetails.price)
-              }
-            "
-            placeholder="0"
-            class="w-full outline-1 outline-white/30 bg-white/10 rounded-sm px-2 py-1 focus:outline-gray-400 focus:outline-2"
+        <!-- START LANGUAGES SUPPORTED PICKER -->
+        <div class="flex flex-col justify-center w-full">
+          <span class="flex items-center text-sm">Langagues Supported</span>
+          <languages-supported-picker
+            v-model:get-languages-supported-data="gameToMutate.languageSupported"
           />
         </div>
+        <!-- END LANGUAGES SUPPORTED PICKER -->
 
-        <div class="flex gap-y-2 gap-x-2 items-end">
-          <span class="text-white/80 font-black">Price Preview:</span>
-          <span class="text-white/80 font-medium">{{ pricePreview }}</span>
+        <!-- START PLATFORMS SUPPORTED PICKER -->
+
+        <div class="flex flex-col tablet:col-span-2 desktop:col-span-1 justify-center w-full">
+          <span class="flex items-center text-sm">Platforms</span>
+          <platforms-supported-tags v-model:get-platforms-supported-data="gameToMutate.platforms" />
         </div>
+        <!-- END PLATFORMS SUPPORTED PICKER -->
       </div>
-      <!-- END PRICE -->
+      <!-- END TAGS SELECTED BAR ${data} -->
 
-      <!-- START ACTIONS -->
-      <div class="flex items-center">
-        <div class="flex gap-x-2 flex-wrap gap-y-2 justify-end items-center">
-          <button
-            class="px-3 font-black cursor-pointer hover:bg-green-400/70 duration-300 transition-colors py-2 border bg-green-500/50 rounded-sm"
-          >
-            Verify Request
-          </button>
-          <button
-            class="px-3 font-black cursor-pointer hover:bg-white/30 duration-300 transition-colors py-2 border bg-white/10 rounded-sm"
-          >
-            Save as Draft
-          </button>
+      <!-- START SYSTEM REQUIREMENTS BAR -->
+      <system-requirements v-model:is-init-system-requirements="isInitSystemRequirements" />
+      <!-- END SYSTEM REQUIREMENTS BAR-->
 
-          <button
-            class="px-2 font-black cursor-pointer hover:bg-sky-400/80 duration-300 transition-colors py-2 border bg-sky-400/60 rounded-sm"
-            @click="handleResetForm"
-          >
-            Reset Form
-          </button>
-          <button
-            @click="handleCancelForm"
-            class="px-3 font-black cursor-pointer hover:bg-red-400/80 duration-300 transition-colors py-2 border bg-red-400/50 rounded-sm"
-          >
-            Cancel
-          </button>
+      <!-- START FOOTER FORM -->
+      <div class="flex gap-x-2 flex-wrap gap-y-2 justify-between">
+        <!-- START PRICE -->
+        <div class="flex gap-x-2">
+          <div class="flex gap-y-2 flex-col">
+            <span class="text-white/80 font-black">Price:</span>
+            <input
+              type="text"
+              v-model.lazy="gameToMutate.price"
+              @blur="
+                () => {
+                  gameToMutate.price = isNaN(Number(gameToMutate.price))
+                    ? 0
+                    : Number(gameToMutate.price)
+                }
+              "
+              placeholder="0"
+              class="w-full outline-1 outline-white/30 bg-white/10 rounded-sm px-2 py-1 focus:outline-gray-400 focus:outline-2"
+            />
+          </div>
+
+          <div class="flex gap-y-2 gap-x-2 items-end">
+            <span class="text-white/80 font-black">Price Preview:</span>
+            <span class="text-white/80 font-medium">{{ pricePreview }}</span>
+          </div>
         </div>
+        <!-- END PRICE -->
+
+        <!-- START ACTIONS -->
+        <div class="flex items-center">
+          <div class="flex gap-x-2 flex-wrap gap-y-2 justify-end items-center">
+            <button
+              class="px-3 font-black cursor-pointer hover:bg-green-400/70 duration-300 transition-colors py-2 border bg-green-500/50 rounded-sm"
+            >
+              Verify Request
+            </button>
+            <button
+              v-if="
+                isGetPresignedImageUrlPending ||
+                isGetPresignedImageUrlsPending ||
+                isPostIntoPresignedUrlPending ||
+                isPostIntoPresignedUrlsPending ||
+                isCreateDraftProjectInformationsPending
+              "
+              class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
+            >
+              Save as Draft
+            </button>
+            <button
+              v-else
+              @click="handleSaveAsDraft"
+              class="px-3 font-black cursor-pointer hover:bg-white/30 duration-300 transition-colors py-2 border bg-white/10 rounded-sm"
+            >
+              Save as Draft
+            </button>
+
+            <button
+              class="px-2 font-black cursor-pointer hover:bg-sky-400/80 duration-300 transition-colors py-2 border bg-sky-400/60 rounded-sm"
+              @click="handleResetForm"
+            >
+              Reset Form
+            </button>
+            <button
+              @click="handleCancelForm"
+              class="px-3 font-black cursor-pointer hover:bg-red-400/80 duration-300 transition-colors py-2 border bg-red-400/50 rounded-sm"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+        <Progress
+          v-if="
+            isGetPresignedImageUrlPending ||
+            isGetPresignedImageUrlsPending ||
+            isPostIntoPresignedUrlPending ||
+            isPostIntoPresignedUrlsPending ||
+            isCreateDraftProjectInformationsPending
+          "
+          :model-value="progressDisplay"
+          class="transition-all duration-500 w-full"
+        />
+        <!-- END ACTIONS -->
       </div>
-      <!-- END ACTIONS -->
-    </div>
-    <!-- END FOOTER FORM -->
-  </form>
+      <!-- END FOOTER FORM -->
+    </form>
+  </TooltipProvider>
 </template>
 
 <script setup lang="ts">
@@ -150,32 +174,300 @@ import SystemRequirements from '@/components/publisher/gameDetails/formComponent
 import PlatformsSupportedTags from '@/components/publisher/gameDetails/formComponents/platform/PlatformsSupportedTags.vue'
 import DescriptionsBar from '@/components/publisher/gameDetails/formComponents/descriptions/DescriptionsBar.vue'
 import MediaBar from '@/components/publisher/gameDetails/formComponents/MediaBar.vue'
-import { type GameType, getDefaultGameValue } from '@/types/game/gameDetails/GameDetailsType'
-import { computed, ref } from 'vue'
+import { getDefaultGameValue, type GameType } from '@/types/game/gameDetails/GameDetailsType'
+import { computed, ref, watch } from 'vue'
+import { usePublisherCreateDraftProjectInformations } from '@/hooks/publisher/project/usePublisherPersonalProjects'
+import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
+import { useImageCompressor } from '@/composables/image/useImageCompression'
+import { useImageStored } from '@/stores/image/useImageStored'
+import {
+  useGetPresignedImageUrl,
+  usePostIntoPresignedUrl,
+  useGetPresignedImageUrls,
+  usePostIntoPresignedUrls,
+} from '@/hooks/common/cdn/useCDNAssetsManager'
+import { MediaType } from '@/types/image/MediaAndImage'
+import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/CdnTypes'
+import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
+import { Progress } from '@/components/ui/progress'
+// import { useRoute } from 'vue-router'
+// import { usePublisherGetPersonalProjectById } from '@/hooks/publisher/project/usePublisherPersonalProjects'
+// import { data } from '../common/sidebar/SidebarItems'
 
-const isInitSystemRequirements = ref<boolean>(false)
-const getDataFromDescriptionsBar = computed({
-  get: () => props.gamePreviewDetails.longDescription,
-  set: (val: string) => (props.gamePreviewDetails.longDescription = val),
-})
+// const route = useRoute()
 
+const useSystem = useSystemRequirementsStore()
+const useComporessionImage = useImageCompressor()
+const useImageStore = useImageStored()
+
+const { mutateAsync: mutateGetPresignedImageUrl, isPending: isGetPresignedImageUrlPending } =
+  useGetPresignedImageUrl()
+const { mutateAsync: mutateGetPresignedImageUrls, isPending: isGetPresignedImageUrlsPending } =
+  useGetPresignedImageUrls()
+const { mutateAsync: mutatePostIntoPresignedUrl, isPending: isPostIntoPresignedUrlPending } =
+  usePostIntoPresignedUrl()
+const { mutateAsync: mutatePostIntoPresignedUrls, isPending: isPostIntoPresignedUrlsPending } =
+  usePostIntoPresignedUrls()
+const {
+  mutateAsync: mutateAsyncCreateDraftProject,
+  isPending: isCreateDraftProjectInformationsPending,
+} = usePublisherCreateDraftProjectInformations()
+
+// const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPersonalProjectById(
+//   route?.params?.id as unknown as bigint,
+// )
 const props = defineProps<{
   gamePreviewDetails: GameType
 }>()
 
-const emit = defineEmits(['update:openDialogForm', 'update:gamePreviewDetailsData'])
+const gameToMutate = ref<GameType>(JSON.parse(JSON.stringify(props.gamePreviewDetails)))
+const isAssignedMediaFiles = ref<boolean>(false)
+const isInitSystemRequirements = ref<boolean>(gameToMutate.value.systemRequirements ? true : false)
 
+const emit = defineEmits(['update:openDialogForm'])
 const handleResetForm = () => {
-  emit('update:gamePreviewDetailsData', getDefaultGameValue())
+  gameToMutate.value = getDefaultGameValue()
+  useSystem.resetSystemRequirements()
+  thumbnailUrlData.value = 'https://ccdn.steak.io.vn/assets-desert.png'
+  longDescriptionsData.value = ''
+}
+const handleDeleteMedia = (index: number) => {
+  gameToMutate.value.media?.splice(index, 1)
 }
 const handleCancelForm = () => {
   emit('update:openDialogForm', false)
 }
 
 const pricePreview = computed(() => {
-  return Number(props.gamePreviewDetails.price).toLocaleString('vi-VN', {
+  return Number(gameToMutate.value.price).toLocaleString('vi-VN', {
     style: 'currency',
     currency: 'VND',
   })
+})
+
+const internetRequiredData = computed({
+  get: () => gameToMutate.value?.internetConnection ?? false,
+  set: (val) => {
+    if (gameToMutate.value) {
+      gameToMutate.value.internetConnection = val
+    }
+  },
+})
+
+const updateAtStatus = computed({
+  get: () => gameToMutate.value?.updatedAt ?? '',
+  set: (val) => {
+    if (gameToMutate.value.updatedAt) {
+      gameToMutate.value.updatedAt = val
+    }
+  },
+})
+
+// const selectedVersion = computed({
+//   get: () => gameToMutate.value?.buildInfo?.versionName ?? '',
+//   set: (val) => {
+//     if (!gameToMutate.value) return
+//     gameToMutate.value.buildInfo ??= {
+//       versionName: '',
+//       execPath: '',
+//       downloadUrl: '',
+//     }
+//     gameToMutate.value.buildInfo.versionName = val
+//   },
+// })
+
+const developTeamsData = computed({
+  get: () => gameToMutate.value?.developerTeams ?? [],
+  set: (val) => {
+    if (gameToMutate.value) {
+      gameToMutate.value.developerTeams = val
+    }
+  },
+})
+
+const estimatedReleaseDateData = computed({
+  get: () => gameToMutate.value?.estimatedReleaseDate ?? '',
+  set: (val) => {
+    if (gameToMutate.value) {
+      gameToMutate.value.estimatedReleaseDate = val
+    }
+  },
+})
+
+const shortDescriptionsData = computed({
+  get: () => gameToMutate.value?.shortDescription ?? '',
+  set: (val) => {
+    if (gameToMutate.value) {
+      gameToMutate.value.shortDescription = val
+    }
+  },
+})
+
+// const subTitleData = computed({
+//   get: () => gameToMutate.value?.subtitles ?? '',
+//   set: (val) => {
+//     if (gameToMutate.value) {
+//       gameToMutate.value.subtitles = val
+//     }
+//   },
+// })
+
+const longDescriptionsData = computed({
+  get: () => gameToMutate.value?.longDescription ?? '',
+  set: (val) => {
+    if (gameToMutate.value) {
+      gameToMutate.value.longDescription = val
+    }
+  },
+})
+
+const regionsData = computed({
+  get: () => gameToMutate.value?.regions ?? [],
+  set: (val) => {
+    if (gameToMutate.value.regions) {
+      gameToMutate.value.regions = val
+    }
+    gameToMutate.value.regions = val || []
+  },
+})
+
+const thumbnailUrlData = ref<string>(
+  gameToMutate.value.thumbnail
+    ? gameToMutate.value.thumbnail
+    : 'https://ccdn.steak.io.vn/assets-desert.png',
+)
+
+const completedApis = ref(0)
+const totalApis = 5
+const progressValue = computed(() => Math.floor((completedApis.value / totalApis) * 100))
+const progressDisplay = ref(0)
+let animationInterval: any = null
+const handleSaveAsDraft = async () => {
+  // <-- handle upload cover image
+  completedApis.value = 0
+  progressDisplay.value = 0
+  if (useImageStore.coverImage_stored) {
+    const files: any = useImageStore.coverImage_stored
+
+    const fileComporessed = await useComporessionImage.compressImage(files)
+
+    const response = await mutateGetPresignedImageUrl({
+      fileName: fileComporessed.name,
+      fileSize: fileComporessed.size,
+    })
+
+    await mutatePostIntoPresignedUrl({
+      url: response.signedUrl,
+      file: fileComporessed,
+    })
+    completedApis.value += 1
+
+    if (response) {
+      gameToMutate.value.thumbnail = 'https://ccdn.steak.io.vn/' + response.cdnFileName
+    }
+  }
+  // end handle upload cover image -->
+
+  // <-- handle upload media files
+
+  if (useImageStore.media_files_stored.length > 0) {
+    const media_files: any = useImageStore.media_files_stored
+    const media_files_compressed = await Promise.all(
+      media_files.map((file: MediaType) => useComporessionImage.compressImage(file.file_instance)),
+    )
+    completedApis.value += 1
+
+    const request_datas = media_files_compressed.map((file) => ({
+      fileName: file.name,
+      fileSize: file.size,
+    }))
+
+    const response: PresignedUrlResponse[] = await mutateGetPresignedImageUrls(request_datas)
+    completedApis.value += 1
+
+    const dataPostIntoPresignedUrls: PostIntoPresignedURLsType[] = media_files.map(
+      (file: any, index: number) => {
+        const { signedUrl } = response[index]
+        return {
+          signedUrl,
+          file_instance: file.file_instance,
+        }
+      },
+    )
+    await mutatePostIntoPresignedUrls(dataPostIntoPresignedUrls)
+    if (response) {
+      const data_to_assigned = response.map((file: PresignedUrlResponse, index: number) => {
+        const { cdnFileName } = file
+        return {
+          url: `https://ccdn.steak.io.vn/${cdnFileName}`,
+          type: media_files[index].type,
+        }
+      })
+      setTimeout(() => {
+        data_to_assigned.forEach((media) => {
+          if (!gameToMutate.value.media) {
+            gameToMutate.value.media = []
+          }
+          gameToMutate.value.media?.push(media)
+        })
+      }, 2000)
+      isAssignedMediaFiles.value = true
+    }
+  }
+  // end handle upload media files -->
+
+  // <-- handle system requirements
+  const system = (gameToMutate.value.systemRequirements ??= {
+    minimum: { cpu: '', gpu: '', storage: '', directX: '', memory: '', osVersion: '' },
+    recommend: { cpu: '', gpu: '', storage: '', directX: '', memory: '', osVersion: '' },
+  })
+
+  if (system.minimum != null || system.recommend != null) {
+    gameToMutate.value.systemRequirements = {
+      minimum: useSystem.minimumRequirement,
+      recommend: useSystem.recommendRequirement,
+    }
+  }
+  // handle system requirements -->
+
+  // <-- handle save as draft
+  try {
+    useImageStore.media_files_stored = []
+    const response = await mutateAsyncCreateDraftProject(gameToMutate.value)
+    completedApis.value += 1
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        'Draft saved successfully',
+        'Your game details have been saved as a draft.',
+      )
+    } else {
+      toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
+    }
+  } catch (error: any) {
+    toastErrorNotificationPopup(
+      'Failed to save as draft. Please try again later.',
+      `Error: ${error}`,
+    )
+  } finally {
+    completedApis.value = 0
+    progressDisplay.value = 0
+  }
+  // handle save as draft -->
+}
+
+watch(progressValue, (newVal) => {
+  if (animationInterval) clearInterval(animationInterval)
+
+  animationInterval = setInterval(() => {
+    if (progressDisplay.value < newVal) {
+      progressDisplay.value += 1
+    } else {
+      clearInterval(animationInterval)
+    }
+  }, 10)
 })
 </script>

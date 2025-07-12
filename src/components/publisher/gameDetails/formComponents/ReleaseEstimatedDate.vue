@@ -25,5 +25,5 @@
 <script setup lang="ts">
 // import StatusPicker from '@/components/publisher/gameDetails/formComponents/status/StatusPicker.vue'
 import EstimatedReleaseDate from '@/components/publisher/gameDetails/formComponents/date/EstimatedReleaseDate.vue'
-const emitEstimatedReleaseDate = defineModel<string>('estimatedReleaseDate')
+const emitEstimatedReleaseDate = defineModel<string | number>('estimatedReleaseDate')
 </script>

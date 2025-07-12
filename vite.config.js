@@ -23,7 +23,22 @@ export default defineConfig(({ mode }) => {
         // '@': fileURLToPath(new URL('./src', import.meta.url)),
         '@': path.resolve(__dirname, './src'),
       },
+
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vue': ['vue', 'vue-router'],
+            'tanstack': ['@tanstack/vue-query'],
+            'tiptap': ['@tiptap/vue-3', '@tiptap/starter-kit'],
+            'axios': ['axios'],
+            'pinia': ['pinia'],
+            'lucide': ['lucide-vue-next'],
+          },
+        }
+      }
+    }
 
   }
 })

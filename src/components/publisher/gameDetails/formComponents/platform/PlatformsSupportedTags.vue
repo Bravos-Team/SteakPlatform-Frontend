@@ -46,7 +46,7 @@
                 (event: any) => {
                   if (typeof event.detail.value === 'string') {
                     searchItem = ''
-                    modalValue.push(event.detail.value)
+                    modalValue = [...(modalValue || []), event.detail.value]
                   }
 
                   if (filteredPlatforms.length === 0) {
@@ -106,14 +106,14 @@ const gamingPlatforms = [
   'Xbox Infinity (cloud hybrid)',
 ]
 
-const modalValue = defineModel<string[]>('getPlatformsSupportedData', { default: [] })
+const modalValue = defineModel<string[] | null>('getPlatformsSupportedData', { default: [] })
 const open = ref(false)
 const searchItem = ref('')
 
 const { contains } = useFilter({ sensitivity: 'base' })
 
 const filteredPlatforms = computed(() => {
-  const options = gamingPlatforms?.filter((platform) => !modalValue.value.includes(platform))
+  const options = gamingPlatforms?.filter((platform) => !modalValue.value?.includes(platform))
   return searchItem.value ? options.filter((option) => contains(option, searchItem.value)) : options
 })
 </script>

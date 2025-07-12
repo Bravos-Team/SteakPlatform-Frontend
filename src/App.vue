@@ -20,11 +20,12 @@
       <div>Loading...</div>
     </template>
   </Suspense>
+  <vue-query-devtools />
 </template>
 
 <script setup>
 // import { onMounted, onUnmounted, ref } from 'vue'
-
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 import { Toaster } from '@/components/ui/sonner'
 import 'vue-sonner/style.css'
 // import { Suspense } from 'vue'

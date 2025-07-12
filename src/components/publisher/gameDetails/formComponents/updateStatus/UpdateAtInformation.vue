@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-const updateAt = null
+const updateAt = defineModel<string>('updateAt')
 </script>

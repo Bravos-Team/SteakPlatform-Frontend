@@ -557,10 +557,8 @@ const gameList = ref([
   },
 ])
 
-onMounted(() => {
-  console.log(route.params.id)
+onMounted(async () => {
+  await nextTick()
   game.value = gameList.value.find((game) => game.id === Number(route.params.id))
-  console.log(game.value)
-  nextTick()
 })
 </script>

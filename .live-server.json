@@ -1,0 +1,6 @@
+{
+  "port": 4000,
+  "mount": [["/dist", "./dist"]],
+  "open": false,
+  "file": "index.html"
+}

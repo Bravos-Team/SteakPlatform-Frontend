@@ -46,7 +46,7 @@
                 (event: any) => {
                   if (typeof event.detail.value === 'string') {
                     searchItem = ''
-                    modalValue.push(event.detail.value)
+                    modalValue = [...(modalValue || []), event.detail.value]
                   }
 
                   if (filteredLanguages.length === 0) {
@@ -88,7 +88,7 @@ import { computed, ref } from 'vue'
 import { queryGetCountriesList } from '@/hooks/common/countries/useCountries'
 const filters = ref(['languages'])
 const { data, isLoading } = queryGetCountriesList(filters)
-const modalValue = defineModel<string[]>('getLanguagesSupportedData', { default: [] })
+const modalValue = defineModel<string[] | null>('getLanguagesSupportedData', { default: [] })
 const open = ref(false)
 const searchItem = ref('')
 
@@ -109,7 +109,7 @@ const flattenedLanguages = computed(() => {
 })
 
 const filteredLanguages = computed(() => {
-  const options = flattenedLanguages.value.filter((lang) => !modalValue.value.includes(lang))
+  const options = flattenedLanguages.value.filter((lang) => !modalValue.value?.includes(lang))
 
   return searchItem.value ? options.filter((lang) => contains(lang, searchItem.value)) : options
 })

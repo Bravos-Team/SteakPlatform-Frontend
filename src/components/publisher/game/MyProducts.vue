@@ -4,7 +4,7 @@
       <!-- PRODUCT COUNT AND ACTIONS BUTTON -->
       <div class="flex flex-col lg:flex-row justify-between">
         <div class="flex flex-col">
-          <span class="font-bold text-2xl">Your Products({{ games.length }})</span>
+          <!-- <span class="font-bold text-2xl">Your Products({{ games?.length }})</span> -->
           <span class="font-normal text-md text-gray-400"
             >Manage products for the Steak Games Store and Steak Online Services.</span
           >
@@ -15,7 +15,7 @@
       </div>
       <!-- END  PRODUCT COUNT AND ACTIONS BUTTON -->
       <!-- UPLOAD GAME BAR -->
-      <upload-game-bar :games="games" />
+      <upload-game-bar :games="games?.data.content ?? []" />
       <!-- END UPLOAD GAME BAR -->
     </card-content>
   </card>
@@ -24,34 +24,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CreateProductButton from '@/components/publisher/game/CreateProductButton.vue'
-import UploadGameBar from './UploadGameBar.vue'
+import UploadGameBar from '@/components/publisher/game/UploadGameBar.vue'
 import { Card, CardContent } from '@/components/ui/card'
-const games = ref([
-  {
-    id: '1',
-    name: 'Clash of Clan',
-    descriptions: 'stupid game',
-    status: 1,
-  },
+import { usePublisherGetPersonalProjects } from '@/hooks/publisher/project/usePublisherPersonalProjects'
+import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/project/PublisherPersonalProjectType'
+const filters = ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>({
+  status: null,
+  page: 1,
+  size: 10,
+  keyword: undefined,
+})
 
-  {
-    id: '2',
-    name: 'Spider man 2 Remastered',
-    descriptions: 'GOTY 2023',
-    status: 2,
-  },
-
-  {
-    id: '3',
-    name: 'Grant Thief Auto VI ',
-    descriptions: 'seventh awards ',
-    status: 3,
-  },
-  {
-    id: '4',
-    name: 'Super Ultra Gay Deluxe Edition',
-    descriptions: 'anbatocom',
-    status: 0,
-  },
-])
+const { data: games } = usePublisherGetPersonalProjects(filters)
 </script>
