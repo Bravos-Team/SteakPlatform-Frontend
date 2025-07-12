@@ -43,6 +43,8 @@ watch(
       useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
       useSystem.recommendRequirement =
         projectById.value.data.systemRequirements.recommended ?? useSystem.minimumRequirement
+    } else {
+      useSystem.resetSystemRequirements()
     }
   },
   { deep: true },

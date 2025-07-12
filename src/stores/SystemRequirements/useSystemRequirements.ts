@@ -8,12 +8,17 @@ import {
 export const useSystemRequirementsStore = defineStore(
   'systemRequirements',
   () => {
-    const minimumRequirement = reactive<SystemRequirementsType>(getDefaultValueRequirements())
-    const recommendRequirement = reactive<SystemRequirementsType>(getDefaultValueRequirements())
+    const minimumRequirement = ref<SystemRequirementsType>(getDefaultValueRequirements())
+    const recommendRequirement = ref<SystemRequirementsType>(getDefaultValueRequirements())
+    const resetSystemRequirements = () => {
+      minimumRequirement.value = getDefaultValueRequirements()
+      recommendRequirement.value = getDefaultValueRequirements()
+    }
 
     return {
       minimumRequirement,
       recommendRequirement,
+      resetSystemRequirements,
     }
   },
   { persist: false },

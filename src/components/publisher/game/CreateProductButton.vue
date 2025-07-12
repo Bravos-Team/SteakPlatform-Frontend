@@ -26,7 +26,12 @@
             <FormItem>
               <FormLabel>Product Name</FormLabel>
               <FormControl>
-                <Input placeholder="Product Name..." v-bind="componentField" />
+                <Input
+                  placeholder="Product Name..."
+                  autofocus
+                  tabindex="1"
+                  v-bind="componentField"
+                />
               </FormControl>
               <FormDescription>This is your game name in public games store</FormDescription>
               <FormMessage />
@@ -84,7 +89,7 @@ const showDialog = ref(false)
 const handleCloseDialog = () => (showDialog.value = false)
 const formSchema = toTypedSchema(
   z.object({
-    name: z.string().min(1, { message: 'Product name is required' }),
+    name: z.string().min(6, { message: 'Product name must be at least 6 characters long' }),
   }),
 )
 
