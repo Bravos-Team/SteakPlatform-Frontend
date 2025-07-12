@@ -9,7 +9,7 @@ import {
   publisherUpdateGameNameApi,
 } from '@/apis/publisher/project/publisherPersonalProjects'
 import { Ref } from 'vue'
-import { GameType } from '@/types/game/gameDetails/GameDetailsType'
+import { GameType, PartialGameType } from '@/types/game/gameDetails/GameDetailsType'
 
 export const usePublisherGetPersonalProjects = (
   filters: Ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>,
@@ -32,11 +32,11 @@ export const usePublisherGetPersonalProjectById = (id: bigint) => {
 export const usePublisherCreateDraftProjectInformations = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (payload: GameType) =>
+    mutationFn: async (payload: PartialGameType) =>
       await publisherCreateDraftProjectInformationsApi(payload),
-    onSuccess: (_data, variables: GameType) => {
+    onSuccess: (_data, variables: PartialGameType) => {
       queryClient.invalidateQueries({
-        queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables.id.toString()),
+        queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
       })
     },
   })

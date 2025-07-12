@@ -6,12 +6,16 @@
           <tooltip-trigger as-child>
             <button
               @click="showDialog = !showDialog"
-              class="cursor-pointer w-12 h-10 rounded-sm hover:bg-white/20 flex justify-center items-center"
+              class="cursor-pointer w-12 h-10 rounded-sm bg-black/10 transition-colors duration-300 hover:bg-black/20 flex justify-center items-center"
             >
               <pen-line class="w-5 h-5" />
             </button>
           </tooltip-trigger>
-          <tooltip-content :class="'bg-[#ffffff]/20 backdrop-blur-xl text-white'" :arrow="false">
+          <tooltip-content
+            :color="1"
+            :class="' bg-[#101014]/20 backdrop-blur-xl text-white'"
+            :arrow="false"
+          >
             <span>Edit name</span>
           </tooltip-content>
           <dialog-content>
@@ -36,12 +40,19 @@
             </form>
             <dialog-footer>
               <Button
+                v-if="isUpdateProjectGamePending"
+                variant="default"
+                class="cursor-pointer min-w-32 cursor-not-allowed"
+              >
+                <LoaderCircle class="animate-spin" />
+              </Button>
+              <Button
+                v-else
                 variant="default"
                 class="cursor-pointer min-w-32"
                 form="updateProductNameForm"
               >
-                <LoaderCircle v-if="isUpdateProjectGamePending" class="animate-spin" />
-                <span v-else> Update Name</span>
+                <span> Update Name</span>
               </Button>
             </dialog-footer>
 
@@ -55,7 +66,6 @@
 
 <script setup lang="ts">
 import { Input } from '@/components/ui/input'
-
 import { Button } from '@/components/ui/button'
 import { z } from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
@@ -90,7 +100,7 @@ const showDialog = ref(false)
 const updateNameSchema = z.object({
   name: z
     .string()
-    .min(3, { message: 'Product name is required and must be at least 3 characters' }),
+    .min(6, { message: 'Product name is required and must be at least 6 characters' }),
 })
 const formSchema = toTypedSchema(updateNameSchema)
 type updateType = z.infer<typeof updateNameSchema>

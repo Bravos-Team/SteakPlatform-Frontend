@@ -12,6 +12,8 @@ export type PUBLISHER_PERSONAL_PROJECT = {
   status?: string
   versionName?: any
   updatedAt?: string
+  thumbnail?: string
+  buildInfo?: any
 }
 
 export type PUBLISHER_PERSONAL_PROJECT_LIST = {

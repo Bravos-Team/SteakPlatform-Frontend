@@ -89,6 +89,7 @@
                 type="file"
                 class="w-full h-full rounded-none bg-white/5 px-2 py-1 font-medium relative"
                 placeholder="image url..."
+                accept="image/*,video/*"
                 @change="handleSelectFile(index, $event)"
               />
 

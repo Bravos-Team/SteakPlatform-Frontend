@@ -153,3 +153,4 @@ export const GameSchema = z.object({
 export type GameType = z.infer<typeof GameSchema>
 export const getDefaultGameValue = (): GameType => GameSchema.parse({})
 export const PartialGameSchema = GameSchema.partial()
+export type PartialGameType = z.infer<typeof PartialGameSchema>

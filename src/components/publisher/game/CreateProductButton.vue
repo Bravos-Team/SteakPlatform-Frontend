@@ -29,7 +29,7 @@
                 <Input
                   placeholder="Product Name..."
                   autofocus
-                  tabindex="1"
+                  tabindex="0"
                   v-bind="componentField"
                 />
               </FormControl>
@@ -40,9 +40,16 @@
         </form>
 
         <DialogFooter>
-          <Button type="submit" form="productNameForm" class="w-30">
-            <span v-if="!isPublisherCreateProjectPending"> Create Product</span>
-            <LoaderCircle v-else class="animate-spin" />
+          <Button
+            v-if="isPublisherCreateProjectPending"
+            tabindex="1"
+            form="productNameForm"
+            class="w-30 cursor-not-allowed"
+          >
+            <LoaderCircle class="animate-spin" />
+          </Button>
+          <Button v-else type="submit" tabindex="1" form="productNameForm" class="w-30">
+            <span> Create Product</span>
           </Button>
         </DialogFooter>
       </DialogContent>

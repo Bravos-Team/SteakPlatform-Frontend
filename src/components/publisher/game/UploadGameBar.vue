@@ -31,9 +31,11 @@
                 '--x': xValueComputed(game.status) + 'px',
               }"
             >
+              <img v-if="game.thumbnail" class="object-cover w-full" :src="game.thumbnail" alt="" />
               <img
-                class="object-contain w-full -translate-y-15"
-                src="https://ccdn.steak.io.vn/assets-guts-profile-pic.png"
+                v-else
+                class="object-cover w-full"
+                src="https://ccdn.steak.io.vn/assets-desert.png"
                 alt=""
               />
             </div>
