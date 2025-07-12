@@ -4,7 +4,7 @@
     <div
       class="border-1 p-3 rounded-sm bg-linear-120 from-blue-200/5 to-emerald-200/5 flex flex-col gap-y-3"
     >
-      <div v-if="!media_files.length">Non media created</div>
+      <div v-if="!media_files.length && !mediaData">Non media created</div>
       <div v-else class="grid grid-cols-1 gap-y-2">
         <!-- MEDIA DATA DRAFT -->
         <div
@@ -89,6 +89,7 @@
                 type="file"
                 class="w-full h-full rounded-none bg-white/5 px-2 py-1 font-medium relative"
                 placeholder="image url..."
+                accept="image/*,video/*"
                 @change="handleSelectFile(index, $event)"
               />
 
@@ -141,6 +142,7 @@ const props = defineProps<{
         url: string
       }[]
     | null
+  isAssignedMediaFiles: boolean
 }>()
 
 const emit = defineEmits<{
@@ -204,10 +206,12 @@ onMounted(() => {
 })
 
 watch(
-  media_files,
-  () => {
-    console.log('Media files updated:', media_files.value)
+  () => props.isAssignedMediaFiles,
+  (val) => {
+    if (val) {
+      media_files.value = []
+    }
   },
-  { deep: true },
+  { immediate: true },
 )
 </script>

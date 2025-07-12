@@ -12,6 +12,7 @@
           ref="gameImage"
           class="object-contain w-full md:h-50 lg:h-full"
           alt=""
+          accept="image/*"
         />
       </div>
       <div class="w-full bg-[#202024] h-full flex justify-between p-4">
@@ -69,9 +70,17 @@ const handleDrop = (e: DragEvent) => {
   isDragging.value = false
   const files = e.dataTransfer?.files
   if (files && files.length) {
-    unShowImageUploaded.value = false
-    gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
-    fileName.value = files[0].name
+    if (files[0].type.startsWith('video/') || !files[0].type.startsWith('image/')) {
+      toastErrorNotificationPopup(
+        'Cannot upload this file as cover image',
+        'Try again with an image file.',
+      )
+    } else {
+      fileName.value = files[0].name
+      gameImage.value?.setAttribute('src', URL.createObjectURL(files[0]))
+      useImageStore.coverImage_stored = files[0]
+      unShowImageUploaded.value = false
+    }
   }
 }
 

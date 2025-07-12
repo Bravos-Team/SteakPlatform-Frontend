@@ -91,8 +91,14 @@ import {
   systemRequirementSuggestions,
 } from '@/types/game/gameDetails/GameDetailsType'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
+import { onMounted } from 'vue'
+import { nextTick } from 'vue'
 
 const useSystem = useSystemRequirementsStore()
 
 const props = defineProps<REQUIREMENTS_TYPE>()
+onMounted(async () => {
+  await nextTick()
+  useSystem.resetSystemRequirements()
+})
 </script>

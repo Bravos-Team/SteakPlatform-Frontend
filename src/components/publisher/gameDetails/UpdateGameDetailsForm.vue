@@ -17,7 +17,11 @@
       <!-- END COVER IAMGE ${data}-->
 
       <!-- START MEDIAS & IMAGES BAR ${data} -->
-      <media-bar @media-deleted-update="handleDeleteMedia" :media-data="gameToMutate.media" />
+      <media-bar
+        :is-assigned-media-files="isAssignedMediaFiles"
+        @media-deleted-update="handleDeleteMedia"
+        :media-data="gameToMutate.media"
+      />
       <!-- END MEDIAS & IMAGES BAR -->
 
       <!-- START DEVELOPER TEAM INPUTS ${data} -->
@@ -107,6 +111,19 @@
               Verify Request
             </button>
             <button
+              v-if="
+                isGetPresignedImageUrlPending ||
+                isGetPresignedImageUrlsPending ||
+                isPostIntoPresignedUrlPending ||
+                isPostIntoPresignedUrlsPending ||
+                isCreateDraftProjectInformationsPending
+              "
+              class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
+            >
+              Save as Draft
+            </button>
+            <button
+              v-else
               @click="handleSaveAsDraft"
               class="px-3 font-black cursor-pointer hover:bg-white/30 duration-300 transition-colors py-2 border bg-white/10 rounded-sm"
             >
@@ -127,6 +144,17 @@
             </button>
           </div>
         </div>
+        <Progress
+          v-if="
+            isGetPresignedImageUrlPending ||
+            isGetPresignedImageUrlsPending ||
+            isPostIntoPresignedUrlPending ||
+            isPostIntoPresignedUrlsPending ||
+            isCreateDraftProjectInformationsPending
+          "
+          :model-value="progressDisplay"
+          class="transition-all duration-500 w-full"
+        />
         <!-- END ACTIONS -->
       </div>
       <!-- END FOOTER FORM -->
@@ -146,8 +174,8 @@ import SystemRequirements from '@/components/publisher/gameDetails/formComponent
 import PlatformsSupportedTags from '@/components/publisher/gameDetails/formComponents/platform/PlatformsSupportedTags.vue'
 import DescriptionsBar from '@/components/publisher/gameDetails/formComponents/descriptions/DescriptionsBar.vue'
 import MediaBar from '@/components/publisher/gameDetails/formComponents/MediaBar.vue'
-import { type GameType } from '@/types/game/gameDetails/GameDetailsType'
-import { computed, onMounted, ref } from 'vue'
+import { getDefaultGameValue, type GameType } from '@/types/game/gameDetails/GameDetailsType'
+import { computed, ref, watch } from 'vue'
 import { usePublisherCreateDraftProjectInformations } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 import {
@@ -165,21 +193,29 @@ import {
 import { MediaType } from '@/types/image/MediaAndImage'
 import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/CdnTypes'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
-import { useRoute } from 'vue-router'
+import { Progress } from '@/components/ui/progress'
+// import { useRoute } from 'vue-router'
 // import { usePublisherGetPersonalProjectById } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 // import { data } from '../common/sidebar/SidebarItems'
 
-const route = useRoute()
+// const route = useRoute()
 
 const useSystem = useSystemRequirementsStore()
 const useComporessionImage = useImageCompressor()
 const useImageStore = useImageStored()
 
-const { mutateAsync: mutateGetPresignedImageUrl } = useGetPresignedImageUrl()
-const { mutateAsync: mutateGetPresignedImageUrls } = useGetPresignedImageUrls()
-const { mutateAsync: mutatePostIntoPresignedUrl } = usePostIntoPresignedUrl()
-const { mutateAsync: mutatePostIntoPresignedUrls } = usePostIntoPresignedUrls()
-const { mutateAsync: mutateAsyncCreateDraftProject } = usePublisherCreateDraftProjectInformations()
+const { mutateAsync: mutateGetPresignedImageUrl, isPending: isGetPresignedImageUrlPending } =
+  useGetPresignedImageUrl()
+const { mutateAsync: mutateGetPresignedImageUrls, isPending: isGetPresignedImageUrlsPending } =
+  useGetPresignedImageUrls()
+const { mutateAsync: mutatePostIntoPresignedUrl, isPending: isPostIntoPresignedUrlPending } =
+  usePostIntoPresignedUrl()
+const { mutateAsync: mutatePostIntoPresignedUrls, isPending: isPostIntoPresignedUrlsPending } =
+  usePostIntoPresignedUrls()
+const {
+  mutateAsync: mutateAsyncCreateDraftProject,
+  isPending: isCreateDraftProjectInformationsPending,
+} = usePublisherCreateDraftProjectInformations()
 
 // const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPersonalProjectById(
 //   route?.params?.id as unknown as bigint,
@@ -189,13 +225,15 @@ const props = defineProps<{
 }>()
 
 const gameToMutate = ref<GameType>(JSON.parse(JSON.stringify(props.gamePreviewDetails)))
-
+const isAssignedMediaFiles = ref<boolean>(false)
 const isInitSystemRequirements = ref<boolean>(gameToMutate.value.systemRequirements ? true : false)
 
 const emit = defineEmits(['update:openDialogForm'])
-
 const handleResetForm = () => {
-  // emit('update:gamePreviewDetailsData', getDefaultGameValue())
+  gameToMutate.value = getDefaultGameValue()
+  useSystem.resetSystemRequirements()
+  thumbnailUrlData.value = 'https://ccdn.steak.io.vn/assets-desert.png'
+  longDescriptionsData.value = ''
 }
 const handleDeleteMedia = (index: number) => {
   gameToMutate.value.media?.splice(index, 1)
@@ -303,11 +341,18 @@ const thumbnailUrlData = ref<string>(
     : 'https://ccdn.steak.io.vn/assets-desert.png',
 )
 
+const completedApis = ref(0)
+const totalApis = 5
+const progressValue = computed(() => Math.floor((completedApis.value / totalApis) * 100))
+const progressDisplay = ref(0)
+let animationInterval: any = null
 const handleSaveAsDraft = async () => {
   // <-- handle upload cover image
-
+  completedApis.value = 0
+  progressDisplay.value = 0
   if (useImageStore.coverImage_stored) {
     const files: any = useImageStore.coverImage_stored
+
     const fileComporessed = await useComporessionImage.compressImage(files)
 
     const response = await mutateGetPresignedImageUrl({
@@ -319,6 +364,7 @@ const handleSaveAsDraft = async () => {
       url: response.signedUrl,
       file: fileComporessed,
     })
+    completedApis.value += 1
 
     if (response) {
       gameToMutate.value.thumbnail = 'https://ccdn.steak.io.vn/' + response.cdnFileName
@@ -333,6 +379,7 @@ const handleSaveAsDraft = async () => {
     const media_files_compressed = await Promise.all(
       media_files.map((file: MediaType) => useComporessionImage.compressImage(file.file_instance)),
     )
+    completedApis.value += 1
 
     const request_datas = media_files_compressed.map((file) => ({
       fileName: file.name,
@@ -340,6 +387,7 @@ const handleSaveAsDraft = async () => {
     }))
 
     const response: PresignedUrlResponse[] = await mutateGetPresignedImageUrls(request_datas)
+    completedApis.value += 1
 
     const dataPostIntoPresignedUrls: PostIntoPresignedURLsType[] = media_files.map(
       (file: any, index: number) => {
@@ -359,12 +407,15 @@ const handleSaveAsDraft = async () => {
           type: media_files[index].type,
         }
       })
-      data_to_assigned.forEach((media) => {
-        if (!gameToMutate.value.media) {
-          gameToMutate.value.media = []
-        }
-        gameToMutate.value.media?.push(media)
-      })
+      setTimeout(() => {
+        data_to_assigned.forEach((media) => {
+          if (!gameToMutate.value.media) {
+            gameToMutate.value.media = []
+          }
+          gameToMutate.value.media?.push(media)
+        })
+      }, 2000)
+      isAssignedMediaFiles.value = true
     }
   }
   // end handle upload media files -->
@@ -385,7 +436,9 @@ const handleSaveAsDraft = async () => {
 
   // <-- handle save as draft
   try {
+    useImageStore.media_files_stored = []
     const response = await mutateAsyncCreateDraftProject(gameToMutate.value)
+    completedApis.value += 1
     if (response.status === 200) {
       toastSuccessNotificationPopup(
         'Draft saved successfully',
@@ -399,7 +452,22 @@ const handleSaveAsDraft = async () => {
       'Failed to save as draft. Please try again later.',
       `Error: ${error}`,
     )
+  } finally {
+    completedApis.value = 0
+    progressDisplay.value = 0
   }
   // handle save as draft -->
 }
+
+watch(progressValue, (newVal) => {
+  if (animationInterval) clearInterval(animationInterval)
+
+  animationInterval = setInterval(() => {
+    if (progressDisplay.value < newVal) {
+      progressDisplay.value += 1
+    } else {
+      clearInterval(animationInterval)
+    }
+  }, 10)
+})
 </script>

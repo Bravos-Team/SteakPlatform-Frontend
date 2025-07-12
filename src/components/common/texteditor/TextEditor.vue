@@ -1257,6 +1257,22 @@ onMounted(() => {
     })
   })
 })
+watch(
+  () => emitLongDescriptionsData.value,
+  async (newValue) => {
+    if (newValue) {
+      await nextTick()
+    } else {
+      editor.commands.setContent(
+        `<p class="text-gray-500">Please, enter your long description here...</p>`,
+      )
+    }
+  },
+  {
+    immediate: true,
+    deep: true,
+  },
+)
 </script>
 
 <style lang="scss" global>

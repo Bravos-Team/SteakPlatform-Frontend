@@ -8,7 +8,10 @@
     <!-- PREVIEW -->
     <div class="w-full @container">
       <card class="bg-[var(--bg-card-base)]/50 lg:px-[4rem] @container">
-        <span v-if="previewFormData" v-html="previewFormData"></span>
+        <game-details-preview
+          v-if="!isProjectByIdPending && projectById?.data"
+          :game-details="projectById.data"
+        />
         <skeleton-preview-form v-else />
       </card>
     </div>
@@ -20,7 +23,8 @@
 import EditGameDetailsSkeleton from '@/components/publisher/gameDetails/EditGameDetailsSkeleton.vue'
 import { Card } from '@/components/ui/card'
 import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPreviewForm.vue'
-import { nextTick, onMounted, ref, watch } from 'vue'
+import GameDetailsPreview from '@/components/publisher/gameDetails/GameDetailsPreview.vue'
+import { nextTick, onBeforeMount, watch } from 'vue'
 import NameAndBackgroundEdit from '@/components/publisher/gameDetails/NameAndBackgroundEdit.vue'
 import UpdateGameInformations from '@/components/publisher/gameDetails/UpdateGameInformations.vue'
 import { useRoute } from 'vue-router'
@@ -29,7 +33,6 @@ import { usePublisherGetPersonalProjectById } from '@/hooks/publisher/project/us
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 const useSystem = useSystemRequirementsStore()
 const route = useRoute()
-const previewFormData = ref('')
 
 const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPersonalProjectById(
   route?.params?.id as unknown as bigint,
@@ -43,8 +46,15 @@ watch(
       useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
       useSystem.recommendRequirement =
         projectById.value.data.systemRequirements.recommended ?? useSystem.minimumRequirement
+    } else {
+      useSystem.resetSystemRequirements()
     }
   },
   { deep: true },
 )
+
+onBeforeMount(async () => {
+  usePublisherGetPersonalProjectById(route?.params?.id as unknown as bigint)
+  await nextTick()
+})
 </script>

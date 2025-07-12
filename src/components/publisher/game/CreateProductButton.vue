@@ -26,7 +26,12 @@
             <FormItem>
               <FormLabel>Product Name</FormLabel>
               <FormControl>
-                <Input placeholder="Product Name..." v-bind="componentField" />
+                <Input
+                  placeholder="Product Name..."
+                  autofocus
+                  tabindex="0"
+                  v-bind="componentField"
+                />
               </FormControl>
               <FormDescription>This is your game name in public games store</FormDescription>
               <FormMessage />
@@ -35,9 +40,16 @@
         </form>
 
         <DialogFooter>
-          <Button type="submit" form="productNameForm" class="w-30">
-            <span v-if="!isPublisherCreateProjectPending"> Create Product</span>
-            <LoaderCircle v-else class="animate-spin" />
+          <Button
+            v-if="isPublisherCreateProjectPending"
+            tabindex="1"
+            form="productNameForm"
+            class="w-30 cursor-not-allowed"
+          >
+            <LoaderCircle class="animate-spin" />
+          </Button>
+          <Button v-else type="submit" tabindex="1" form="productNameForm" class="w-30">
+            <span> Create Product</span>
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -84,7 +96,7 @@ const showDialog = ref(false)
 const handleCloseDialog = () => (showDialog.value = false)
 const formSchema = toTypedSchema(
   z.object({
-    name: z.string().min(1, { message: 'Product name is required' }),
+    name: z.string().min(6, { message: 'Product name must be at least 6 characters long' }),
   }),
 )
 
