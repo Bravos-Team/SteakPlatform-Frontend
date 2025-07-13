@@ -18,10 +18,10 @@
           <div
             class="w-full h-full overflow-hidden rounded-t-sm"
             :class="{
-              'bg-red-300/10': game.status === 2,
-              'bg-green-300/30': game.status === 3,
-              'bg-white/20': game.status === 0,
-              'bg-sky-300/20': game.status === 1,
+              'bg-red-300/10': game.status === 'REJECTED',
+              'bg-green-300/30': game.status === 'VERIFIED',
+              'bg-white/20': game.status === 'PUBLISHED',
+              'bg-sky-300/20': game.status === 'DRAFT',
             }"
           >
             <!-- GAME IMAGE -->
@@ -31,9 +31,11 @@
                 '--x': xValueComputed(game.status) + 'px',
               }"
             >
+              <img v-if="game.thumbnail" class="object-cover w-full" :src="game.thumbnail" alt="" />
               <img
-                class="object-contain w-full -translate-y-15"
-                src="https://ccdn.steak.io.vn/assets-guts-profile-pic.png"
+                v-else
+                class="object-cover w-full"
+                src="https://ccdn.steak.io.vn/assets-desert.png"
                 alt=""
               />
             </div>
@@ -42,13 +44,13 @@
             >
               <span
                 :class="{
-                  'text-red-500/90': game.status === 2,
-                  'text-green-500/90': game.status === 3,
-                  'text-gray-300/90': game.status === 0,
-                  'text-sky-300/90': game.status === 1,
+                  'text-red-500/90': game.status === 'REJECTED',
+                  'text-green-500/90': game.status === 'VERIFIED',
+                  'text-gray-300/90': game.status === 'PUBLISHED',
+                  'text-sky-300/90': game.status === 'DRAFT',
                 }"
                 class="w-full h-full"
-                >{{ statusComputed(game.status) }}</span
+                >{{ game.status }}</span
               >
             </div>
           </div>
@@ -121,46 +123,26 @@
 <script setup lang="ts">
 import { ChartSpline, UserRoundCog, Gamepad2, ShoppingCart, Settings } from 'lucide-vue-next'
 import { Card, CardAction, CardDescription } from '@/components/ui/card'
+import { PUBLISHER_PERSONAL_PROJECT } from '@/types/publisher/project/PublisherPersonalProjectType'
 const props = defineProps<{
-  isCollaped: {
+  isCollaped?: {
     type: boolean
-    default: true
   }
-  games: {
-    id: string
-    name: string
-    descriptions: string
-    status: number
-  }[]
+  games: PUBLISHER_PERSONAL_PROJECT[]
 }>()
 
-const xValueComputed = (status: number) => {
+const xValueComputed = (status: string) => {
   switch (status) {
-    case 0:
+    case 'REJECTED':
       return 70
-    case 1:
+    case 'VERIFIED':
       return 110
-    case 2:
+    case 'PUBLISHED':
       return 100
-    case 3:
+    case 'DRAFT':
       return 90
     default:
       return 100
-  }
-}
-
-const statusComputed = (status: number) => {
-  switch (status) {
-    case 0:
-      return 'DRAFT'
-    case 1:
-      return 'PUBLISHED'
-    case 2:
-      return 'REJECTED'
-    case 3:
-      return 'VERIFIED'
-    default:
-      return 'UNDIFINE'
   }
 }
 </script>

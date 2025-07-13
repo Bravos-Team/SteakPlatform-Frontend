@@ -72,20 +72,18 @@
             </div>
           </div>
 
-          <div class="flex justify-center w-8/12 lg:w-4/12">
+          <div class="flex flex-col justify-center w-8/12 lg:w-4/12">
             <button
               type="submit"
               class="w-full rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] m-2 flex items-center bg-[#ffffff26] transition-all"
             >
-              <span v-if="!isPendingPublisherLoginEmail || !isPendingPublisherLoginUserName">
-                Login
-              </span>
               <loader-circle
                 v-if="isPendingPublisherLoginEmail || isPendingPublisherLoginUserName"
                 class="animate-spin ml-2"
               />
+              <span v-else> Login </span>
             </button>
-            <span class="text-danger">{{ loginMessage }}</span>
+            <span class="text-red-500 text-center">{{ loginMessage }}</span>
           </div>
         </form>
       </div>
@@ -126,16 +124,17 @@ import { onMounted, reactive, ref } from 'vue'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint.js'
 import { extractErrors } from '@/utils/zod/HanldeZodErrors.js'
 import { LoginByEmailSchema, LoginByUserNameSchema } from '@/types/publisher/AuthType.js'
-import { isEmail } from '@/services/common/CurrencyUtils.js'
+import { isEmail } from '@/utils/type/typeChecking.js'
 import { usePublisherLoginEmail, usePublisherLoginUserName } from '@/hooks/publisher/usePublisher'
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next'
 import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'
 import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
-
+import { useRouter } from 'vue-router'
 import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+const router = useRouter()
 const { mutateAsync: mutateAsyncPublisherLoginEmail, isPending: isPendingPublisherLoginEmail } =
   usePublisherLoginEmail()
 const {
@@ -198,15 +197,14 @@ const handlePublisherLogin = async () => {
         : mutateAsyncPublisherLoginUserName(payload))
       if (res.status === 200) {
         toastSuccessNotificationPopup('Login successfully', `Welcome ${res.data.username}`)
+        router.push({ name: 'PublisherHome' })
       }
     } catch (err: any) {
-      console.error('Login failed:', err)
       toastErrorNotificationPopup(
         'Login failed',
         err?.response?.data?.detail || 'An error occurred',
       )
       loginMessage.value = err?.response?.data?.detail
-      console.log('loginMessage: ', loginMessage.value)
     }
   }
 }

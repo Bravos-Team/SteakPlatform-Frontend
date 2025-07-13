@@ -30,19 +30,18 @@ const router = createRouter({
   },
 })
 
-const resolveMiddleware = (to: any) => {
-  const matched = to.matched.slice().reverse()
-  for (const record of matched) {
-    if (record.meta && record.meta.middleware) {
-      return record.meta.middleware
-    }
-  }
-  return null
-}
+// const resolveMiddleware = (to: any) => {
+//   const matched = to.matched.slice().reverse()
+//   for (const record of matched) {
+//     if (record.meta && record.meta.middleware) {
+//       return record.meta.middleware
+//     }
+//   }
+//   return null
+// }
 
 router.beforeEach((to: any, from, next) => {
   // if (!to.meta.middleware) {
-  //   console.log('this page is not requires authentication')
   //   return next()
   // }
 

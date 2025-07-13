@@ -10,7 +10,7 @@
       >
         <span class="text-sm font-bold">OS</span>
         <OsVersionTags
-          v-model:emit-minimum-os-versions="minimumRequirements.osVersion"
+          v-model:emit-minimum-os-versions="useSystem.minimumRequirement.osVersion"
           :os-version="systemRequirementSuggestions?.osVersion"
         />
       </div>
@@ -22,7 +22,7 @@
       >
         <span class="text-sm font-bold">CPU</span>
         <cpu-tags
-          v-model:emit-cpu-data="minimumRequirements.cpu"
+          v-model:emit-cpu-data="useSystem.minimumRequirement.cpu"
           :cpus="systemRequirementSuggestions?.cpu"
         />
       </div>
@@ -34,7 +34,7 @@
       >
         <span class="text-sm font-bold">GPU</span>
         <gpu-tags
-          v-model:emit-gpu-data="minimumRequirements.gpu"
+          v-model:emit-gpu-data="useSystem.minimumRequirement.gpu"
           :gpus="systemRequirementSuggestions?.gpu"
         />
       </div>
@@ -46,7 +46,7 @@
       >
         <span class="text-sm font-bold">MEMORY</span>
         <memory-tags
-          v-model:emit-memory-data="minimumRequirements.memory"
+          v-model:emit-memory-data="useSystem.minimumRequirement.memory"
           :memories="systemRequirementSuggestions?.memory"
         />
       </div>
@@ -58,7 +58,7 @@
       >
         <span class="text-sm font-bold">DIRECTX</span>
         <direct-x-tags
-          v-model:emit-directx-data="minimumRequirements.directX"
+          v-model:emit-directx-data="useSystem.minimumRequirement.directX"
           :directxs="systemRequirementSuggestions?.directX"
         />
       </div>
@@ -70,7 +70,7 @@
       >
         <span class="text-sm font-bold">STORAGE</span>
         <storage-tags
-          v-model:emit-storage-data="minimumRequirements.storage"
+          v-model:emit-storage-data="useSystem.minimumRequirement.storage"
           :storages="systemRequirementSuggestions?.storage"
         />
       </div>
@@ -87,25 +87,18 @@ import MemoryTags from '@/components/publisher/gameDetails/formComponents/system
 import StorageTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/StorageTags.vue'
 import DirectXTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/DirectXTags.vue'
 import {
-  SystemRequirementsType,
+  REQUIREMENTS_TYPE,
   systemRequirementSuggestions,
-  getDefaultValueRequirements,
 } from '@/types/game/gameDetails/GameDetailsType'
-import { ref, watch } from 'vue'
-const props = defineProps<{
-  minimumRequirements: SystemRequirementsType
-}>()
+import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
+import { onMounted } from 'vue'
+import { nextTick } from 'vue'
 
-const minimumRequirements = ref<SystemRequirementsType>(props.minimumRequirements)
-const minimumRequirementsModel = defineModel<SystemRequirementsType>('minimumRequirementsModel', {
-  default: getDefaultValueRequirements(),
+const useSystem = useSystemRequirementsStore()
+
+const props = defineProps<REQUIREMENTS_TYPE>()
+onMounted(async () => {
+  await nextTick()
+  useSystem.resetSystemRequirements()
 })
-
-watch(
-  minimumRequirements,
-  (val) => {
-    minimumRequirementsModel.value = val
-  },
-  { deep: true, immediate: true },
-)
 </script>

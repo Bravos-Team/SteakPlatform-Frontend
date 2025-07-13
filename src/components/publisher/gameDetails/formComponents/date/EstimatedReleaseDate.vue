@@ -3,12 +3,10 @@
     <popover-trigger as-child>
       <button
         class="w-full border-2 gap-x-1 items-center px-3 border-double rounded-sm flex text-left font-normal bg-white/10 cursor-pointer"
-        :clas="cn(!value && 'text-muted-foreground')"
+        :class="cn(!value && 'text-muted-foreground')"
       >
         <calendar-icon class="mr-2 size-4" />
-        {{
-          value ? dateFormatter.format(value.toDate(getLocalTimeZone())) : 'Pick your release date'
-        }}
+        {{ displayDateText }}
       </button>
     </popover-trigger>
     <popover-content
@@ -24,7 +22,10 @@
         "
       >
         <select-trigger class="w-full flex">
-          <select-value placeholder="Pick your release date" class="w-full flex"> </select-value>
+          <select-value
+            :placeholder="emitEstimatedReleaseDate ? '' : 'Pick your release date'"
+            class="w-full flex"
+          ></select-value>
         </select-trigger>
         <select-content side="right">
           <select-item :value="item.value.toString()" v-for="item in items" :key="item.value">{{
@@ -38,9 +39,15 @@
 </template>
 
 <script setup lang="ts">
-import { DateFormatter, type DateValue, getLocalTimeZone, today } from '@internationalized/date'
+import {
+  DateFormatter,
+  type DateValue,
+  parseDate,
+  getLocalTimeZone,
+  today,
+} from '@internationalized/date'
 import { CalendarIcon } from 'lucide-vue-next'
-import { ref, h, watch } from 'vue'
+import { ref, h, watch, onMounted, computed } from 'vue'
 import { toast } from 'vue-sonner'
 import { cn } from '@/lib/utils'
 import { Calendar } from '@/components/ui/calendar'
@@ -65,16 +72,19 @@ const items = [
 ]
 
 const value = ref<DateValue | undefined | DateValue[]>()
-const emitEstimatedReleaseDate = defineModel<string>('emitEstimatedReleaseDate')
+const emitEstimatedReleaseDate = defineModel<string | number>('emitEstimatedReleaseDate')
+const displayDateText = ref<string | number>('Please select a release date')
 
 watch(
   () => value.value,
   (newVal) => {
     if (newVal) {
       const isoDate = newVal.toString() // => YYYY-MM-DD (ISO)
+      const longDate = newVal.toDate(getLocalTimeZone()).getTime()
       const formatted = dateFormatter.format(newVal.toDate(getLocalTimeZone()))
 
-      emitEstimatedReleaseDate.value = isoDate
+      displayDateText.value = isoDate
+      emitEstimatedReleaseDate.value = longDate.toString()
 
       toast(
         h(
@@ -89,4 +99,10 @@ watch(
     }
   },
 )
+
+onMounted(() => {
+  if (emitEstimatedReleaseDate.value) {
+    displayDateText.value = new Date(emitEstimatedReleaseDate.value).toISOString().split('T')[0]
+  }
+})
 </script>

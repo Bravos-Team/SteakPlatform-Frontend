@@ -59,7 +59,7 @@
               @mouseenter="showDropdown = true"
               @mouseleave="showDropdown = false"
             >
-              <span>{{ selectedLanguage != '' ? selectedLanguage : 'Tiếng Việt' }}</span>
+              <span>{{ selectedLanguage !== '' ? selectedLanguage : 'English' }}</span>
               <img
                 :src="'https://ccdn.steak.io.vn/down-line-white.svg'"
                 alt="Dropdown Icon"

@@ -6,12 +6,16 @@
           <tooltip-trigger as-child>
             <button
               @click="showDialog = !showDialog"
-              class="cursor-pointer w-12 h-10 rounded-sm hover:bg-white/20 flex justify-center items-center"
+              class="cursor-pointer w-12 h-10 rounded-sm bg-black/10 transition-colors duration-300 hover:bg-black/20 flex justify-center items-center"
             >
               <pen-line class="w-5 h-5" />
             </button>
           </tooltip-trigger>
-          <tooltip-content :class="'bg-[#ffffff]/20 backdrop-blur-xl text-white'" :arrow="false">
+          <tooltip-content
+            :color="1"
+            :class="' bg-[#101014]/20 backdrop-blur-xl text-white'"
+            :arrow="false"
+          >
             <span>Edit name</span>
           </tooltip-content>
           <dialog-content>
@@ -23,7 +27,11 @@
                 <form-item>
                   <form-label>Product Name</form-label>
                   <form-control>
-                    <Input placeholder="Product Name..." v-bind="componentField" />
+                    <Input
+                      placeholder="Product Name..."
+                      :default-value="gameName"
+                      v-bind="componentField"
+                    />
                   </form-control>
                   <form-description>Changes your product name</form-description>
                   <form-message />
@@ -31,9 +39,21 @@
               </form-field>
             </form>
             <dialog-footer>
-              <Button variant="default" class="cursor-pointer" form="updateProductNameForm"
-                >Update Name</Button
+              <Button
+                v-if="isUpdateProjectGamePending"
+                variant="default"
+                class="cursor-pointer min-w-32 cursor-not-allowed"
               >
+                <LoaderCircle class="animate-spin" />
+              </Button>
+              <Button
+                v-else
+                variant="default"
+                class="cursor-pointer min-w-32"
+                form="updateProductNameForm"
+              >
+                <span> Update Name</span>
+              </Button>
             </dialog-footer>
 
             <dialog-description class="hidden"> </dialog-description>
@@ -45,13 +65,11 @@
 </template>
 
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
 import { Input } from '@/components/ui/input'
-import { h } from 'vue'
 import { Button } from '@/components/ui/button'
 import { z } from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
-import { PenLine } from 'lucide-vue-next'
+import { LoaderCircle, PenLine } from 'lucide-vue-next'
 import {
   Dialog,
   DialogDescription,
@@ -71,30 +89,50 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { ref } from 'vue'
+import { usePublisherUpdateProjectName } from '@/hooks/publisher/project/usePublisherPersonalProjects'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
+const { isPending: isUpdateProjectGamePending, mutateAsync: mutateAsyncUpdateProjectGame } =
+  usePublisherUpdateProjectName()
 const showDialog = ref(false)
 const updateNameSchema = z.object({
   name: z
     .string()
-    .min(3, { message: 'Product name is required and must be at least 3 characters' }),
+    .min(6, { message: 'Product name is required and must be at least 6 characters' }),
 })
 const formSchema = toTypedSchema(updateNameSchema)
 type updateType = z.infer<typeof updateNameSchema>
 
-const emit = defineEmits(['update:gameNameData'])
+const props = defineProps<{
+  gameName: string
+  gameId: bigint
+}>()
 
-const onSubmitUpdateName = (name: updateType) => {
-  showDialog.value = false
-  emit('update:gameNameData', name.name)
-  toast.success(
-    h('span', { class: 'text-white  text-lg z-999' }, `"${name.name}" has been updated`),
-    {
-      class: 'z-[9999] flex  w-full ',
-      description: h('div', { class: 'text-white' }, new Date().toLocaleString()),
-      action: {
-        class: '!bg-yellow-500',
-        label: 'Undo',
-      },
-    },
-  )
+const onSubmitUpdateName = async (name: updateType) => {
+  try {
+    const response = await mutateAsyncUpdateProjectGame({ id: props.gameId, name: name.name })
+    if (response.status === 200) {
+      showDialog.value = false
+      toastSuccessNotificationPopup(
+        'Game name updated successfully',
+        `Your game name has been updated to: ${name.name}`,
+      )
+    } else {
+      toastErrorNotificationPopup(
+        'Failed to update game name',
+        `Error: ${response.data.message || 'Unknown error'}`,
+      )
+    }
+  } catch (error: any) {
+    if (error.response && error.response.data) {
+      return toastErrorNotificationPopup('Error updating game name', `Error: ${error?.message}`)
+    }
+    return toastErrorNotificationPopup(
+      'Failed to update game name',
+      'An unexpected error occurred while updating the game name.',
+    )
+  }
 }
 </script>

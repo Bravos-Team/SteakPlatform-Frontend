@@ -18,9 +18,10 @@ export const getPresignedImageUrl = async (fileName: string, fileSize: number) =
 export const getPresignedImageUrls = async (
   payload: Array<{ fileName: string; fileSize: number }>,
 ) =>
-  await SteakApi.post('/api/v1/dev/upload/presigned-image-url', payload).then((rp) => {
+  await SteakApi.post('/api/v1/dev/upload/presigned-image-urls', payload).then((rp) => {
     return rp
   })
+
 export const postIntoPresignedUrl = async (url: string, file: File) => {
   return await axios.put(url, file, {
     headers: {

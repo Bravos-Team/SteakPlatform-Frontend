@@ -2,7 +2,7 @@
   <div class="text-white flex flex-col items-center justify-center px-4 min-h-screen">
     <div class="flex flex-col items-center mb-10">
       <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
-      <p class="text-2xl text-black dark:text-white font-extrabold mt-2">Đăng ký</p>
+      <p class="text-2xl text-black dark:text-white font-extrabold mt-2">Register</p>
     </div>
 
     <form @submit.prevent="handleSubmitRegistry" class="w-full max-w-md max-auto space-y-4 mb-10">
@@ -13,7 +13,7 @@
           type="email"
           name="email"
           id="email"
-          placeholder="Nhập email của bạn"
+          placeholder="Email"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 text-black dark:text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
         <label v-if="accountErrors.email" for="email" class="text-red-500">
@@ -22,11 +22,11 @@
       </div>
 
       <div>
-        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0 5">Tên đăng nhập</p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0 5">Username</p>
         <input
           type="text"
           v-model="account.username"
-          placeholder="Tên đăng nhập"
+          placeholder="Username"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 text-black dark:text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
         <label v-if="accountErrors.username" class="text-red-500">
@@ -35,11 +35,11 @@
       </div>
 
       <div class="relative">
-        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Mật khẩu</p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Password</p>
 
         <input
           :type="isPassword ? 'password' : 'text'"
-          :placeholder="'Nhập mật khẩu của bạn'"
+          :placeholder="'Password'"
           name="password"
           id="password"
           v-model="account.password"
@@ -57,11 +57,11 @@
       </div>
 
       <div>
-        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Xác nhận mật khẩu</p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Password again</p>
 
         <input
           type="password"
-          :placeholder="'Xác nhận mật khẩu của bạn'"
+          :placeholder="'Password again'"
           name="verifyPassword"
           id="verifyPassword"
           v-model="account.verifyPassword"
@@ -69,32 +69,6 @@
         />
         <label v-if="accountErrors.verifyPassword" class="text-red-500">
           {{ accountErrors.verifyPassword }}
-        </label>
-      </div>
-
-      <div>
-        <label class="inline-flex items-start cursor-pointer relative">
-          <input
-            v-model="account.agreeNotification"
-            type="checkbox"
-            class="sr-only peer/notification"
-          />
-          <div
-            class="min-w-5 min-h-5 border border-black dark:border-none dark:bg-[#202024] rounded-[3px] peer-checked/notification:bg-[#fff] peer-checked/notification:dark:bg-gray-700 transition-all duration-300 peer-checked/notification:ring-1 peer-checked/notification:ring-[#0af] peer"
-          ></div>
-
-          <svg
-            class="w-5 h-5 text-black dark:text-white absolute left-0 top-0 transition-all duration-300 peer-checked/notification:block hidden"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="3"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-          <span class="ml-2 text-gray-500 dark:text-gray-400 font-bold"
-            >gửi cho tôi tin tức mới mất, khảo sát và ưu đãi đặc biệt từ steak store</span
-          >
         </label>
       </div>
 
@@ -123,13 +97,13 @@
           <span
             class="ml-2 before:text-red-500 before:content-['*'] text-gray-500 dark:text-gray-400 font-bold leading-snug"
           >
-            Tôi đã đọc và đồng ý với
+            By registering, you agree to our
             <a :href="decodePrivateUrl(privateUrl)" class="underline text-blue-400"
-              >Điều khoản Dịch vụ</a
+              >Terms of service</a
             >
-            và
+            and
             <a :href="decodePrivateUrl(privateUrl)" class="underline text-blue-400">
-              Thỏa thuận Cấp phép Người dùng cuối của Steak Store.
+              Privacy policy
             </a>
           </span>
         </label>
@@ -160,14 +134,14 @@
         <button
           class="h-12 hover:ring-3 hover:bg-blue-400 hover:text-black cursor-pointer hover:ring-blue-300 transition-all duration-300 bg-[#3f3f3f] rounded-[5px] w-full"
         >
-          Tiếp tục
+          Continue
         </button>
       </div>
       <!-- END BUTTON SUBMIT -->
 
       <span class="flex flex-row justify-center">
-        <span class="me-1 text-black dark:text-white">Đã có tài khoản?</span>
-        <router-link to="/login" class="text-[#0af] italic underline">Đăng nhập"</router-link>
+        <span class="me-1 text-black dark:text-white">I have an account?</span>
+        <router-link to="/login" class="text-[#0af] italic underline">Login now</router-link>
       </span>
     </form>
   </div>

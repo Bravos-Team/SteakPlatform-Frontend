@@ -34,9 +34,11 @@
           </div>
           <!-- END CHARS COUNTS -->
           <!-- START INVERT COLOR -->
-          <div class="flex gap-x-1 items-center shrink-0">
-            <span>Invert color</span>
-            <Switch @update:model-value="invertDarkMode = $event" />
+          <div class="flex gap-x-3 items-center shrink-0">
+            <div class="flex gap-x-1 items-center shrink-0">
+              <span>Invert color</span>
+              <Switch @update:model-value="invertDarkMode = $event" />
+            </div>
           </div>
           <!-- END INVERT COLOR -->
 
@@ -1026,11 +1028,7 @@
         }"
         class="w-full flex col-span-2 min-h-[10rem] overflow-hidden rounded-sm border"
       >
-        <EditorContent
-          v-model="texts"
-          class="!min-w-full p-3 bg-black !prose prose-invert"
-          :editor="editor"
-        />
+        <EditorContent v-model="texts" class="!min-w-full p-3 bg-black" :editor="editor" />
       </section>
     </div>
   </tooltip-provider>
@@ -1038,7 +1036,7 @@
 
 <script setup lang="ts">
 import { Editor, EditorContent } from '@tiptap/vue-3'
-import { onBeforeUnmount } from 'vue'
+import { onBeforeUnmount, watch, type HTMLAttributes } from 'vue'
 import Helps from '@/components/common/texteditor/Helps.vue'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import Image from '@tiptap/extension-image'
@@ -1093,15 +1091,30 @@ const youtubeVideo = ref({
 const setLinkToText = ref('')
 
 const highlighterColorHex = ref('#ffc078')
-const isSpellCheck = ref(false)
 const errorLinkToTextMessage = ref('')
 const charsLimit = ref(10000)
+
+const customHeading = Heading.extend({
+  renderHTML({ node, HTMLAttributes }) {
+    const level = node.attrs.level
+    const classes: Record<number, string> = {
+      1: 'text-3xl font-bold prose-h1',
+      2: 'text-2xl font-semibold prose-h2',
+      3: 'text-xl font-medium prose-h3',
+      4: 'text-lg prose-h4',
+      5: 'text-base prose-h5',
+      6: 'text-sm prose-h6',
+    }
+    return ['h' + level, { ...HTMLAttributes, class: classes[level] }, 0]
+  },
+})
+
+const emitLongDescriptionsData = defineModel<string>('emitLongDescriptionsData')
+
 const editor = new Editor({
   extensions: [
     StarterKit.configure({
-      HTMLAttributes: {
-        class: 'min-h-[20rem]',
-      },
+      heading: false,
       blockquote: {
         HTMLAttributes: {
           class: 'border-l-3 prose-blockquote border-black dark:border-white px-2',
@@ -1128,22 +1141,7 @@ const editor = new Editor({
         },
       },
     }),
-    Heading.extend({
-      renderHTML({ node, HTMLAttributes }) {
-        const level = node.attrs.level
-        const classes = {
-          1: 'font-bold prose-h1',
-          2: 'font-semibold prose-h2',
-          3: 'font-medium prose-h3',
-          4: 'prose-h4',
-          5: 'prose-h5',
-          6: 'prose-h6',
-        }
-        return ['h' + level, { ...HTMLAttributes, class: classes[level] || '' }, 0]
-      },
-    }).configure({
-      levels: [1, 2, 3, 4, 5, 6],
-    }),
+    customHeading,
     Image.configure({
       inline: true,
       allowBase64: true,
@@ -1190,16 +1188,15 @@ const editor = new Editor({
     }),
     TextStyleKit,
     Underline,
-    TextStyle,
-    Color,
   ],
   editorProps: {
     attributes: {
-      spellcheck: isSpellCheck.value,
-      class: 'h-full outline-0 text-white   min-w-full',
+      class: 'h-full outline-0 !text-white  min-w-full',
     },
   },
-  content: `
+  content: emitLongDescriptionsData.value
+    ? emitLongDescriptionsData.value
+    : `
 <p>Hello World!</p>
   `,
 })
@@ -1248,10 +1245,6 @@ const percentage = computed(() => {
   return Math.round((100 / charsLimit.value) * editor.storage.characterCount.characters())
 })
 
-const emitLongDescriptionsData = defineModel<string>('emitLongDescriptionsData')
-
-const dirtyHTMLS = "<img src=x onerror='alert(1)'><p><b>Hello</b></p>"
-
 onBeforeUnmount(() => {
   editor.destroy()
 })
@@ -1264,6 +1257,22 @@ onMounted(() => {
     })
   })
 })
+watch(
+  () => emitLongDescriptionsData.value,
+  async (newValue) => {
+    if (newValue) {
+      await nextTick()
+    } else {
+      editor.commands.setContent(
+        `<p class="text-gray-500">Please, enter your long description here...</p>`,
+      )
+    }
+  },
+  {
+    immediate: true,
+    deep: true,
+  },
+)
 </script>
 
 <style lang="scss" global>

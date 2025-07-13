@@ -11,7 +11,7 @@
       <DialogContent :hide-close-button="true" class="[&_[data-dialog-close]]:hidden">
         <dialog-close as-child>
           <button
-            @click="showDialog = !showDialog"
+            @click="handleCloseDialog"
             class="absolute right-2 top-2 cursor-pointer hover:bg-white/10 p-1 rounded-sm"
           >
             <X class="w-4 h-4" />
@@ -22,11 +22,16 @@
         </DialogHeader>
 
         <form id="productNameForm" @submit.prevent="handleSubmit(onSubmit)">
-          <FormField v-slot="{ componentField }"  name="name">
+          <FormField v-slot="{ componentField }" name="name">
             <FormItem>
               <FormLabel>Product Name</FormLabel>
               <FormControl>
-                <Input placeholder="Product Name..." v-bind="componentField" />
+                <Input
+                  placeholder="Product Name..."
+                  autofocus
+                  tabindex="0"
+                  v-bind="componentField"
+                />
               </FormControl>
               <FormDescription>This is your game name in public games store</FormDescription>
               <FormMessage />
@@ -35,7 +40,17 @@
         </form>
 
         <DialogFooter>
-          <Button type="submit" form="productNameForm">Create Product</Button>
+          <Button
+            v-if="isPublisherCreateProjectPending"
+            tabindex="1"
+            form="productNameForm"
+            class="w-30 cursor-not-allowed"
+          >
+            <LoaderCircle class="animate-spin" />
+          </Button>
+          <Button v-else type="submit" tabindex="1" form="productNameForm" class="w-30">
+            <span> Create Product</span>
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -43,15 +58,12 @@
 </template>
 
 <script setup lang="ts">
-import { Plus } from 'lucide-vue-next'
+import { LoaderCircle, Plus } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
-import { toast } from 'vue-sonner'
-import { h } from 'vue'
-
+import { usePublisherCreatePersonalProject } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { X } from 'lucide-vue-next'
-
 import {
   Dialog,
   DialogClose,
@@ -59,7 +71,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
@@ -71,33 +82,44 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
 // import { LoaderCircle } from 'lucide-vue-next'
 import { ref } from 'vue'
 
+const { isPending: isPublisherCreateProjectPending, mutateAsync: mutateAsyncPublisherProject } =
+  usePublisherCreatePersonalProject()
+
 const showDialog = ref(false)
+const handleCloseDialog = () => (showDialog.value = false)
 const formSchema = toTypedSchema(
   z.object({
-    name: z.string().min(1, { message: 'Product name is required' }),
+    name: z.string().min(6, { message: 'Product name must be at least 6 characters long' }),
   }),
 )
 
-type ProductNameType = {
-  name: string
-}
-
-const promiseNew = new Promise((resolve) => setTimeout(resolve, 2000))
-
-const onSubmit = (values: ProductNameType): any => {
-  toast.success(
-    h('span', { class: 'text-white text-lg z-999' }, `"${values.name}" has been created`),
-    {
-      class: 'z-[9999]',
-      description: h('div', { class: 'text-white' }, new Date().toLocaleString()),
-      action: {
-        label: 'Undo',
-      },
-    },
-  )
-  showDialog.value = !showDialog.value
+const onSubmit = async (values: { name: string }) => {
+  try {
+    const response = await mutateAsyncPublisherProject(values.name)
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        'Create Product Success',
+        `Product "${values.name}" created successfully!`,
+      )
+      showDialog.value = false
+    } else {
+      toastErrorNotificationPopup(
+        'Create Product Error',
+        `Failed to create product: ${values.name}. Please try again.`,
+      )
+    }
+  } catch (error: any) {
+    toastErrorNotificationPopup(
+      'Create Product Error',
+      error instanceof Error ? error.message : `An unexpected error occurred. Please try again.`,
+    )
+  }
 }
 </script>

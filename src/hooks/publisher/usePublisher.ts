@@ -1,6 +1,7 @@
-import { useMutation } from '@tanstack/vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { loginEmail, loginUserName, register } from '@/apis/publisher/auth/authPublisher'
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
+import { PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS } from '@/hooks/constants/publisher/project/publisherPersonalProjectConstant'
 
 export const usePublisherRegister = () => {
   const { isPending, mutateAsync, reset } = useMutation({
@@ -19,12 +20,13 @@ export const usePublisherRegister = () => {
 }
 
 export const usePublisherLoginUserName = () => {
-  const { isPending, mutateAsync, reset } = useMutation({
+  const queryClient = useQueryClient()
+  const { isPending, mutateAsync } = useMutation({
     mutationFn: async (data: PublisherLoginRequest) => {
       return await loginUserName(data)
     },
     onSuccess: () => {
-      reset()
+      queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL })
     },
   })
   return {
@@ -34,12 +36,13 @@ export const usePublisherLoginUserName = () => {
 }
 
 export const usePublisherLoginEmail = () => {
-  const { isPending, mutateAsync, reset } = useMutation({
+  const queryClient = useQueryClient()
+  const { isPending, mutateAsync } = useMutation({
     mutationFn: async (data: PublisherLoginRequest) => {
       return await loginEmail(data)
     },
     onSuccess: () => {
-      reset()
+      queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL })
     },
   })
   return {

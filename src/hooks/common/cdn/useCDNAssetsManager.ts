@@ -9,6 +9,7 @@ import {
   type PresignedUrlType,
   type PostIntoPresignedURLType,
   type PresignedUrlResponse,
+  type PostIntoPresignedURLsType,
 } from '@/types/cdn/CdnTypes'
 import { AxiosResponse } from 'axios'
 export const useDeleteImage = () => {
@@ -52,6 +53,7 @@ export const useGetPresignedImageUrls = () => {
     },
   })
   return {
+    isPending,
     mutateAsync,
   }
 }
@@ -60,6 +62,21 @@ export const usePostIntoPresignedUrl = () => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (data: PostIntoPresignedURLType) =>
       (await postIntoPresignedUrl(data.url, data.file)).data,
+  })
+  return {
+    mutateAsync,
+    isPending,
+  }
+}
+
+export const usePostIntoPresignedUrls = () => {
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (data: PostIntoPresignedURLsType[]) =>
+      Promise.all(
+        data.map((file: PostIntoPresignedURLsType) => {
+          postIntoPresignedUrl(file.signedUrl, file.file_instance)
+        }),
+      ),
   })
   return {
     mutateAsync,

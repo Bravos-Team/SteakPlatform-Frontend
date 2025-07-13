@@ -14,7 +14,7 @@ export const useRegisterMutation = () => {
   }
 }
 
-export const useLoginByEmailMutatetion = () => {
+export const useLoginByEmailMutation = () => {
   const { isPending, mutateAsync, data, isSuccess } = useMutation<any, unknown, LoginRequest>({
     mutationKey: ['user', 'auth', 'login', 'email'],
   })
@@ -27,7 +27,7 @@ export const useLoginByEmailMutatetion = () => {
   }
 }
 
-export const useLoginByUsernameMutatetion = () => {
+export const useLoginByUsernameMutation = () => {
   const { isPending, data, mutateAsync, isSuccess } = useMutation<any, unknown, LoginRequest>({
     mutationKey: ['user', 'auth', 'login', 'username'],
   })
