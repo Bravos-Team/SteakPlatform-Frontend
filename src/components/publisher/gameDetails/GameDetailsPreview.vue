@@ -171,7 +171,7 @@
       <!-- END LEFT CONTENT -->
 
       <!-- START RIGHT CONTENT -->
-      <div class="w-full sitcky top-0 flex-col gap-y-[15px]">
+      <div class="w-full sticky top-0 flex-col gap-y-[15px]">
         <!-- START GAME THUMBNAIL -->
         <div class="tablet:flex justify-center items-center p-[20px] hidden">
           <div v-if="gameDetails?.thumbnail" class="flex justify-center items-center w-full">

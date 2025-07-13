@@ -126,7 +126,6 @@ const handleFileUpload = async (event: Event) => {
           await mutateUpdateDraftProjectInformations(dataUpdated)
         }
       } catch (error: any) {
-        console.log(error)
         toastErrorNotificationPopup(
           'Error uploading image',
           error.message || 'An unexpected error occurred.',
