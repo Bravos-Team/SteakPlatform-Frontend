@@ -4,7 +4,7 @@
     <div
       class="border-1 p-3 rounded-sm bg-linear-120 from-blue-200/5 to-emerald-200/5 flex flex-col gap-y-3"
     >
-      <div v-if="!media_files.length && !mediaData">Non media created</div>
+      <div v-if="!media_files.length && !mediaData">Non media created yet</div>
       <div v-else class="grid grid-cols-1 gap-y-2">
         <!-- MEDIA DATA DRAFT -->
         <div

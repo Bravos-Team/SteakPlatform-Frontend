@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden" :class="`bg-[${background_color}] h-[${height}]`">
+  <div class="overflow-hidden w-full" :class="`bg-[${background_color}] h-[${height}]`">
     <!-- HEADER CATEGORY LIST-->
     <div class="flex flex-row justify-between w-full lg:mb-[23px] h-[30px]">
       <!-- Category title-->

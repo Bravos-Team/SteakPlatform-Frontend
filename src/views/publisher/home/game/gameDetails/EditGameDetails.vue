@@ -34,9 +34,11 @@ import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSyste
 const useSystem = useSystemRequirementsStore()
 const route = useRoute()
 
-const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPersonalProjectById(
-  route?.params?.id as unknown as bigint,
-)
+const {
+  data: projectById,
+  isPending: isProjectByIdPending,
+  refetch: refetchingProjectData,
+} = usePublisherGetPersonalProjectById(route?.params?.id as unknown as bigint)
 
 watch(
   projectById,
@@ -54,7 +56,7 @@ watch(
 )
 
 onBeforeMount(async () => {
-  usePublisherGetPersonalProjectById(route?.params?.id as unknown as bigint)
+  await refetchingProjectData()
   await nextTick()
 })
 </script>
