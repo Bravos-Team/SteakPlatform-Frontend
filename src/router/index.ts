@@ -4,12 +4,14 @@ import authRoutes from '@/router/routes/store/AuthRoutes'
 import homeRoutes from '@/router/routes/store/HomeRoutes'
 import storeRoutes from '@/router/routes/store/StoreRoutes'
 import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
+import adminRoutes from '@/router/routes/admin/AdminRoutes'
 import supportCenterRoutes from '@/router/routes/help/SupportCenterRoutes'
 
 const routes: RouteRecordRaw[] = [
   homeRoutes,
   authRoutes,
   storeRoutes,
+  ...adminRoutes,
   ...publisherRoutes,
   ...supportCenterRoutes,
 ]

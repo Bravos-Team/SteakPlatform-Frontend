@@ -13,17 +13,16 @@
         <span class="font-bold text-3xl">Sign In</span>
       </div>
       <div class="flex w-full">
-        <form @submit.prevent="handlePublisherLogin" action=""
+        <form @submit.prevent="handleAdminLogin" action=""
           class="flex flex-col gap-y-[10px] border-0 p-5 w-full items-center">
           <div class="flex flex-col gap-y-[20px] w-full lg:w-8/12">
             <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Email</span>
+              <span class="font-black">Username or Email</span>
               <input type="text" v-model="form.usernameOrEmail" name="emailOrUsername" autocomplete="off"
                 class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                placeholder="Enter Your Email" />
-              <label v-if="publisherErrors.email || publisherErrors.username" for="emailOrUsername"
-                class="text-red-500">
-                {{ publisherErrors.username || publisherErrors.email }}
+                placeholder="Enter your username or email" />
+              <label v-if="adminErrors.email || adminErrors.username" for="emailOrUsername" class="text-red-500">
+                {{ adminErrors.username || adminErrors.email }}
               </label>
             </div>
 
@@ -33,9 +32,9 @@
                 <input :type="isPassword ? 'password' : 'text'" v-model="form.password" name="password"
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  placeholder="Enter Your Password" />
-                <label v-if="publisherErrors.password" for="password" class="text-red-500">
-                  {{ publisherErrors.password }}
+                  placeholder="Enter your password" />
+                <label v-if="adminErrors.password" for="password" class="text-red-500">
+                  {{ adminErrors.password }}
                 </label>
                 <eye @click="togglePasswordVisibility" v-if="!isPassword"
                   class="absolute right-2 top-2 cursor-pointer" />
@@ -44,45 +43,19 @@
               </div>
             </div>
             <div class="flex justify-center">
-              <a href="" class="underline italic text-blue-400 hover:text-blue-500 text-[12px]">Forgot Password ?</a>
+              <a href="" class="underline italic text-blue-400 hover:text-blue-500 text-[12px]"></a>
             </div>
           </div>
 
           <div class="flex flex-col justify-center w-8/12 lg:w-4/12">
             <button type="submit"
               class="w-full rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] m-2 flex items-center bg-[#ffffff26] transition-all">
-              <loader-circle v-if="isPendingPublisherLoginEmail || isPendingPublisherLoginUserName"
-                class="animate-spin ml-2" />
+              <loader-circle v-if="isPendingAdminLoginEmail || isPendingAdminLoginUserName" class="animate-spin ml-2" />
               <span v-else> Login </span>
             </button>
             <span class="text-red-500 text-center">{{ loginMessage }}</span>
           </div>
         </form>
-      </div>
-      <div class="flex justify-center">
-        <div class="flex flex-col gap-y-2 w-full">
-          <div class="flex gap-x-3 text-white justify-center">
-            <router-link :to="{ name: 'PublisherAuthRegister' }"
-              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline">Create
-              Account ?
-            </router-link>
-            or
-            <router-link :to="{ name: 'Login' }"
-              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline">Login
-              as User Account
-            </router-link>
-            <!-- <span>or</span>
-            <router-link
-              :to="{ name: 'Home' }"
-              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
-              >Countinue exploring Steak?
-            </router-link> -->
-          </div>
-          <router-link to="#"
-            class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline">Privacy
-            Policy
-          </router-link>
-        </div>
       </div>
     </div>
   </div>
@@ -92,9 +65,9 @@
 import { onMounted, reactive, ref } from 'vue'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint.js'
 import { extractErrors } from '@/utils/zod/HanldeZodErrors.js'
-import { LoginByEmailSchema, LoginByUserNameSchema } from '@/types/publisher/AuthType.js'
+import { LoginByEmailSchema, LoginByUserNameSchema } from '@/types/admin/AuthType.js'
 import { isEmail } from '@/utils/type/typeChecking.js'
-import { usePublisherLoginEmail, usePublisherLoginUserName } from '@/hooks/publisher/usePublisher'
+import { useAdminLoginEmail, useAdminLoginUserName } from '@/hooks/admin/useAdmin'
 import { Eye, EyeClosed, LoaderCircle } from 'lucide-vue-next'
 import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'
 import ParticlesBase from '@/components/common/particles/ParticlesBase.vue'
@@ -104,20 +77,26 @@ import {
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
 const router = useRouter()
-const { mutateAsync: mutateAsyncPublisherLoginEmail, isPending: isPendingPublisherLoginEmail } =
-  usePublisherLoginEmail()
+
+const { mutateAsync: mutateAsyncAdminLoginEmail, isPending: isPendingAdminLoginEmail } =
+  useAdminLoginEmail()
+
 const {
-  mutateAsync: mutateAsyncPublisherLoginUserName,
-  isPending: isPendingPublisherLoginUserName,
-} = usePublisherLoginUserName()
-const publisherErrors = ref<Record<string, string>>({})
+  mutateAsync: mutateAsyncAdminLoginUserName,
+  isPending: isPendingAdminLoginUserName,
+} = useAdminLoginUserName()
+
+const adminErrors = ref<Record<string, string>>({})
+
 const form = reactive({
   usernameOrEmail: '',
   password: '',
   deviceId: '',
   deviceInfo: '',
 })
+
 const loginMessage = ref('')
+
 onMounted(async () => {
   try {
     form.deviceInfo = await generateDeviceInfo()
@@ -154,25 +133,28 @@ function getPayload(formData: typeof form) {
   }
 }
 
-const handlePublisherLogin = async () => {
+const handleAdminLogin = async () => {
   const { schema, payload, type } = getPayload(form)
   const { success, error } = schema.safeParse(payload)
-  if (!success) publisherErrors.value = extractErrors(error)
+  if (!success) adminErrors.value = extractErrors(error)
   else {
-    publisherErrors.value = {}
+    adminErrors.value = {}
     try {
       const res = await (type === 'email'
-        ? mutateAsyncPublisherLoginEmail(payload)
-        : mutateAsyncPublisherLoginUserName(payload))
+        ? mutateAsyncAdminLoginEmail(payload)
+        : mutateAsyncAdminLoginUserName(payload))
+
       if (res.status === 200) {
-        toastSuccessNotificationPopup('Login successfully', `Welcome ${res.data.username}`)
-        router.push({ name: 'PublisherHome' })
+        let user = res.data;
+        toastSuccessNotificationPopup('Login successfully', `Welcome ${user.username}`)
+        router.push({ name: 'AdminDashboard' })
       }
     } catch (err: any) {
       toastErrorNotificationPopup(
         'Login failed',
         err?.response?.data?.detail || 'An error occurred',
       )
+      console.log(err);
       loginMessage.value = err?.response?.data?.detail
     }
   }

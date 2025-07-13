@@ -26,6 +26,16 @@ SteakApi.interceptors.response.use(
             'Publisher Authentication',
           )
         }
+      } else if (path.startsWith('/admin')) {
+        if (router.currentRoute.value.name === 'AdminLogin') {
+          return
+        } else {
+          await router.push({ name: 'AdminLogin' })
+          return toastErrorNotificationPopup(
+            'Need admin account to login!',
+            'Steak Admin Authentication',
+          )
+        }
       } else {
         await router.push({ name: 'Login' })
         return toastErrorNotificationPopup(
