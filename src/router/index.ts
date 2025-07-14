@@ -6,8 +6,10 @@ import storeRoutes from '@/router/routes/store/StoreRoutes'
 import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
 import adminRoutes from '@/router/routes/admin/AdminRoutes'
 import supportCenterRoutes from '@/router/routes/help/SupportCenterRoutes'
+import testRoute from '@/router/routes/test/TestRoute'
 
 const routes: RouteRecordRaw[] = [
+  testRoute,
   homeRoutes,
   authRoutes,
   storeRoutes,

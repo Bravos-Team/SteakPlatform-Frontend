@@ -3,12 +3,11 @@
   <store-sliders></store-sliders>
   <!-- END SLIDER -->
 
-  <div class="flex flex-col gap-y-[64px] my-[64px]">
+  <div class="flex flex-col gap-y-[64px] my-[64px] overflow-hidden items-center justify-center">
     <!-- game by category -->
     <category-base-bar
       :game-by-category-list="gameByCategoryList"
       :title-category="'discover something new'"
-      class=""
     ></category-base-bar>
     <!-- END GAME BY CATEGORY-->
 
@@ -36,7 +35,9 @@
     <!-- END DEALS BAR -->
 
     <!-- FREE GAME BAR -->
-    <free-game-bar :freeGameList="freeGameList"></free-game-bar>
+    <div class="px-3">
+      <free-game-bar :freeGameList="freeGameList"></free-game-bar>
+    </div>
     <!-- END FREE GAME BAR -->
 
     <!-- LIST GAME HORIZONTAL BAR -->

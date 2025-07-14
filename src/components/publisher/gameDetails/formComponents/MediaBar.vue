@@ -4,7 +4,7 @@
     <div
       class="border-1 p-3 rounded-sm bg-linear-120 from-blue-200/5 to-emerald-200/5 flex flex-col gap-y-3"
     >
-      <div v-if="!media_files.length && !mediaData">Non media created</div>
+      <div v-if="!media_files.length && !mediaData">Non media created yet</div>
       <div v-else class="grid grid-cols-1 gap-y-2">
         <!-- MEDIA DATA DRAFT -->
         <div
@@ -22,7 +22,9 @@
               <div
                 class="w-full relative flex desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
               >
-                <div class="h-full flex desktop:flex-row justify-center bg-white/10 border-2">
+                <div
+                  class="h-full items-center flex desktop:flex-row justify-center bg-white/10 border-2"
+                >
                   <!-- VIDEO AND IMAGE -->
                   <img
                     v-if="media.url && media.type === 'image'"
@@ -39,9 +41,13 @@
                   ></video>
                   <!-- END VIDEO AND IMAGES -->
                 </div>
-                <div class="w-full h-full">
-                  <div class="w-full h-full rounded-none bg-white/5 px-2 py-1 font-medium relative">
-                    {{ media.url.split('images/')[1] }}
+                <div class="w-full h-100%">
+                  <div
+                    class="w-full min-h-full rounded-none bg-white/5 px-2 py-1 font-medium relative"
+                  >
+                    <div class="h-full flex items-center w-full">
+                      {{ media.url.split('images/')[1] }}
+                    </div>
                   </div>
 
                   <div
@@ -171,7 +177,6 @@ const handleDeleteMediaInput = (index: number) => {
   useImageStore.media_files_stored.splice(index, 1)
 }
 const handleDeleteMediaUploaded = (index: number) => {
-  console.log('Deleting media at index:', index)
   emit('media-deleted-update', index)
 }
 

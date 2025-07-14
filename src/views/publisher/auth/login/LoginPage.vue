@@ -122,8 +122,11 @@ onMounted(async () => {
   try {
     form.deviceInfo = await generateDeviceInfo()
     form.deviceId = await generateDeviceId()
-  } catch (err) {
-    console.log(err)
+  } catch (err: any) {
+    toastErrorNotificationPopup(
+      'Device Information Error',
+      `${err instanceof Error ? err.message : 'An error occurred while generating device info.'}`,
+    )
   }
 })
 

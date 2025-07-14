@@ -1,5 +1,7 @@
 <template>
-  <div class="h-[884px] w-[320px] sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]">
+  <div
+    class="h-[884px] w-full laptop:w-[320px] laptop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]"
+  >
     <div class="flex justify-center items-center p-[20px]">
       <div class="flex justify-center items-center">
         <img :src="game.signatureImage" alt="" />

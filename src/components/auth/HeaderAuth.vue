@@ -14,7 +14,7 @@
         <div class="bg-black dark:bg-white w-0.5 h-8 ms-3"></div>
       </router-link>
 
-      <div class="flex absolute right-70">
+      <div class="laptop:flex hidden absolute right-70">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"

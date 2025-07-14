@@ -34,18 +34,22 @@ import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSyste
 const useSystem = useSystemRequirementsStore()
 const route = useRoute()
 
-const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPersonalProjectById(
-  route?.params?.id as unknown as bigint,
-)
+const {
+  data: projectById,
+  isPending: isProjectByIdPending,
+  refetch: refetchingProjectData,
+} = usePublisherGetPersonalProjectById(route?.params?.id as unknown as bigint)
 
 watch(
   projectById,
   async () => {
     await nextTick()
     if (projectById.value?.data.systemRequirements) {
-      useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
-      useSystem.recommendRequirement =
-        projectById.value.data.systemRequirements.recommended ?? useSystem.minimumRequirement
+      useSystem.resetSystemRequirements()
+      if (projectById.value.data.systemRequirements.minimum)
+        useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
+      if (projectById.value.data.systemRequirements.recommended)
+        useSystem.recommendRequirement = projectById.value.data.systemRequirements.recommended
     } else {
       useSystem.resetSystemRequirements()
     }
@@ -54,7 +58,7 @@ watch(
 )
 
 onBeforeMount(async () => {
-  usePublisherGetPersonalProjectById(route?.params?.id as unknown as bigint)
+  await refetchingProjectData()
   await nextTick()
 })
 </script>

@@ -29,6 +29,20 @@ export const toastErrorNotificationPopup = (
   })
 }
 
+export const toastNotificationPopup = (
+  message: string,
+  descriptions: string,
+  position?: number,
+) => {
+  return toast.info(h('span', { class: 'text-blue-500 text-lg z-999' }, `${message}`), {
+    description: h('div', { class: 'text-white' }, `${descriptions}`),
+    position: positionComputed(position || 2),
+    action: {
+      label: 'Undo',
+    },
+  })
+}
+
 const positionComputed = (positionId: number) => {
   switch (positionId) {
     case 1:
