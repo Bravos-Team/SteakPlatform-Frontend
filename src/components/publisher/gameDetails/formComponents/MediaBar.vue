@@ -22,7 +22,9 @@
               <div
                 class="w-full relative flex desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
               >
-                <div class="h-full flex desktop:flex-row justify-center bg-white/10 border-2">
+                <div
+                  class="h-full items-center flex desktop:flex-row justify-center bg-white/10 border-2"
+                >
                   <!-- VIDEO AND IMAGE -->
                   <img
                     v-if="media.url && media.type === 'image'"
@@ -39,9 +41,13 @@
                   ></video>
                   <!-- END VIDEO AND IMAGES -->
                 </div>
-                <div class="w-full h-full">
-                  <div class="w-full h-full rounded-none bg-white/5 px-2 py-1 font-medium relative">
-                    {{ media.url.split('images/')[1] }}
+                <div class="w-full h-100%">
+                  <div
+                    class="w-full min-h-full rounded-none bg-white/5 px-2 py-1 font-medium relative"
+                  >
+                    <div class="h-full flex items-center w-full">
+                      {{ media.url.split('images/')[1] }}
+                    </div>
                   </div>
 
                   <div
@@ -204,13 +210,13 @@ onMounted(() => {
   }
 })
 
-// watch(
-//   () => props.isAssignedMediaFiles,
-//   (val) => {
-//     if (val) {
-//       media_files.value = []
-//     }
-//   },
-//   { immediate: true },
-// )
+watch(
+  () => props.isAssignedMediaFiles,
+  (val) => {
+    if (val) {
+      media_files.value = []
+    }
+  },
+  { immediate: true },
+)
 </script>

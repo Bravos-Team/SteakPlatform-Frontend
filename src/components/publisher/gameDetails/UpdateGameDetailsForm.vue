@@ -397,7 +397,7 @@ const handleSaveAsDraft = async () => {
             resolve(true)
         }, 2000)
       })
-      // isAssignedMediaFiles.value = true
+      isAssignedMediaFiles.value = true
     }
   } else {
     completedApis.value += 1
@@ -470,8 +470,6 @@ watch(
         gameToMutate.value.systemRequirements.recommend = null
       }
     }
-
-    console.log('System Requirements:', gameToMutate.value.systemRequirements)
   },
   { deep: true },
 )

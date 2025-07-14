@@ -29,7 +29,6 @@ import { Switch } from '@/components/ui/switch'
 import { SystemRequirementsType } from '@/types/game/gameDetails/GameDetailsType'
 import MinimumRequirementsForm from '@/components/publisher/gameDetails/formComponents/systemRequirements/MinimumRequirementsForm.vue'
 import RecommendedRequirementsForm from '@/components/publisher/gameDetails/formComponents/systemRequirements/RecommendedRequirementsForm.vue'
-import { onMounted, watch } from 'vue'
 
 const props = defineProps<{
   minimumData: SystemRequirementsType | null
