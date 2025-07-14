@@ -171,7 +171,6 @@ const handleDeleteMediaInput = (index: number) => {
   useImageStore.media_files_stored.splice(index, 1)
 }
 const handleDeleteMediaUploaded = (index: number) => {
-  console.log('Deleting media at index:', index)
   emit('media-deleted-update', index)
 }
 
@@ -205,13 +204,13 @@ onMounted(() => {
   }
 })
 
-watch(
-  () => props.isAssignedMediaFiles,
-  (val) => {
-    if (val) {
-      media_files.value = []
-    }
-  },
-  { immediate: true },
-)
+// watch(
+//   () => props.isAssignedMediaFiles,
+//   (val) => {
+//     if (val) {
+//       media_files.value = []
+//     }
+//   },
+//   { immediate: true },
+// )
 </script>

@@ -45,9 +45,11 @@ watch(
   async () => {
     await nextTick()
     if (projectById.value?.data.systemRequirements) {
-      useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
-      useSystem.recommendRequirement =
-        projectById.value.data.systemRequirements.recommended ?? useSystem.minimumRequirement
+      useSystem.resetSystemRequirements()
+      if (projectById.value.data.systemRequirements.minimum)
+        useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
+      if (projectById.value.data.systemRequirements.recommended)
+        useSystem.recommendRequirement = projectById.value.data.systemRequirements.recommended
     } else {
       useSystem.resetSystemRequirements()
     }

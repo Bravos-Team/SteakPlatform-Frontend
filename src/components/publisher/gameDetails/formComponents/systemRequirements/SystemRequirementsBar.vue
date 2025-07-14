@@ -8,10 +8,16 @@
       />
     </div>
     <div
+      v-if="minimumData || recommendData"
       class="grid gap-x-3 grid-cols-1 gap-y-2 border-2 rounded-sm p-3 laptop:grid-cols-2 w-full gapx-3"
-      v-if="addMinimunAndRecommended"
     >
-      <minimum-and-recommended />
+      <!-- START MINIMUM SYS -->
+      <minimum-requirements-form v-if="minimumData" :minimum="minimumData" />
+      <!-- END MINIMUM SYS -->
+
+      <!-- START RECOMMENDED SYS -->
+      <recommended-requirements-form v-if="recommendData" :recommend="recommendData" />
+      <!-- END RECOMMENDED SYS -->
     </div>
   </div>
 </template>
@@ -19,7 +25,16 @@
 <script setup lang="ts">
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import MinimumAndRecommended from '@/components/publisher/gameDetails/formComponents/systemRequirements/MinimumAndRecommended.vue'
+
+import { SystemRequirementsType } from '@/types/game/gameDetails/GameDetailsType'
+import MinimumRequirementsForm from '@/components/publisher/gameDetails/formComponents/systemRequirements/MinimumRequirementsForm.vue'
+import RecommendedRequirementsForm from '@/components/publisher/gameDetails/formComponents/systemRequirements/RecommendedRequirementsForm.vue'
+import { onMounted, watch } from 'vue'
+
+const props = defineProps<{
+  minimumData: SystemRequirementsType | null
+  recommendData: SystemRequirementsType | null
+}>()
 
 const addMinimunAndRecommended = defineModel<boolean>('isInitSystemRequirements', {
   default: false,
