@@ -8,5 +8,6 @@
 
 <script lang="ts" setup>
 // import SupportCenterFooter from '@/components/help/SupportCenterFooter.vue'
+import { Drawer } from '@/components/ui/drawer'
 import FooterStore from '@/components/store/FooterStore.vue'
 </script>

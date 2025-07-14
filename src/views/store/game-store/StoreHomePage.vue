@@ -35,7 +35,9 @@
     <!-- END DEALS BAR -->
 
     <!-- FREE GAME BAR -->
-    <free-game-bar :freeGameList="freeGameList"></free-game-bar>
+    <div class="px-3">
+      <free-game-bar :freeGameList="freeGameList"></free-game-bar>
+    </div>
     <!-- END FREE GAME BAR -->
 
     <!-- LIST GAME HORIZONTAL BAR -->

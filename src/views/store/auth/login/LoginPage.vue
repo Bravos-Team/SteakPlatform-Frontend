@@ -9,9 +9,7 @@
 
     <form @submit.prevent="handleSubmission" novalidate class="w-full max-w-md mx-auto space-y-4">
       <div>
-        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">
-          Username or Email
-        </p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Username or Email</p>
         <input
           type="text"
           required
@@ -49,7 +47,10 @@
         </label>
       </div>
 
-      <div class="text-right">
+      <div class="text-right flex justify-between items-center">
+        <router-link :to="{ name: 'store' }" class="text-sm text-[#0af] underline"
+          >Steak Game Store</router-link
+        >
         <a href="#" class="text-sm text-[#0af] underline">Forgotten password ?</a>
       </div>
 
@@ -93,7 +94,7 @@
         <button
           class="flex items-center justify-center h-12 border border-black w-full bg-[#65a8ff] dark:bg-[#1877f2] rounded-lg"
         >
-          <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6"  alt="logo"/>
+          <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6" alt="logo" />
         </button>
         <div class="flex items-center justify-center">
           <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-sky-400"

@@ -1,8 +1,10 @@
 <template>
   <tooltip-provider>
-    <div class="flex flex-col justify-center h-full gap-y-6">
+    <div class="flex flex-col mb-3 justify-center h-full gap-y-6">
       <span class="text-5xl font-extrabold">Your Wishlist</span>
-      <div class="flex tablet:flex-col-reverse desktop:flex-row gap-x-2 justify-between">
+      <div
+        class="flex relative px-3 gap-y-5 flex-col-reverse desktop:flex-row gap-x-2 justify-between"
+      >
         <div class="flex w-full gap-y-3 flex-col">
           <div class="flex gap-x-1 items-center">
             <div class="text-white/50">Sort by:</div>
@@ -109,7 +111,9 @@
             <!-- END RIGHT CONTENT -->
           </div>
         </div>
-        <div class="min-h-[326px] px-3 gap-y-5 min-w-[10rem] flex flex-col">
+        <div
+          class="tablet:min-h-[326px] laptop:relative top-25 sticky bg-[#101014] w-full px-3 gap-y-5 h-[10rem] laptop:min-w-[10rem] flex flex-col"
+        >
           <div class="font-bold">Filters</div>
           <div class="border-y-1 border-white/40">
             <div class="flex w-full flex-col justify-between py-2">

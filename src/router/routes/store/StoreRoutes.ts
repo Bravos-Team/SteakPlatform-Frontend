@@ -3,6 +3,7 @@ const storeRoutes: RouteRecordRaw = {
   path: '/store',
   name: 'store',
   component: () => import('@/layouts/store/main/StoreLayout.vue'),
+  redirect: { name: 'store-home' },
   meta: {
     title: 'Store',
   },
