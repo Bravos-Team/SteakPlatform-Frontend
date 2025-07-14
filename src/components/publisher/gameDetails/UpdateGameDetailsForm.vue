@@ -71,7 +71,11 @@
       <!-- END TAGS SELECTED BAR ${data} -->
 
       <!-- START SYSTEM REQUIREMENTS BAR -->
-      <system-requirements v-model:is-init-system-requirements="isInitSystemRequirements" />
+      <system-requirements
+        v-model:is-init-system-requirements="isAddSystemRequirements"
+        :minimum-data="gameToMutate.systemRequirements?.minimum"
+        :recommend-data="gameToMutate.systemRequirements?.recommend"
+      />
       <!-- END SYSTEM REQUIREMENTS BAR-->
 
       <!-- START FOOTER FORM -->
@@ -174,13 +178,19 @@ import SystemRequirements from '@/components/publisher/gameDetails/formComponent
 import PlatformsSupportedTags from '@/components/publisher/gameDetails/formComponents/platform/PlatformsSupportedTags.vue'
 import DescriptionsBar from '@/components/publisher/gameDetails/formComponents/descriptions/DescriptionsBar.vue'
 import MediaBar from '@/components/publisher/gameDetails/formComponents/MediaBar.vue'
-import { getDefaultGameValue, type GameType } from '@/types/game/gameDetails/GameDetailsType'
+import { getObjectDiff } from '@/utils/compare/comparationObject'
+import {
+  getDefaultGameValue,
+  getDefaultValueRequirements,
+  type GameType,
+} from '@/types/game/gameDetails/GameDetailsType'
 import { computed, ref, watch } from 'vue'
 import { usePublisherCreateDraftProjectInformations } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
+  toastNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
 import { useImageCompressor } from '@/composables/image/useImageCompression'
 import { useImageStored } from '@/stores/image/useImageStored'
@@ -194,11 +204,6 @@ import { MediaType } from '@/types/image/MediaAndImage'
 import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/CdnTypes'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import { Progress } from '@/components/ui/progress'
-// import { useRoute } from 'vue-router'
-// import { usePublisherGetPersonalProjectById } from '@/hooks/publisher/project/usePublisherPersonalProjects'
-// import { data } from '../common/sidebar/SidebarItems'
-
-// const route = useRoute()
 
 const useSystem = useSystemRequirementsStore()
 const useComporessionImage = useImageCompressor()
@@ -217,16 +222,13 @@ const {
   isPending: isCreateDraftProjectInformationsPending,
 } = usePublisherCreateDraftProjectInformations()
 
-// const { data: projectById, isPending: isProjectByIdPending } = usePublisherGetPersonalProjectById(
-//   route?.params?.id as unknown as bigint,
-// )
 const props = defineProps<{
   gamePreviewDetails: GameType
 }>()
 
 const gameToMutate = ref<GameType>(JSON.parse(JSON.stringify(props.gamePreviewDetails)))
 const isAssignedMediaFiles = ref<boolean>(false)
-const isInitSystemRequirements = ref<boolean>(gameToMutate.value.systemRequirements ? true : false)
+const isAddSystemRequirements = ref<boolean>(false)
 
 const emit = defineEmits(['update:openDialogForm'])
 const handleResetForm = () => {
@@ -266,20 +268,6 @@ const updateAtStatus = computed({
     }
   },
 })
-
-// const selectedVersion = computed({
-//   get: () => gameToMutate.value?.buildInfo?.versionName ?? '',
-//   set: (val) => {
-//     if (!gameToMutate.value) return
-//     gameToMutate.value.buildInfo ??= {
-//       versionName: '',
-//       execPath: '',
-//       downloadUrl: '',
-//     }
-//     gameToMutate.value.buildInfo.versionName = val
-//   },
-// })
-
 const developTeamsData = computed({
   get: () => gameToMutate.value?.developerTeams ?? [],
   set: (val) => {
@@ -306,16 +294,6 @@ const shortDescriptionsData = computed({
     }
   },
 })
-
-// const subTitleData = computed({
-//   get: () => gameToMutate.value?.subtitles ?? '',
-//   set: (val) => {
-//     if (gameToMutate.value) {
-//       gameToMutate.value.subtitles = val
-//     }
-//   },
-// })
-
 const longDescriptionsData = computed({
   get: () => gameToMutate.value?.longDescription ?? '',
   set: (val) => {
@@ -346,10 +324,12 @@ const totalApis = 5
 const progressValue = computed(() => Math.floor((completedApis.value / totalApis) * 100))
 const progressDisplay = ref(0)
 let animationInterval: any = null
+
 const handleSaveAsDraft = async () => {
   // <-- handle upload cover image
   completedApis.value = 0
   progressDisplay.value = 0
+
   if (useImageStore.coverImage_stored) {
     const files: any = useImageStore.coverImage_stored
 
@@ -369,10 +349,9 @@ const handleSaveAsDraft = async () => {
     if (response) {
       gameToMutate.value.thumbnail = 'https://ccdn.steak.io.vn/' + response.cdnFileName
     }
+  } else {
+    completedApis.value += 1
   }
-  // end handle upload cover image -->
-
-  // <-- handle upload media files
 
   if (useImageStore.media_files_stored.length > 0) {
     const media_files: any = useImageStore.media_files_stored
@@ -407,56 +386,55 @@ const handleSaveAsDraft = async () => {
           type: media_files[index].type,
         }
       })
-      setTimeout(() => {
-        data_to_assigned.forEach((media) => {
-          if (!gameToMutate.value.media) {
-            gameToMutate.value.media = []
-          }
-          gameToMutate.value.media?.push(media)
-        })
-      }, 2000)
-      isAssignedMediaFiles.value = true
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          data_to_assigned.forEach((media) => {
+            if (!gameToMutate.value.media) {
+              gameToMutate.value.media = []
+            }
+            gameToMutate.value.media?.push(media)
+          }),
+            resolve(true)
+        }, 2000)
+      })
+      // isAssignedMediaFiles.value = true
     }
-  }
-  // end handle upload media files -->
-
-  // <-- handle system requirements
-  const system = (gameToMutate.value.systemRequirements ??= {
-    minimum: { cpu: '', gpu: '', storage: '', directX: '', memory: '', osVersion: '' },
-    recommend: { cpu: '', gpu: '', storage: '', directX: '', memory: '', osVersion: '' },
-  })
-
-  if (system.minimum != null || system.recommend != null) {
-    gameToMutate.value.systemRequirements = {
-      minimum: useSystem.minimumRequirement,
-      recommend: useSystem.recommendRequirement,
-    }
-  }
-  // handle system requirements -->
-
-  // <-- handle save as draft
-  try {
-    useImageStore.media_files_stored = []
-    const response = await mutateAsyncCreateDraftProject(gameToMutate.value)
+  } else {
     completedApis.value += 1
-    if (response.status === 200) {
-      toastSuccessNotificationPopup(
-        'Draft saved successfully',
-        'Your game details have been saved as a draft.',
-      )
-    } else {
-      toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
-    }
-  } catch (error: any) {
-    toastErrorNotificationPopup(
-      'Failed to save as draft. Please try again later.',
-      `Error: ${error}`,
-    )
-  } finally {
-    completedApis.value = 0
-    progressDisplay.value = 0
   }
-  // handle save as draft -->
+
+  const diff = getObjectDiff(gameToMutate.value, props.gamePreviewDetails)
+  if (!diff) {
+    toastNotificationPopup(
+      'No changes detected',
+      'Please make some changes before saving as draft.',
+    )
+    return
+  } else {
+    Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
+    try {
+      useImageStore.media_files_stored = []
+      useSystem.resetSystemRequirements()
+      const response = await mutateAsyncCreateDraftProject(diff)
+      completedApis.value += 1
+      if (response.status === 200) {
+        toastSuccessNotificationPopup(
+          'Draft saved successfully',
+          'Your game details have been saved as a draft.',
+        )
+      } else {
+        toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
+      }
+    } catch (error: any) {
+      toastErrorNotificationPopup(
+        'Failed to save as draft. Please try again later.',
+        `Error: ${error}`,
+      )
+    } finally {
+      completedApis.value = 0
+      progressDisplay.value = 0
+    }
+  }
 }
 
 watch(progressValue, (newVal) => {
@@ -470,4 +448,31 @@ watch(progressValue, (newVal) => {
     }
   }, 10)
 })
+
+watch(
+  () => isAddSystemRequirements.value,
+  (val) => {
+    if (val) {
+      if (!gameToMutate.value.systemRequirements) {
+        gameToMutate.value.systemRequirements = {
+          minimum: getDefaultValueRequirements(),
+          recommend: getDefaultValueRequirements(),
+        }
+      } else {
+        if (!gameToMutate.value.systemRequirements.minimum)
+          gameToMutate.value.systemRequirements.minimum = getDefaultValueRequirements()
+        if (!gameToMutate.value.systemRequirements.recommend)
+          gameToMutate.value.systemRequirements.recommend = getDefaultValueRequirements()
+      }
+    } else {
+      if (gameToMutate.value.systemRequirements) {
+        gameToMutate.value.systemRequirements.minimum = null
+        gameToMutate.value.systemRequirements.recommend = null
+      }
+    }
+
+    console.log('System Requirements:', gameToMutate.value.systemRequirements)
+  },
+  { deep: true },
+)
 </script>
