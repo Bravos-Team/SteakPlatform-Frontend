@@ -2,7 +2,7 @@
   <tooltip-provider>
     <div class="flex flex-col justify-center h-full gap-y-6">
       <span class="text-5xl font-extrabold">Your Cart</span>
-      <div class="flex gap-x-2 justify-between">
+      <div class="flex flex-col tablet:flex-row px-2 gap-y-10 gap-x-2 justify-between">
         <div class="flex w-full gap-y-3 flex-col">
           <div
             v-for="game in mockProducts"

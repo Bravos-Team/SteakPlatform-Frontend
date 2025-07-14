@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-[#202024] h-[589px] rounded-[12px] py-[30px] px-[40px] flex flex-col gap-y-[25px]">
+  <div
+    class="bg-[#202024] h-full tablet:h-[589px] rounded-[12px] py-[30px] px-[40px] flex flex-col gap-y-[25px]"
+  >
     <!-- HEADER -->
     <div class="flex text-white flex-row justify-between h-[40px]">
       <div class="flex flex-row justify-center items-center gap-x-[15px]">
@@ -14,10 +16,10 @@
       </router-link>
     </div>
     <!-- END HEADER -->
-    <div class="flex flex-row text-white h-[464px] gap-x-[20px]">
+    <div class="flex flex-col tablet:flex-row text-white h-full tablet:h-[464px] gap-x-[20px]">
       <div v-for="game in freeGameList" :key="game.id" class="flex flex-col gap-y-[20px]">
         <div class="relative rounded-md overflow-hidden">
-          <img :src="game.img" alt="" />
+          <img :src="game.img" class="w-[40rem] tablet:w-full" alt="" />
           <div
             v-if="game.status != 3"
             class="absolute flex justify-center items-center bottom-0 left-0 right-0 bg-[#26bbff] h-[25px]"

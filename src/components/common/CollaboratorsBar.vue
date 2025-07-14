@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row gap-x-[22px]" :class="`h-[${height}]`">
+  <div class="flex flex-col px-4 gap-y-6 tablet:flex-row gap-x-[22px]" :class="`h-[${height}]`">
     <router-link
       to="#"
       class="text-white flex flex-col"

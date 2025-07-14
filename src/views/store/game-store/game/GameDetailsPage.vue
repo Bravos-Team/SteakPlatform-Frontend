@@ -23,7 +23,7 @@
     <!-- END OPTIONS BAR-->
 
     <!-- MAIN CONTENT -->
-    <div class="lg:w-full flex flex-row justify-between">
+    <div class="lg:w-full flex flex-col laptop:flex-row justify-between">
       <!-- LEFT CONTENT -->
       <div
         class="flex flex-col h-[1412px] overflow-hidden xl:w-[1039px] lg:w-[751px] gap-y-[50px] relative"
@@ -57,7 +57,7 @@
           <div class="w-full bg-[#101014] h-[26px] flex justify-start">
             <button
               @click="showMore = !showMore"
-              class="text-[#26bbff] hover:underline text-[18px]"
+              class="cursor-pointer text-[#26bbff] hover:underline text-[18px]"
             >
               {{ showMore ? 'Show less' : 'Show more' }}
             </button>
