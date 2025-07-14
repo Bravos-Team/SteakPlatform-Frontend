@@ -10,7 +10,7 @@
       >
         <span class="text-sm font-bold">OS</span>
         <OsVersionTags
-          v-model:emit-minimum-os-versions="useSystem.minimumRequirement.osVersion"
+          v-model:emit-minimum-os-versions="minimum.osVersion"
           :os-version="systemRequirementSuggestions?.osVersion"
         />
       </div>
@@ -21,10 +21,7 @@
         class="flex hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
       >
         <span class="text-sm font-bold">CPU</span>
-        <cpu-tags
-          v-model:emit-cpu-data="useSystem.minimumRequirement.cpu"
-          :cpus="systemRequirementSuggestions?.cpu"
-        />
+        <cpu-tags v-model:emit-cpu-data="minimum.cpu" :cpus="systemRequirementSuggestions?.cpu" />
       </div>
       <!-- END CPU-->
 
@@ -33,10 +30,7 @@
         class="flex gap-x-1 items-center border-1 px-2 border-white/20 hover:bg-gray-200/10 transition-colors duration-300 text-gray-200/70"
       >
         <span class="text-sm font-bold">GPU</span>
-        <gpu-tags
-          v-model:emit-gpu-data="useSystem.minimumRequirement.gpu"
-          :gpus="systemRequirementSuggestions?.gpu"
-        />
+        <gpu-tags v-model:emit-gpu-data="minimum.gpu" :gpus="systemRequirementSuggestions?.gpu" />
       </div>
       <!-- END GPU-->
 
@@ -46,7 +40,7 @@
       >
         <span class="text-sm font-bold">MEMORY</span>
         <memory-tags
-          v-model:emit-memory-data="useSystem.minimumRequirement.memory"
+          v-model:emit-memory-data="minimum.memory"
           :memories="systemRequirementSuggestions?.memory"
         />
       </div>
@@ -58,7 +52,7 @@
       >
         <span class="text-sm font-bold">DIRECTX</span>
         <direct-x-tags
-          v-model:emit-directx-data="useSystem.minimumRequirement.directX"
+          v-model:emit-directx-data="minimum.directX"
           :directxs="systemRequirementSuggestions?.directX"
         />
       </div>
@@ -70,7 +64,7 @@
       >
         <span class="text-sm font-bold">STORAGE</span>
         <storage-tags
-          v-model:emit-storage-data="useSystem.minimumRequirement.storage"
+          v-model:emit-storage-data="minimum.storage"
           :storages="systemRequirementSuggestions?.storage"
         />
       </div>
@@ -87,18 +81,11 @@ import MemoryTags from '@/components/publisher/gameDetails/formComponents/system
 import StorageTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/StorageTags.vue'
 import DirectXTags from '@/components/publisher/gameDetails/formComponents/systemRequirements/minimum/DirectXTags.vue'
 import {
-  REQUIREMENTS_TYPE,
+  SystemRequirementsType,
   systemRequirementSuggestions,
 } from '@/types/game/gameDetails/GameDetailsType'
-import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
-import { onMounted } from 'vue'
-import { nextTick } from 'vue'
 
-const useSystem = useSystemRequirementsStore()
-
-const props = defineProps<REQUIREMENTS_TYPE>()
-onMounted(async () => {
-  await nextTick()
-  useSystem.resetSystemRequirements()
-})
+const props = defineProps<{
+  minimum: SystemRequirementsType
+}>()
 </script>

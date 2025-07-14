@@ -133,7 +133,8 @@ import {
   useLoginByEmailMutation,
   useLoginByUsernameMutation,
 } from '@/hooks/store/auth/useAuthentications'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const {
   isPending: isLoginByEmailPending,
   isSuccess: isLoginByEmailSuccess,
@@ -207,15 +208,21 @@ const handleSubmission = async () => {
     } else {
       errors.value = {}
       try {
-        await mutateLoginByUsername({ ...commonData, username: form.usernameOrEmail })
-        if (isLoginByUsernameSuccess)
+        const response = await mutateLoginByUsername({
+          ...commonData,
+          username: form.usernameOrEmail,
+        })
+        if (response.status === 200) {
+          ;(window as any).api?.login(response.data)
           toastSuccessNotificationPopup(
             'Login successful',
             `Welcome back! ${loginByUsernameData.value.data.displayName}`,
           )
-        else toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
+        } else
+          toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
+        await router.push({ name: 'Test' })
       } catch (error: any) {
-        toastErrorNotificationPopup('Login failed', `Error: ${error.response.data.detail}`)
+        toastErrorNotificationPopup('Login failed', `Error: ${error?.response?.data?.detail}`)
       }
     }
   }

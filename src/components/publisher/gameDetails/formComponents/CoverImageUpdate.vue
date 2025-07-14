@@ -12,7 +12,6 @@
           ref="gameImage"
           class="object-contain w-full md:h-50 lg:h-full"
           alt=""
-          accept="image/*"
         />
       </div>
       <div class="w-full bg-[#202024] h-full flex justify-between p-4">
@@ -34,13 +33,20 @@
       @dragleave.prevent="isDragging = false"
       @drop.prevent="handleDrop"
       @click="fileInput?.click()"
+      accept="image/*"
       :class="{ 'border-sky-500 bg-sky-50 text-sky-700': isDragging, hidden: !unShowImageUploaded }"
     >
       <Upload class="group-hover:text-white transition-all duration-250 group-hover:scale-110" />
       <span class="group-hover:text-gray-400 transition-colors duration-250"
         >Kéo thả file vào đây hoặc click để chọn</span
       >
-      <input type="file" class="hidden" ref="fileInput" @change="handleFileChange" />
+      <input
+        type="file"
+        class="hidden"
+        accept="image/*"
+        ref="fileInput"
+        @change="handleFileChange"
+      />
     </div>
   </div>
 </template>

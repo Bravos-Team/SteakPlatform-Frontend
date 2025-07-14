@@ -28,6 +28,22 @@ const storeRoutes: RouteRecordRaw = {
         middleware: ['example'],
       },
     },
+    {
+      path: '/cart',
+      name: 'CartManagementPage',
+      component: () => import('@/views/cart/CartManagementPage.vue'),
+      meta: {
+        middleware: ['auth'],
+      },
+    },
+    {
+      path: '/wishlist',
+      name: 'WishlistManagementPage',
+      component: () => import('@/views/cart/WishlistManagementPage.vue'),
+      meta: {
+        middleware: ['auth'],
+      },
+    },
   ],
 }
 export default storeRoutes
