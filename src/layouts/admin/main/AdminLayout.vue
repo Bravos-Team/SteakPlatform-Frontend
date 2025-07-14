@@ -2,10 +2,10 @@
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import Spark from '@/components/common/sparks/Spark.vue'
 import BaseBreadcrumb from '@/components/common/breadcrumb/BaseBreadcrumb.vue'
-import PublisherSidebar from '@/components/publisher/common/sidebar/PublisherSidebar.vue'
+import AdminSidebar from '@/components/admin/sidebar/AdminSidebar.vue'
 import { getCookie, setCookie } from '@/utils/cookies/cookie-utils'
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu'
-import PublisherContextMenu from '@/components/publisher/contextMenuBar/PublisherContextMenu.vue'
+import AdminContextMenu from '@/components/admin/contextMenuBar/AdminContextMenu.vue'
 const defaultOpen = getCookie('sidebar_state') === 'true'
 const toggleNav = () => {
   setCookie('sidebar_state', (!defaultOpen).toString().trim())
@@ -14,7 +14,7 @@ const toggleNav = () => {
 
 <template>
   <sidebar-provider class="no-scrollbar">
-    <publisher-sidebar />
+    <AdminSidebar />
     <context-menu>
       <context-menu-trigger class="w-full">
         <sidebar-inset class="relative overflow-hidden w-full h-full">
@@ -27,13 +27,15 @@ const toggleNav = () => {
             <sidebar-trigger @click="toggleNav" class="flex items-center gap-2 p-1" />
             <base-breadcrumb />
           </header>
+
+          <!-- Content -->
           <router-view />
 
           <spark :colorChanges="'#64403b'" :top="'850'" :left="'290'" :colorFirst="'#ac3973'" :idSpark="'contentbottom'"
             class="z-0" />
         </sidebar-inset>
       </context-menu-trigger>
-      <publisher-context-menu />
+      <admin-context-menu />
     </context-menu>
   </sidebar-provider>
 </template>
