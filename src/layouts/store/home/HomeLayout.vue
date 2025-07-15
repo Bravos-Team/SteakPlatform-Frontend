@@ -1,5 +1,5 @@
 <template>
-  <drawer>
+  <drawer direction="top">
     <store-header :isHiddenSearchingBar="isHiddenSearchingBar"></store-header>
     <router-view></router-view>
     <store-footer></store-footer>

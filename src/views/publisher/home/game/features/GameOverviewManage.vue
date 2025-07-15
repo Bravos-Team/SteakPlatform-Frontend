@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 flex flex-col gap-y-5">
+  <div class="py-4 px-2 flex flex-col gap-y-5">
     <!--  ORGANIZATION PROFILE -->
     <div class="flex flex-col-reverse lg:flex-row gap-y-3 lg:gap-y-0 lg:gap-x-3">
       <organization-profile />

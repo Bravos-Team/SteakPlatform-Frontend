@@ -1,9 +1,9 @@
 <template>
-  <div
-    class="sticky z-10 top-0 bottom-0 p-5 laptop:px-[3rem] desktop:px-[5rem] desktop-xl:px-[189.1px] tablet:px-0 h-[100px] w-full"
+  <dikv
+    class="sticky z-10 top-0 bottom-0 tablet:p-5 laptop:px-[3rem] desktop:px-[5rem] desktop-xl:px-[189.1px] tablet:px-0 h-[100px] w-full"
   >
-    <div
-      class="flex flex-row bg-[#101014] px-2 tablet:px-10 items-center justify-between w-full h-full"
+    <ediv
+      class="flex flex-row bg-[#101014] px-4 tablet:px-10 items-center justify-between w-full h-full"
     >
       <!-- SEARCH BAR -->
       <div class="flex justify-center items-center">
@@ -48,8 +48,8 @@
           <ShoppingBag class="fill-white/30" /> Cart</router-link
         >
       </div>
-    </div>
-  </div>
+    </ediv>
+  </dikv>
 </template>
 
 <script setup>

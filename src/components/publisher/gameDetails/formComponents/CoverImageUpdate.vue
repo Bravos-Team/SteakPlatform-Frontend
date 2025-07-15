@@ -6,11 +6,11 @@
       :class="{ hidden: unShowImageUploaded }"
       class="w-full lg:h-40 border-4 border-double rounded-md flex lg:flex-row flex-col overflow-hidden relative"
     >
-      <div class="h-full flex justify-center p-5 bg-[#29292D]">
+      <div class="h-full flex justify-center bg-[#29292D]">
         <img
           :src="thumbnailUrl"
           ref="gameImage"
-          class="object-contain w-full md:h-50 lg:h-full"
+          class="object-cover w-full md:h-50 lg:h-full"
           alt=""
         />
       </div>
