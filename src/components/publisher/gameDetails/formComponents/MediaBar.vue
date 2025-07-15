@@ -20,16 +20,16 @@
                 <cloud-upload :size="20" class="text-green-400" />
               </span>
               <div
-                class="w-full relative flex desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
+                class="w-full relative flex border-4 border-double rounded-md overflow-hidden desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
               >
                 <div
-                  class="h-full items-center flex desktop:flex-row justify-center bg-white/10 border-2"
+                  class="h-full items-center rounded-xs overflow-hidden flex desktop:flex-row justify-center bg-white/10 border-2"
                 >
                   <!-- VIDEO AND IMAGE -->
                   <img
                     v-if="media.url && media.type === 'image'"
                     :src="media.url"
-                    class="object-contain w-full h-20 tablet:h-40"
+                    class="object-cover w-full h-20 tablet:h-40"
                     alt=""
                   />
                   <video

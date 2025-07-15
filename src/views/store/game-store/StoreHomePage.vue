@@ -41,7 +41,7 @@
     <!-- END FREE GAME BAR -->
 
     <!-- LIST GAME HORIZONTAL BAR -->
-    <div class="flex flex-row">
+    <div class="flex flex-col gap-y-5 laptop:flex-row w-full h-full">
       <game-card-horizontal title="top sellers" :data="topSellersList"></game-card-horizontal>
       <game-card-horizontal title="most played" :data="topSellersList"></game-card-horizontal>
       <game-card-horizontal

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex nth-[2]:border nth-[2]:border-t-0 nth-[2]:border-b-0 nth-[2]:border-r-[#ffffff26] px-[6px] nth-[2]:border-l-[#ffffff26] lg:w-[540px] flex-col text-white justify-between"
+    class="flex nth-[2]:border nth-[2]:border-r-0 nth-[2]:border-l-0 laptop:nth-[2]:border laptop:nth-[2]:border-t-0 laptop:nth-[2]:border-b-0 laptop:nth-[2]:border-r-[#ffffff26] px-[6px] nth-[2]:border-l-[#ffffff26] lg:w-[540px] flex-col text-white justify-between"
   >
     <router-link to="#" class="flex flex-row group/category">
       <span class="capitalize text-start font-bold text-[20px] tracking-[0.4px] leading-[25px]">{{

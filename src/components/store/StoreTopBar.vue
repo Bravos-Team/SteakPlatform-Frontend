@@ -150,7 +150,7 @@
                 />
               </div>
             </drawer-trigger>
-            <drawer-content>
+            <drawer-content class="h-full bg-white/10 backdrop-blur-xl py-10">
               <div class="mx-auto w-full max-w-sm">
                 <drawer-title class="hidden">Menu</drawer-title>
                 <drawer-header

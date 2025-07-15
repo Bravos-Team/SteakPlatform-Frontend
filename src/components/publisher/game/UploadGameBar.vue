@@ -8,7 +8,7 @@
     <card
       v-for="(game, index) in games"
       :key="index"
-      class="bg-[var(--bg-card-game-base)]/60 transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem] relative"
+      class="bg-[var(--bg-card-game-base)]/60 overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem] relative"
     >
       <router-link
         :to="{ name: 'PublisherEditGame', params: { id: game.id } }"
@@ -31,10 +31,15 @@
                 '--x': xValueComputed(game.status) + 'px',
               }"
             >
-              <img v-if="game.thumbnail" class="object-cover w-full" :src="game.thumbnail" alt="" />
+              <img
+                v-if="game.thumbnail"
+                class="object-cover scale-120 w-full"
+                :src="game.thumbnail"
+                alt=""
+              />
               <img
                 v-else
-                class="object-cover w-full"
+                class="object-cover w-full scale-120"
                 src="https://ccdn.steak.io.vn/assets-desert.png"
                 alt=""
               />

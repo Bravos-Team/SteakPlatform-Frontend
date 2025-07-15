@@ -1,5 +1,5 @@
 <template>
-  <drawer>
+  <drawer direction="top">
     <div>
       <store-top-bar></store-top-bar>
       <store-searching-bar></store-searching-bar>
