@@ -1,41 +1,49 @@
+<template>
+  <div class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <AdminSidebar :isCollapsed="isSidebarCollapsed" />
+
+    <div class="flex-1 flex flex-col min-h-screen overflow-hidden">
+      <!-- Header -->
+      <header class="h-16 bg-white border-b border-gray-200 shadow-sm">
+        <div class="flex items-center justify-between h-full px-4">
+          <div class="flex items-center gap-4">
+            <button @click="toggleSidebar" class="p-2 hover:bg-gray-150 rounded-lg">
+              <MenuIcon class="h-5 w-5 text-gray-600" />
+            </button>
+            <BaseBreadcrumb />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <UserMenu class="" />
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-auto p-6 bg-gray-150 text-black">
+        <router-view />
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-white border-t border-gray-200 p-4 text-center text-gray-600 shadow-sm">
+        <AdminFooter />
+      </footer>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
-import Spark from '@/components/common/sparks/Spark.vue'
-import BaseBreadcrumb from '@/components/common/breadcrumb/BaseBreadcrumb.vue'
+import { ref } from 'vue'
+import { MenuIcon, BellIcon } from 'lucide-vue-next'
 import AdminSidebar from '@/components/admin/sidebar/AdminSidebar.vue'
-import { getCookie, setCookie } from '@/utils/cookies/cookie-utils'
-import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu'
-import AdminContextMenu from '@/components/admin/contextMenuBar/AdminContextMenu.vue'
-const defaultOpen = getCookie('sidebar_state') === 'true'
-const toggleNav = () => {
-  setCookie('sidebar_state', (!defaultOpen).toString().trim())
+import BaseBreadcrumb from '@/components/common/breadcrumb/BaseBreadcrumb.vue'
+import UserMenu from '@/components/admin/common/header/UserMenu.vue'
+import AdminFooter from '@/components/admin/common/header/footer/AdminFooter.vue'
+
+const isSidebarCollapsed = ref(false)
+
+const toggleSidebar = () => {
+  isSidebarCollapsed.value = !isSidebarCollapsed.value
 }
 </script>
-
-<template>
-  <sidebar-provider class="no-scrollbar">
-    <AdminSidebar />
-    <context-menu>
-      <context-menu-trigger class="w-full">
-        <sidebar-inset class="relative overflow-hidden w-full h-full">
-          <spark :colorChanges="'#64403b'" :top="'-450'" :left="'-150'" :colorFirst="'#422277'" class="z-0"
-            :idSpark="'content'" />
-          <spark :colorChanges="'#422277'" :top="'-450'" :left="'290'" :colorFirst="'#64403b'" :idSpark="'content2'"
-            class="z-0" />
-          <header
-            class="backdrop-blur-3xl w-full bg-[#101014]/10 border-b-1 border-b-gray-100/10 z-10 lg:border-b-0 flex h-16 px-2 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-            <sidebar-trigger @click="toggleNav" class="flex items-center gap-2 p-1" />
-            <base-breadcrumb />
-          </header>
-
-          <!-- Content -->
-          <router-view />
-
-          <spark :colorChanges="'#64403b'" :top="'850'" :left="'290'" :colorFirst="'#ac3973'" :idSpark="'contentbottom'"
-            class="z-0" />
-        </sidebar-inset>
-      </context-menu-trigger>
-      <admin-context-menu />
-    </context-menu>
-  </sidebar-provider>
-</template>

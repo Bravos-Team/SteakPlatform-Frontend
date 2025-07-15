@@ -44,7 +44,7 @@ const getPageTitle = () => {
 </script>
 
 <template>
-  <header class="z-10 py-4 bg-white shadow-sm dark:bg-gray-800 dark:border-gray-700">
+  <header class="z-10 py-4 bg-white shadow-sm">
     <div class="container px-6 mx-auto flex items-center justify-between">
       <div class="flex items-center gap-4">
         <!-- Toggle sidebar button -->

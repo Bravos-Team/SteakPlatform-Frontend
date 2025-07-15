@@ -28,7 +28,7 @@ export const data = ref({
 // Data profile
 export const userData = {
   data: {
-    name: 'Admin',
+    name: 'NoN4m3',
     email: 'admin@gmail.com',
     avatar: 'https://ccdn.steak.io.vn/assets-guts-profile-pic.png',
   },
@@ -39,35 +39,17 @@ export const navItemsData = [
   {
     title: 'Dashboard',
     icon: LayoutDashboard,
-    items: [
-      {
-        title: 'Overview',
-        name: 'AdminDashboard',
-        icon: ChartNoAxesGantt,
-      },
-    ],
+    route: '/admin/dashboard',
   },
   {
     title: 'Users',
     icon: User,
-    items: [
-      {
-        title: 'Overview',
-        name: 'AdminUsers',
-        icon: ChartNoAxesGantt,
-      },
-    ],
+    route: '/admin/users',
   },
   {
     title: 'Games',
     icon: Gamepad2,
-    items: [
-      {
-        title: 'Overview',
-        name: 'AdminGames',
-        icon: ChartNoAxesGantt,
-      },
-    ],
+    route: '/admin/games',
   },
   // {
   //   title: 'Settings',
@@ -79,9 +61,4 @@ export const navItemsData = [
   //   name: 'AdminLogin',
   //   icon: LogOut,
   // },
-  {
-    title: 'Logout',
-    name: 'AdminLogin',
-    icon: LogOut,
-  },
 ]
