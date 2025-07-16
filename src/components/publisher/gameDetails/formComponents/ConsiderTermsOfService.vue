@@ -2,9 +2,7 @@
   <div class="flex flex-col w-full">
     <!-- TITLE DESCRIPTIONS ALERT -->
     <div class="before:content-['*'] before:text-red-500">
-      The information you enter on this page will be used by the team at
-      <span class="text-white"> Steak Game Store</span>
-      to discover your title and consider you for additional help as part of Steak Community.
+      {{ $t('title.pages.game_details.form.consider.header_title') }}
     </div>
     <!-- END TITLE DESCRIPTIONS ALERT -->
 
@@ -20,26 +18,23 @@
           :class="{ 'w-full': consider.showConsider == false }"
         >
           <badge-alert />
-          <span> Consider Carefully </span>
+          <span>
+            {{ $t('title.pages.game_details.form.consider.title') }}
+          </span>
         </div>
         <span
           :class="{ hidden: consider.showConsider == false }"
           class="flex flex-col gap-y-1 lg:gap-y-0 px-1 lg:px-11"
         >
           <span>
-            Please only share information that you feel would help Steak understand your game
-            better. If your game is confidential or you are working with a third party such as a
-            publisher, please ensure that you are able to share this information with Epic. If you
-            would like details of your project to be shared with partners we work with, you can let
-            us know below. To make things easier, please share your information in English.
-            Apologies for any hassle, and thanks for understanding!
+            {{ $t('title.pages.game_details.form.consider.descriptions') }}
           </span>
           <div class="flex justify-end">
             <button
               class="px-4 cursor-pointer rounded-md py-1 bg-orange-400/30 hover:bg-orange-400/40 transition-colors duration-250 text-md"
               @click="consider.showConsiderCard = false"
             >
-              Hide
+              {{ $t('title.pages.game_details.actions.hide') }}
             </button>
           </div>
         </span>

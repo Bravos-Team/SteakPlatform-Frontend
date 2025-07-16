@@ -4,12 +4,14 @@
   >
     <div class="flex flex-col items-center mb-10">
       <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
-      <p class="text-2xl font-extrabold mt-2">Login</p>
+      <p class="text-2xl font-extrabold mt-2">{{ $t('auth.login') }}</p>
     </div>
 
     <form @submit.prevent="handleSubmission" novalidate class="w-full max-w-md mx-auto space-y-4">
       <div>
-        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Username or Email</p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">
+          {{ $t('auth.informations.username_and_password') }}
+        </p>
         <input
           type="text"
           required

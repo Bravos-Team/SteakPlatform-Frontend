@@ -2,7 +2,9 @@
   <div
     class="flex flex-col gap-y-1 border-[2px] border-dashed p-3 rounded-sm border-white/20 hover:border-white/40 transition-all duration-500 cursor-pointer bg-linear-100 from-gray-200/20 to-black/50 hover:bg-gray-200/10"
   >
-    <span class="font-bold text-lg">Recommended</span>
+    <span class="font-bold text-lg">
+      {{ $t('title.pages.game_details.form.system_requirements.recommended') }}</span
+    >
     <div class="grid grid-cols-1 laptop:grid-cols-2 gap-x-2 gap-y-3">
       <!-- START OS -->
       <div

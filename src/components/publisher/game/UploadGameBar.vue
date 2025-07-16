@@ -8,7 +8,7 @@
     <card
       v-for="(game, index) in games"
       :key="index"
-      class="bg-[var(--bg-card-game-base)]/60 overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem] relative"
+      class="bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem] relative"
     >
       <router-link
         :to="{ name: 'PublisherEditGame', params: { id: game.id } }"
@@ -33,13 +33,13 @@
             >
               <img
                 v-if="game.thumbnail"
-                class="object-cover scale-120 w-full"
+                class="object-cover scale-160 w-full"
                 :src="game.thumbnail"
                 alt=""
               />
               <img
                 v-else
-                class="object-cover w-full scale-120"
+                class="object-cover w-full scale-140"
                 src="https://ccdn.steak.io.vn/assets-desert.png"
                 alt=""
               />
@@ -87,7 +87,7 @@
                   class="flex bg-[--bg-base] gap-x-2 cursor-pointer items-center hover:bg-[#4B4B4E] w-full rounded-sm p-1"
                 >
                   <shopping-cart />
-                  Steak Game Store
+                  {{ $t('title.pages.game_management.services.store') }}
                 </button>
               </card-action>
 
@@ -96,7 +96,7 @@
                   class="flex bg-[--bg-base] gap-x-2 cursor-pointer items-start hover:bg-[#4B4B4E] w-full rounded-sm p-1"
                 >
                   <gamepad2 />
-                  <span> Game Services </span>
+                  <span> {{ $t('title.pages.game_management.services.service') }} </span>
                 </button>
               </card-action>
               <card-action as-child class="w-full">
@@ -105,7 +105,7 @@
                 >
                   <user-round-cog />
                   <span class="truncate" title="Steak Account Services">
-                    Steak Account Services
+                    {{ $t('title.pages.game_management.services.account') }}
                   </span>
                 </button>
               </card-action>
@@ -114,7 +114,7 @@
                   class="flex bg-[--bg-base] gap-x-2 cursor-pointer items-center hover:bg-[#4B4B4E] w-full rounded-sm p-1"
                 >
                   <chart-spline />
-                  Analytics
+                  {{ $t('title.pages.game_management.services.analytics') }}
                 </button>
               </card-action>
             </div>

@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
+import { setCookie } from '@/utils/cookies/cookie-utils'
 import { loginEmail, loginUserName, register } from '@/apis/publisher/auth/authPublisher'
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
 import { PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS } from '@/hooks/constants/publisher/project/publisherPersonalProjectConstant'
@@ -25,8 +26,11 @@ export const usePublisherLoginUserName = () => {
     mutationFn: async (data: PublisherLoginRequest) => {
       return await loginUserName(data)
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL })
+      setCookie('publisherAccessRights', response.data?.username, {
+        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      })
     },
   })
   return {
@@ -41,8 +45,11 @@ export const usePublisherLoginEmail = () => {
     mutationFn: async (data: PublisherLoginRequest) => {
       return await loginEmail(data)
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL })
+      setCookie('publisherAccessRights', response.data?.username, {
+        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      })
     },
   })
   return {

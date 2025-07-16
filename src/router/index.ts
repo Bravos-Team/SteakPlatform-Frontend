@@ -34,40 +34,10 @@ const router = createRouter({
   },
 })
 
-// const resolveMiddleware = (to: any) => {
-//   const matched = to.matched.slice().reverse()
-//   for (const record of matched) {
-//     if (record.meta && record.meta.middleware) {
-//       return record.meta.middleware
-//     }
-//   }
-//   return null
-// }
-
 router.beforeEach((to: any, from, next) => {
-  // if (!to.meta.middleware) {
-  //   return next()
-  // }
-
-  // if (to.name === 'PublisherHome' && to.meta.middleware) {
-  //   return next({
-  //     name: 'PublisherAuthLogin',
-  //   })
-  // }
-
+  console.log('Global beforeEach:', to, from)
+  console.log('Global beforeEach: next', next)
   return next()
-  // const middleware: any[] = to.meta.middleware
-
-  // const context = {
-  //   to,
-  //   from,
-  //   next,
-  // }
-
-  // return middleware[0]({
-  //   ...context,
-  //   next: middlewarePipeline(context, middleware, 1),
-  // })
 })
 
 export default router

@@ -8,6 +8,7 @@ import router from './router'
 import Particles from 'vue3-particles'
 import { RouteLocationNormalized } from 'vue-router'
 // import { VueReCaptcha } from 'vue-recaptcha-v3'
+import i18n from '@/i18n/index'
 import './assets/index.css'
 import { mutationDefaults } from '@/hooks/mutationDefaults/mutations'
 const queryClient = new QueryClient()
@@ -40,7 +41,19 @@ const vueQueryPluginOptions: VueQueryPluginOptions = {
 
 const app = createApp(App).use(Particles)
 
-app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions)
+// await setupI18n().then((i18n) => {
+//   app.use(i18n)
+//   app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions)
+
+//   router.afterEach((to: RouteLocationNormalized) => {
+//     if (to.meta?.title) {
+//       document.title = to.meta.title as string
+//     }
+//   })
+
+//   app.mount('#app')
+// })
+app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions).use(i18n)
 
 router.afterEach((to: RouteLocationNormalized) => {
   if (to.meta?.title) {

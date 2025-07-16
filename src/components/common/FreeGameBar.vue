@@ -6,13 +6,15 @@
     <div class="flex text-white flex-row justify-between h-[40px]">
       <div class="flex flex-row justify-center items-center gap-x-[15px]">
         <img src="https://ccdn.steak.io.vn/assets-gift-box-white.svg" class="w-[35px]" alt="" />
-        <p class="font-bold text-[22px] tracking-[0.4px] leading-[25px] font-hard">Free Games</p>
+        <p class="font-bold text-[22px] tracking-[0.4px] leading-[25px] font-hard">
+          {{ $t('title.component.free_games') }}
+        </p>
       </div>
       <router-link
         to="#"
         class="flex flex-row gap align-middle py-[7px] px-[15px] leading-[19.6px] tracking-[0.28px] justify-center text-[14px] border-[0.8px] border-[#ffffffa6]/50 hover:border-[#ffffffa6] rounded-[8px] transition-all duration-200 bg-[#ffffff26]/10 font-medium hover:bg-[#ffffff26]"
       >
-        View More
+        {{ $t('title.link.view_more') }}
       </router-link>
     </div>
     <!-- END HEADER -->

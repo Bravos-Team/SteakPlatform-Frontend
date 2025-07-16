@@ -5,7 +5,7 @@
         <breadcrumb-separator v-if="index > 0" />
         <breadcrumb-link as-child>
           <router-link :to="{ name: route.name }">
-            {{ route?.meta?.baseName || route.name }}
+            {{ getTranslatedTitle('title.routers.', route?.meta?.i18n) ?? route.baseName }}
           </router-link>
         </breadcrumb-link>
       </breadcrumb-item>
@@ -25,6 +25,8 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 
+import i18n from '@/i18n/index'
+import getTranslatedTitle from '@/utils/i18n/useI18nUtils'
 const route = useRoute()
 const currentRouterList = ref<any[]>([])
 

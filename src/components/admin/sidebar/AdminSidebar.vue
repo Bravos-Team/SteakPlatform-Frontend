@@ -1,14 +1,23 @@
 <template>
-  <aside :class="[
-    'transition-all duration-300 ease-in-out bg-[#1a1a1a] border-r border-gray-800',
-    isCollapsed ? 'w-16' : 'w-64'
-  ]">
-    <!-- Logo -->
-    <div class="h-16 flex items-center px-4 border-b border-gray-800">
-      <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo" class="h-8 w-8" />
-      <span :class="['ml-3 font-semibold text-white', isCollapsed && 'hidden']">
-        Steak
-      </span>
+  <sidebar
+    id="publisher-main-sidebar"
+    variant="sidebar"
+    side="left"
+    collapsible="icon"
+    class="bg-transparent/20"
+  >
+    <spark
+      :colorChanges="'#64403b'"
+      class="!left-10 hidden laptop:block"
+      :bottom="'-200'"
+      :colorFirst="'#422277'"
+      :idSpark="'sidebar-spark'"
+    />
+
+    <div
+      class="absolute shrink-0 -bottom-[10px] !left-10 z-0 w-full h-full flex items-center justify-center mobile:hidden"
+    >
+      <div class="bg-[#422277] !left-10 w-[55rem] h-[35rem] rounded-full blur-[10rem]"></div>
     </div>
 
     <!-- Navigation -->

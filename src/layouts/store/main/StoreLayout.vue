@@ -1,6 +1,6 @@
 <template>
-  <drawer direction="top">
-    <div>
+  <drawer direction="top" class="p-0 m-0">
+    <div class="p-0">
       <store-top-bar></store-top-bar>
       <store-searching-bar></store-searching-bar>
       <div class="desktop-xl:px-[14rem] desktop:px-[10rem] laptop:px-[6rem] tablet:px-[2rem]">

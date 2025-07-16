@@ -1,7 +1,14 @@
 <template>
   <tooltip-provider>
     <tooltip>
-      <Form :validation-schema="formSchema" v-slot="{ handleSubmit, values }">
+      <Form
+        v-if="gameName"
+        :validate-on-mount="false"
+        :initial-touched="{ name: false }"
+        :keep-values="true"
+        :validation-schema="formSchema"
+        v-slot="{ handleSubmit, values }"
+      >
         <Dialog :open="showDialog" @update:open="showDialog = $event">
           <tooltip-trigger as-child>
             <button
@@ -16,16 +23,22 @@
             :class="' bg-[#101014]/20 backdrop-blur-xl text-white'"
             :arrow="false"
           >
-            <span>Edit name</span>
+            <span> {{ $t('title.pages.game_details.actions.update_name') }}</span>
           </tooltip-content>
           <dialog-content>
             <dialog-header>
-              <dialog-title class="flex justify-center text-2xl">Edit your game name</dialog-title>
+              <dialog-title class="flex justify-center text-2xl">
+                <span> {{ $t('title.pages.game_details.dialog.title') }}</span>
+              </dialog-title>
             </dialog-header>
             <form id="updateProductNameForm" @submit.prevent="handleSubmit(onSubmitUpdateName)">
               <form-field v-slot="{ componentField }" name="name">
                 <form-item>
-                  <form-label>Product Name</form-label>
+                  <form-label>
+                    <span>
+                      {{ $t('title.pages.game_details.dialog.name') }}
+                    </span>
+                  </form-label>
                   <form-control>
                     <Input
                       placeholder="Product Name..."
@@ -33,7 +46,9 @@
                       v-bind="componentField"
                     />
                   </form-control>
-                  <form-description>Changes your product name</form-description>
+                  <form-description>
+                    {{ $t('title.pages.game_details.dialog.description') }}
+                  </form-description>
                   <form-message />
                 </form-item>
               </form-field>
@@ -42,18 +57,25 @@
               <Button
                 v-if="isUpdateProjectGamePending"
                 variant="default"
-                class="cursor-pointer min-w-32 cursor-not-allowed"
+                class="min-w-32 cursor-not-allowed"
               >
                 <LoaderCircle class="animate-spin" />
               </Button>
-              <Button
-                v-else
-                variant="default"
-                class="cursor-pointer min-w-32"
-                form="updateProductNameForm"
-              >
-                <span> Update Name</span>
-              </Button>
+              <tooltip v-else>
+                <tooltip-trigger>
+                  <Button
+                    variant="default"
+                    :class="cn(isGameNameValid ? '' : 'cursor-not-allowed')"
+                    class="min-w-32"
+                    form="updateProductNameForm"
+                  >
+                    <span> {{ $t('title.pages.game_details.dialog.button') }}</span>
+                  </Button>
+                </tooltip-trigger>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.dialog.error.update_name') }}
+                </tooltip-content>
+              </tooltip>
             </dialog-footer>
 
             <dialog-description class="hidden"> </dialog-description>
@@ -94,13 +116,13 @@ import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+import { cn } from '@/lib/utils'
+import i18n from '@/i18n'
 const { isPending: isUpdateProjectGamePending, mutateAsync: mutateAsyncUpdateProjectGame } =
   usePublisherUpdateProjectName()
 const showDialog = ref(false)
 const updateNameSchema = z.object({
-  name: z
-    .string()
-    .min(6, { message: 'Product name is required and must be at least 6 characters' }),
+  name: z.string().min(6, i18n.global.t('title.pages.game_details.dialog.error.update_name')),
 })
 const formSchema = toTypedSchema(updateNameSchema)
 type updateType = z.infer<typeof updateNameSchema>
@@ -109,6 +131,8 @@ const props = defineProps<{
   gameName: string
   gameId: bigint
 }>()
+
+const isGameNameValid = ref<boolean>(true)
 
 const onSubmitUpdateName = async (name: updateType) => {
   try {

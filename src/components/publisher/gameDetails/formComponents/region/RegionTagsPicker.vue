@@ -13,10 +13,10 @@
             </tags-input-item>
           </div>
 
-          <combobox-input v-model="searchItem" as-child>
+          <combobox-input class="!w-fit" v-model="searchItem" as-child>
             <tags-input-input
               id="regions"
-              placeholder="Country..."
+              :placeholder="$t('title.pages.game_details.form.available_countries.placeholder')"
               class="min-w-full p-0 border-none focus-visible:ring-0 h-auto"
               @keydown.enter.prevent
             />

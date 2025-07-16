@@ -16,16 +16,16 @@
     </div>
     <div :class="`flex flex-col shrink-0 justify-between gap-y-[${gapY}]`">
       <div class="text-[20px] font-bold tracking-[0.5px] leading-[25px] font-stretch-[700px]">
-        {{ game.name }}
+        {{ $t('title.component.check_out_deals') }}
       </div>
       <div :class="game.descriptions != '' ? 'min-h-[90px]' : ''" class="text-[#ffffffa6]">
-        {{ game.descriptions }}
+        {{ $t(game.descriptions) }}
       </div>
       <div v-if="game.type == 0">
         <button
           class="py-[8px] flex flex-row px-[16px] bg-[#ffffff59]/50 hover:bg-[#ffffff59] rounded-[8px] align-center justify-center items-center gap-x-[5px]"
         >
-          <p class="text-[16px]">See In Shop</p>
+          <p class="text-[16px]">{{ $t('title.link.see_in_shop') }}</p>
           <img
             class="w-[20px]"
             src="https://ccdn.steak.io.vn/assets-shared-ico-collaborators-list.svg"
@@ -49,7 +49,7 @@
               {{
                 CurrencyUtils.formatCurrency(
                   CurrencyUtils.calculatPriceAfterSale(game.price, game.salePercent),
-                  '₫'
+                  '₫',
                 )
               }}
             </p>

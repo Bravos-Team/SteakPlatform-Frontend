@@ -11,9 +11,9 @@
 
     <!-- START ESTIMATED RELEASE DATE -->
     <div class="flex flex-col justify-center">
-      <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
-        >Estimated Release Date</span
-      >
+      <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400">
+        {{ $t('title.pages.game_details.form.estimated_date') }}
+      </span>
       <div class="w-full border-2 border-double rounded-sm">
         <estimated-release-date v-model:emitEstimatedReleaseDate="emitEstimatedReleaseDate" />
       </div>

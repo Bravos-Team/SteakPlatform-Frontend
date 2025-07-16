@@ -1,0 +1,328 @@
+export default {
+  auth: {
+    informations: {
+      username_and_password: 'Tên đăng nhập và mật khẩu',
+    },
+    login: 'Đăng nhập',
+    logout: 'Đăng xuất',
+    register: 'Đăng ký',
+    email: 'Email',
+    password: 'Mật khẩu',
+    confirmPassword: 'Xác nhận mật khẩu',
+    forgotPassword: 'Quên mật khẩu?',
+    resetPassword: 'Đặt lại mật khẩu',
+  },
+  navigation: {
+    home: 'Trang chủ',
+    about: 'Về chúng tôi',
+    contact: 'Liên hệ',
+    products: 'Sản phẩm',
+    cart: 'Giỏ hàng',
+    profile: 'Hồ sơ',
+    help: 'Hỗ trợ',
+    hub: 'Diễn đàn',
+    community: 'Cộng đồng',
+    help_center: 'Trung tâm hỗ trợ',
+    store: 'Cửa hàng',
+    development_workspace: 'Dành cho nhà phát triển',
+    settings: 'Cài đặt',
+  },
+  menu: {
+    base: 'Steak',
+  },
+  component: {
+    search: 'Tìm kiếm...',
+  },
+  title: {
+    routers: {
+      publisher: 'Nhà phát hành',
+      dashboard: 'Bảng điều khiển',
+      game_management: 'Quản lý game',
+      game_management_overview: 'Tổng quan quản lý game',
+      support: 'Trung tâm hỗ trợ',
+      game_details: 'Chi tiết game',
+    },
+    pages: {
+      wishlist: 'Danh sách mong muốn của bạn',
+      cart: 'Giỏ hàng của bạn',
+      payment: 'Thanh toán',
+      order: 'Đơn hàng',
+      order_history: 'Lịch sử đơn hàng',
+      order_details: 'Chi tiết đơn hàng',
+      order_status: 'Trạng thái đơn hàng',
+      order_summary: 'Tóm tắt đơn hàng',
+      game_management: {
+        your_organization: 'Tổ chức của bạn',
+        changes_profile: 'Thay đổi hồ sơ',
+        notifications: 'Thông báo',
+        clear_all: 'Xóa tất cả',
+        noti: {
+          message_logs: 'Lần cập nhật gần nhất của nền tảng: ',
+          actions: 'Xem nhật ký cập nhật',
+          create: 'Tạo game mới',
+        },
+        services: {
+          store: 'Cửa hàng Steak',
+          service: 'Dịch vụ Steak',
+          account: 'Tài khoản Steak',
+          analytics: 'Phân tích',
+        },
+      },
+
+      game_details: {
+        uploading: 'Đang tải lên...',
+        update_image: 'Cập nhật hình ảnh',
+        upload_image: 'Tải lên hình ảnh',
+        form: {
+          text_editor: {
+            char_limited: {
+              char: 'ký tự',
+              words: 'từ',
+            },
+            invert_color: 'Đảo ngược màu',
+            help: {
+              title: 'Trợ giúp',
+            },
+            bold: 'In đậm',
+            toggle_highlight: 'Bật/tắt tô sáng',
+            highlight: 'Tô sáng',
+            color_picker: 'Chọn màu',
+            italic: 'In nghiêng',
+            embed_link_to_text: 'Chèn liên kết vào văn bản',
+            unset_link_to_text: 'Bỏ liên kết văn bản',
+            embed_link_des: 'Dán URL liên kết...',
+            embed: 'Chèn',
+            strike: 'Gạch ngang',
+            subscript: 'Chỉ số dưới',
+            superscript: 'Chỉ số trên',
+            underline: 'Gạch dưới',
+            blockquote: 'Trích dẫn',
+            add_blockquote: 'Thêm đoạn trích',
+            list: 'Danh sách',
+            add_list: 'Thêm danh sách',
+            up_level_block_list: 'Tăng cấp độ danh sách',
+            down_level_block_list: 'Giảm cấp độ danh sách',
+            break_block_list_line: 'Ngắt dòng danh sách',
+            heading: 'Tiêu đề',
+            add_dashed_line: 'Thêm đường gạch ngang',
+            add_image: 'Thêm hình ảnh',
+            embed_image_url: 'Dán URL hình ảnh...',
+            embed_image: 'Chèn hình ảnh',
+            add_table: 'Thêm bảng',
+            add_column: 'Thêm cột',
+            add_before: 'Thêm trước',
+            add_after: 'Thêm sau',
+            delete_column: 'Xóa cột',
+            add_row: 'Thêm hàng',
+            delete_row: 'Xóa hàng',
+            delete_table: 'Xóa bảng',
+            merge_or_split_cells: 'Gộp hoặc tách ô',
+            header_column: 'Bật/tắt cột tiêu đề',
+            header_row: 'Bật/tắt hàng tiêu đề',
+            header_cell: 'Bật/tắt ô tiêu đề',
+            embed_youtube_video: 'Chèn video YouTube',
+            embed_youtube_url: 'Chèn URL YouTube...',
+            add_youtube_video: 'Thêm video YouTube',
+            width: 'Chiều rộng',
+            height: 'Chiều cao',
+          },
+
+          price_preview: 'Xem trước giá',
+          verify_request: 'Gửi yêu cầu xác minh',
+          save_as_draft: 'Lưu dưới dạng bản nháp',
+          reset_form: 'Đặt lại biểu mẫu',
+          cancel: 'Hủy bỏ',
+
+          available_countries: {
+            title: 'Quốc gia khả dụng',
+            placeholder: 'Nhập các quốc gia...',
+          },
+          languages_supported: {
+            title: 'Ngôn ngữ được hỗ trợ',
+            placeholder: 'Nhập các ngôn ngữ...',
+          },
+          platforms: {
+            title: 'Nền tảng',
+            placeholder: 'Nhập các nền tảng...',
+          },
+          system_requirements: {
+            title: 'Yêu cầu hệ thống',
+            minimum: 'Yêu cầu tối thiểu',
+            recommended: 'Yêu cầu đề xuất',
+          },
+          is_required_internet_connection: 'Yêu cầu kết nối Internet',
+          update_at: 'Lần cập nhật cuối',
+          cover_image: {
+            title: 'Hình ảnh bìa',
+            input_suggestion: 'Kéo thả file vào đây hoặc click để chọn',
+          },
+          developer_teams: {
+            title: 'Nhóm phát triển',
+            descriptions: 'Vui lòng nhập tên của các nhóm phát triển của bạn...',
+          },
+          estimated_date: 'Ngày phát hành dự kiến',
+          short_descriptions: {
+            title: 'Mô tả ngắn',
+            placeholder: 'Nhập mô tả ngắn cho game của bạn...',
+          },
+          long_descriptions: {
+            title: 'Mô tả dài',
+            placeholder: 'Nhập mô tả dài cho game của bạn...',
+          },
+          media_and_images: {
+            title: 'Video và Hình ảnh',
+            title_input: 'Nhập video và hình ảnh',
+            choose_file: 'Chọn file, Không có file nào được chọn',
+            non_file_created: 'Chưa có video hoặc hình ảnh nào được tạo',
+            media_uploaded: 'Video và hình ảnh đã được tải lên',
+            clear_all: 'Xóa tất cả',
+            add_media: 'Thêm video hoặc hình ảnh',
+            tooltip: {
+              title: 'Bạn không thể thay đổi video và hình ảnh đã tải lên.',
+            },
+          },
+          consider: {
+            header_title:
+              'Thông tin bạn nhập trên trang này sẽ được nhóm tại Steak Game Store sử dụng để khám phá tiêu đề của bạn và xem xét bạn cho sự trợ giúp bổ sung như một phần của Cộng đồng Steak.',
+            title: 'Xem Xét Kỹ Lưỡng',
+            descriptions:
+              'Xin chỉ chia sẻ thông tin mà bạn cảm thấy sẽ giúp Steak hiểu rõ hơn về trò chơi của bạn. Nếu trò chơi của bạn là bí mật hoặc bạn đang làm việc với bên thứ ba như một nhà phát hành, xin vui lòng đảm bảo rằng bạn có thể chia sẻ thông tin này với Epic. Nếu bạn muốn chi tiết về dự án của bạn được chia sẻ với các đối tác mà chúng tôi hợp tác, bạn có thể cho chúng tôi biết bên dưới. Để mọi thứ dễ dàng hơn, xin vui lòng chia sẻ thông tin của bạn bằng tiếng Anh. Xin lỗi vì bất kỳ phiền phức nào, và cảm ơn vì đã hiểu!',
+          },
+          footer_message:
+            'Cập nhật thông tin trò chơi của bạn để giữ cho người chơi được thông báo.',
+        },
+        actions: {
+          update: 'Cập nhật',
+          informations: 'Thông tin',
+          update_name: 'Cập nhật tên',
+          hide: 'Ẩn',
+          show: 'Hiển thị',
+        },
+        dialog: {
+          title: 'Cập nhật tên game',
+          name: 'Tên game',
+          description: 'Nhập tên mới cho game của bạn',
+          button: 'Cập nhật',
+          buttonLoading: 'Đang cập nhật...',
+          error: {
+            update_name: 'Tên sản phẩm là bắt buộc và phải có ít nhất 6 ký tự',
+          },
+        },
+      },
+    },
+    subPagesCompo: {
+      game_and_apps_summary_price: 'Tổng tiền game và ứng dụng',
+      sidebar: {
+        publisher: {
+          platform: 'Nền tảng',
+          dashboard: {
+            title: 'Bảng điều khiển',
+            items: {
+              overview: 'Tổng quan',
+              sub: {},
+            },
+          },
+          game_management: {
+            title: 'Quản lý game',
+            items: {
+              overview: 'Tổng quan về game',
+              sub: {},
+            },
+          },
+          support: {
+            title: 'Trung tâm hỗ trợ',
+          },
+          logout: {
+            title: 'Đăng xuất',
+          },
+        },
+      },
+    },
+    component: {
+      discover: 'Khám phá',
+      spotlight: 'Game giá rẻ nổi bật',
+      check_out_deals: 'Xem các đơn hàng hời trong tuần',
+      free_games: 'Game miễn phí',
+      free_now: 'Miễn phí ngay bây giờ',
+      top_sellers: 'Top bán chạy',
+      most_played: 'Được chơi nhiều nhất',
+      top_upcoming_wishlisted: 'Phổ biến sắp ra mắt',
+    },
+    store: {
+      wishlist: 'Danh sách mong muốn',
+      cart: 'Giỏ hàng',
+      payment: 'Thanh toán',
+      order: 'Đơn hàng',
+      order_history: 'Lịch sử đơn hàng',
+      order_details: 'Chi tiết đơn hàng',
+      order_status: 'Trạng thái đơn hàng',
+      order_summary: 'Tóm tắt đơn hàng',
+    },
+    link: {
+      see_in_shop: 'Xem trong cửa hàng',
+      view_more: 'Xem thêm',
+    },
+  },
+  noti_note: {
+    cart: {
+      self_refundable: 'Tự hoàn tiền cho đơn hàng này.',
+      learn_about_refunds: 'Tìm hiểu thêm về hoàn tiền',
+      taxes: 'Thuế và phí',
+      total: 'Tổng cộng',
+      total_prices: 'Tổng giá',
+      calculated_at_checkout: 'Tính tại thời điểm thanh toán',
+    },
+  },
+
+  features: {
+    buttons: {
+      add_to_cart: 'Thêm vào giỏ hàng',
+      buy_now: 'Mua ngay',
+      view_details: 'Xem chi tiết',
+      remove_from_wishlist: 'Xóa khỏi danh sách mong muốn',
+      add_to_wishlist: 'Thêm vào danh sách mong muốn',
+      move_to_wishlist: 'Chuyển đến danh sách mong muốn',
+      remove_from_cart: 'Xóa khỏi giỏ hàng',
+    },
+    filters: {
+      title: 'Bộ lọc',
+      sortBy: 'Sắp xếp theo',
+      sortType: 'Loại sắp xếp',
+      type: 'Loại',
+      types: {
+        name: 'Tên',
+        price: 'Giá',
+        free: 'Miễn phí',
+        paid: 'Trả phí',
+        dlc: 'DLC',
+        bundle: 'Gói',
+        software: 'Phần mềm',
+      },
+      sorts: {
+        asc: 'Tăng dần',
+        desc: 'Giảm dần',
+        new: 'Mới',
+        old: 'Cũ',
+      },
+    },
+  },
+  warnings: {
+    game: {
+      type: {
+        horror_moderate_violence: 'Kinh dị, Bạo lực vừa phải',
+      },
+    },
+  },
+  type: {
+    game: {
+      free: 'Miễn phí',
+      base: 'Bản cơ bản',
+    },
+  },
+  collaborations: {
+    fornite: {
+      descriptions:
+        'This biz is about to get redonk! Go on an adventure with Finn the Human, Jake the Dog, Princess Bubblegum, and Marceline.',
+    },
+  },
+}

@@ -1,10 +1,14 @@
 <template>
   <div class="flex flex-col gap-y-1">
-    <div class="font-bold text-lg text-gray-200/80">Media and Images</div>
+    <div class="font-bold text-lg text-gray-200/80">
+      {{ $t('title.pages.game_details.form.media_and_images.title') }}
+    </div>
     <div
       class="border-1 p-3 rounded-sm bg-linear-120 from-blue-200/5 to-emerald-200/5 flex flex-col gap-y-3"
     >
-      <div v-if="!media_files.length && !mediaData">Non media created yet</div>
+      <div v-if="!media_files.length && !mediaData">
+        {{ $t('title.pages.game_details.form.media_and_images.non_file_created') }}
+      </div>
       <div v-else class="grid grid-cols-1 gap-y-2">
         <!-- MEDIA DATA DRAFT -->
         <div
@@ -16,14 +20,16 @@
           <Tooltip>
             <tooltip-trigger>
               <span class="flex gap-x-1 items-center">
-                <span> Media Uploaded</span>
+                <span>
+                  {{ $t('title.pages.game_details.form.media_and_images.media_uploaded') }}</span
+                >
                 <cloud-upload :size="20" class="text-green-400" />
               </span>
               <div
-                class="w-full relative flex border-4 border-double rounded-md overflow-hidden desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
+                class="w-full relative flex rounded-md overflow-hidden desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
               >
                 <div
-                  class="h-full items-center rounded-xs overflow-hidden flex desktop:flex-row justify-center bg-white/10 border-2"
+                  class="h-full items-center border-4 border-double rounded-xs overflow-hidden flex desktop:flex-row justify-center bg-white/10"
                 >
                   <!-- VIDEO AND IMAGE -->
                   <img
@@ -51,7 +57,7 @@
                   </div>
 
                   <div
-                    class="absolute -top-2 -right-2 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
+                    class="absolute top-1 right-1 z-10 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
                     @click="handleDeleteMediaUploaded(index)"
                   >
                     <X class="size-3" />
@@ -59,7 +65,9 @@
                 </div>
               </div>
             </tooltip-trigger>
-            <tooltip-content :color="1"> You cannot change uploaded media.. </tooltip-content>
+            <tooltip-content :color="1">
+              {{ $t('title.pages.game_details.form.media_and_images.tooltip.title') }}
+            </tooltip-content>
           </Tooltip>
         </div>
         <!-- END MEDIA DATA DRAFT -->
@@ -67,7 +75,10 @@
         <!-- MEDIA INPUTS -->
         <div class="flex flex-col gap-y-1" v-for="(media, index) in media_files" :key="index">
           <span class="flex gap-x-1 items-center">
-            <span> Media Input {{ index + 1 }}</span>
+            <span>
+              {{ $t('title.pages.game_details.form.media_and_images.title_input') }}
+              {{ index + 1 }}</span
+            >
             <cloud-upload :size="20" />
           </span>
           <div
@@ -116,14 +127,14 @@
           class="border-2 border-gray-300/20 px-2 rounded-sm py-1 bg-white/10 flex gap-x-1 cursor-pointer hover:bg-white/20 transition-colors duration-300"
           @click="handleClearAll"
         >
-          Clear All
+          {{ $t('title.pages.game_details.form.media_and_images.clear_all') }}
           <shredder :size="20" />
         </button>
         <button
           class="border-2 border-gray-300/20 px-2 rounded-sm py-1 bg-white/10 flex gap-x-1 cursor-pointer hover:bg-white/20 transition-colors duration-300"
           @click="handleCreateMediaInput"
         >
-          Add media
+          {{ $t('title.pages.game_details.form.media_and_images.add_media') }}
           <DiamondPlus :size="20" />
         </button>
       </div>

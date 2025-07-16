@@ -1,9 +1,7 @@
 <template>
-  <dikv
-    class="sticky z-10 top-0 bottom-0 tablet:p-5 laptop:px-[3rem] desktop:px-[5rem] desktop-xl:px-[189.1px] tablet:px-0 h-[100px] w-full"
-  >
-    <ediv
-      class="flex flex-row bg-[#101014] px-4 tablet:px-10 items-center justify-between w-full h-full"
+  <dikv class="sticky z-10 top-0 h-full w-full">
+    <div
+      class="flex flex-row bg-[#101014] px-[2rem] tablet:px-[5rem] laptop:px-[6rem] desktop:px-[15rem] items-center justify-between w-full h-full"
     >
       <!-- SEARCH BAR -->
       <div class="flex justify-center items-center">
@@ -18,7 +16,7 @@
           />
           <input
             type="text"
-            placeholder="Search store"
+            :placeholder="$t('component.search')"
             class="bg-transparent placeholder:text-[#fff]/70 text-white w-full h-full focus:outline-none"
           />
         </div>
@@ -33,8 +31,8 @@
           :class="{ '!text-white !font-bold': isActiveWishlistRouter }"
           class="relative hover:text-[#fff] transition-all duration-200 group flex gap-x-1 flex-row-reverse hover:bg-white/10 px-2 py-1 rounded-lg"
         >
-          Wishlist</router-link
-        >
+          {{ $t('title.store.wishlist') }}
+        </router-link>
         <router-link
           :to="{ name: 'CartManagementPage' }"
           :class="{ '!text-white !font-bold  ': isActiveCartRouter }"
@@ -45,10 +43,10 @@
           >
             10
           </div>
-          <ShoppingBag class="fill-white/30" /> Cart</router-link
+          <ShoppingBag class="fill-white/30" /> {{ $t('title.store.cart') }}</router-link
         >
       </div>
-    </ediv>
+    </div>
   </dikv>
 </template>
 
