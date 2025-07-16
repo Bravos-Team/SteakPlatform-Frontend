@@ -12,3 +12,7 @@ export const loginUserName = (data: PublisherLoginRequest) => {
 export const loginEmail = (data: PublisherLoginRequest) => {
   return SteakApi.post('/api/v1/dev/auth/email-login', data)
 }
+
+export const logout = () => {
+  return SteakApi.get('/api/v1/dev/auth/logout')
+}

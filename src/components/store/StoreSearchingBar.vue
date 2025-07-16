@@ -1,5 +1,5 @@
 <template>
-  <dikv class="sticky z-10 top-0 h-full w-full">
+  <div class="sticky z-10 top-0 h-full w-full">
     <div
       class="flex flex-row bg-[#101014] px-[2rem] tablet:px-[5rem] laptop:px-[6rem] desktop:px-[15rem] items-center justify-between w-full h-full"
     >
@@ -47,7 +47,7 @@
         >
       </div>
     </div>
-  </dikv>
+  </div>
 </template>
 
 <script setup>

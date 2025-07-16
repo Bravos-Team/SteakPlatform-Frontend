@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
+import middlewarePipeLine from '@/router/middlewares/middlewarePipeLine'
 import authRoutes from '@/router/routes/store/AuthRoutes'
 import homeRoutes from '@/router/routes/store/HomeRoutes'
 import storeRoutes from '@/router/routes/store/StoreRoutes'
@@ -7,6 +9,8 @@ import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
 import adminRoutes from '@/router/routes/admin/AdminRoutes'
 import supportCenterRoutes from '@/router/routes/help/SupportCenterRoutes'
 import testRoute from '@/router/routes/test/TestRoute'
+import { getCookie } from '@/utils/cookies/cookie-utils'
+import { MiddlewareContext } from '@/types/router/middleware'
 
 const routes: RouteRecordRaw[] = [
   testRoute,
@@ -34,10 +38,27 @@ const router = createRouter({
   },
 })
 
-router.beforeEach((to: any, from, next) => {
-  console.log('Global beforeEach:', to, from)
-  console.log('Global beforeEach: next', next)
-  return next()
-})
+router.beforeEach(
+  async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+    console.log('TO: ', to)
+    console.log('FROM: ', from)
+    console.log('NEXT:', next)
+    if (!to.meta?.middleware) {
+      return next()
+    }
+
+    const checkAccess = {
+      publisher: getCookie('publisherAccessRights'),
+      user: getCookie('userAccessRights'),
+    }
+
+    const middleware: any[] = to.meta.middleware
+    const context: MiddlewareContext = { to, from, next, checkAccess }
+    return middleware[0]({
+      ...context,
+      next: middlewarePipeLine(context, middleware, 1),
+    })
+  },
+)
 
 export default router

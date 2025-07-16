@@ -25,10 +25,19 @@ export const getCookie = (key: string) => {
 }
 
 export const removeCookie = (key: string) => {
+  cookies.set(encode(key), '', {
+    expires: new Date(0),
+  })
   cookies.remove(encode(key), { path: '/' })
 }
 
+export const removeCookies = (keys: string[]) => {
+  keys.forEach((key) => {
+    removeCookie(key)
+  })
+}
+
 export const invalidateCookie = (key: string, data: any, options?: any) => {
-  if (data) return
+  if (!data) return
   setCookie(key, '', options)
 }

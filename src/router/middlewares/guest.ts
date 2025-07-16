@@ -1,5 +1,11 @@
-const guest = ({ next, authStore }: { next: any; authStore: any }) => {
-  if (authStore.isLogin) {
+const guest = ({
+  next,
+  checkAccess,
+}: {
+  next: any
+  checkAccess: { user: string; publisher: string }
+}) => {
+  if (!checkAccess.user) {
     return next({
       name: 'Home',
     })

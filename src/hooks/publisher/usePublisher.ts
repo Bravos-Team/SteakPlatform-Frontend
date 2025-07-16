@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { setCookie } from '@/utils/cookies/cookie-utils'
-import { loginEmail, loginUserName, register } from '@/apis/publisher/auth/authPublisher'
+import { loginEmail, loginUserName, logout, register } from '@/apis/publisher/auth/authPublisher'
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
 import { PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS } from '@/hooks/constants/publisher/project/publisherPersonalProjectConstant'
+import { useQuery } from '@tanstack/vue-query'
 
 export const usePublisherRegister = () => {
   const { isPending, mutateAsync, reset } = useMutation({
@@ -56,4 +57,15 @@ export const usePublisherLoginEmail = () => {
     isPending,
     mutateAsync,
   }
+}
+
+export const usePublisherLogout = () => {
+  const queryClient = useQueryClient()
+  return useQuery({
+    queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LOGOUT(),
+    queryFn: async () => {
+      queryClient.clear()
+      return await logout()
+    },
+  })
 }

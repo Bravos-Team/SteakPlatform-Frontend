@@ -111,7 +111,11 @@
           <sidebar-menu-item>
             <collapsible-trigger as-child>
               <router-link @click="handleRedirect" :to="{ name: value?.name }">
-                <sidebar-menu-button class="cursor-pointer" :tooltip="value?.title">
+                <sidebar-menu-button
+                  @click="refetch()"
+                  class="cursor-pointer"
+                  :tooltip="value?.title"
+                >
                   <component :is="value?.icon" />
                   <span>
                     {{ getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value?.i18n) }}
@@ -144,7 +148,9 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import getTranslatedTitle from '@/utils/i18n/useI18nUtils'
-
+import { usePublisherLogout } from '@/hooks/publisher/usePublisher'
+import { removeCookie, removeCookies } from '@/utils/cookies/cookie-utils'
+const { refetch } = usePublisherLogout()
 const useSideBarTool = useSidebar()
 const props = defineProps<{
   items: [
@@ -170,6 +176,12 @@ const props = defineProps<{
   ]
 }>()
 
+const handleLogout = () => {
+  removeCookies(['userAccessRights', 'publisherAccessRights'])
+  removeCookie('userAccessRights')
+  removeCookie('publisherAccessRights')
+  refetch()
+}
 const handleRedirect = async () => {
   if (useSideBarTool.isMobile.value) {
     useSideBarTool.setOpenMobile(false)
