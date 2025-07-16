@@ -65,9 +65,9 @@
       </div>
       <button
         @click="scrollToTheTop"
-        class="cursor-pointer py-[12px] w-[143px] justify-center h-[48px] px-[20px] leading-[21px] tracking-[0.28px] flex text-white bg-[#ffffff59]/50 hover:bg-[#ffffff59] gap-[8px] text-[15px] rounded-[8px] items-center"
+        class="cursor-pointer py-[12px] text-nowrap w-[143px] justify-center h-[48px] px-[20px] leading-[21px] tracking-[0.28px] flex text-white bg-[#ffffff59]/50 hover:bg-[#ffffff59] gap-[8px] text-[15px] rounded-[8px] items-center"
       >
-        Back to Top
+        {{ $t('footer.back_to_top') }}
       </button>
     </section>
   </div>

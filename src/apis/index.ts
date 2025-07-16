@@ -16,10 +16,7 @@ SteakApi.interceptors.response.use(
   async (error) => {
     const path = router.currentRoute.value.fullPath
     if (error.response?.status === 401 && path != '/login' && path != '/publisher/login') {
-      new Promise((resolve) => {
-        removeCookies(['userAccessRights', 'publisherAccessRights'])
-        resolve(true)
-      })
+      removeCookies(['userAccessRights', 'publisherAccessRights'])
       if (path.startsWith('/publisher') || path.startsWith('/game')) {
         if (router.currentRoute.value.name === 'PublisherAuthLogin') {
           return

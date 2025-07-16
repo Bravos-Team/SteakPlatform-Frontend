@@ -6,6 +6,7 @@ import PublisherSidebar from '@/components/publisher/common/sidebar/PublisherSid
 import { getCookie, setCookie } from '@/utils/cookies/cookie-utils'
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu'
 import PublisherContextMenu from '@/components/publisher/contextMenuBar/PublisherContextMenu.vue'
+import LanguagesOption from '@/components/common/LanguagesOption.vue'
 const defaultOpen = getCookie('sidebar_state') === 'true'
 const toggleNav = () => {
   setCookie('sidebar_state', (!defaultOpen).toString().trim())
@@ -35,10 +36,13 @@ const toggleNav = () => {
             class="z-0"
           />
           <header
-            class="backdrop-blur-3xl w-full bg-[#101014]/10 border-b-1 border-b-gray-100/10 z-10 lg:border-b-0 flex h-16 px-2 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
+            class="backdrop-blur-3xl justify-between w-full bg-[#101014]/10 border-b-1 border-b-gray-100/10 z-10 lg:border-b-0 flex h-16 px-2 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
           >
-            <sidebar-trigger @click="toggleNav" class="flex items-center gap-2 p-1" />
-            <base-breadcrumb />
+            <div class="flex items-center justify-center">
+              <sidebar-trigger @click="toggleNav" class="flex items-center gap-2 p-1" />
+              <base-breadcrumb />
+            </div>
+            <LanguagesOption />
           </header>
           <router-view />
 
