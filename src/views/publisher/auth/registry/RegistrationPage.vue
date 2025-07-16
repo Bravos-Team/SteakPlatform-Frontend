@@ -1,10 +1,15 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
-    <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
-    <particles-base class="absolute opacity-80" />
-    <div class="bg-black absolute inset-0 opacity-35"></div>
-  </div>
+    <div class="relative">
+      <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
+      <particles-base class="absolute opacity-80" />
+      <div class="bg-black absolute inset-0 opacity-35"></div>
 
+      <div class="absolute top-10 right-10 z-10">
+        <LanguagesOption />
+      </div>
+    </div>
+  </div>
   <div class="flex justify-center items-center py-25 px-5">
     <!-- FORM BOXED -->
     <div
@@ -13,7 +18,9 @@
       <!-- LOGO AND FORM TITLE -->
       <div class="flex flex-col justify-center items-center gap-y-2 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
-        <span class="font-bold text-xl lg:text-3xl">Create An Company Account</span>
+        <span class="font-bold text-xl lg:text-3xl">{{
+          $t('auth.create_an_company_account')
+        }}</span>
       </div>
       <!-- END LOGO END FORM TITLE -->
 
@@ -30,16 +37,18 @@
             <div
               class="flex flex-col lg:border-none gap-y-[5px] border-b-1 border-b-gray-500 border-t-1 border-t-gray-500 py-3 lg:gap-y-[20px] w-full"
             >
-              <span class="font-bold text-center text-white">Master account</span>
+              <span class="font-bold text-center text-white">
+                {{ $t('auth.master_account') }}
+              </span>
               <div class="flex text-white gap-2 flex-col w-full">
-                <span class="font-black">Email</span>
+                <span class="font-black"> {{ $t('auth.email') }}</span>
                 <input
                   v-model="publisher.masterEmail"
                   type="text"
                   name="email"
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  placeholder="Enter your email"
+                  :placeholder="$t('auth.email_placeholder')"
                 />
                 <label v-if="publisherErrors.masterEmail" for="email" class="text-red-500">
                   {{ publisherErrors.masterEmail }}
@@ -47,14 +56,14 @@
               </div>
 
               <div class="flex text-white gap-2 flex-col w-full">
-                <span class="font-black">Username</span>
+                <span class="font-black"> {{ $t('auth.username') }}</span>
                 <input
                   type="text"
                   v-model="publisher.masterUsername"
                   autocomplete="off"
                   name="masterUsername"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  placeholder="Enter your Username"
+                  :placeholder="$t('auth.username_placeholder')"
                 />
 
                 <label
@@ -67,7 +76,7 @@
               </div>
 
               <div class="flex text-white gap-2 flex-col w-full">
-                <span class="font-black">Password</span>
+                <span class="font-black"> {{ $t('auth.password') }}</span>
                 <div class="relative">
                   <input
                     :type="isPassword ? 'Password' : 'text'"
@@ -75,7 +84,7 @@
                     v-model="publisher.masterPassword"
                     autocomplete="off"
                     class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                    placeholder="Enter your Password"
+                    :placeholder="$t('auth.informations.password_placeholder')"
                   />
                   <eye
                     @click="togglePasswordVisibility"
@@ -98,14 +107,14 @@
               </div>
 
               <div class="flex text-white gap-2 flex-col w-full">
-                <span class="font-black">Confirm Password</span>
+                <span class="font-black"> {{ $t('auth.confirm_password') }}</span>
                 <input
                   type="password"
                   v-model="publisher.verifyMasterPassword"
                   name="verifyMasterPassword"
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  placeholder="Enter Password Again"
+                  :placeholder="$t('auth.confirm_password_placeholder')"
                 />
 
                 <label
@@ -123,16 +132,18 @@
             <div
               class="flex flex-col gap-y-[5px] lg:gap-y-[20px] w-full border-b-1 border-b-gray-500 py-3 lg:border-none"
             >
-              <span class="font-bold text-center text-white">Company Informations</span>
+              <span class="font-bold text-center text-white">
+                {{ $t('auth.company_informations') }}
+              </span>
               <div class="flex text-white gap-2 flex-col w-full">
-                <span class="font-black">Company Email</span>
+                <span class="font-black"> {{ $t('auth.company_email') }}</span>
                 <input
                   type="text"
                   v-model="publisher.businessEmail"
                   name="businessEmail"
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  placeholder="Enter Company Informations"
+                  :placeholder="$t('auth.company_email_placeholder')"
                 />
 
                 <label
@@ -145,14 +156,14 @@
               </div>
 
               <div class="flex text-white gap-2 flex-col w-full">
-                <span class="font-black">Company Name</span>
+                <span class="font-black"> {{ $t('auth.company_name') }}</span>
                 <input
                   type="text"
                   name="name"
                   v-model="publisher.name"
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  placeholder="Enter Company Name"
+                  :placeholder="$t('auth.company_name_placeholder')"
                 />
 
                 <label
@@ -166,7 +177,7 @@
               </div>
 
               <div class="flex text-white gap-2 flex-col w-full">
-                <span class="font-black">Company Phone Number</span>
+                <span class="font-black"> {{ $t('auth.company_phone') }}</span>
                 <input
                   type="text"
                   name="name"
@@ -178,7 +189,7 @@
                   "
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  placeholder="Enter Company Phone Number"
+                  :placeholder="$t('auth.company_phone_placeholder')"
                 />
 
                 <label
@@ -199,7 +210,9 @@
             <button
               class="rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] flex items-center bg-[#ffffff26] transition-all"
             >
-              <span v-if="!isPendingPublisherRegister" class="capitalize"> create account </span>
+              <span v-if="!isPendingPublisherRegister" class="capitalize">
+                {{ $t('auth.create_account') }}</span
+              >
               <loader-circle v-if="isPendingPublisherRegister" class="animate-spin ml-2" />
             </button>
 
@@ -219,13 +232,15 @@
         <router-link
           :to="{ name: 'PublisherAuthLogin' }"
           class="text-blue-400/80 hover:text-blue-400 transition-all duration-400"
-          >Already have an account?</router-link
+        >
+          {{ $t('auth.already_have_an_account') }}?</router-link
         >
 
         <router-link
           :to="{ name: 'Home' }"
           class="text-blue-400/80 hover:text-blue-400 transition-all duration-400"
-          >Continue exploring Steak</router-link
+        >
+          {{ $t('auth.continue_exploring_steak') }}</router-link
         >
       </div>
       <!-- END BUTTON AND DIRECTLY LINKS -->
@@ -244,6 +259,7 @@ import { extractErrors } from '@/utils/zod/HanldeZodErrors'
 import { PublisherRegisterRequestSchema } from '@/types/publisher/AuthType'
 import { isPassword, togglePasswordVisibility } from '@/utils/auth/auth-utils'
 import { useRouter } from 'vue-router'
+import LanguagesOption from '@/components/common/LanguagesOption.vue'
 const { mutateAsync: mutateAsyncPublisherRegister, isPending: isPendingPublisherRegister } =
   usePublisherRegister()
 const publisher = ref({

@@ -130,19 +130,7 @@
           <!-- Optional -->
           <div class="h-full w-full lg:w-auto flex justify-between items-center text-sm">
             <span class="block lg:hidden font-bold text-[18px]">{{ $t('navigation.home') }}</span>
-            <div
-              class="settingOption w-full hidden lg:flex justify-center items-center group duration-300 transition-all hover:bg-gray-800/80 h-full px-3"
-            >
-              <img
-                src="https://ccdn.steak.io.vn/setting-white.svg"
-                alt=""
-                class="w-5 lg:w-5 lg:h-5 lg:mt-1 lg:group-hover:rotate-45 transition-transform"
-              />
-              <button class="me-2 flex justify-center items-center px-2 text-nowrap">
-                {{ $t('navigation.settings') }}
-              </button>
-            </div>
-
+            <languages-option />
             <drawer-trigger as-child>
               <div class="block lg:hidden cursor-pointer">
                 <img
@@ -211,4 +199,5 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from '@/components/ui/drawer'
+import LanguagesOption from '@/components/common/LanguagesOption.vue'
 </script>
