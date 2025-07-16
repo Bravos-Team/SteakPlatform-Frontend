@@ -7,28 +7,24 @@
     <!-- game by category -->
     <category-base-bar
       :game-by-category-list="gameByCategoryList"
-      :title-category="'discover something new'"
+      :title-category="$t('title.component.discover')"
     ></category-base-bar>
     <!-- END GAME BY CATEGORY-->
 
     <!-- COLLABORATORS BAR -->
-    <collaborators-bar
-      :game-collaborators-list="gameCollaboratorsList"
-      class=""
-    ></collaborators-bar>
+    <collaborators-bar :game-collaborators-list="gameCollaboratorsList"></collaborators-bar>
     <!-- END COLLABORATORS BAR -->
 
     <!-- GAME BY SAVINGS BAR -->
     <category-base-bar
       class=""
       :game-by-category-list="gameBySavingsSpotlightList"
-      :title-category="'epic savings spotlight'"
+      :title-category="$t('title.component.spotlight')"
     ></category-base-bar>
     <!-- END GAME BY SAVINGS BAR -->
 
     <!-- DEALS BAR -->
     <collaborators-bar
-      class=""
       :gapCollacborationCardY="'15px'"
       :game-collaborators-list="gameDealsNotableList"
     ></collaborators-bar>
@@ -42,10 +38,16 @@
 
     <!-- LIST GAME HORIZONTAL BAR -->
     <div class="flex flex-col gap-y-5 laptop:flex-row w-full h-full">
-      <game-card-horizontal title="top sellers" :data="topSellersList"></game-card-horizontal>
-      <game-card-horizontal title="most played" :data="topSellersList"></game-card-horizontal>
       <game-card-horizontal
-        title="top upcoming wishlisted"
+        :title="$t('title.component.top_sellers')"
+        :data="topSellersList"
+      ></game-card-horizontal>
+      <game-card-horizontal
+        :title="$t('title.component.most_played')"
+        :data="topSellersList"
+      ></game-card-horizontal>
+      <game-card-horizontal
+        :title="$t('title.component.top_upcoming_wishlisted')"
         :data="topSellersList"
       ></game-card-horizontal>
     </div>

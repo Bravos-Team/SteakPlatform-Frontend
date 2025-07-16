@@ -45,7 +45,13 @@
         class="cursor-not-allowed flex gap-x-2 items-center rounded-sm bg-black/10 backdrop-blur-[8px] hover:bg-black/30 transition-colors duration-300 px-5 py-2"
       >
         <Download class="w-5 h-5" />
-        <span class="font-medium text-md">Upload image</span>
+        <span class="font-medium text-md">
+          {{
+            gameDetails.thumbnail
+              ? $t('title.pages.game_details.uploading')
+              : $t('title.pages.game_details.uploading')
+          }}
+        </span>
 
         <input class="hidden" />
       </label>
@@ -55,7 +61,13 @@
         class="flex gap-x-2 items-center cursor-pointer rounded-sm bg-black/10 backdrop-blur-[8px] hover:bg-black/30 transition-colors duration-300 px-5 py-2"
       >
         <Download class="w-5 h-5" />
-        <span class="font-medium text-md">Upload image</span>
+        <span class="font-medium text-md">
+          {{
+            gameDetails.thumbnail
+              ? $t('title.pages.game_details.update_image')
+              : $t('title.pages.game_details.upload_image')
+          }}
+        </span>
 
         <input
           id="file-upload"

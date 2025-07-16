@@ -1,5 +1,4 @@
 import { type RouteRecordRaw } from 'vue-router'
-
 import publisher from '@/router/middlewares/publisher'
 
 export const publisherRoutes: RouteRecordRaw[] = [
@@ -15,6 +14,7 @@ export const publisherRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/publisher/home/dashboard/PublisherDashboard.vue'),
         meta: {
           baseName: 'Dashboard',
+          i18n: 'dashboard',
         },
       },
       {
@@ -23,6 +23,7 @@ export const publisherRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/publisher/home/game/PublisherGameManagement.vue'),
         meta: {
           baseName: 'Game Manage',
+          i18n: 'game_management',
         },
         redirect: { name: 'PublisherGameManagementOverview' },
         children: [
@@ -32,12 +33,17 @@ export const publisherRoutes: RouteRecordRaw[] = [
             component: () => import('@/views/publisher/home/game/features/GameOverviewManage.vue'),
             meta: {
               baseName: 'Game Overview',
+              i18n: 'game_management_overview',
             },
           },
           {
             path: 'game-edited/:id',
             name: 'PublisherEditGame',
             component: () => import('@/views/publisher/home/game/gameDetails/EditGameDetails.vue'),
+            meta: {
+              baseName: 'Edit Game',
+              i18n: 'game_details',
+            },
           },
           {
             path: 'pending',
@@ -52,6 +58,7 @@ export const publisherRoutes: RouteRecordRaw[] = [
     ],
     meta: {
       baseName: 'Publisher',
+      i18n: 'publisher',
       middleware: [publisher],
     },
   },

@@ -68,9 +68,9 @@
           </button>
         </div>
 
-        <div class="flex flex-col tabler:flex-row gap-x-3 px-10">
-          <span class="font-bold">Popular Searches:</span>
-          <div class="w-full flex flex-col text-pretty gap-x-2">
+        <div class="flex flex-col tablet:flex-row gap-x-3 px-10">
+          <span class="font-bold text-nowrap">Popular Searches:</span>
+          <div class="w-full flex flex-col tablet:flex-row text-pretty gap-x-2">
             <a :href="link" class="underline text-white/70 font-medium">How to play?</a>
             <a :href="link" class="underline text-white/70 font-medium">Can I upload my game?</a>
             <a :href="link" class="underline text-white/70 font-medium"

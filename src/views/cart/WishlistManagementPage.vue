@@ -1,23 +1,27 @@
 <template>
   <tooltip-provider>
     <div class="flex flex-col mb-3 justify-center h-full gap-y-6">
-      <span class="text-5xl font-extrabold">Your Wishlist</span>
+      <span class="text-5xl font-extrabold">{{ $t('title.pages.wishlist') }}</span>
       <div
         class="flex relative px-3 gap-y-5 flex-col-reverse desktop:flex-row gap-x-2 justify-between"
       >
         <div class="flex w-full gap-y-3 flex-col">
           <div class="flex gap-x-1 items-center">
-            <div class="text-white/50">Sort by:</div>
+            <div class="text-white/50">{{ $t('features.filters.sortBy') }}:</div>
             <Select>
               <select-trigger>
-                <select-value placeholder="type" class="max-h-8 px-5" />
+                <select-value :placeholder="$t('features.filters.type')" class="max-h-8 px-5" />
               </select-trigger>
               <select-content>
                 <select-group>
-                  <select-label class="text-white/30">Sort Type</select-label>
-                  <select-item v-for="(type, index) in filterTypes" :value="type" :key="index">{{
-                    type
-                  }}</select-item>
+                  <select-label class="text-white/30">{{
+                    $t('features.filters.sortType')
+                  }}</select-label>
+                  <select-item value="asc">{{ $t('features.filters.sorts.asc') }}</select-item>
+
+                  <select-item value="desc">{{ $t('features.filters.sorts.desc') }}</select-item>
+                  <select-item value="new">{{ $t('features.filters.sorts.new') }}</select-item>
+                  <select-item value="old">{{ $t('features.filters.sorts.old') }}</select-item>
                 </select-group>
               </select-content>
             </Select>
@@ -51,7 +55,9 @@
             <div class="flex w-full flex-col gap-y-2">
               <!-- NAME AND HEADER BADGE -->
               <div class="flex justify-between w-full">
-                <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">Base Game</span>
+                <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">{{
+                  $t('type.game.base')
+                }}</span>
                 <span class="font-bold">{{
                   Number(game.price).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
                 }}</span>
@@ -71,9 +77,9 @@
                   />
                   <div class="flex flex-col gap-y-3 w-full">
                     <span class="text-sm font-bold">12+</span>
-                    <span class="text-xs font-light border-t-1 border-white/20 py-2 text-white/50"
-                      >Horror, Moderate Violence</span
-                    >
+                    <span class="text-xs font-light border-t-1 border-white/20 py-2 text-white/50">
+                      {{ $t('warnings.game.type.horror_moderate_violence') }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -81,7 +87,7 @@
 
               <!-- SELF-REFUNDABLE -->
               <div class="flex gap-x-2">
-                <span>Self-Refundable</span>
+                <span>{{ $t('noti_note.cart.self_refundable') }}</span>
                 <div class="rounded-full">
                   <tooltip>
                     <tooltip-trigger>
@@ -89,7 +95,9 @@
                         <Info class="size-5 text-white/70" />
                       </router-link>
                     </tooltip-trigger>
-                    <tooltip-content :color="1"> Learn more about refund </tooltip-content>
+                    <tooltip-content :color="1">
+                      <span>{{ $t('noti_note.cart.learn_about_refunds') }}</span>
+                    </tooltip-content>
                   </tooltip>
                 </div>
               </div>
@@ -98,12 +106,12 @@
               <!-- ACTION BUTTONS -->
               <div class="flex text-white/50 w-full items-center gap-x-3 justify-end">
                 <button class="hover:text-white/80 cursor-pointer transition-colors duration-300">
-                  Remove
+                  {{ $t('features.buttons.remove_from_wishlist') }}
                 </button>
                 <button
                   class="text-black px-3 py-1.5 rounded-sm text-sm font-medium cursor-pointer transition-colors duration-300 bg-blue-400 hover:bg-blue-400/90"
                 >
-                  Add to Cart
+                  {{ $t('features.buttons.add_to_cart') }}
                 </button>
               </div>
               <!-- END ACTION BUTTONS -->
@@ -112,18 +120,29 @@
           </div>
         </div>
         <div
-          class="tablet:min-h-[326px] laptop:relative top-25 sticky bg-[#101014] w-full px-3 gap-y-5 h-[10rem] laptop:min-w-[10rem] flex flex-col"
+          class="tablet:min-h-[326px] desktop:max-w-[20rem] laptop:relative top-25 sticky bg-[#101014] w-full px-3 gap-y-5 h-[10rem] flex flex-col"
         >
-          <div class="font-bold">Filters</div>
+          <div class="font-bold">{{ $t('features.filters.title') }}</div>
           <div class="border-y-1 border-white/40">
             <div class="flex w-full flex-col justify-between py-2">
-              <div
-                class="flex justify-between gap-x-1 w-full"
-                v-for="(filter, index) in filterTypes"
-                :key="index"
-              >
+              <div class="flex justify-between gap-x-1 w-full">
                 <checkbox />
-                <span> {{ filter }}</span>
+                <span> {{ $t('features.filters.types.name') }}</span>
+              </div>
+
+              <div class="flex justify-between gap-x-1 w-full">
+                <checkbox />
+                <span> {{ $t('features.filters.types.price') }}</span>
+              </div>
+
+              <div class="flex justify-between gap-x-1 w-full">
+                <checkbox />
+                <span>{{ $t('features.filters.types.free') }}</span>
+              </div>
+
+              <div class="flex justify-between gap-x-1 w-full">
+                <checkbox />
+                <span>{{ $t('features.filters.types.dlc') }}</span>
               </div>
             </div>
           </div>
@@ -213,6 +232,4 @@ const mockProducts = ref<{ id: number; title: string; thumbnail: string; price: 
     price: 123000,
   },
 ])
-
-const filterTypes = ref(['Price', 'Name', 'Release Date'])
 </script>

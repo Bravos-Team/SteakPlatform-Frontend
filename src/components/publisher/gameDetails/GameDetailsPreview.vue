@@ -148,8 +148,8 @@
           <!-- START LONG DESCRIPTION -->
 
           <div v-if="gameDetails?.longDescription" class="flex flex-col gap-y-3 w-full">
-            <span class="bg-white/10 px-2 rounded-xs text-white/30 font-bold"
-              >LONG DESCRIPTION</span
+            <span class="bg-white/10 px-2 rounded-xs text-white/30 font-bold">
+              {{ $t('title.pages.game_details.form.long_descriptions.title') }}</span
             >
             <span
               class="text-sm text-white/80 text-pretty"
@@ -158,9 +158,9 @@
             </span>
           </div>
           <div v-else class="flex flex-col gap-y-3 w-full">
-            <span class="bg-white/10 px-2 rounded-xs text-white/30 font-bold"
-              >LONG DESCRIPTION</span
-            >
+            <span class="bg-white/10 px-2 rounded-xs text-white/30 font-bold">
+              {{ $t('title.pages.game_details.form.long_descriptions.title') }}
+            </span>
             <div class="h-4 w-full bg-white/10 rounded-xs" v-for="i in 12" />
           </div>
           <!-- END LONG DESCRIPTION -->
@@ -216,17 +216,18 @@
           <button
             class="py-[12px] text-white/30 px-[20px] align-middle bg-[#26bbff]/30 rounded-[10px] flex justify-center items-center"
           >
-            Buy Now
+            <!-- {{ $t('title.pages.game_details.form.long_descriptions') }} -->
+            {{ $t('features.buttons.buy_now') }}
           </button>
           <button
             class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center"
           >
-            Add To Cart
+            {{ $t('features.buttons.add_to_cart') }}
           </button>
           <button
             class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center"
           >
-            Add To Wishlist
+            {{ $t('features.buttons.add_to_wishlist') }}
           </button>
         </div>
 

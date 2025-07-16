@@ -19,6 +19,7 @@ const props = withDefaults(
   defineProps<TooltipContentProps & { class?: HTMLAttributes['class']; color?: number }>(),
   {
     sideOffset: 4,
+    color: 1,
   },
 )
 

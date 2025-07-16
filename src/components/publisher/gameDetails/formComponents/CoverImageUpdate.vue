@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col gap-y-2 w-full">
-    <span class="text-lg font-bold text-gray-400">Cover Image</span>
+    <span class="text-lg font-bold text-gray-400">
+      {{ $t('title.pages.game_details.form.cover_image.title') }}
+    </span>
     <!-- DEFAULT IMAGE -->
     <div
       :class="{ hidden: unShowImageUploaded }"
@@ -37,9 +39,9 @@
       :class="{ 'border-sky-500 bg-sky-50 text-sky-700': isDragging, hidden: !unShowImageUploaded }"
     >
       <Upload class="group-hover:text-white transition-all duration-250 group-hover:scale-110" />
-      <span class="group-hover:text-gray-400 transition-colors duration-250"
-        >Kéo thả file vào đây hoặc click để chọn</span
-      >
+      <span class="group-hover:text-gray-400 transition-colors duration-250">
+        {{ $t('title.pages.game_details.form.cover_image.input_suggestion') }}
+      </span>
       <input
         type="file"
         class="hidden"

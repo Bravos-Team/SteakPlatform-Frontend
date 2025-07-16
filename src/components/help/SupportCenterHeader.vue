@@ -3,7 +3,7 @@
     <div class="flex w-full h-full items-center justify-between">
       <router-link to="#" class="flex items-center gap-2">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" />
-        <span class="font-black text-xl capitalize">Steak help center</span>
+        <span class="font-black text-xl capitalize">Steak {{ $t('navigation.help') }}</span>
       </router-link>
 
       <div class="flex gap-x-6">
@@ -15,18 +15,18 @@
         </div>
 
         <div class="relative group">
-          <router-link :to="{ name: 'PublisherHome' }" class="font-medium text-lg"
-            >Developers</router-link
-          >
+          <router-link :to="{ name: 'PublisherHome' }" class="font-medium text-lg">{{
+            $t('navigation.development_workspace')
+          }}</router-link>
           <div
             class="w-full group-hover:h-1 h-0 bg-white absolute bottom-0 left-0 transition-all duration-100"
           ></div>
         </div>
 
         <div class="relative group">
-          <router-link :to="{ name: 'PublisherHome' }" class="font-medium text-lg ease-in-out"
-            >Community</router-link
-          >
+          <router-link :to="{ name: 'PublisherHome' }" class="font-medium text-lg ease-in-out">{{
+            $t('navigation.community')
+          }}</router-link>
           <div
             class="w-full group-hover:h-1 h-0 bg-white absolute bottom-0 left-0 ease-in-out transition-all duration-100"
           ></div>

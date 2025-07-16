@@ -46,14 +46,18 @@
       >
         <!-- START AVAILABLE COUNTRIES PICKER -->
         <div class="flex flex-col desktop:col-span-1 justify-center w-full">
-          <span class="flex items-center text-sm">Available Countries</span>
+          <span class="flex items-center text-sm">
+            {{ $t('title.pages.game_details.form.available_countries.title') }}
+          </span>
           <region-tags-picker v-model:get-regions-data="regionsData" />
         </div>
         <!-- END AVAILABLE COUNTRIES PICKER -->
 
         <!-- START LANGUAGES SUPPORTED PICKER -->
         <div class="flex flex-col justify-center w-full">
-          <span class="flex items-center text-sm">Langagues Supported</span>
+          <span class="flex items-center text-sm">
+            {{ $t('title.pages.game_details.form.languages_supported.title') }}
+          </span>
           <languages-supported-picker
             v-model:get-languages-supported-data="gameToMutate.languageSupported"
           />
@@ -63,7 +67,9 @@
         <!-- START PLATFORMS SUPPORTED PICKER -->
 
         <div class="flex flex-col tablet:col-span-2 desktop:col-span-1 justify-center w-full">
-          <span class="flex items-center text-sm">Platforms</span>
+          <span class="flex items-center text-sm">
+            {{ $t('title.pages.game_details.form.platforms.title') }}
+          </span>
           <platforms-supported-tags v-model:get-platforms-supported-data="gameToMutate.platforms" />
         </div>
         <!-- END PLATFORMS SUPPORTED PICKER -->
@@ -83,7 +89,9 @@
         <!-- START PRICE -->
         <div class="flex gap-x-2">
           <div class="flex gap-y-2 flex-col">
-            <span class="text-white/80 font-black">Price:</span>
+            <span class="text-white/80 font-black">
+              {{ $t('features.filters.types.price') }}:
+            </span>
             <input
               type="text"
               v-model.lazy="gameToMutate.price"
@@ -100,7 +108,9 @@
           </div>
 
           <div class="flex gap-y-2 gap-x-2 items-end">
-            <span class="text-white/80 font-black">Price Preview:</span>
+            <span class="text-white/80 font-black">
+              {{ $t('title.pages.game_details.form.price_preview') }}:</span
+            >
             <span class="text-white/80 font-medium">{{ pricePreview }}</span>
           </div>
         </div>
@@ -112,7 +122,7 @@
             <button
               class="px-3 font-black cursor-pointer hover:bg-green-400/70 duration-300 transition-colors py-2 border bg-green-500/50 rounded-sm"
             >
-              Verify Request
+              {{ $t('title.pages.game_details.form.verify_request') }}
             </button>
             <button
               v-if="
@@ -124,27 +134,27 @@
               "
               class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
             >
-              Save as Draft
+              {{ $t('title.pages.game_details.form.save_as_draft') }}
             </button>
             <button
               v-else
               @click="handleSaveAsDraft"
               class="px-3 font-black cursor-pointer hover:bg-white/30 duration-300 transition-colors py-2 border bg-white/10 rounded-sm"
             >
-              Save as Draft
+              {{ $t('title.pages.game_details.form.save_as_draft') }}
             </button>
 
             <button
               class="px-2 font-black cursor-pointer hover:bg-sky-400/80 duration-300 transition-colors py-2 border bg-sky-400/60 rounded-sm"
               @click="handleResetForm"
             >
-              Reset Form
+              {{ $t('title.pages.game_details.form.reset_form') }}
             </button>
             <button
               @click="handleCancelForm"
               class="px-3 font-black cursor-pointer hover:bg-red-400/80 duration-300 transition-colors py-2 border bg-red-400/50 rounded-sm"
             >
-              Cancel
+              {{ $t('title.pages.game_details.form.cancel') }}
             </button>
           </div>
         </div>

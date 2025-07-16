@@ -98,30 +98,30 @@
             <div class="ms-5 hidden lg:flex lg:items-center lg:h-full">
               <router-link
                 to="/store/home"
-                class="flex items-center hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
+                class="flex items-center text-nowrap hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
               >
-                Store
+                {{ $t('navigation.store') }}
               </router-link>
 
               <a
                 href=""
-                class="h-full flex items-center hover:text-gray-300 duration-300 transition-all hover:bg-gray-800/80 px-3"
-                >Hub</a
+                class="h-full flex items-center text-nowrap hover:text-gray-300 duration-300 transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.hub') }}</a
               >
               <a
                 href=""
-                class="hover:text-gray-300 flex items-center h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
-                >Community</a
+                class="hover:text-gray-300 flex text-nowrap items-center h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.community') }}</a
               >
               <router-link
                 :to="{ name: 'SupportCenter' }"
-                class="px-3 hover:text-gray-300 flex items-center duration-300 h-full transition-all hover:bg-gray-800/80"
-                >Help</router-link
+                class="px-3 hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80"
+                >{{ $t('navigation.help') }}</router-link
               >
               <a
                 href=""
-                class="hover:text-gray-300 flex items-center duration-300 h-full transition-all hover:bg-gray-800/80 px-3"
-                >About</a
+                class="hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.about') }}</a
               >
             </div>
             <!-- END NAVIGATION -->
@@ -129,7 +129,7 @@
 
           <!-- Optional -->
           <div class="h-full w-full lg:w-auto flex justify-between items-center text-sm">
-            <span class="block lg:hidden font-bold text-[18px]">STORE</span>
+            <span class="block lg:hidden font-bold text-[18px]">{{ $t('navigation.home') }}</span>
             <div
               class="settingOption w-full hidden lg:flex justify-center items-center group duration-300 transition-all hover:bg-gray-800/80 h-full px-3"
             >
@@ -138,7 +138,9 @@
                 alt=""
                 class="w-5 lg:w-5 lg:h-5 lg:mt-1 lg:group-hover:rotate-45 transition-transform"
               />
-              <button class="me-2 flex justify-center items-center px-2">Setting</button>
+              <button class="me-2 flex justify-center items-center px-2 text-nowrap">
+                {{ $t('navigation.settings') }}
+              </button>
             </div>
 
             <drawer-trigger as-child>
@@ -151,17 +153,17 @@
               </div>
             </drawer-trigger>
             <drawer-content class="h-full bg-white/10 backdrop-blur-xl py-10">
-              <div class="mx-auto w-full max-w-sm">
+              <div class="mx-auto w-full">
                 <drawer-title class="hidden">Menu</drawer-title>
                 <drawer-header
                   class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row"
                 >
-                  <span>Menu</span>
+                  <span>{{ $t('menu.base') }}</span>
                   <router-link
                     :to="{ name: 'Login' }"
                     class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm"
                   >
-                    Login
+                    {{ $t('auth.login') }}
                   </router-link>
                 </drawer-header>
                 <drawer-description class="hidden"> </drawer-description>
@@ -169,17 +171,17 @@
                   <router-link
                     class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'store' }"
-                    >Game Store</router-link
+                    >{{ $t('navigation.store') }}</router-link
                   >
                   <router-link
                     class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'PublisherDashboard' }"
-                    >Development Workspace</router-link
+                    >{{ $t('navigation.development_workspace') }}</router-link
                   >
                   <router-link
                     class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'SupportCenter' }"
-                    >Help Center</router-link
+                    >{{ $t('navigation.help') }}</router-link
                   >
                 </drawer-footer>
               </div>
@@ -188,9 +190,9 @@
             <div
               class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full"
             >
-              <router-link to="/login" class="flex justify-center items-center mx-auto"
-                >Login</router-link
-              >
+              <router-link to="/login" class="flex justify-center items-center mx-auto">{{
+                $t('auth.login')
+              }}</router-link>
             </div>
           </div>
           <!-- END OPTIONAL-->

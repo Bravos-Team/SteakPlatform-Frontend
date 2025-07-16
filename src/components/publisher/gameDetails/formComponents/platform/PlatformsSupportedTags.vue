@@ -21,7 +21,7 @@
           <combobox-input v-model="searchItem" as-child>
             <tags-input-input
               id="platforms"
-              placeholder="Platforms..."
+              :placeholder="$t('title.pages.game_details.form.platforms.placeholder')"
               class="min-w-full p-0 border-none focus-visible:ring-0 h-auto"
               @keydown.enter.prevent
             />

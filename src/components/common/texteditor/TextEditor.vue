@@ -28,15 +28,18 @@
               <circle r="6" cx="10" cy="10" fill="#2B2A34" />
             </svg>
 
-            {{ editor.storage.characterCount.characters() }} / {{ charsLimit }} characters
+            {{ editor.storage.characterCount.characters() }} / {{ charsLimit }}
+            {{ $t('title.pages.game_details.form.text_editor.char_limited.char') }}
             <br />
-            {{ editor.storage.characterCount.words() }} words
+            {{ editor.storage.characterCount.words() }}
+            {{ $t('title.pages.game_details.form.text_editor.char_limited.words') }}
           </div>
           <!-- END CHARS COUNTS -->
+
           <!-- START INVERT COLOR -->
           <div class="flex gap-x-3 items-center shrink-0">
             <div class="flex gap-x-1 items-center shrink-0">
-              <span>Invert color</span>
+              <span> {{ $t('title.pages.game_details.form.text_editor.invert_color') }}</span>
               <Switch @update:model-value="invertDarkMode = $event" />
             </div>
           </div>
@@ -69,7 +72,9 @@
                     />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle Bold </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.bold') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE BOLD -->
 
@@ -91,7 +96,9 @@
                         <label
                           class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
                         >
-                          <span>Color picker</span>
+                          <span>
+                            {{ $t('title.pages.game_details.form.text_editor.color_picker') }}</span
+                          >
                           <input
                             type="color"
                             class="cursor-crosshair"
@@ -116,12 +123,14 @@
                           "
                           class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer"
                         >
-                          Hightlight
+                          {{ $t('title.pages.game_details.form.text_editor.highlight') }}
                         </button>
                         <!-- END ADD HIGHLIGHT -->
                       </popover-content>
                     </tooltip-trigger>
-                    <tooltip-content> Highlight </tooltip-content>
+                    <tooltip-content>
+                      {{ $t('title.pages.game_details.form.text_editor.toggle_highlight') }}
+                    </tooltip-content>
                   </tooltip>
                 </Popover>
               </div>
@@ -138,7 +147,9 @@
                     <italic class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle Italic </tooltip-content>
+                <tooltip-content :color="1">
+                  {{ $t('title.pages.game_details.form.text_editor.italic') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE ITALIC -->
 
@@ -185,7 +196,9 @@
                                 type="text"
                                 v-model="setLinkToText"
                                 class="w-full border rounded-sm px-3 h-[2rem] !outline-none ring-2 ring-gray-300/20 focus:ring-gray-300/50"
-                                placeholder="Embbed link url..."
+                                :placeholder="
+                                  $t('title.pages.game_details.form.text_editor.embed_link_des')
+                                "
                               />
                               <span v-if="errorLinkToTextMessage" class="text-red-500">{{
                                 errorLinkToTextMessage
@@ -196,7 +209,7 @@
                               class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer"
                               @click="hanldeSetLinkToText"
                             >
-                              Embbed
+                              {{ $t('title.pages.game_details.form.text_editor.embed') }}
                             </button>
                           </div>
                           <!-- END SET LINK TO TEXT -->
@@ -215,7 +228,9 @@
                         </div>
                       </popover-content>
                     </tooltip-trigger>
-                    <tooltip-content> Embbed link to text</tooltip-content>
+                    <tooltip-content>
+                      {{ $t('title.pages.game_details.form.text_editor.embed_link_to_text') }}
+                    </tooltip-content>
                   </tooltip>
                 </Popover>
                 <!-- END ENTER URL -->
@@ -243,7 +258,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle strike </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.strike') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE STRIKE -->
 
@@ -270,7 +287,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle subscript </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.subscript') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE SUBSCRIPT -->
 
@@ -299,7 +318,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle superscript </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.superscript') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE SUPERSCRIPT -->
 
@@ -328,7 +349,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle underline </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.underline') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE UNDERLINE -->
             </div>
@@ -349,7 +372,9 @@
                     <text-quote class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle Blockquote </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.blockquote') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE BLOCKQUOTE -->
 
@@ -366,7 +391,9 @@
                     </div>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Add Blockquote </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.add_blockquote') }}
+                </tooltip-content>
               </tooltip>
               <!-- END ADD BLOCKQUOTE -->
             </div>
@@ -387,7 +414,9 @@
                     <List class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle List </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.list') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE LISt -->
 
@@ -406,7 +435,9 @@
                     <list-plus class="text-white" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Add Block List </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.add_list') }}
+                </tooltip-content>
               </tooltip>
               <!-- END ADD BLOCK LIST (SPLIT) -->
 
@@ -425,7 +456,9 @@
                     <list-start class="text-white rotate-180" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Up level Block List </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.up_level_block_list') }}
+                </tooltip-content>
               </tooltip>
               <!-- END UP LEVEL BLOCK LIST (SHINK) -->
 
@@ -444,7 +477,9 @@
                     <list-start class="text-white scale-x-[-1] rotate-180" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Up level Block List </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.down_level_block_list') }}
+                </tooltip-content>
               </tooltip>
               <!-- END DOWN LEVEL BLOCK LIST (LIFT) -->
             </div>
@@ -463,7 +498,9 @@
                     <wrap-text class="text-white" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Break Line </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.break_block_list_line') }}
+                </tooltip-content>
               </tooltip>
             </div>
           </div>
@@ -503,7 +540,9 @@
                         class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
                       >
                         <heading1 class="text-white size-5" />
-                        <span class="text-sm font-medium"> Heading1</span>
+                        <span class="text-sm font-medium">
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 1</span
+                        >
                       </button>
                       <!-- END HEADING 1 -->
 
@@ -514,7 +553,10 @@
                         class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
                       >
                         <heading2 class="text-white size-5" />
-                        <span class="text-sm font-medium"> Heading2</span>
+                        <span class="text-sm font-medium">
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }}
+                          2</span
+                        >
                       </button>
                       <!-- END HEADING 2 -->
 
@@ -525,7 +567,9 @@
                         class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
                       >
                         <heading3 class="text-white size-5" />
-                        <span class="text-sm font-medium"> Heading3</span>
+                        <span class="text-sm font-medium">
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 3</span
+                        >
                       </button>
                       <!-- END HEADING 3 -->
 
@@ -536,7 +580,9 @@
                         class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
                       >
                         <heading4 class="text-white size-5" />
-                        <span class="text-sm font-medium"> Heading4</span>
+                        <span class="text-sm font-medium">
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 4</span
+                        >
                       </button>
                       <!-- END HEADING 4 -->
 
@@ -547,7 +593,9 @@
                         class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
                       >
                         <heading5 class="text-white size-5" />
-                        <span class="text-sm font-medium"> Heading5</span>
+                        <span class="text-sm font-medium">
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 5</span
+                        >
                       </button>
                       <!-- END HEADING 5 -->
 
@@ -558,12 +606,16 @@
                         class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
                       >
                         <heading6 class="text-white size-5" />
-                        <span class="text-sm font-medium"> Heading6</span>
+                        <span class="text-sm font-medium">
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 6</span
+                        >
                       </button>
                       <!-- END HEADING 6 -->
                     </popover-content>
                   </tooltip-trigger>
-                  <tooltip-content> Heading </tooltip-content>
+                  <tooltip-content>
+                    {{ $t('title.pages.game_details.form.text_editor.heading') }}
+                  </tooltip-content>
                 </tooltip>
               </Popover>
             </div>
@@ -582,7 +634,9 @@
                     <Minus class="text-white" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Add Dashed Line </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.add_dashed_line') }}
+                </tooltip-content>
               </tooltip>
             </div>
           </div>
@@ -606,7 +660,9 @@
                             type="text"
                             v-model="imageUrl"
                             class="w-full border rounded-sm px-3 h-[2rem] !outline-none ring-2 ring-gray-300/20 focus:ring-gray-300/50"
-                            placeholder="Image url..."
+                            :placeholder="
+                              $t('title.pages.game_details.form.text_editor.embed_image_url')
+                            "
                           />
                         </div>
 
@@ -614,12 +670,14 @@
                           class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer"
                           @click="addImage"
                         >
-                          Add Image
+                          {{ $t('title.pages.game_details.form.text_editor.embed') }}
                         </button>
                       </div>
                     </popover-content>
                   </tooltip-trigger>
-                  <tooltip-content> Add image </tooltip-content>
+                  <tooltip-content>
+                    {{ $t('title.pages.game_details.form.text_editor.add_image') }}
+                  </tooltip-content>
                 </tooltip>
               </Popover>
             </div>
@@ -645,7 +703,9 @@
                     <sheet class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Add table </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.add_table') }}
+                </tooltip-content>
               </tooltip>
               <!-- END ADD TABLE -->
 
@@ -663,17 +723,19 @@
                         @click="editor.chain().focus().addColumnBefore().run()"
                         class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer"
                       >
-                        Add before
+                        {{ $t('title.pages.game_details.form.text_editor.add_before') }}
                       </button>
                       <button
                         @click="editor.chain().focus().addColumnAfter().run()"
                         class="w-full px-3 py-1 font-medium rounded-sm bg-white/5 hover:bg-white/10 cursor-pointer"
                       >
-                        Add after
+                        {{ $t('title.pages.game_details.form.text_editor.add_after') }}
                       </button>
                     </popover-content>
                   </tooltip-trigger>
-                  <tooltip-content> Add column </tooltip-content>
+                  <tooltip-content>
+                    {{ $t('title.pages.game_details.form.text_editor.add_column') }}
+                  </tooltip-content>
                 </tooltip>
               </Popover>
               <!-- END ADD TABLE -->
@@ -702,7 +764,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Delete column </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.delete_column') }}
+                </tooltip-content>
               </tooltip>
               <!-- END ADD TABLE -->
 
@@ -720,17 +784,19 @@
                         @click="editor.chain().focus().addRowBefore().run()"
                         class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer"
                       >
-                        Add before
+                        {{ $t('title.pages.game_details.form.text_editor.add_before') }}
                       </button>
                       <button
                         @click="editor.chain().focus().addRowAfter().run()"
                         class="w-full px-3 py-1 font-medium rounded-sm bg-white/5 hover:bg-white/10 cursor-pointer"
                       >
-                        Add after
+                        {{ $t('title.pages.game_details.form.text_editor.add_after') }}
                       </button>
                     </popover-content>
                   </tooltip-trigger>
-                  <tooltip-content> Add row </tooltip-content>
+                  <tooltip-content>
+                    {{ $t('title.pages.game_details.form.text_editor.add_row') }}
+                  </tooltip-content>
                 </tooltip>
               </Popover>
               <!-- END ADD ROW -->
@@ -760,7 +826,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Delete row </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.delete_row') }}</tooltip-content
+                >
               </tooltip>
               <!-- END DELETE ROW -->
 
@@ -785,7 +853,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Delete table </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.delete_table') }}
+                </tooltip-content>
               </tooltip>
               <!-- END DELETE TABLE -->
 
@@ -812,7 +882,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Merge or Split cells </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.merge_or_split_cells') }}
+                </tooltip-content>
               </tooltip>
               <!-- END MERGE CELLS -->
 
@@ -867,7 +939,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle header column </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.header_column') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE HEADER COLUMN -->
 
@@ -892,7 +966,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle header row </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.header_row') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE HEADER ROW -->
 
@@ -917,7 +993,9 @@
                     </svg>
                   </button>
                 </tooltip-trigger>
-                <tooltip-content> Toggle header cell </tooltip-content>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.header_cell') }}
+                </tooltip-content>
               </tooltip>
               <!-- END TOGGLE HEADER CELL -->
             </div>
@@ -953,7 +1031,9 @@
                             type="text"
                             v-model="youtubeVideo.url"
                             class="w-full border rounded-sm px-3 h-[2rem] !outline-none ring-2 ring-gray-300/20 focus:ring-gray-300/50"
-                            placeholder="Youtube video url..."
+                            :placeholder="
+                              $t('title.pages.game_details.form.text_editor.embed_youtube_url')
+                            "
                           />
                         </div>
 
@@ -961,12 +1041,14 @@
                           class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer"
                           @click="addYoutubeVideo"
                         >
-                          Add youtube video
+                          {{ $t('title.pages.game_details.form.text_editor.embed') }}
                         </button>
                       </div>
                     </popover-content>
                   </tooltip-trigger>
-                  <tooltip-content> Embbed youtube video </tooltip-content>
+                  <tooltip-content>
+                    {{ $t('title.pages.game_details.form.text_editor.embed_youtube_video') }}
+                  </tooltip-content>
                 </tooltip>
               </Popover>
               <!-- END ENTER URL -->
@@ -1078,7 +1160,6 @@ import { TextStyle, Color } from '@tiptap/extension-text-style'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import Underline from '@tiptap/extension-underline'
 import DOMPurify from 'dompurify'
-// import Mention from '@tiptap/extension-mention'
 
 const texts = ref('')
 const invertDarkMode = ref(false)

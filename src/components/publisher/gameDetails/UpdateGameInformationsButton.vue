@@ -6,10 +6,10 @@
     >
       <square-dot />
       <span class="lg:text-md xl:text-[17px] flex gap-x-1 flex-wrap">
-        <span>Update</span>
+        <span>{{ $t('title.pages.game_details.actions.update') }}</span>
         <div class="flex gap-x-1">
           <span class="font-bold text-nowrap"> '{{ gameInformations?.name }}' </span>
-          <span>informations</span>
+          <span>{{ $t('title.pages.game_details.actions.informations') }}</span>
         </div>
       </span>
     </button>
@@ -17,15 +17,15 @@
       class="resize-x mobile:p-2 bg-linear-120 border-2 from-gray-200/7 to-indigo-400/10 min-w-full flex flex-col desktop-xl:min-w-[90rem]"
     >
       <dialog-header>
-        <dialog-title class="text-2xl"
-          >Update
+        <dialog-title class="text-2xl flex gap-x-1">
+          <span>{{ $t('title.pages.game_details.actions.update') }}</span>
           <span
             class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-cyan-500"
           >
             {{ gameInformations?.name }}
           </span>
-          informations</dialog-title
-        >
+          <span>{{ $t('title.pages.game_details.actions.informations') }}</span>
+        </dialog-title>
       </dialog-header>
       <!-- START <update-game-details-form /> -->
       <update-game-details-form
@@ -34,7 +34,7 @@
       />
       <!-- END <update-game-details-form /> -->
       <dialog-description class="text-gray-400 text-center">
-        <span class="text-sm">Update your game details to keep your players informed.</span>
+        <span class="text-sm">{{ $t('title.pages.game_details.form.footer_message') }}</span>
       </dialog-description>
     </dialog-scroll-content>
   </Dialog>
