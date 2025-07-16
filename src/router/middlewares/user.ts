@@ -1,7 +1,9 @@
-const user = ({ next, authStore }: { next: any; authStore: any }) => {
-  if (authStore.isLogin) {
+import { MiddlewareContext } from '@/types/router/middleware'
+
+const user = ({ next, checkAccess }: MiddlewareContext) => {
+  if (!checkAccess.user) {
     return next({
-      name: 'Home',
+      name: 'Login',
     })
   }
   return next()
