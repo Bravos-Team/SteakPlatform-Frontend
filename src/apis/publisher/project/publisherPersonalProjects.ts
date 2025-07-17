@@ -6,21 +6,25 @@ export const publisherGetPersonalProjectListApi = (
   fitlers: PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS,
   signal: AbortSignal,
 ) => {
-  return SteakApi.get('/api/v1/dev/project/list', { params: fitlers, signal: signal })
+  return SteakApi.get('/dev/project/list', { params: fitlers, signal: signal })
 }
 
 export const publisherCreatePersonalProjectApi = (name: string) => {
-  return SteakApi.post(`/api/v1/dev/project/create?name=${name}`)
+  return SteakApi.post(`/dev/project/create?name=${name}`)
 }
 
 export const publisherCreateDraftProjectInformationsApi = (payload: GameType) => {
-  return SteakApi.post('/api/v1/dev/project/update', payload)
+  return SteakApi.post('/dev/project/update', payload)
 }
 
 export const publisherUpdateGameNameApi = (payload: { id: bigint; name: string }) => {
-  return SteakApi.post(`/api/v1/dev/project/update`, payload)
+  return SteakApi.post(`/dev/project/update`, payload)
 }
 
 export const publisherGetPersonalProjectByIdApi = (id: bigint, signal: AbortSignal) => {
-  return SteakApi.get(`/api/v1/dev/project/detail/${id}`, { signal: signal })
+  return SteakApi.get(`/dev/project/detail/${id}`, { signal: signal })
+}
+
+export const publisherPostVerifyGameRequest = (id: bigint) => {
+  return SteakApi.post(`/dev/project/submit?projectId=${id}`)
 }

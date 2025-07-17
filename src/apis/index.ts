@@ -15,34 +15,36 @@ SteakApi.interceptors.response.use(
   (response) => response,
   async (error) => {
     const path = router.currentRoute.value.fullPath
-    if (error.response?.status === 401 && path != '/login' && path != '/publisher/login') {
-      removeCookies(['userAccessRights', 'publisherAccessRights'])
-      if (path.startsWith('/publisher') || path.startsWith('/game')) {
-        if (router.currentRoute.value.name === 'PublisherAuthLogin') {
-          return
+    if (error.response?.status === 401) {
+      if (path != '/login' && path != '/publisher/login') {
+        if (path.startsWith('/publisher') || path.startsWith('/game')) {
+          if (router.currentRoute.value.name === 'PublisherAuthLogin') {
+            return
+          } else {
+            removeCookies(['userAccessRights', 'publisherAccessRights'])
+            await router.push({ name: 'PublisherAuthLogin' })
+            return toastErrorNotificationPopup(
+              'You need login to access authenication required page!',
+              'Publisher Authentication',
+            )
+          }
+        } else if (path.startsWith('/admin')) {
+          if (router.currentRoute.value.name === 'AdminLogin') {
+            return
+          } else {
+            await router.push({ name: 'AdminLogin' })
+            return toastErrorNotificationPopup(
+              'Need admin account to login!',
+              'Steak Admin Authentication',
+            )
+          }
         } else {
-          await router.push({ name: 'PublisherAuthLogin' })
+          await router.push({ name: 'Login' })
           return toastErrorNotificationPopup(
             'You need login to access authenication required page!',
-            'Publisher Authentication',
+            'Steak Game Store Authentication',
           )
         }
-      } else if (path.startsWith('/admin')) {
-        if (router.currentRoute.value.name === 'AdminLogin') {
-          return
-        } else {
-          await router.push({ name: 'AdminLogin' })
-          return toastErrorNotificationPopup(
-            'Need admin account to login!',
-            'Steak Admin Authentication',
-          )
-        }
-      } else {
-        await router.push({ name: 'Login' })
-        return toastErrorNotificationPopup(
-          'You need login to access authenication required page!',
-          'Steak Game Store Authentication',
-        )
       }
     }
     return Promise.reject(error)

@@ -131,19 +131,19 @@ export const GameSchema = z.object({
     }),
   internetConnection: z.boolean().optional().default(false),
   languageSupported: z.array(z.string()).optional().default([]),
-  // buildInfo: z
-  //   .object({
-  //     versionName: z.string().optional().default(''),
-  //     execPath: z.string().optional().default(''),
-  //     downloadUrl: z.string().optional().default(''),
-  //   })
-  //   .optional()
-  //   .nullable()
-  //   .default({
-  //     versionName: '',
-  //     execPath: '',
-  //     downloadUrl: '',
-  //   }),
+  buildInfo: z
+    .object({
+      versionName: z.string().optional().default(''),
+      execPath: z.string().optional().default(''),
+      downloadUrl: z.string().optional().default(''),
+    })
+    .optional()
+    .nullable()
+    .default({
+      versionName: '',
+      execPath: '',
+      downloadUrl: '',
+    }),
 
   status: z.enum(['draft', 'published', 'archived']).default('draft'),
   updatedAt: z.union([z.string(), z.date(), z.number()]).optional().nullable().default(''),

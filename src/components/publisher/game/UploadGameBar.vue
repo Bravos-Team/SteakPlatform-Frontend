@@ -21,6 +21,7 @@
               'bg-red-300/10': game.status === 'REJECTED',
               'bg-green-300/30': game.status === 'VERIFIED',
               'bg-white/20': game.status === 'PUBLISHED',
+              'bg-green-950/60': game.status === 'PENDING_REVIEW',
               'bg-sky-300/20': game.status === 'DRAFT',
             }"
           >
@@ -52,6 +53,7 @@
                   'text-red-500/90': game.status === 'REJECTED',
                   'text-green-500/90': game.status === 'VERIFIED',
                   'text-gray-300/90': game.status === 'PUBLISHED',
+                  'text-white': game.status === 'PENDING_REVIEW',
                   'text-sky-300/90': game.status === 'DRAFT',
                 }"
                 class="w-full h-full"
@@ -144,6 +146,8 @@ const xValueComputed = (status: string) => {
       return 110
     case 'PUBLISHED':
       return 100
+    case 'PENDING_REVIEW':
+      return 150
     case 'DRAFT':
       return 90
     default:

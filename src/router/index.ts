@@ -40,16 +40,13 @@ const router = createRouter({
 
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-    console.log('TO: ', to)
-    console.log('FROM: ', from)
-    console.log('NEXT:', next)
     if (!to.meta?.middleware) {
       return next()
     }
 
     const checkAccess = {
-      publisher: getCookie('publisherAccessRights'),
-      user: getCookie('userAccessRights'),
+      publisher: getCookie('publisherAccessRights') ?? null,
+      user: getCookie('userAccessRights') ?? null,
     }
 
     const middleware: any[] = to.meta.middleware
