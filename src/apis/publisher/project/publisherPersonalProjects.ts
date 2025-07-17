@@ -1,4 +1,4 @@
-import { SteakApi } from '@/apis/index'
+import { SteakApi } from '@/apis'
 import { type GameType } from '@/types/game/gameDetails/GameDetailsType'
 import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/project/PublisherPersonalProjectType'
 
