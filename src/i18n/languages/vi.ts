@@ -169,9 +169,15 @@ export default {
           price_preview: 'Xem trước giá',
           verify_request: 'Gửi yêu cầu xác minh',
           save_as_draft: 'Lưu dưới dạng bản nháp',
+          verify_pending: 'Đang gửi yêu cầu...',
           reset_form: 'Đặt lại biểu mẫu',
+          pending_review: 'Yêu cầu đang được xem xét',
+          pending_message: 'Yêu cầu đang được xử lý, không thể chỉnh sửa',
           cancel: 'Hủy bỏ',
-
+          verify_popup: {
+            title: 'Bạn cần tải dự án lên trước khi gửi xác minh',
+            description: 'Tải phần mềm đăng tải dự án của chúng tôi',
+          },
           available_countries: {
             title: 'Quốc gia khả dụng',
             placeholder: 'Nhập các quốc gia...',

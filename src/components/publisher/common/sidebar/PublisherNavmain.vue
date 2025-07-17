@@ -112,7 +112,7 @@
             <collapsible-trigger as-child>
               <router-link @click="handleRedirect" :to="{ name: value?.name }">
                 <sidebar-menu-button
-                  @click="refetch()"
+                  @click="handleLogout()"
                   class="cursor-pointer"
                   :tooltip="value?.title"
                 >
@@ -136,6 +136,7 @@ import { ChevronRight, ChevronsDown, type LucideIcon } from 'lucide-vue-next'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useSidebar } from '@/components/ui/sidebar'
 import { nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -149,7 +150,8 @@ import {
 } from '@/components/ui/sidebar'
 import getTranslatedTitle from '@/utils/i18n/useI18nUtils'
 import { usePublisherLogout } from '@/hooks/publisher/usePublisher'
-import { removeCookie, removeCookies } from '@/utils/cookies/cookie-utils'
+import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
+const router = useRouter()
 const { refetch } = usePublisherLogout()
 const useSideBarTool = useSidebar()
 const props = defineProps<{
@@ -176,11 +178,11 @@ const props = defineProps<{
   ]
 }>()
 
-const handleLogout = () => {
-  removeCookies(['userAccessRights', 'publisherAccessRights'])
-  removeCookie('userAccessRights')
-  removeCookie('publisherAccessRights')
+const handleLogout = async () => {
+  if (getCookie('userAccessRights')) removeCookie('userAccessRights')
+  if (getCookie('publisherAccessRights')) removeCookie('publisherAccessRights')
   refetch()
+  await router.push({ name: 'PublisherAuthLogin' })
 }
 const handleRedirect = async () => {
   if (useSideBarTool.isMobile.value) {

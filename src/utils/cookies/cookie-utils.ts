@@ -7,14 +7,14 @@ const decode = (val: string) => decodeURIComponent(atob(val))
 
 export const setCookie = (key: string, value: string | object, options?: any) => {
   const safeValue = typeof value === 'object' ? JSON.stringify(value) : value
-  cookies.set(encode(key), encode(safeValue), {
+  cookies.set(key, encode(safeValue), {
     path: '/',
     ...options,
   })
 }
 
 export const getCookie = (key: string) => {
-  const raw = cookies.get(encode(key))
+  const raw = cookies.get(key)
   if (!raw) return null
   const decoded = decode(raw)
   try {
@@ -24,11 +24,24 @@ export const getCookie = (key: string) => {
   }
 }
 
-export const removeCookie = (key: string) => {
-  cookies.set(encode(key), '', {
+// export const setNormalCookie = (key: string, value: string, options?: any) => {
+//   cookies.set(key, value, {
+//     expires:
+//   })
+// }
+export const removeCookie = (key: string, options: any = {}) => {
+  const encodedKey = encode(key)
+
+  cookies.set(encodedKey, '', {
+    path: '/',
     expires: new Date(0),
+    ...options,
   })
-  cookies.remove(encode(key), { path: '/' })
+
+  cookies.remove(encodedKey, {
+    path: '/',
+    ...options,
+  })
 }
 
 export const removeCookies = (keys: string[]) => {

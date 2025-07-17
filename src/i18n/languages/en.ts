@@ -213,6 +213,13 @@ export default {
           },
           price_preview: 'Price Preview',
           verify_request: 'Verify Request',
+          verify_pending: 'Pending processing...',
+          pending_review: 'Request is under review',
+          pending_message: 'Request is being processed, cannot be edited',
+          verify_popup: {
+            title: 'You need to upload the game before submitting verification',
+            description: 'Download our project upload software',
+          },
           save_as_draft: 'Save as Draft',
           reset_form: 'Reset Form',
           cancel: 'Cancel',

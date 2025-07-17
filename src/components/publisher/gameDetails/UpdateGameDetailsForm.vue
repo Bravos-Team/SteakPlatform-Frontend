@@ -117,45 +117,121 @@
         <!-- END PRICE -->
 
         <!-- START ACTIONS -->
-        <div class="flex items-center">
-          <div class="flex gap-x-2 flex-wrap gap-y-2 justify-end items-center">
+        <div class="flex flex-row-reverse items-center">
+          <div class="flex flex-row-reverse gap-x-2 flex-wrap gap-y-2 justify-end items-center">
+            <!--  IS NOT UPLOAD PROJECT YET -->
             <button
+              v-if="gamePreviewDetails.buildInfo && gamePreviewDetails.status === GAME_STATUS.DRAFT"
+              :disabled="isVerifyPersonalProjectPending"
+              :class="{ '!cursor-not-allowed': isVerifyPersonalProjectPending }"
+              @click="mutatePostVerifyProjectRequest(gamePreviewDetails.id)"
               class="px-3 font-black cursor-pointer hover:bg-green-400/70 duration-300 transition-colors py-2 border bg-green-500/50 rounded-sm"
             >
-              {{ $t('title.pages.game_details.form.verify_request') }}
+              <span v-if="isVerifyPersonalProjectPending">
+                {{ $t('title.pages.game_details.form.verify_pending') }}
+              </span>
+              <span v-else> {{ $t('title.pages.game_details.form.verify_request') }}</span>
             </button>
-            <button
-              v-if="
-                isGetPresignedImageUrlPending ||
-                isGetPresignedImageUrlsPending ||
-                isPostIntoPresignedUrlPending ||
-                isPostIntoPresignedUrlsPending ||
-                isCreateDraftProjectInformationsPending
-              "
-              class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
-            >
-              {{ $t('title.pages.game_details.form.save_as_draft') }}
-            </button>
-            <button
-              v-else
-              @click="handleSaveAsDraft"
-              class="px-3 font-black cursor-pointer hover:bg-white/30 duration-300 transition-colors py-2 border bg-white/10 rounded-sm"
-            >
-              {{ $t('title.pages.game_details.form.save_as_draft') }}
-            </button>
+            <!-- END IS NOT UPLOAD PROJECT YET -->
 
+            <!-- IS PENDING PREVIEW -->
+            <tooltip
+              v-else-if="
+                gamePreviewDetails.buildInfo &&
+                gamePreviewDetails.status === GAME_STATUS.PENDING_REVIEW
+              "
+            >
+              <tooltip-trigger as-child>
+                <button
+                  disabled
+                  @click="mutatePostVerifyProjectRequest(gamePreviewDetails.id)"
+                  class="px-3 font-black cursor-not-allowed py-2 border bg-green-500/50 rounded-sm"
+                >
+                  <span>
+                    {{ $t('title.pages.game_details.form.pending_review') }}
+                  </span>
+                </button>
+              </tooltip-trigger>
+              <tooltip-content>
+                {{ $t('title.pages.game_details.form.pending_message') }}
+              </tooltip-content>
+            </tooltip>
+            <!-- END IS PENDING PREVIEW-->
+
+            <!-- MUST DOWNLOAD CLIENT APP -->
+            <Dialog>
+              <dialog-trigger>
+                <button
+                  v-if="gamePreviewDetails.buildInfo === null"
+                  class="px-3 font-black cursor-pointer hover:bg-green-400/70 duration-300 transition-colors py-2 border bg-green-500/50 rounded-sm"
+                >
+                  <span v-if="isVerifyPersonalProjectPending">
+                    {{ $t('title.pages.game_details.form.verify_pending') }}
+                  </span>
+                  <span v-else> {{ $t('title.pages.game_details.form.verify_request') }}</span>
+                </button>
+              </dialog-trigger>
+              <dialog-content class="w-full tablet:min-w-full desktop:min-w-[40rem]">
+                <dialog-header class="w-full">
+                  <dialog-title class="font-black text-2xl w-full text-center">
+                    {{ $t('title.pages.game_details.form.verify_popup.title') }}
+                  </dialog-title>
+                  <dialog-description class="flex justify-center">
+                    <button
+                      @click="handleDownloadClientApp"
+                      class="px-6 py-3 flex items-center justify-center border rounded-sm border-white/20 hover:bg-white/20 bg-white/10 cursor-pointer text-white font-black"
+                    >
+                      {{ $t('title.pages.game_details.form.verify_popup.description') }}
+                      <ArrowDownToLine />
+                    </button>
+                  </dialog-description>
+                </dialog-header>
+              </dialog-content>
+            </Dialog>
+            <!-- END MUST DOWNLOAD CLIENT APP -->
+
+            <!-- SAVE AS DRAFT -->
+            <div v-if="gamePreviewDetails.status === GAME_STATUS.DRAFT">
+              <button
+                v-if="
+                  isGetPresignedImageUrlPending ||
+                  isGetPresignedImageUrlsPending ||
+                  isPostIntoPresignedUrlPending ||
+                  isPostIntoPresignedUrlsPending ||
+                  isCreateDraftProjectInformationsPending
+                "
+                class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
+              >
+                {{ $t('title.pages.game_details.form.save_as_draft') }}
+              </button>
+              <button
+                v-else
+                @click="handleSaveAsDraft"
+                class="px-3 font-black cursor-pointer hover:bg-white/30 duration-300 transition-colors py-2 border bg-white/10 rounded-sm"
+              >
+                {{ $t('title.pages.game_details.form.save_as_draft') }}
+              </button>
+            </div>
+            <!-- END SAVE AS DRAFT -->
+
+            <!-- RESET FORM -->
             <button
+              v-if="gamePreviewDetails.status === GAME_STATUS.DRAFT"
               class="px-2 font-black cursor-pointer hover:bg-sky-400/80 duration-300 transition-colors py-2 border bg-sky-400/60 rounded-sm"
               @click="handleResetForm"
             >
               {{ $t('title.pages.game_details.form.reset_form') }}
             </button>
+            <!-- END RESET FORM -->
+
+            <!-- CANCEL -->
             <button
               @click="handleCancelForm"
-              class="px-3 font-black cursor-pointer hover:bg-red-400/80 duration-300 transition-colors py-2 border bg-red-400/50 rounded-sm"
+              class="px-3 cursor-pointer duration-300 transition-all py-2 underline text-red-500"
             >
               {{ $t('title.pages.game_details.form.cancel') }}
             </button>
+            <!-- END CANCEL -->
           </div>
         </div>
         <Progress
@@ -177,6 +253,15 @@
 </template>
 
 <script setup lang="ts">
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import YourDeveloperTeams from '@/components/publisher/gameDetails/formComponents/developerTeam/YourDeveloperTeams.vue'
 import RegionTagsPicker from '@/components/publisher/gameDetails/formComponents/region/RegionTagsPicker.vue'
 import ReleaseEstimatedDate from '@/components/publisher/gameDetails/formComponents/ReleaseEstimatedDate.vue'
@@ -195,7 +280,10 @@ import {
   type GameType,
 } from '@/types/game/gameDetails/GameDetailsType'
 import { computed, ref, watch } from 'vue'
-import { usePublisherCreateDraftProjectInformations } from '@/hooks/publisher/project/usePublisherPersonalProjects'
+import {
+  usePublisherCreateDraftProjectInformations,
+  usePublisherPostVerifyPersonalProject,
+} from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 import {
   toastErrorNotificationPopup,
@@ -214,11 +302,23 @@ import { MediaType } from '@/types/image/MediaAndImage'
 import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/CdnTypes'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import { Progress } from '@/components/ui/progress'
+import { ArrowDownToLine } from 'lucide-vue-next'
 
 const useSystem = useSystemRequirementsStore()
 const useComporessionImage = useImageCompressor()
 const useImageStore = useImageStored()
+const GAME_STATUS = {
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  PENDING: 'PENDING_REVIEW',
+  DRAFT: 'DRAFT',
+  VERIFY: 'VERIFY',
+}
 
+const handleDownloadClientApp = async () => {
+  window.open(
+    'https://github.com/Bravos-Team/SteakPublisherClient/releases/download/lastest/SteakDev.zip',
+  )
+}
 const { mutateAsync: mutateGetPresignedImageUrl, isPending: isGetPresignedImageUrlPending } =
   useGetPresignedImageUrl()
 const { mutateAsync: mutateGetPresignedImageUrls, isPending: isGetPresignedImageUrlsPending } =
@@ -231,6 +331,8 @@ const {
   mutateAsync: mutateAsyncCreateDraftProject,
   isPending: isCreateDraftProjectInformationsPending,
 } = usePublisherCreateDraftProjectInformations()
+const { isPending: isVerifyPersonalProjectPending, mutateAsync: mutatePostVerifyProjectRequest } =
+  usePublisherPostVerifyPersonalProject()
 
 const props = defineProps<{
   gamePreviewDetails: GameType

@@ -2,13 +2,13 @@ import SteakApi from '@/apis/index'
 import axios from 'axios'
 
 export const deleteImage = async (url: string) => {
-  return await SteakApi.delete('/api/v1/dev/upload/delete-image', {
+  return await SteakApi.delete('/dev/upload/delete-image', {
     data: url,
   })
 }
 
 export const getPresignedImageUrl = async (fileName: string, fileSize: number) =>
-  await SteakApi.post('/api/v1/dev/upload/presigned-image-url', {
+  await SteakApi.post('/dev/upload/presigned-image-url', {
     fileName,
     fileSize,
   }).then((rp) => {
@@ -18,7 +18,7 @@ export const getPresignedImageUrl = async (fileName: string, fileSize: number) =
 export const getPresignedImageUrls = async (
   payload: Array<{ fileName: string; fileSize: number }>,
 ) =>
-  await SteakApi.post('/api/v1/dev/upload/presigned-image-urls', payload).then((rp) => {
+  await SteakApi.post('/dev/upload/presigned-image-urls', payload).then((rp) => {
     return rp
   })
 
