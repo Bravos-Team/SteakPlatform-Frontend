@@ -18,4 +18,19 @@ import FooterStore from '@/components/store/FooterStore.vue'
 import StoreSearchingBar from '@/components/store/StoreSearchingBar.vue'
 import StoreTopBar from '@/components/store/StoreTopBar.vue'
 import { Drawer } from '@/components/ui/drawer'
+import { useGameStoreInfiniteQueryList } from '@/hooks/store/game/useGameStore'
+import { onMounted } from 'vue'
+const {
+  data: gameStoreData,
+  fetchNextPage: fetchNextGameStorePage,
+  fetchPreviousPage: fetchPreviousGameStorePage,
+  hasNextPage: hasNextGameStorePage,
+  hasPreviousPage: hasPreviousGameStorePage,
+  isFetchingNextPage: isFetchingNextGameStorePage,
+  isFetchingPreviousPage: isFetchingPreviousGameStorePage,
+  isLoading: isGameStoreLoading,
+} = useGameStoreInfiniteQueryList()
+onMounted(async () => {
+  console.log('Mounted StoreLayout', gameStoreData)
+})
 </script>
