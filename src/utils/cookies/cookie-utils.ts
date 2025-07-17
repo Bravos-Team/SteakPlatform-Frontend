@@ -24,21 +24,14 @@ export const getCookie = (key: string) => {
   }
 }
 
-// export const setNormalCookie = (key: string, value: string, options?: any) => {
-//   cookies.set(key, value, {
-//     expires:
-//   })
-// }
 export const removeCookie = (key: string, options: any = {}) => {
-  const encodedKey = encode(key)
-
-  cookies.set(encodedKey, '', {
+  cookies.set(key, '', {
     path: '/',
     expires: new Date(0),
     ...options,
   })
 
-  cookies.remove(encodedKey, {
+  cookies.remove(key, {
     path: '/',
     ...options,
   })
