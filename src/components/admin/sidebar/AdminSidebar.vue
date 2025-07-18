@@ -23,15 +23,17 @@
     <!-- Navigation -->
     <nav class="p-2">
       <div v-for="item in navItemsData" :key="item.name" class="mb-1">
-        <router-link :to="item.route"
+        <router-link
+          :to="item.route"
           class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white"
-          :class="{ 'justify-center': isCollapsed }">
+          :class="{ 'justify-center': isCollapsed }"
+        >
           <component :is="item.icon" class="h-5 w-5" />
           <span :class="[isCollapsed && 'hidden']">{{ item.title }}</span>
         </router-link>
       </div>
     </nav>
-  </aside>
+  </sidebar>
 </template>
 
 <script setup lang="ts">

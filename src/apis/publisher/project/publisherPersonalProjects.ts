@@ -28,3 +28,7 @@ export const publisherGetPersonalProjectByIdApi = (id: bigint, signal: AbortSign
 export const publisherPostVerifyGameRequest = (id: bigint) => {
   return SteakApi.post(`/dev/project/submit?projectId=${id}`)
 }
+
+export const publisherDeleteImageUploaded = (url: string) => {
+  return SteakApi.delete('/dev/upload/delete-image', { data: { url } })
+}
