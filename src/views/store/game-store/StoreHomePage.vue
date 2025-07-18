@@ -3,7 +3,9 @@
   <store-sliders></store-sliders>
   <!-- END SLIDER -->
 
-  <div class="flex flex-col gap-y-[64px] my-[64px] overflow-hidden items-center justify-center">
+  <div
+    class="typewriter flex flex-col gap-y-[64px] my-[64px] overflow-hidden items-center justify-center"
+  >
     <!-- game by category -->
     <category-base-bar
       :game-by-category-list="gameByCategoryList"
