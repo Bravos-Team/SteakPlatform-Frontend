@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col gap-y-2 rounded-sm px-2 justify-center">
     <div class="flex gap-x-2">
-      <Label for="add_requirements_switcher">System Requirements</Label>
+      <Label for="add_requirements_switcher">
+        {{ $t('title.pages.game_details.form.system_requirements.title') }}
+      </Label>
       <Switch
         id="add_requirements_switcher"
         @update:model-value="addMinimunAndRecommended = $event"

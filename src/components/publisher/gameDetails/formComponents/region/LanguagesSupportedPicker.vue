@@ -18,11 +18,11 @@
             </tags-input-item>
           </div>
 
-          <combobox-input v-model="searchItem" as-child>
+          <combobox-input v-model="searchItem" as-child class="!w-full">
             <tags-input-input
               id="languages"
-              placeholder="Language..."
-              class="w-full p-0 border-none focus-visible:ring-0 h-auto"
+              :placeholder="$t('title.pages.game_details.form.languages_supported.placeholder')"
+              class="min-w-full p-0 border-none focus-visible:ring-0 h-auto"
               @keydown.enter.prevent
             />
           </combobox-input>

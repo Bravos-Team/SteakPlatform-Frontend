@@ -52,57 +52,46 @@ export const userData = {
 export const navItemsData = [
   {
     title: 'Dashboard',
+    i18n: 'dashboard.title',
     icon: LayoutDashboard,
     isActive: true,
     items: [
       {
         title: 'Overview',
         name: 'PublisherDashboard',
+        i18n: 'dashboard.items.overview',
         icon: ChartNoAxesGantt,
       },
-      // {
-      //   title: 'Game Manage',
-      //   name: 'PublisherGameManagement',
-      //   icon: Gamepad2,
-      //   subItems: [
-      //     {
-      //       title: 'Game Overview',
-      //       name: 'PublisherGameManagementOverview',
-      //       icon: SquareDashedKanban,
-      //     },
-      //     {
-      //       title: 'Game Pending',
-      //       name: 'PublisherGameManagementPending',
-      //       icon: HardDriveUpload,
-      //     },
-      //   ],
-      // },
     ],
   },
   {
     title: 'Game Manage',
+    i18n: 'game_management.title',
     name: 'PublisherGameManagement',
     icon: Gamepad2,
     items: [
       {
         title: 'Game Overview',
+        i18n: 'game_management.items.overview',
         name: 'PublisherGameManagementOverview',
         icon: SquareDashedKanban,
       },
-      {
-        title: 'Game Pending',
-        name: 'PublisherGameManagementPending',
-        icon: HardDriveUpload,
-      },
+      // {
+      //   title: 'Game Pending',
+      //   name: 'PublisherGameManagementPending',
+      //   icon: HardDriveUpload,
+      // },
     ],
   },
   {
     title: 'Support',
     name: 'SupportCenter',
+    i18n: 'support.title',
     icon: BadgeInfo,
   },
   {
     title: 'Logout',
+    i18n: 'logout.title',
     name: 'PublisherAuthLogin',
     icon: LogOut,
   },

@@ -14,7 +14,7 @@
         <div class="bg-black dark:bg-white w-0.5 h-8 ms-3"></div>
       </router-link>
 
-      <div class="flex absolute right-70">
+      <div class="laptop:flex hidden absolute right-70">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -40,55 +40,7 @@
 
       <!-- Language Selection -->
       <div class="flex absolute right-10 ms-2 items-center gap-x-2">
-        <img
-          :src="'https://ccdn.steak.io.vn/language-white.svg'"
-          class="content-start text-black dark:text-white hidden dark:block"
-          alt="language icon"
-        />
-
-        <img
-          :src="'https://ccdn.steak.io.vn/language-black.svg'"
-          class="content-start text-black dark:text-white block dark:hidden"
-          alt="language icon"
-        />
-        <div class="items-end">
-          <div class="relative">
-            <button
-              @click="showDropdown = !showDropdown"
-              class="flex items-center gap-x-1 text-black dark:text-white hover:text-gray-400"
-              @mouseenter="showDropdown = true"
-              @mouseleave="showDropdown = false"
-            >
-              <span>{{ selectedLanguage !== '' ? selectedLanguage : 'English' }}</span>
-              <img
-                :src="'https://ccdn.steak.io.vn/down-line-white.svg'"
-                alt="Dropdown Icon"
-                class="mt-1 hidden dark:block text-white"
-              />
-              <img
-                :src="'https://ccdn.steak.io.vn/down-line-black.svg.svg'"
-                alt="Dropdown Icon"
-                class="mt-1 block dark:hidden"
-              />
-            </button>
-
-            <ul
-              v-if="showDropdown"
-              class="absolute mt-0 bg-white dark:bg-[#101014] rounded top-full -left-15 shadow-md text-white w-40 z-50"
-              @mouseenter="showDropdown = true"
-              @mouseleave="showDropdown = false"
-            >
-              <template v-for="(language, index) in languages" :key="index">
-                <li
-                  class="px-4 py-2 hover:bg-gray-100 text-black dark:text-white hover:text-black cursor-pointer"
-                  @click="(handleSelectedLanguage(language.code), (showDropdown = !showDropdown))"
-                >
-                  {{ language.name }}
-                </li>
-              </template>
-            </ul>
-          </div>
-        </div>
+        <LanguagesOption />
       </div>
       <span class="text-dark dark:text-white xl:text-[18px] text-[14px]">{{ headerTitle }}</span>
     </header>
@@ -97,7 +49,7 @@
 
 <script setup>
 import { ref } from 'vue'
-const showDropdown = ref(false)
+import LanguagesOption from '@/components/common/LanguagesOption.vue'
 
 const languages = [
   { code: 'vi', name: 'Tiếng Việt' },

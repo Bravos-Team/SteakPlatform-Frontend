@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden w-full" :class="`bg-[${background_color}] h-[${height}]`">
+  <div class="w-full flex flex-col gap-y-3" :class="`bg-[${background_color}] h-[${height}]`">
     <!-- HEADER CATEGORY LIST-->
     <div class="flex flex-row justify-between w-full lg:mb-[23px] h-[30px]">
       <!-- Category title-->
@@ -39,8 +39,12 @@
     <!-- END HEADER CATEGORY LIST-->
 
     <!-- CATEGORY CONTENT LIST-->
-    <div class="w-[{{ width }}] flex gap-x-[20px]">
-      <div class="w-[211px] h-[422px] shrink-0" v-for="game in gameByCategoryList" :key="game.id">
+    <div class=" px-3 w-[{{ width }}] overflow-auto no-scrollbar snap-x  flex gap-x-[20px]">
+      <div
+        class="w-[211px] h-[422px] shrink-0 snap-start"
+        v-for="game in gameByCategoryList"
+        :key="game.id"
+      >
         <router-link
           :to="{ name: 'game-details', params: { id: game.id } }"
           class="w-[211px] h-[369px] cursor-pointer"

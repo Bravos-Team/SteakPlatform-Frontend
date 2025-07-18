@@ -19,7 +19,7 @@
 
                 <img
                   src="https://ccdn.steak.io.vn/down-line-white.svg"
-                  class="lg:group-hover/logo:rotate-180 w-[8px] mt-2 object-cover lg:w-3 lg:ms-2 lg:mt-3 lg:relative transition-all"
+                  class="lg:group-hover/logo:rotate-180 w-[8px] mt-2 hidden lg:block object-cover lg:w-3 lg:ms-2 lg:mt-3 lg:relative transition-all"
                   alt=""
                 />
               </div>
@@ -95,33 +95,33 @@
             </div>
 
             <!-- Navigation -->
-            <div class="ms-5 hidden lg:block lg:flex lg:items-center lg:h-full">
+            <div class="ms-5 hidden lg:flex lg:items-center lg:h-full">
               <router-link
                 to="/store/home"
-                class="flex items-center hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
+                class="flex items-center text-nowrap hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
               >
-                Store
+                {{ $t('navigation.store') }}
               </router-link>
 
               <a
                 href=""
-                class="h-full flex items-center hover:text-gray-300 duration-300 transition-all hover:bg-gray-800/80 px-3"
-                >Hub</a
+                class="h-full flex items-center text-nowrap hover:text-gray-300 duration-300 transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.hub') }}</a
               >
               <a
                 href=""
-                class="hover:text-gray-300 flex items-center h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
-                >Community</a
+                class="hover:text-gray-300 flex text-nowrap items-center h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.community') }}</a
               >
               <router-link
                 :to="{ name: 'SupportCenter' }"
-                class="px-3 hover:text-gray-300 flex items-center duration-300 h-full transition-all hover:bg-gray-800/80"
-                >Help</router-link
+                class="px-3 hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80"
+                >{{ $t('navigation.help') }}</router-link
               >
               <a
                 href=""
-                class="hover:text-gray-300 flex items-center duration-300 h-full transition-all hover:bg-gray-800/80 px-3"
-                >About</a
+                class="hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.about') }}</a
               >
             </div>
             <!-- END NAVIGATION -->
@@ -129,32 +129,58 @@
 
           <!-- Optional -->
           <div class="h-full w-full lg:w-auto flex justify-between items-center text-sm">
-            <span class="block lg:hidden font-bold text-[18px]">STORE</span>
-            <div
-              class="settingOption w-full hidden lg:block lg:flex justify-center items-center group duration-300 transition-all hover:bg-gray-800/80 h-full px-3"
-            >
-              <img
-                src="https://ccdn.steak.io.vn/setting-white.svg"
-                alt=""
-                class="w-5 lg:w-5 lg:h-5 lg:mt-1 lg:group-hover:rotate-45 transition-transform"
-              />
-              <button class="me-2 flex justify-center items-center px-2">Setting</button>
-            </div>
+            <span class="block lg:hidden font-bold text-[18px]">{{ $t('navigation.home') }}</span>
+            <languages-option />
+            <drawer-trigger as-child>
+              <div class="block lg:hidden cursor-pointer">
+                <img
+                  src="https://ccdn.steak.io.vn/assets-menu-mobile-repo-white.svg"
+                  class="w-6.5"
+                  alt=""
+                />
+              </div>
+            </drawer-trigger>
+            <drawer-content class="h-full bg-white/10 backdrop-blur-xl py-10">
+              <div class="mx-auto w-full">
+                <drawer-title class="hidden">Menu</drawer-title>
+                <drawer-header
+                  class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row"
+                >
+                  <span>{{ $t('menu.base') }}</span>
+                  <router-link
+                    :to="{ name: 'Login' }"
+                    class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm"
+                  >
+                    {{ $t('auth.login') }}
+                  </router-link>
+                </drawer-header>
+                <drawer-description class="hidden"> </drawer-description>
+                <drawer-footer class="flex flex-col gap-y-2">
+                  <router-link
+                    class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                    :to="{ name: 'store' }"
+                    >{{ $t('navigation.store') }}</router-link
+                  >
+                  <router-link
+                    class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                    :to="{ name: 'PublisherDashboard' }"
+                    >{{ $t('navigation.development_workspace') }}</router-link
+                  >
+                  <router-link
+                    class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                    :to="{ name: 'SupportCenter' }"
+                    >{{ $t('navigation.help') }}</router-link
+                  >
+                </drawer-footer>
+              </div>
+            </drawer-content>
 
-            <div class="block lg:hidden">
-              <img
-                src="https://ccdn.steak.io.vn/assets-menu-mobile-repo-white.svg"
-                class="w-6.5"
-                alt=""
-              />
-            </div>
-
             <div
-              class="loginOption hidden w-full lg:block lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full"
+              class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full"
             >
-              <router-link to="/login" class="flex justify-center items-center mx-auto"
-                >Login</router-link
-              >
+              <router-link to="/login" class="flex justify-center items-center mx-auto">{{
+                $t('auth.login')
+              }}</router-link>
             </div>
           </div>
           <!-- END OPTIONAL-->
@@ -164,4 +190,14 @@
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+import {
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerHeader,
+  DrawerTrigger,
+} from '@/components/ui/drawer'
+import LanguagesOption from '@/components/common/LanguagesOption.vue'
+</script>

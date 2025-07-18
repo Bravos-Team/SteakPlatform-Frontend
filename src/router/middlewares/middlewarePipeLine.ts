@@ -1,4 +1,10 @@
-const middlewarePipeLine = (context: any, middleware: any[], index: number): any => {
+import { MiddlewareContext } from '@/types/router/middleware'
+
+const middlewarePipeLine = (
+  context: MiddlewareContext,
+  middleware: ((context: MiddlewareContext) => void)[],
+  index: number,
+): any => {
   const nextMiddleWare = middleware[index]
   if (!nextMiddleWare) return context.next
   return () => {

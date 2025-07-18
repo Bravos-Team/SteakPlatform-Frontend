@@ -1,17 +1,43 @@
 <template>
-  <div class="lg:w-[1135px] xl:w-[1423px] xl:h-[638px] shrink-0 lg:h-[526px]">
-    <div class="flex flex-row gap-x-5">
-      <div class="lg:w-[935px] xl:w-[1134px] xl:h-[638px] lg:h-[525px] overflow-hidden rounded-3xl bg-gray-200/5">
-        <div v-for="game in gameSliders" :key="game.id">
-          <img :src="game.background" alt="" />
+  <div class="w-full">
+    <div class="flex flex-col laptop:flex-row gap-x-5">
+      <div
+        class="w-full hidden laptop:flex lg:w-[935px] xl:w-[1134px] xl:h-[638px] lg:h-[525px] overflow-hidden rounded-3xl bg-gray-200/5"
+      >
+        <div class="w-full h-full">
+          <img
+            v-for="game in gameSliders"
+            :key="game.id"
+            :src="game.background"
+            alt=""
+            class="object-cover h-full w-full"
+          />
+        </div>
+      </div>
+
+      <div
+        class="w-full px-3 shrink-0 snap-mandatory laptop:hidden flex gap-x-10 lg:w-[935px] xl:w-[1134px] snap-x xl:h-[638px] lg:h-[525px] overflow-x-scroll no-scrollbar bg-gray-transparent"
+      >
+        <div
+          v-for="game in gameSliders"
+          :key="game.id"
+          class="w-full tablet:min-w-[40rem] tablet:w-full snap-center rounded-sm overflow-hidden shrink-0 h-[40rem] flex"
+        >
+          <img :src="game.background" alt="" class="object-cover h-full w-full" />
         </div>
       </div>
       <!-- SUB SLIDER BAR-->
-      <div class="lg:w-[180px] lg:h-[526px] flex flex-col">
+      <div class="lg:w-[180px] lg:h-[526px] hidden laptop:flex flex-col">
         <div
           class="lg:w-[180px] xl:w-[256px] xl:h-[101px] shrink-0 lg:h-[85px] flex flex-row justify-center items-center hover:bg-[#404044]/40 mb-[3px] rounded-md"
-          v-for="game in gameSliders" :key="game.id">
-          <img :src="game.img" alt="" class="w-10 rounded-md mx-5 flex justify-center items-center" />
+          v-for="game in gameSliders"
+          :key="game.id"
+        >
+          <img
+            :src="game.img"
+            alt=""
+            class="w-10 rounded-md mx-5 flex justify-center items-center"
+          />
           <p class="text-white w-[120px]">{{ game.name }}</p>
         </div>
       </div>

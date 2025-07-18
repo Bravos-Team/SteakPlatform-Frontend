@@ -21,9 +21,9 @@
 
   <div class="flex flex-col">
     <div class="flex flex-row justify-between items-center my-[5px]">
-      <span class="text-gray-400 text-[12px] mb-[5px] leading-[18px]">{{
-        game.category.name
-      }}</span>
+      <span class="text-gray-400 text-[12px] mb-[5px] leading-[18px]">
+        {{ game.category.name }}</span
+      >
       <span
         v-if="game.salePercent != 0"
         class="text-black bg-[#26bbff] w-[48px] h-[20px] rounded-full flex justify-center items-center font-medium align-center text-[12px]"
@@ -71,7 +71,7 @@
           {{
             CurrencyUtils.formatCurrency(
               CurrencyUtils.calculatPriceAfterSale(game.price, game.salePercent),
-              '₫'
+              '₫',
             )
           }}
         </p>

@@ -1,17 +1,24 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
-    <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
-    <particles-base class="absolute opacity-80" />
-    <div class="bg-black absolute inset-0 opacity-35"></div>
-  </div>
+    <div class="relative">
+      <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
+      <particles-base class="absolute opacity-80" />
+      <div class="bg-black absolute inset-0 opacity-35"></div>
 
+      <div class="absolute top-10 right-10 z-10">
+        <LanguagesOption />
+      </div>
+    </div>
+  </div>
   <div class="flex justify-center items-center h-screen px-5">
     <div
       class="backdrop-blur-[6px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-5 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
     >
       <div class="flex flex-col justify-center items-center gap-y-3 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
-        <span class="font-bold text-3xl">Sign In</span>
+        <span class="font-bold text-3xl">
+          {{ $t('auth.login') }}
+        </span>
       </div>
       <div class="flex w-full">
         <form
@@ -21,14 +28,16 @@
         >
           <div class="flex flex-col gap-y-[20px] w-full lg:w-8/12">
             <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Email</span>
+              <span class="font-black">
+                {{ $t('auth.email') }}
+              </span>
               <input
                 type="text"
                 v-model="form.usernameOrEmail"
                 name="emailOrUsername"
                 autocomplete="off"
                 class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                placeholder="Enter Your Email"
+                :placeholder="$t('auth.informations.username_and_password_placeholder')"
               />
               <label
                 v-if="publisherErrors.email || publisherErrors.username"
@@ -40,7 +49,7 @@
             </div>
 
             <div class="flex text-white gap-2 flex-col w-full">
-              <span class="font-black">Password</span>
+              <span class="font-black"> {{ $t('auth.password') }}</span>
               <div class="relative">
                 <input
                   :type="isPassword ? 'password' : 'text'"
@@ -48,7 +57,7 @@
                   name="password"
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  placeholder="Enter Your Password"
+                  :placeholder="$t('auth.informations.password_placeholder')"
                 />
                 <label v-if="publisherErrors.password" for="password" class="text-red-500">
                   {{ publisherErrors.password }}
@@ -66,8 +75,9 @@
               </div>
             </div>
             <div class="flex justify-center">
-              <a href="" class="underline italic text-blue-400 hover:text-blue-500 text-[12px]"
-                >Forgot Password ?</a
+              <a href="" class="underline italic text-blue-400 hover:text-blue-500 text-[12px]">
+                {{ $t('auth.informations.forgot_password') }}
+                ?</a
               >
             </div>
           </div>
@@ -81,7 +91,7 @@
                 v-if="isPendingPublisherLoginEmail || isPendingPublisherLoginUserName"
                 class="animate-spin ml-2"
               />
-              <span v-else> Login </span>
+              <span v-else> {{ $t('auth.login') }} </span>
             </button>
             <span class="text-red-500 text-center">{{ loginMessage }}</span>
           </div>
@@ -93,13 +103,15 @@
             <router-link
               :to="{ name: 'PublisherAuthRegister' }"
               class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
-              >Create Account ?
+            >
+              {{ $t('auth.create_account') }}
             </router-link>
-            or
+            {{ $t('auth.or') }}
             <router-link
               :to="{ name: 'Login' }"
               class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
-              >Login as User Account
+            >
+              {{ $t('auth.login_as_user') }}
             </router-link>
             <!-- <span>or</span>
             <router-link
@@ -111,7 +123,8 @@
           <router-link
             to="#"
             class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
-            >Privacy Policy
+          >
+            {{ $t('auth.privacy_policy') }}
           </router-link>
         </div>
       </div>
@@ -134,6 +147,7 @@ import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+import LanguagesOption from '@/components/common/LanguagesOption.vue'
 const router = useRouter()
 const { mutateAsync: mutateAsyncPublisherLoginEmail, isPending: isPendingPublisherLoginEmail } =
   usePublisherLoginEmail()

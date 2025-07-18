@@ -1,7 +1,9 @@
 <template>
   <!-- <sidebar-group class="group-data-[collapsible=icon]:hidden">  -->
   <sidebar-group>
-    <sidebar-group-label>Platform</sidebar-group-label>
+    <sidebar-group-label>{{
+      $t('title.subPagesCompo.sidebar.publisher.platform')
+    }}</sidebar-group-label>
     <sidebar-menu>
       <sidebar-menu-skeleton v-if="!items" />
       <sidebar-menu-skeleton v-if="!items" />
@@ -20,7 +22,9 @@
             <collapsible-trigger as-child>
               <sidebar-menu-button :tooltip="value?.title">
                 <component :is="value?.icon" />
-                <span>{{ value?.title }}</span>
+                <span>{{
+                  getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value.i18n)
+                }}</span>
                 <chevron-right
                   class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
                 />
@@ -38,7 +42,9 @@
                     <sidebar-menu-item>
                       <sidebar-menu-button :tooltip="subItem?.title">
                         <component :is="subItem?.icon" />
-                        <span>{{ subItem?.title }}</span>
+                        <span>{{
+                          getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', subItem.i18n)
+                        }}</span>
 
                         <collapsible-trigger
                           class="bg-[#101014]/50 cursor-pointer rounded-sm"
@@ -59,7 +65,14 @@
                             <sidebar-menu-sub-button as-child>
                               <router-link @click="handleRedirect" :to="{ name: valueSub?.name }">
                                 <component :is="valueSub?.icon" />
-                                <span>{{ valueSub?.title }}</span>
+                                <span>
+                                  {{
+                                    getTranslatedTitle(
+                                      'title.subPagesCompo.sidebar.publisher.',
+                                      valueSub?.i18n,
+                                    )
+                                  }}
+                                </span>
                               </router-link>
                             </sidebar-menu-sub-button>
                           </sidebar-menu-sub-item>
@@ -73,7 +86,14 @@
                   <sidebar-menu-sub-button v-else as-child>
                     <router-link @click="handleRedirect" :to="{ name: subItem?.name }">
                       <component :is="subItem?.icon" />
-                      <span>{{ subItem?.title }}</span>
+                      <span>
+                        {{
+                          getTranslatedTitle(
+                            'title.subPagesCompo.sidebar.publisher.',
+                            subItem?.i18n,
+                          )
+                        }}
+                      </span>
                     </router-link>
                   </sidebar-menu-sub-button>
                   <!-- END IF NOT -->
@@ -91,9 +111,15 @@
           <sidebar-menu-item>
             <collapsible-trigger as-child>
               <router-link @click="handleRedirect" :to="{ name: value?.name }">
-                <sidebar-menu-button :tooltip="value?.title">
+                <sidebar-menu-button
+                  @click="handleLogout()"
+                  class="cursor-pointer"
+                  :tooltip="value?.title"
+                >
                   <component :is="value?.icon" />
-                  <span>{{ value?.title }}</span>
+                  <span>
+                    {{ getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value?.i18n) }}
+                  </span>
                 </sidebar-menu-button>
               </router-link>
             </collapsible-trigger>
@@ -110,6 +136,7 @@ import { ChevronRight, ChevronsDown, type LucideIcon } from 'lucide-vue-next'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useSidebar } from '@/components/ui/sidebar'
 import { nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -121,7 +148,11 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
-
+import getTranslatedTitle from '@/utils/i18n/useI18nUtils'
+import { usePublisherLogout } from '@/hooks/publisher/usePublisher'
+import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
+const router = useRouter()
+const { refetch } = usePublisherLogout()
 const useSideBarTool = useSidebar()
 const props = defineProps<{
   items: [
@@ -130,13 +161,16 @@ const props = defineProps<{
       name?: string
       icon: LucideIcon
       isActive?: boolean
+      i18n?: string
       items: {
         title: string
         name: string
+        i18n?: string
         icon: LucideIcon
         subItems?: {
           title: string
           name: string
+          i18n?: string
           icon: LucideIcon
         }[]
       }[]
@@ -144,6 +178,12 @@ const props = defineProps<{
   ]
 }>()
 
+const handleLogout = async () => {
+  if (getCookie('userAccessRights')) removeCookie('userAccessRights')
+  if (getCookie('publisherAccessRights')) removeCookie('publisherAccessRights')
+  refetch()
+  await router.push({ name: 'PublisherAuthLogin' })
+}
 const handleRedirect = async () => {
   if (useSideBarTool.isMobile.value) {
     useSideBarTool.setOpenMobile(false)

@@ -4,20 +4,20 @@
   >
     <div class="flex flex-col items-center mb-10">
       <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
-      <p class="text-2xl font-extrabold mt-2">Login</p>
+      <p class="text-2xl font-extrabold mt-2">{{ $t('auth.login') }}</p>
     </div>
 
     <form @submit.prevent="handleSubmission" novalidate class="w-full max-w-md mx-auto space-y-4">
       <div>
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">
-          Username or Email
+          {{ $t('auth.informations.username_and_password') }}
         </p>
         <input
           type="text"
           required
           v-model="form.usernameOrEmail"
           autocomplete="username"
-          placeholder="Username or Email"
+          :placeholder="$t('auth.informations.username_and_password_placeholder')"
           class="xl:w-full peer invalid:focus:border-red-500 h-12 px-4 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
         />
         <label v-if="errors.usernameOrEmail" class="peer-invalid:block text-red-500">
@@ -26,7 +26,9 @@
       </div>
 
       <div>
-        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-1">Password</p>
+        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-1">
+          {{ $t('auth.informations.password') }}
+        </p>
         <div class="relative">
           <input
             :type="isPassword ? 'password' : 'text'"
@@ -34,7 +36,7 @@
             v-model="form.password"
             autocomplete="current-password"
             required
-            placeholder="Password"
+            :placeholder="$t('auth.informations.password_placeholder')"
             class="peer xl:w-full h-12 px-4 pr-12 rounded-lg bg-white dark:bg-[#1a1a1a] border border-black dark:border-gray-600 dark:text-white invalid:focus:border-red-500 invalid:focus:ring-2 invalid:focus:ring-red-500 focus:outline-none valid:focus:ring-2 valid:focus:ring-[#0af] transition w-full"
           />
           <img
@@ -49,8 +51,13 @@
         </label>
       </div>
 
-      <div class="text-right">
-        <a href="#" class="text-sm text-[#0af] underline">Forgotten password ?</a>
+      <div class="text-right flex justify-between items-center">
+        <router-link :to="{ name: 'store' }" class="text-sm text-[#0af] underline">
+          {{ $t('navigation.steak_store') }}
+        </router-link>
+        <a href="#" class="text-sm text-[#0af] underline">
+          {{ $t('auth.informations.forgot_password') }}
+        </a>
       </div>
 
       <div v-if="isLoginByEmailPending || isLoginByUsernamePending">
@@ -58,7 +65,7 @@
           class="h-12 hover:ring-3 hover:bg-blue-400 overflow-hidden hover:text-black cursor-not-allowed hover:ring-blue-300 transition-all duration-300 bg-[#A9A9A9] rounded-[5px] w-full"
         >
           <div class="flex space-x-2 animate-pulse justify-center items-center bg-blue-400 h-full">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only"> {{ $t('auth.informations.isLogin') }}</span>
             <div
               class="h-2 w-2 bg-black dark:bg-white rounded-full animate-bounce [animation-delay:-0.3s]"
             ></div>
@@ -74,13 +81,13 @@
           type="submit"
           class="w-full h-12 bg-white dark:bg-gray-500 dark:text-white border border-black dark:border-none font-medium rounded-lg cursor-pointer hover:bg-[#464646] hover:text-white hover:ring-2 hover:ring-gray-800 hover:dark:ring-3 hover:dark:bg-blue-300 hover:dark:text-black hover:dark:ring-blue-400 transition duration-300"
         >
-          Login
+          {{ $t('auth.login') }}
         </button>
       </div>
 
       <div class="flex items-center text-sm font-bold text-black dark:text-white">
         <hr class="flex-1 border-gray-600" />
-        <span class="px-4">Or login with</span>
+        <span class="px-4"> {{ $t('auth.or_login_with') }}</span>
         <hr class="flex-1 border-gray-600" />
       </div>
 
@@ -93,25 +100,29 @@
         <button
           class="flex items-center justify-center h-12 border border-black w-full bg-[#65a8ff] dark:bg-[#1877f2] rounded-lg"
         >
-          <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6"  alt="logo"/>
+          <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6" alt="logo" />
         </button>
         <div class="flex items-center justify-center">
-          <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-sky-400"
-            >Login as Publisher</router-link
-          >
+          <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-sky-400">{{
+            $t('auth.login_as_publisher')
+          }}</router-link>
         </div>
       </div>
     </form>
 
     <footer class="mt-10 mb-10 flex flex-col items-center space-y-3">
-      <p class="text-sm text-gray-500 dark:text-gray-400">
-        Don't have an account?
-        <router-link to="/register" class="text-[#0af] underline">Register</router-link>
+      <p class="text-sm text-gray-500 dark:text-gray-400 flex gap-x-1">
+        {{ $t('auth.dont_have_an_account') }}?
+        <router-link to="/register" class="text-[#0af] underline">
+          {{ $t('auth.register') }}</router-link
+        >
       </p>
-      <p class="text-sm text-gray-500 dark:text-gray-400">
-        By logging in, you agree to our
-        <a href="#" class="text-[#0af] underline">Terms of Service</a> and
-        <a href="#" class="text-[#0af] underline">Privacy Policy</a>.
+      <p class="text-sm text-gray-500 dark:text-gray-400 flex gap-x-1">
+        {{ $t('auth.by_logging_in') }}
+        <a href="#" class="text-[#0af] underline"> {{ $t('auth.terms_of_services') }}</a>
+        {{ $t('auth.and') }}
+        <a href="#" class="text-[#0af] underline"> {{ $t('auth.policy') }}</a
+        >.
       </p>
     </footer>
   </div>

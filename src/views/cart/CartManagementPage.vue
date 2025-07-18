@@ -1,8 +1,8 @@
 <template>
   <tooltip-provider>
     <div class="flex flex-col justify-center h-full gap-y-6">
-      <span class="text-5xl font-extrabold">Your Cart</span>
-      <div class="flex gap-x-2 justify-between">
+      <span class="text-5xl font-extrabold">{{ $t('title.pages.cart') }}</span>
+      <div class="flex flex-col tablet:flex-row px-2 gap-y-10 gap-x-2 justify-between">
         <div class="flex w-full gap-y-3 flex-col">
           <div
             v-for="game in mockProducts"
@@ -33,7 +33,9 @@
             <div class="flex w-full flex-col gap-y-2">
               <!-- NAME AND HEADER BADGE -->
               <div class="flex justify-between w-full">
-                <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">Base Game</span>
+                <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">{{
+                  $t('type.game.base')
+                }}</span>
                 <span class="font-bold">{{
                   Number(game.price).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
                 }}</span>
@@ -53,9 +55,9 @@
                   />
                   <div class="flex flex-col gap-y-3 w-full">
                     <span class="text-sm font-bold">12+</span>
-                    <span class="text-xs font-light border-t-1 border-white/20 py-2 text-white/50"
-                      >Horror, Moderate Violence</span
-                    >
+                    <span class="text-xs font-light border-t-1 border-white/20 py-2 text-white/50">
+                      {{ $t('warnings.game.type.horror_moderate_violence') }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -63,7 +65,7 @@
 
               <!-- SELF-REFUNDABLE -->
               <div class="flex gap-x-2">
-                <span>Self-Refundable</span>
+                <span>{{ $t('noti_note.cart.self_refundable') }}</span>
                 <div class="rounded-full">
                   <tooltip>
                     <tooltip-trigger>
@@ -71,19 +73,21 @@
                         <Info class="size-5 text-white/70" />
                       </router-link>
                     </tooltip-trigger>
-                    <tooltip-content :color="1"> Learn more about refund </tooltip-content>
+                    <tooltip-content :color="1">
+                      <span>{{ $t('noti_note.cart.learn_about_refunds') }}</span>
+                    </tooltip-content>
                   </tooltip>
                 </div>
               </div>
               <!-- END SELF-REFUNDABLE -->
 
               <!-- ACTION BUTTONS -->
-              <div class="flex text-white/50 w-full items-center gap-x-2 justify-end">
+              <div class="flex text-white/50 w-full items-center gap-x-6 justify-end">
                 <button class="hover:text-white/80 cursor-pointer transition-colors duration-300">
-                  Remove
+                  {{ $t('features.buttons.remove_from_cart') }}
                 </button>
                 <button class="hover:text-white/80 cursor-pointer transition-colors duration-300">
-                  Move to Wishlist
+                  {{ $t('features.buttons.move_to_wishlist') }}
                 </button>
               </div>
               <!-- END ACTION BUTTONS -->
@@ -92,24 +96,26 @@
           </div>
         </div>
         <div class="min-w-[296px] min-h-[326px] px-3 gap-y-5 flex flex-col">
-          <span class="text-3xl font-extrabold">Games and Apps Summary</span>
+          <span class="text-3xl font-extrabold">{{
+            $t('title.subPagesCompo.game_and_apps_summary_price')
+          }}</span>
           <div class="flex flex-col gap-y-3">
             <div class="flex flex-col gap-y-3 py-3 border-b-1">
               <div class="flex justify-between">
-                <span class="text-white">Price</span>
+                <span class="text-white">{{ $t('features.filters.types.price') }}</span>
                 <span class="text-white">{{ totalPrices }}</span>
               </div>
 
               <div class="flex justify-between">
-                <span class="text-white">Taxes</span>
-                <span class="text-white">Calculated at Checkout</span>
+                <span class="text-white">{{ $t('noti_note.cart.taxes') }}</span>
+                <span class="text-white">{{ $t('noti_note.cart.calculated_at_checkout') }}</span>
               </div>
             </div>
 
             <button
               class="text-center font-medium bg-blue-400/90 hover:bg-blue-400 cursor-pointer transition-colors duration-300 text-black text-sm w-full rounded-sm py-4"
             >
-              Check Out
+              {{ $t('title.store.payment') }}
             </button>
           </div>
         </div>
@@ -124,7 +130,8 @@ import TooltipContent from '@/components/ui/tooltip/TooltipContent.vue'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import TooltipTrigger from '@/components/ui/tooltip/TooltipTrigger.vue'
 import { Info } from 'lucide-vue-next'
-import { computed, ref } from 'vue'
+import { computed, nextTick, onBeforeMount, ref } from 'vue'
+import { getCookie } from '@/utils/cookies/cookie-utils'
 
 const mockProducts = ref<{ id: number; title: string; thumbnail: string; price: number }[]>([
   {

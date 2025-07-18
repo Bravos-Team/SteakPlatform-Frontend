@@ -16,14 +16,14 @@
 
     <!-- START SHORT DESCRIPTIONS -->
     <div class="flex col-span-2 flex-col justify-center">
-      <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
-        >Short Descriptions</span
-      >
+      <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400">
+        {{ $t('title.pages.game_details.form.short_descriptions.title') }}
+      </span>
       <Textarea
         maxlength="125"
         v-model:model-value="getShortDescriptions"
         name="shortDescriptions"
-        placeholder="Enter your short descriptions..."
+        :placeholder="$t('title.pages.game_details.form.short_descriptions.placeholder')"
         class="w-full border-2 border-double rounded-sm"
       ></Textarea>
     </div>
@@ -31,9 +31,9 @@
 
     <!-- START LONG DESCRIPTIONS -->
     <div class="flex col-span-2 flex-col justify-center">
-      <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400"
-        >Long Descriptions</span
-      >
+      <span class="flex items-center text-sm after:content-['*'] after:ms-1 after:text-yellow-400">
+        {{ $t('title.pages.game_details.form.long_descriptions.title') }}
+      </span>
       <text-editor v-model:emit-long-descriptions-data="getLongDescriptionsHTML" />
     </div>
     <!-- END LONG DESCRIPTIONS -->

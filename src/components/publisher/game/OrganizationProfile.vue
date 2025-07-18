@@ -1,7 +1,9 @@
 <template>
   <card class="bg-[#101014]/50 backdrop-blur-2xl w-full lg:w-5/12">
     <card-content class="flex flex-col gap-2">
-      <card-header class="text-3xl font-bold">Your Organization</card-header>
+      <card-header class="text-3xl font-bold">{{
+        $t('title.pages.game_management.your_organization')
+      }}</card-header>
       <card-content class="flex lg:flex-row justify-start items-center lg:items-start">
         <img
           class="w-30 rounded-sm"
@@ -12,7 +14,7 @@
           <card-header class="font-bold text-3xl">Steak</card-header>
           <card-content>
             <card-title>狗男孩</card-title>
-            <card-description> Bravos Organization </card-description>
+            <card-description> Bravos Organization</card-description>
           </card-content>
         </div>
       </card-content>
@@ -20,8 +22,9 @@
         <card-action as-child>
           <Button
             class="bg-[#69696B]/50 text-white text-md font-medium hover:bg-[#69696B]/80 cursor-pointer"
-            >Changes Profile</Button
           >
+            {{ $t('title.pages.game_management.changes_profile') }}
+          </Button>
         </card-action>
       </card-footer>
     </card-content>
@@ -30,7 +33,9 @@
     class="bg-[#101014]/50 backdrop-blur-2xl w-full lg:w-7/12 border-dashed border-gray-500/30 border-2"
   >
     <card-content class="flex flex-col gap-1">
-      <card-header class="text-3xl font-bold">Nofitications</card-header>
+      <card-header class="text-3xl font-bold">
+        {{ $t('title.pages.game_management.notifications') }}
+      </card-header>
       <card-content class="flex flex-wrap gap-y-1 min-h-9/12">
         <Alert class="h-18 bg-[#101014]/60">
           <Rocket class="h-4 w-4" />
@@ -47,7 +52,8 @@
           <Button
             variant="outline"
             class="text-md !border-red-200/20 hover:!bg-red-400/10 cursor-pointer font-black"
-            >Clear All</Button
+          >
+            {{ $t('title.pages.game_management.clear_all') }}</Button
           >
         </card-action>
       </card-footer>

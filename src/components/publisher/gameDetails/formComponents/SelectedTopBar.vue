@@ -1,13 +1,13 @@
 <template>
-  <div class="flex w-full gap-y-2 justify-between gap-x-2">
+  <div class="flex tablet:flex-row flex-col w-full gap-y-2 justify-between gap-x-2">
     <!-- START INTERNET CONNECTED SWITCHER -->
     <internet-connected-switcher v-model:model-value="getInternetConnectedRequiredData" />
     <!-- END INTERNET CONNECTED SWITCHER -->
 
-    <div class="flex gap-x-2 w-full justify-between justify-end">
+    <div class="flex gap-x-2 w-full justify-between tablet:justify-end">
       <!-- START UPDATE AT INFORMATION -->
       <div class="flex items-center gap-x-2">
-        <span>Updated at:</span>
+        <span>{{ $t('title.pages.game_details.form.update_at') }}:</span>
         <tooltip>
           <tooltip-trigger>
             <update-at-information

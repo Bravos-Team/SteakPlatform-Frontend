@@ -1,11 +1,14 @@
 <template>
-  <span class="text-white font-medium">Latest updated features: {{ changeLogDateData }} </span>
+  <span class="text-white font-medium px-2">
+    {{ $t('title.pages.game_management.noti.message_logs') }}
+    {{ new Date().toLocaleDateString('vi-VN') }}
+  </span>
   <sheet>
     <sheet-trigger as-child>
       <button
         class="text-sky-400 ms-1 underline underline-blue-200 decoration-sky-500 cursor-pointer"
       >
-        View changelog
+        {{ $t('title.pages.game_management.noti.actions') }}
       </button>
     </sheet-trigger>
     <sheet-content class="pt-10 px-3">
@@ -27,5 +30,4 @@ import {
 } from '@/components/ui/sheet'
 
 import ChangelogAccordion from '@/components/publisher/game/ChangelogAccordion.vue'
-const changeLogDateData = 'Mar 25, 2025'
 </script>

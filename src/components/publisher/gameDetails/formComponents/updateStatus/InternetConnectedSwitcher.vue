@@ -13,7 +13,9 @@
           class="w-5 h-5 transition-all duration-1000 absolute -top-[5px] left-0"
           :class="{ 'opacity-0 ': isInternetConnectedRequired }"
         />
-        <span class="ml-6">Require Internet Connection</span>
+        <span class="ml-6">{{
+          $t('title.pages.game_details.form.is_required_internet_connection')
+        }}</span>
       </Label>
     </div>
     <Switch v-model:model-value="isInternetConnectedRequired" id="internet_connected_switcher" />

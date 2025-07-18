@@ -1,8 +1,10 @@
+import user from '@/router/middlewares/user'
 import { RouteRecordRaw } from 'vue-router'
 const storeRoutes: RouteRecordRaw = {
   path: '/store',
   name: 'store',
   component: () => import('@/layouts/store/main/StoreLayout.vue'),
+  redirect: { name: 'store-home' },
   meta: {
     title: 'Store',
   },
@@ -25,7 +27,7 @@ const storeRoutes: RouteRecordRaw = {
       name: 'GameStorePayment',
       component: () => import('@/views/store/payment/TempPayment.vue'),
       meta: {
-        middleware: ['example'],
+        middleware: [user],
       },
     },
     {
@@ -33,7 +35,7 @@ const storeRoutes: RouteRecordRaw = {
       name: 'CartManagementPage',
       component: () => import('@/views/cart/CartManagementPage.vue'),
       meta: {
-        middleware: ['auth'],
+        middleware: [user],
       },
     },
     {
@@ -41,7 +43,7 @@ const storeRoutes: RouteRecordRaw = {
       name: 'WishlistManagementPage',
       component: () => import('@/views/cart/WishlistManagementPage.vue'),
       meta: {
-        middleware: ['auth'],
+        middleware: [user],
       },
     },
   ],

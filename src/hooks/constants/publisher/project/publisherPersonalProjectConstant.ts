@@ -14,4 +14,5 @@ export const PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS = {
     filters?.value.size ?? 10,
     filters?.value.keyword ?? '',
   ]) as QUERY_KEY_TYPE<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>,
+  LOGOUT: () => ['publisher', 'logout'] as const,
 }

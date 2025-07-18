@@ -7,9 +7,10 @@ import {
   publisherCreatePersonalProjectApi,
   publisherGetPersonalProjectByIdApi,
   publisherUpdateGameNameApi,
+  publisherPostVerifyGameRequest,
 } from '@/apis/publisher/project/publisherPersonalProjects'
 import { Ref } from 'vue'
-import { GameType, PartialGameType } from '@/types/game/gameDetails/GameDetailsType'
+import { PartialGameType } from '@/types/game/gameDetails/GameDetailsType'
 
 export const usePublisherGetPersonalProjects = (
   filters: Ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>,
@@ -78,5 +79,21 @@ export const usePublisherCreatePersonalProject = () => {
     mutateAsync,
     isPending,
     data,
+  }
+}
+
+export const usePublisherPostVerifyPersonalProject = () => {
+  const queryClient = useQueryClient()
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (id: bigint) => await publisherPostVerifyGameRequest(id),
+    onSuccess: (_data, variables: bigint) => {
+      queryClient.invalidateQueries({
+        queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables.toString()),
+      })
+    },
+  })
+  return {
+    mutateAsync,
+    isPending,
   }
 }

@@ -1,16 +1,18 @@
 <template>
   <div class="flex flex-col gap-y-2 w-full">
-    <span class="text-lg font-bold text-gray-400">Cover Image</span>
+    <span class="text-lg font-bold text-gray-400">
+      {{ $t('title.pages.game_details.form.cover_image.title') }}
+    </span>
     <!-- DEFAULT IMAGE -->
     <div
       :class="{ hidden: unShowImageUploaded }"
       class="w-full lg:h-40 border-4 border-double rounded-md flex lg:flex-row flex-col overflow-hidden relative"
     >
-      <div class="h-full flex justify-center p-5 bg-[#29292D]">
+      <div class="h-full flex justify-center bg-[#29292D]">
         <img
           :src="thumbnailUrl"
           ref="gameImage"
-          class="object-contain w-full md:h-50 lg:h-full"
+          class="object-cover w-full md:h-50 lg:h-full"
           alt=""
         />
       </div>
@@ -37,9 +39,9 @@
       :class="{ 'border-sky-500 bg-sky-50 text-sky-700': isDragging, hidden: !unShowImageUploaded }"
     >
       <Upload class="group-hover:text-white transition-all duration-250 group-hover:scale-110" />
-      <span class="group-hover:text-gray-400 transition-colors duration-250"
-        >Kéo thả file vào đây hoặc click để chọn</span
-      >
+      <span class="group-hover:text-gray-400 transition-colors duration-250">
+        {{ $t('title.pages.game_details.form.cover_image.input_suggestion') }}
+      </span>
       <input
         type="file"
         class="hidden"

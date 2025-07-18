@@ -119,8 +119,8 @@
           </popover-content>
         </Popover>
       </tooltip-trigger>
-      <TooltipContent>
-        <span class="font-medium">Help</span>
+      <TooltipContent :color="1">
+        <span class="font-medium"> {{ $t('navigation.help') }}</span>
       </TooltipContent>
     </tooltip>
   </tooltip-provider>
