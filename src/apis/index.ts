@@ -3,7 +3,7 @@ import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificati
 import router from '@/router/index'
 import { removeCookie, removeCookies } from '@/utils/cookies/cookie-utils'
 export const SteakApi = axios.create({
-  baseURL: import.meta.env.VITE_BASE_API_URL,
+  baseURL: import.meta.env.VITE_BASE_API_URL + "/api/v1",
   timeout: 5000,
   withCredentials: true,
   headers: {
