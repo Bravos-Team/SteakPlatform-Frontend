@@ -117,7 +117,7 @@
             <div class="flex flex-col gap-y-3 py-3 border-b-1">
               <div class="flex justify-between">
                 <span class="text-white">{{ $t('features.filters.types.price') }}</span>
-                <!-- <span class="text-white">{{ totalPrices }}</span> -->
+                <span class="text-white">{{ totalPrices }}</span>
               </div>
 
               <div class="flex justify-between">
@@ -144,8 +144,7 @@ import TooltipContent from '@/components/ui/tooltip/TooltipContent.vue'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import TooltipTrigger from '@/components/ui/tooltip/TooltipTrigger.vue'
 import { Info } from 'lucide-vue-next'
-// import { computed, nextTick, onBeforeMount, ref } from 'vue'
-// import { getCookie } from '@/utils/cookies/cookie-utils'
+import { computed } from 'vue'
 import { useUserCartList } from '@/hooks/store/cart/useUserCart'
 import { onMounted } from 'vue'
 const {
@@ -153,10 +152,13 @@ const {
   isFetching: isUserCartFetching,
   refetch: userCartRefetch,
 } = useUserCartList()
-// const totalPrices = computed(() => {
-//   return Number(mockProducts.value.reduce((total, game) => total + game.price, 0)).toLocaleString(
-//     'vi-VN',
-//     { style: 'currency', currency: 'VND' },
-//   )
-// })
+const totalPrices = computed(() => {
+  return Number(
+    userCartData.value?.data?.items.reduce((total: any, game: any) => total + game.price, 0),
+  ).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+})
+
+onMounted(() => {
+  userCartRefetch()
+})
 </script>

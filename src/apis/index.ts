@@ -14,28 +14,31 @@ export const SteakApi = axios.create({
 SteakApi.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const path = router.currentRoute.value.fullPath
-    if (error.response?.status === 401) {
-      if (path != '/login' && path != '/publisher/login' && path !== '/store/home') {
-        if (path.startsWith('/publisher') || path.startsWith('/game')) {
-          if (router.currentRoute.value.name === 'PublisherAuthLogin') {
-            return
-          } else {
-            removeCookies(['userAccessRights', 'publisherAccessRights'])
-            toastErrorNotificationPopup(
-              'You need login to access authenication required page!',
-              'Publisher Authentication',
-            )
-            await router.push({ name: 'PublisherAuthLogin' })
-          }
-        } else {
-          toastErrorNotificationPopup(
-            'You need login to access authenication required page!',
-            'Steak Game Store Authentication',
-          )
-          await router.push({ name: 'Login' })
-        }
+    const route = router.currentRoute.value
+    const status = error.response?.status
+    if (status === 401 && route?.meta?.middleware) {
+      removeCookies(['userAccessRights', 'publisherAccessRights'])
+      const group = (route.meta?.group ?? 'default') as keyof typeof messages
+      const messages = {
+        publisher: {
+          msg: 'You need login to access authenication required page!',
+          title: 'Publisher Authentication',
+          redirect: { name: 'PublisherAuthLogin' },
+        },
+        user: {
+          msg: 'You need login to access authenication required page!',
+          title: 'Steak Game Store Authentication',
+          redirect: { name: 'Login' },
+        },
+        default: {
+          msg: 'Something went wrong, please try again later!',
+          title: 'Steak Game Store Error',
+          redirect: { name: 'NotFound' },
+        },
       }
+      const { msg, title, redirect } = messages[group] || messages.default
+      toastErrorNotificationPopup(msg, title)
+      await router.push(redirect)
     }
     return Promise.reject(error)
   },

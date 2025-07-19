@@ -143,7 +143,7 @@
                   />
                 </div>
               </drawer-trigger>
-              <drawer-content class="h-full bg-white/10 backdrop-blur-xl py-10">
+              <drawer-content class="h-full outline-0 bg-white/10 backdrop-blur-xl py-10">
                 <div class="mx-auto w-full">
                   <drawer-title class="hidden">Menu</drawer-title>
                   <drawer-header
@@ -186,40 +186,6 @@
                   </drawer-header>
                   <drawer-description class="hidden"> </drawer-description>
                   <drawer-footer class="flex flex-col gap-y-2">
-                    <div
-                      class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                    >
-                      <div
-                        v-if="!getCookie('userAccessRights')"
-                        class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full"
-                      >
-                        <router-link to="/login" class="flex justify-center items-center mx-auto">{{
-                          $t('auth.login')
-                        }}</router-link>
-                      </div>
-
-                      <dropdown-menu v-else>
-                        <dropdown-menu-trigger as-child>
-                          <div class="flex items-center gap-x-2 cursor-pointer h-full font-black">
-                            {{ getCookie('userAccessRights') }}
-                          </div>
-                        </dropdown-menu-trigger>
-                        <dropdown-menu-content class="!min-w-[30rem]" align="end">
-                          <dropdown-menu-label>
-                            <span class="flex w-full text-center font-extrabold">{{
-                              $t('auth.informations.user.profile.title')
-                            }}</span>
-                          </dropdown-menu-label>
-                          <dropdown-menu-separator />
-                          <dropdown-menu-group>
-                            <dropdown-menu-item class="cursor-pointer" @click="handleLogout">
-                              <LogOut class="text-white" />
-                              {{ $t('auth.logout') }}
-                            </dropdown-menu-item>
-                          </dropdown-menu-group>
-                        </dropdown-menu-content>
-                      </dropdown-menu>
-                    </div>
                     <router-link
                       class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                       :to="{ name: 'store' }"

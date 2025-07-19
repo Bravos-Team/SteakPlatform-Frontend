@@ -28,15 +28,13 @@ const storeRoutes: RouteRecordRaw = {
       component: () => import('@/views/store/payment/TempPayment.vue'),
       meta: {
         middleware: [user],
+        group: 'user',
       },
     },
     {
       path: '/cart',
       name: 'CartManagementPage',
       component: () => import('@/views/cart/CartManagementPage.vue'),
-      meta: {
-        middleware: [user],
-      },
     },
     {
       path: '/wishlist',
@@ -44,6 +42,7 @@ const storeRoutes: RouteRecordRaw = {
       component: () => import('@/views/cart/WishlistManagementPage.vue'),
       meta: {
         middleware: [user],
+        group: 'user',
       },
     },
   ],
