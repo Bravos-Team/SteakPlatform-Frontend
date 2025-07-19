@@ -80,9 +80,16 @@
                 class="shrink-0 min-w-[100px] h-14 bg-white/10 rounded-sm flex justify-center"
               >
                 <img
+                  v-if="media.type === 'image'"
                   :src="media.url"
                   class="w-full h-full object-cover rounded-sm"
                   alt="Game Media"
+                />
+                <video
+                  v-else-if="media.type === 'video'"
+                  :src="media.url"
+                  class="w-full h-full object-cover rounded-sm"
+                  autoplay
                 />
               </div>
 

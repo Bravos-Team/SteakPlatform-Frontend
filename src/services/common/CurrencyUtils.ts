@@ -1,5 +1,6 @@
 const CurrencyUtils = {
-  formatCurrency(value: number, currencyType: string) {
+  formatCurrency(value: number | undefined, currencyType: string) {
+    if (value === undefined || value === null) return 0
     const dotIndexOf = value
       .toFixed(2)
       .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
