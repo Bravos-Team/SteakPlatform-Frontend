@@ -18,7 +18,7 @@ export const useLoginByEmailMutation = () => {
   const { isPending, mutateAsync, data, isSuccess } = useMutation<any, unknown, LoginRequest>({
     mutationKey: ['user', 'auth', 'login', 'email'],
     onSuccess: (response) => {
-      setCookie('userAccessRights', response.data?.username, {
+      setCookie('userAccessRights', response.data?.displayName, {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       })
     },
@@ -36,7 +36,7 @@ export const useLoginByUsernameMutation = () => {
   const { isPending, data, mutateAsync, isSuccess } = useMutation<any, unknown, LoginRequest>({
     mutationKey: ['user', 'auth', 'login', 'username'],
     onSuccess: (response) => {
-      setCookie('userAccessRights', response.data?.username, {
+      setCookie('userAccessRights', response.data?.displayName, {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       })
     },

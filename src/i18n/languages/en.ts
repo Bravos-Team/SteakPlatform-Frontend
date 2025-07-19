@@ -7,6 +7,11 @@ export default {
       password_placeholder: 'Enter password...',
       forgot_password: 'Forgot password',
       isLogin: 'Logging in...',
+      user: {
+        profile: {
+          title: 'Your Profile',
+        },
+      },
     },
     login: 'Login',
     or_login_with: 'Or login with',
@@ -107,8 +112,16 @@ export default {
       },
     },
     pages: {
-      wishlist: 'Your Wishlist',
-      cart: 'Your Cart',
+      wishlist: {
+        title: 'Your Wishlist',
+        empty: 'Your wishlist is empty',
+        empty_description: 'Add games to your wishlist to keep track of them.',
+      },
+      cart: {
+        title: 'Your Cart',
+        empty: 'Your cart is empty',
+        empty_description: 'Add games to your cart to start shopping.',
+      },
       payment: 'Payment',
       order: 'Order',
       order_history: 'Order History',

@@ -12,6 +12,8 @@ export const useUserCartList = () => {
   return useQuery({
     queryKey: CART_STORE_QUERY_KEYS.USER,
     queryFn: async ({ signal }) => await getMyCart(signal),
+    enabled: false,
+    retry: 3,
   })
 }
 

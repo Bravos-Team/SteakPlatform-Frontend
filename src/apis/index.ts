@@ -16,24 +16,24 @@ SteakApi.interceptors.response.use(
   async (error) => {
     const path = router.currentRoute.value.fullPath
     if (error.response?.status === 401) {
-      if (path != '/login' && path != '/publisher/login') {
+      if (path != '/login' && path != '/publisher/login' && path !== '/store/home') {
         if (path.startsWith('/publisher') || path.startsWith('/game')) {
           if (router.currentRoute.value.name === 'PublisherAuthLogin') {
             return
           } else {
             removeCookies(['userAccessRights', 'publisherAccessRights'])
-            await router.push({ name: 'PublisherAuthLogin' })
-            return toastErrorNotificationPopup(
+            toastErrorNotificationPopup(
               'You need login to access authenication required page!',
               'Publisher Authentication',
             )
+            await router.push({ name: 'PublisherAuthLogin' })
           }
         } else {
-          await router.push({ name: 'Login' })
-          return toastErrorNotificationPopup(
+          toastErrorNotificationPopup(
             'You need login to access authenication required page!',
             'Steak Game Store Authentication',
           )
+          await router.push({ name: 'Login' })
         }
       }
     }

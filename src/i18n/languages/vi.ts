@@ -7,6 +7,11 @@ export default {
       password_placeholder: 'Nhập mật khẩu...',
       forgot_password: 'Quên mật khẩu',
       isLogin: 'Đang đăng nhập...',
+      user: {
+        profile: {
+          title: 'Hồ sơ của bạn',
+        },
+      },
     },
     login: 'Đăng nhập',
     or_login_with: 'Hoặc đăng nhập với',
@@ -82,8 +87,16 @@ export default {
       game_details: 'Chi tiết game',
     },
     pages: {
-      wishlist: 'Danh sách mong muốn của bạn',
-      cart: 'Giỏ hàng của bạn',
+      wishlist: {
+        title: 'Danh sách mong muốn của bạn',
+        empty: 'Danh sách mong muốn của bạn đang trống',
+        empty_description: 'Thêm game vào danh sách mong muốn để theo dõi chúng.',
+      },
+      cart: {
+        title: 'Giỏ hàng của bạn',
+        empty: 'Giỏ hàng của bạn đang trống',
+        empty_description: 'Thêm game vào giỏ hàng để bắt đầu mua sắm.',
+      },
       payment: 'Thanh toán',
       order: 'Đơn hàng',
       order_history: 'Lịch sử đơn hàng',

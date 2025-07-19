@@ -1,11 +1,13 @@
 <template>
   <tooltip-provider>
-    <div class="flex flex-col mb-3 justify-center h-full gap-y-6">
-      <span class="text-5xl font-extrabold">{{ $t('title.pages.wishlist') }}</span>
+    <div class="flex flex-col px-2 mt-6 mb-3 justify-start h-full gap-y-6">
+      <span class="text-2xl laptop:text-5xl font-extrabold">
+        {{ $t('title.pages.wishlist.title') }}
+      </span>
       <div
-        class="flex relative px-3 gap-y-5 flex-col-reverse desktop:flex-row gap-x-2 justify-between"
+        class="flex relative px-3 gap-y-5 flex-col-reverse desktop:flex-row gap-x-2 justify-start"
       >
-        <div class="flex w-full gap-y-3 flex-col">
+        <div class="flex w-full h-full gap-y-3 flex-col">
           <div class="flex gap-x-1 items-center">
             <div class="text-white/50">{{ $t('features.filters.sortBy') }}:</div>
             <Select>
@@ -27,7 +29,8 @@
             </Select>
           </div>
           <div
-            v-for="game in mockProducts"
+            v-if="userWishlistData?.data.length > 0"
+            v-for="game in userWishlistData?.data?.items"
             :key="game.id"
             class="w-full cursor-pointer p-6 rounded-lg bg-white/6 flex gap-x-3 gap-[20px]"
           >
@@ -118,9 +121,16 @@
             </div>
             <!-- END RIGHT CONTENT -->
           </div>
+          <div v-else>
+            <span class="text-lg font-black">
+              {{ $t('title.pages.wishlist.empty') }}
+            </span>
+          </div>
         </div>
+
+        <!-- FILTERS  -->
         <div
-          class="tablet:min-h-[326px] desktop:max-w-[20rem] laptop:relative top-25 sticky bg-[#101014] w-full px-3 gap-y-5 h-[10rem] flex flex-col"
+          class="desktop:max-w-[20rem] top-25 sticky bg-[#101014] w-full px-3 gap-y-5 h-[10rem] flex flex-col"
         >
           <div class="font-bold">{{ $t('features.filters.title') }}</div>
           <div class="border-y-1 border-white/40">
@@ -147,6 +157,7 @@
             </div>
           </div>
         </div>
+        <!-- END FILTERS  -->
       </div>
     </div>
   </tooltip-provider>
@@ -154,6 +165,7 @@
 
 <script setup lang="ts">
 import { Checkbox } from '@/components/ui/checkbox'
+
 import {
   Select,
   SelectContent,
@@ -168,68 +180,6 @@ import TooltipContent from '@/components/ui/tooltip/TooltipContent.vue'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import TooltipTrigger from '@/components/ui/tooltip/TooltipTrigger.vue'
 import { Info } from 'lucide-vue-next'
-import { computed, ref } from 'vue'
-
-const mockProducts = ref<{ id: number; title: string; thumbnail: string; price: number }[]>([
-  {
-    id: 1,
-    title: 'Product 1',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 250000,
-  },
-  {
-    id: 2,
-    title: 'Product 2',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 180000,
-  },
-  {
-    id: 3,
-    title: 'Product 3',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 99000,
-  },
-  {
-    id: 4,
-    title: 'Product 4',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 315000,
-  },
-  {
-    id: 5,
-    title: 'Product 5',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 279000,
-  },
-  {
-    id: 6,
-    title: 'Product 6',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 150000,
-  },
-  {
-    id: 7,
-    title: 'Product 7',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 65000,
-  },
-  {
-    id: 8,
-    title: 'Product 8',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 205000,
-  },
-  {
-    id: 9,
-    title: 'Product 9',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 420000,
-  },
-  {
-    id: 10,
-    title: 'Product 10',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 123000,
-  },
-])
+import { useGetUserWishlist } from '@/hooks/store/wishlist/useWishlist'
+const { data: userWishlistData, isFetching: isUserWishlistFetching } = useGetUserWishlist()
 </script>
