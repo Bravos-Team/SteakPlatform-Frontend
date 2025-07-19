@@ -3,7 +3,7 @@ import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificati
 import router from '@/router/index'
 import { removeCookie, removeCookies } from '@/utils/cookies/cookie-utils'
 export const SteakApi = axios.create({
-  baseURL: import.meta.env.VITE_BASE_API_URL + "/api/v1",
+  baseURL: import.meta.env.VITE_BASE_API_URL + '/api/v1',
   timeout: 5000,
   withCredentials: true,
   headers: {
@@ -26,16 +26,6 @@ SteakApi.interceptors.response.use(
             return toastErrorNotificationPopup(
               'You need login to access authenication required page!',
               'Publisher Authentication',
-            )
-          }
-        } else if (path.startsWith('/admin')) {
-          if (router.currentRoute.value.name === 'AdminLogin') {
-            return
-          } else {
-            await router.push({ name: 'AdminLogin' })
-            return toastErrorNotificationPopup(
-              'Need admin account to login!',
-              'Steak Admin Authentication',
             )
           }
         } else {
