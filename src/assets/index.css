@@ -112,6 +112,7 @@
       opacity: 1;
     }
   }
+
   @keyframes accordion-down {
     from {
       height: 0;
@@ -130,6 +131,24 @@
   }
 }
 
+@keyframes typewriter {
+  to {
+    left: 100%;
+  }
+}
+
+@keyframes blinkTextCursor {
+  0%   { border-right-color: rgba(255,255,255,0.75); }
+  49%  { border-right-color: rgba(255,255,255,0.75); }
+  50%  { border-right-color: transparent; }
+  100% { border-right-color: transparent; }
+}
+
+.typewriter {
+  animation:
+    typewriter 4s steps(40) 1s 1 normal both,
+    blinkTextCursor 500ms steps(40) infinite normal;
+}
 :root {
   --background: oklch(1 0 0);
 

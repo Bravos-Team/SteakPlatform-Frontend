@@ -19,8 +19,8 @@
             class="w-full h-full overflow-hidden rounded-t-sm"
             :class="{
               'bg-red-300/10': game.status === 'REJECTED',
-              'bg-green-300/30': game.status === 'VERIFIED',
-              'bg-white/20': game.status === 'PUBLISHED',
+              'bg-green-300/30': game.status === 'ACCEPTED',
+              'bg-white/20': game.status === 'NEED_UPDATED',
               'bg-green-950/60': game.status === 'PENDING_REVIEW',
               'bg-sky-300/20': game.status === 'DRAFT',
             }"
@@ -51,8 +51,8 @@
               <span
                 :class="{
                   'text-red-500/90': game.status === 'REJECTED',
-                  'text-green-500/90': game.status === 'VERIFIED',
-                  'text-gray-300/90': game.status === 'PUBLISHED',
+                  'text-green-500/90': game.status === 'ACCEPTED',
+                  'text-gray-300/90': game.status === 'NEED_UPDATED',
                   'text-white': game.status === 'PENDING_REVIEW',
                   'text-sky-300/90': game.status === 'DRAFT',
                 }"
@@ -142,9 +142,9 @@ const xValueComputed = (status: string) => {
   switch (status) {
     case 'REJECTED':
       return 70
-    case 'VERIFIED':
+    case 'ACCEPTED':
       return 110
-    case 'PUBLISHED':
+    case 'NEED_UPDATED':
       return 100
     case 'PENDING_REVIEW':
       return 150

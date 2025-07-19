@@ -1,6 +1,6 @@
 import SteakApi from '@/apis'
 
-export const getMyWishlist = (signal: AbortSignal) => {
+export const getMyWishlist = (signal?: AbortSignal) => {
   return SteakApi.get('/api/v1/store/private/wishlist/me', { signal: signal })
 }
 

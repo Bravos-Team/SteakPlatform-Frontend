@@ -1,4 +1,10 @@
-import { useMutation, useQuery, useQueryClient, keepPreviousData } from '@tanstack/vue-query'
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  keepPreviousData,
+  QueryClient,
+} from '@tanstack/vue-query'
 import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/project/PublisherPersonalProjectType'
 import { PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS } from '@/hooks/constants/publisher/project/publisherPersonalProjectConstant'
 import {
@@ -8,6 +14,7 @@ import {
   publisherGetPersonalProjectByIdApi,
   publisherUpdateGameNameApi,
   publisherPostVerifyGameRequest,
+  publisherDeleteImageUploaded,
 } from '@/apis/publisher/project/publisherPersonalProjects'
 import { Ref } from 'vue'
 import { PartialGameType } from '@/types/game/gameDetails/GameDetailsType'
@@ -89,6 +96,23 @@ export const usePublisherPostVerifyPersonalProject = () => {
     onSuccess: (_data, variables: bigint) => {
       queryClient.invalidateQueries({
         queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables.toString()),
+      })
+    },
+  })
+  return {
+    mutateAsync,
+    isPending,
+  }
+}
+
+export const usePublisherDeleteImageUploaded = () => {
+  const queryClient = useQueryClient()
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (payload: { id: bigint; url: string }) =>
+      await publisherDeleteImageUploaded(payload.url),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
       })
     },
   })
