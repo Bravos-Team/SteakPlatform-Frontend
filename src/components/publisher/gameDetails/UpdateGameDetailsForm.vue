@@ -468,7 +468,13 @@ const handleSaveAsDraft = async () => {
   if (useImageStore.media_files_stored.length > 0) {
     const media_files: any = useImageStore.media_files_stored
     const media_files_compressed = await Promise.all(
-      media_files.map((file: MediaType) => useComporessionImage.compressImage(file.file_instance)),
+      media_files.map((file: MediaType) => {
+        if (file.type === 'image') {
+          return useComporessionImage.compressImage(file.file_instance)
+        } else {
+          return file.file_instance
+        }
+      }),
     )
     completedApis.value += 1
 

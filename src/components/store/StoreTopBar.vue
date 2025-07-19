@@ -129,7 +129,9 @@
 
           <!-- Optional -->
           <div class="h-full w-full lg:w-auto flex justify-between items-center text-sm">
-            <span class="block lg:hidden font-bold text-[18px]">{{ $t('navigation.home') }}</span>
+            <span class="block lg:hidden font-bold text-[18px]">
+              {{ $t('navigation.home') }}
+            </span>
             <div class="flex items-center gap-x-6 flex-row lg:gap-x-4 justify-end h-full">
               <languages-option />
               <drawer-trigger as-child>

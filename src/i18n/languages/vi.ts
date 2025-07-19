@@ -287,6 +287,9 @@ export default {
               sub: {},
             },
           },
+          store: {
+            title: 'Cửa hàng Steak',
+          },
           support: {
             title: 'Trung tâm hỗ trợ',
           },

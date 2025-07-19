@@ -7,7 +7,7 @@
       <div class="flex justify-center items-center w-full">
         <input type="text" placeholder="Search..." class="sr-only shrink-0" />
         <div
-          class="bg-[#202024] relative hover:bg-[#404044] rounded-full w-full laptop:w-[230px] outline-none h-[40px] text-gray-400 px-10"
+          class="bg-[#202024] relative hover:bg-[#404044] rounded-full w-full outline-none h-[40px] text-gray-400 px-10"
         >
           <img
             src="https://ccdn.steak.io.vn/assets-search-white-w-opacity.svg"

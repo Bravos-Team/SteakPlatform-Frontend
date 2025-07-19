@@ -89,6 +89,9 @@ export default {
       sidebar: {
         publisher: {
           platform: 'Platform',
+          store: {
+            title: 'Steak Game Store',
+          },
           dashboard: {
             title: 'Dashboard',
             sub: {
