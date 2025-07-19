@@ -6,7 +6,6 @@ import authRoutes from '@/router/routes/store/AuthRoutes'
 import homeRoutes from '@/router/routes/store/HomeRoutes'
 import storeRoutes from '@/router/routes/store/StoreRoutes'
 import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
-import adminRoutes from '@/router/routes/admin/AdminRoutes'
 import supportCenterRoutes from '@/router/routes/help/SupportCenterRoutes'
 import testRoute from '@/router/routes/test/TestRoute'
 import { getCookie } from '@/utils/cookies/cookie-utils'
@@ -17,7 +16,6 @@ const routes: RouteRecordRaw[] = [
   homeRoutes,
   authRoutes,
   storeRoutes,
-  ...adminRoutes,
   ...publisherRoutes,
   ...supportCenterRoutes,
 ]
