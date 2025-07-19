@@ -176,6 +176,7 @@
             </drawer-content>
 
             <div
+              v-if="!getCookie('userAccessRights')"
               class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full"
             >
               <router-link to="/login" class="flex justify-center items-center mx-auto">{{
@@ -200,4 +201,5 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 import LanguagesOption from '@/components/common/LanguagesOption.vue'
+import { getCookie } from '@/utils/cookies/cookie-utils'
 </script>

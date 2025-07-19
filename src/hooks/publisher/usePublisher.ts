@@ -64,8 +64,13 @@ export const usePublisherLogout = () => {
   return useQuery({
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LOGOUT(),
     queryFn: async () => {
-      queryClient.clear()
-      return await logout()
+      // queryClient.clear()
+      await logout()
     },
+    enabled: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retry: 0,
   })
 }

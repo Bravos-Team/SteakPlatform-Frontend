@@ -112,10 +112,18 @@
             <collapsible-trigger as-child>
               <router-link @click="handleRedirect" :to="{ name: value?.name }">
                 <sidebar-menu-button
-                  @click="handleLogout()"
+                  v-if="value?.i18n === 'logout'"
+                  @click="handleLogout"
                   class="cursor-pointer"
                   :tooltip="value?.title"
                 >
+                  <component :is="value?.icon" />
+                  <span>
+                    {{ getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value?.i18n) }}
+                  </span>
+                </sidebar-menu-button>
+
+                <sidebar-menu-button v-else class="cursor-pointer" :tooltip="value?.title">
                   <component :is="value?.icon" />
                   <span>
                     {{ getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value?.i18n) }}
@@ -181,7 +189,7 @@ const props = defineProps<{
 const handleLogout = async () => {
   if (getCookie('userAccessRights')) removeCookie('userAccessRights')
   if (getCookie('publisherAccessRights')) removeCookie('publisherAccessRights')
-  refetch()
+  await refetch()
   await router.push({ name: 'PublisherAuthLogin' })
 }
 const handleRedirect = async () => {

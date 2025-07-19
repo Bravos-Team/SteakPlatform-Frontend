@@ -231,7 +231,7 @@ const handleSubmission = async () => {
           )
         } else
           toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
-        await router.push({ name: 'Test' })
+        await router.push({ name: 'store-home' })
       } catch (error: any) {
         toastErrorNotificationPopup('Login failed', `Error: ${error?.response?.data?.detail}`)
       }
