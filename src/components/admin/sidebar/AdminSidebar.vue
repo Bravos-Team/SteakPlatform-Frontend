@@ -1,22 +1,10 @@
 <template>
-  <sidebar
-    id="publisher-main-sidebar"
-    variant="sidebar"
-    side="left"
-    collapsible="icon"
-    class="bg-transparent/20"
-  >
-    <spark
-      :colorChanges="'#64403b'"
-      class="!left-10 hidden laptop:block"
-      :bottom="'-200'"
-      :colorFirst="'#422277'"
-      :idSpark="'sidebar-spark'"
-    />
+  <sidebar id="publisher-main-sidebar" variant="sidebar" side="left" collapsible="icon" class="bg-transparent/20">
+    <spark :colorChanges="'#64403b'" class="!left-10 hidden laptop:block" :bottom="'-200'" :colorFirst="'#422277'"
+      :idSpark="'sidebar-spark'" />
 
     <div
-      class="absolute shrink-0 -bottom-[10px] !left-10 z-0 w-full h-full flex items-center justify-center mobile:hidden"
-    >
+      class="absolute shrink-0 -bottom-[10px] !left-10 z-0 w-full h-full flex items-center justify-center mobile:hidden">
       <div class="bg-[#422277] !left-10 w-[55rem] h-[35rem] rounded-full blur-[10rem]"></div>
     </div>
 
@@ -31,7 +19,7 @@
         </router-link>
       </div>
     </nav>
-  </aside>
+  </sidebar>
 </template>
 
 <script setup lang="ts">
