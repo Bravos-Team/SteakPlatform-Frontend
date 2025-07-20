@@ -18,7 +18,7 @@ export const useGetUserWishlist = () => {
 export const useMutateAddToWishlist = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (gameId: bigint) => await addToWishlist(gameId),
+    mutationFn: async (gameId: bigint) => await addToWishlist(gameId.toString()),
     onSuccess: () =>
       queryClient.invalidateQueries({
         queryKey: WISH_LIST_QUERY_KEYS.USER,

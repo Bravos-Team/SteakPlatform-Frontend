@@ -96,6 +96,21 @@ export default {
         title: 'Giỏ hàng của bạn',
         empty: 'Giỏ hàng của bạn đang trống',
         empty_description: 'Thêm game vào giỏ hàng để bắt đầu mua sắm.',
+        actions: {
+          add_to_cart_success: 'Đã thêm vào giỏ hàng',
+          has_been_added_to_cart: 'đã được thêm vào giỏ hàng',
+          has_been_removed_from_cart: 'đã được xóa khỏi giỏ hàng',
+          has_been_moved_to_cart: 'đã được chuyển đến giỏ hàng',
+          has_been_moved_to_wishlist: 'đã được chuyển đến danh sách mong muốn',
+          has_been_removed_from_wishlist: 'đã được xóa khỏi danh sách mong muốn',
+          has_been_removed_from_wishlist_success: 'đã được xóa khỏi danh sách mong muốn',
+          already_in_cart: 'đã có trong giỏ hàng',
+          add_to_cart_error: 'Không thể thêm vào giỏ hàng',
+          remove_from_cart_success: 'Đã xóa khỏi giỏ hàng',
+          remove_from_cart_error: 'Không thể xóa khỏi giỏ hàng',
+          move_to_wishlist_success: 'Đã chuyển đến danh sách mong muốn',
+          move_to_wishlist_error: 'Không thể chuyển đến danh sách mong muốn',
+        },
       },
       payment: 'Thanh toán',
       order: 'Đơn hàng',
@@ -104,6 +119,18 @@ export default {
       order_status: 'Trạng thái đơn hàng',
       order_summary: 'Tóm tắt đơn hàng',
       game_management: {
+        filters: {
+          placeholder: 'Lọc theo trạng thái',
+          options: {
+            title: 'Lọc theo trạng thái',
+            all: 'Tất cả',
+            draft: 'Bản nháp',
+            pending: 'Đang chờ',
+            approved: 'Đã phê duyệt',
+            accepted: 'Đã chấp nhận',
+            rejected: 'Đã từ chối',
+          },
+        },
         your_organization: 'Tổ chức của bạn',
         changes_profile: 'Thay đổi hồ sơ',
         notifications: 'Thông báo',
@@ -134,6 +161,12 @@ export default {
             invert_color: 'Đảo ngược màu',
             help: {
               title: 'Trợ giúp',
+            },
+            mediabar: {
+              actions: {
+                title: 'Xác nhận xóa media',
+                delete: 'Xóa',
+              },
             },
             bold: 'In đậm',
             toggle_highlight: 'Bật/tắt tô sáng',

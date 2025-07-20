@@ -124,6 +124,21 @@ export default {
         title: 'Your Cart',
         empty: 'Your cart is empty',
         empty_description: 'Add games to your cart to start shopping.',
+        actions: {
+          add_to_cart_success: 'Added to cart successfully',
+          has_been_added_to_cart: 'has been added to the cart',
+          has_been_removed_from_cart: 'has been removed from the cart',
+          has_been_moved_to_cart: 'has been moved to the cart',
+          has_been_moved_to_wishlist: 'has been moved to the wishlist',
+          has_been_removed_from_wishlist: 'has been removed from the wishlist',
+          has_been_removed_from_wishlist_success: 'has been removed from the wishlist successfully',
+          already_in_cart: 'is already in the cart',
+          add_to_cart_error: 'Unable to add to cart',
+          remove_from_cart_success: 'Removed from cart successfully',
+          remove_from_cart_error: 'Unable to remove from cart',
+          move_to_wishlist_success: 'Moved to wishlist successfully',
+          move_to_wishlist_error: 'Unable to move to wishlist',
+        },
       },
       payment: 'Payment',
       order: 'Order',
@@ -132,6 +147,18 @@ export default {
       order_status: 'Order Status',
       order_summary: 'Order Summary',
       game_management: {
+        filters: {
+          placeholder: 'Filter by status',
+          options: {
+            title: 'Filter by Status',
+            all: 'All',
+            draft: 'Draft',
+            pending: 'Pending',
+            approved: 'Approved',
+            accepted: 'Accepted',
+            rejected: 'Rejected',
+          },
+        },
         your_organization: 'Your Organization',
         changes_profile: 'Change Profile',
         notifications: 'Notifications',
@@ -157,6 +184,12 @@ export default {
         form: {
           is_required_internet_connection: 'Require Internet Connection',
           update_at: 'Last updated',
+          mediabar: {
+            actions: {
+              title: 'Confirm Delete Media',
+              delete: 'Delete',
+            },
+          },
           cover_image: {
             title: 'Cover Image',
             input_suggestion: 'Drag and drop file here or click to select',

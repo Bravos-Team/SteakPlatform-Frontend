@@ -4,7 +4,7 @@
       <span class="text-5xl font-extrabold">
         {{ $t('title.pages.cart.title') }}
       </span>
-      <div class="flex flex-col tablet:flex-row px-2 gap-y-10 gap-x-2 justify-between">
+      <div class="flex flex-col laptop:flex-row px-2 gap-y-10 gap-x-2 justify-between">
         <div class="flex w-full gap-y-3 flex-col">
           <div v-if="userCartData?.data?.items">
             <div
@@ -92,10 +92,26 @@
 
                 <!-- ACTION BUTTONS -->
                 <div class="flex text-white/50 w-full items-center gap-x-6 justify-end">
-                  <button class="hover:text-white/80 cursor-pointer transition-colors duration-300">
+                  <button
+                    :disabled="isRemoveFromCartPending"
+                    :class="{
+                      'cursor-progress': isRemoveFromCartPending,
+                      'cursor-pointer': !isRemoveFromCartPending,
+                    }"
+                    @click="handleRemoveFromCart(game.id, game.title)"
+                    class="hover:text-white/80 transition-colors duration-300"
+                  >
                     {{ $t('features.buttons.remove_from_cart') }}
                   </button>
-                  <button class="hover:text-white/80 cursor-pointer transition-colors duration-300">
+                  <button
+                    :disabled="isMoveToWishlistPending"
+                    :class="{
+                      'cursor-progress': isMoveToWishlistPending,
+                      'cursor-pointer': !isMoveToWishlistPending,
+                    }"
+                    @click="handleMovedToWishlist(game.id, game.title)"
+                    class="hover:text-white/80 transition-colors duration-300"
+                  >
                     {{ $t('features.buttons.move_to_wishlist') }}
                   </button>
                 </div>
@@ -147,17 +163,60 @@ import { Info } from 'lucide-vue-next'
 import { computed } from 'vue'
 import { useUserCartList } from '@/hooks/store/cart/useUserCart'
 import { onMounted } from 'vue'
+import { useMutateRemoveFromCart, useMoveToWishList } from '@/hooks/store/cart/useUserCart'
+import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+const { mutateAsync: moveToWishlist, isPending: isMoveToWishlistPending } = useMoveToWishList()
+const { mutateAsync: mutateRemoveFromCart, isPending: isRemoveFromCartPending } =
+  useMutateRemoveFromCart()
+
 const {
   data: userCartData,
   isFetching: isUserCartFetching,
   refetch: userCartRefetch,
 } = useUserCartList()
+
 const totalPrices = computed(() => {
   return Number(
     userCartData.value?.data?.items.reduce((total: any, game: any) => total + game.price, 0),
   ).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
 })
 
+const handleRemoveFromCart = async (gameId: bigint, gameTitle: string) => {
+  try {
+    const response = await mutateRemoveFromCart(gameId)
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        `${t('title.pages.cart.actions.remove_from_cart_success')}`,
+        `${gameTitle} ${t('title.pages.cart.actions.has_been_removed_from_cart')}`,
+      )
+    }
+  } catch (error) {
+    toastSuccessNotificationPopup(`${t('title.pages.cart.actions.remove_from_cart_error')}`, ``)
+  }
+}
+
+const handleMovedToWishlist = async (gameId: bigint, gameTitle: string) => {
+  try {
+    const response = await moveToWishlist(gameId)
+    if (response.status === 200) {
+      // const removeResponse = await mutateRemoveFromCart(gameId)
+      // if (removeResponse.status === 200) {
+      //   toastSuccessNotificationPopup(
+      //     `${t('title.pages.cart.actions.move_to_wishlist_success')}`,
+      //     `${gameTitle} ${t('title.pages.cart.actions.has_been_moved_to_wishlist')}`,
+      //   )
+      // }
+      toastSuccessNotificationPopup(
+        `${t('title.pages.cart.actions.move_to_wishlist_success')}`,
+        `${gameTitle} ${t('title.pages.cart.actions.has_been_moved_to_wishlist')}`,
+      )
+    }
+  } catch (error) {
+    toastSuccessNotificationPopup(`${t('title.pages.cart.actions.move_to_wishlist_error')}`, ``)
+  }
+}
 onMounted(() => {
   userCartRefetch()
 })

@@ -87,7 +87,7 @@
       <!-- START FOOTER FORM -->
       <div class="flex gap-x-2 flex-wrap gap-y-2 justify-between">
         <!-- START PRICE -->
-        <div class="flex gap-x-2">
+        <div class="flex flex-col tablet:flex-row gap-x-2">
           <div class="flex gap-y-2 flex-col">
             <span class="text-white/80 font-black">
               {{ $t('features.filters.types.price') }}:

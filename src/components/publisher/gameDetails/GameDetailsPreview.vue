@@ -89,7 +89,6 @@
                   v-else-if="media.type === 'video'"
                   :src="media.url"
                   class="w-full h-full object-cover rounded-sm"
-                  autoplay
                 />
               </div>
 
@@ -108,7 +107,7 @@
           <!-- START SUB TYPE BAR -->
           <div class="flex w-full flex-col laptop:flex-row gap-y-2 gap-x-2">
             <div
-              class="w-6/12 flex-wrap laptop:border-r-1 border-b-1 pb-1 laptop:pb-0 border-white/30 laptop:border-b-0 flex flex-col gap-y-2"
+              class="w-6/12 px-2 flex-wrap laptop:border-r-1 border-b-1 pb-1 laptop:pb-0 border-white/30 laptop:border-b-0 flex flex-col gap-y-2"
             >
               <template v-if="gameDetails?.regions">
                 <div class="w-16 font-black h-5 rounded-xs">Regions:</div>

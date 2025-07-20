@@ -30,7 +30,7 @@
           </div>
           <div
             v-if="userWishlistData?.data.length > 0"
-            v-for="game in userWishlistData?.data?.items"
+            v-for="game in userWishlistData?.data"
             :key="game.id"
             class="w-full cursor-pointer p-6 rounded-lg bg-white/6 flex gap-x-3 gap-[20px]"
           >
@@ -108,11 +108,25 @@
 
               <!-- ACTION BUTTONS -->
               <div class="flex text-white/50 w-full items-center gap-x-3 justify-end">
-                <button class="hover:text-white/80 cursor-pointer transition-colors duration-300">
+                <button
+                  :disabled="isRemoveGameFromWishlistPending"
+                  :class="{
+                    'cursor-progress': isRemoveGameFromWishlistPending,
+                    'cursor-pointer': !isRemoveGameFromWishlistPending,
+                  }"
+                  @click="handleRemoveFromWishlist(game.id, game.title)"
+                  class="hover:text-white/80 transition-colors duration-300"
+                >
                   {{ $t('features.buttons.remove_from_wishlist') }}
                 </button>
                 <button
-                  class="text-black px-3 py-1.5 rounded-sm text-sm font-medium cursor-pointer transition-colors duration-300 bg-blue-400 hover:bg-blue-400/90"
+                  :disabled="isMoveItemToCartPending"
+                  :class="{
+                    'cursor-progress': isMoveItemToCartPending,
+                    'cursor-pointer': !isMoveItemToCartPending,
+                  }"
+                  @click="handleMoveToCart(game.id, game.title)"
+                  class="text-black px-3 py-1.5 rounded-sm text-sm font-medium transition-colors duration-300 bg-blue-400 hover:bg-blue-400/90"
                 >
                   {{ $t('features.buttons.add_to_cart') }}
                 </button>
@@ -180,6 +194,57 @@ import TooltipContent from '@/components/ui/tooltip/TooltipContent.vue'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import TooltipTrigger from '@/components/ui/tooltip/TooltipTrigger.vue'
 import { Info } from 'lucide-vue-next'
-import { useGetUserWishlist } from '@/hooks/store/wishlist/useWishlist'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+import {
+  useGetUserWishlist,
+  useMutateRemoveGameFromWishlist,
+  useMutateMoveWishlistItemToCart,
+} from '@/hooks/store/wishlist/useWishlist'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
+const { mutateAsync: mutateMoveItemToCart, isPending: isMoveItemToCartPending } =
+  useMutateMoveWishlistItemToCart()
+const { mutateAsync: mutateRemoveGameFromWishlist, isPending: isRemoveGameFromWishlistPending } =
+  useMutateRemoveGameFromWishlist()
+
+const handleMoveToCart = async (gameId: bigint, gameTitle: string) => {
+  try {
+    const response = await mutateMoveItemToCart(gameId)
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        `${gameTitle} ${t('title.pages.cart.actions.had_been_moved_to_cart')}`,
+        `${t('title.pages.cart.actions.add_to_cart_success')}`,
+      )
+    } else {
+      toastErrorNotificationPopup('', `${t('title.pages.cart.actions.add_to_cart_error')}`)
+    }
+  } catch (error: any) {
+    console.error('Error moving item to cart:', error)
+    // toastErrorNotificationPopup('Error moving item to cart', error?.message || 'An error occurred')
+  }
+}
+
+const handleRemoveFromWishlist = async (gameId: bigint, gameTitle: string) => {
+  try {
+    const response = await mutateRemoveGameFromWishlist(gameId)
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        `${t('title.pages.wishlist.actions.has_been_removed_from_wishlist_success')}`,
+        `${gameTitle} ${t('title.pages.wishlist.actions.has_been_removed_from_wishlist')}`,
+      )
+    } else {
+      toastErrorNotificationPopup(``, ``)
+    }
+  } catch (error: any) {
+    console.error('Error removing item from wishlist:', error)
+    // toastErrorNotificationPopup(
+    //   'Error removing item from wishlist',
+    //   error?.message || 'An error occurred',
+    // )
+  }
+}
 const { data: userWishlistData, isFetching: isUserWishlistFetching } = useGetUserWishlist()
 </script>
