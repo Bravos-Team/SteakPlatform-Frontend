@@ -13,7 +13,7 @@ import {
 } from '@/types/cdn/CdnTypes'
 import { AxiosResponse } from 'axios'
 export const useDeleteImage = () => {
-  const { data, isSuccess, isError, mutate, isPending, error } = useMutation({
+  const { data, isSuccess, isError, mutateAsync, isPending, error } = useMutation({
     mutationFn: async (url: string) => {
       return (await deleteImage(url)).data
     },
@@ -21,7 +21,7 @@ export const useDeleteImage = () => {
 
   return {
     data,
-    mutate,
+    mutateAsync,
     error,
     isSuccess,
     isError,

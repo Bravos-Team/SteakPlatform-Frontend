@@ -25,7 +25,7 @@
       <!-- END SEARCH BAR -->
 
       <div
-        class="laptop:w-[845px] text-[#fff]/70 h-[100px] flex flex-col tablet:flex-row tablet:w-full tablet:items-center laptop:justify-end ms-7 gap-x-2 laptop:gap-5 laptop:items-center items-end justify-center"
+        class="laptop:w-[845px] w-full text-[#fff]/70 h-[100px] flex flex-row tablet:w-full tablet:items-center justify-center laptop:justify-end ms-7 gap-x-2 laptop:gap-5 laptop:items-center items-center"
       >
         <router-link
           :to="{ name: 'WishlistManagementPage' }"
@@ -34,7 +34,9 @@
         >
           {{ $t('title.store.wishlist') }}
         </router-link>
+        <div v-if="isFetchingCart">Hello</div>
         <router-link
+          v-else
           :to="{ name: 'CartManagementPage' }"
           :class="{ '!text-white !font-bold  ': isActiveCartRouter }"
           class="relative hover:text-[#fff] transition-all duration-200 group flex gap-x-1 flex-row-reverse hover:bg-white/10 px-2 py-1 rounded-lg"
@@ -43,7 +45,7 @@
             v-if="cartItems.length > 0"
             class="absolute -top-3 -right-3 rounded-full bg-blue-500/50 group-hover:bg-blue-500 transition-colors duration-300 size-6 text-xs flex items-center justify-center"
           >
-            {{ cartItems.length ?? 0 }}
+            {{ cartItems.length }}
           </div>
           <ShoppingBag class="fill-white/30" /> {{ $t('title.store.cart') }}</router-link
         >
@@ -54,9 +56,9 @@
 
 <script setup>
 import { ShoppingBag } from 'lucide-vue-next'
-import { computed } from 'vue'
-
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
+
 const route = useRoute()
 
 const isActiveWishlistRouter = computed(() => {
@@ -69,6 +71,10 @@ const props = defineProps({
   cartItems: {
     type: Array,
     default: () => [],
+  },
+  isFetchingCart: {
+    type: Boolean,
+    default: false,
   },
 })
 </script>

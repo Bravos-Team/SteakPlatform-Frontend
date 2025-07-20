@@ -17,7 +17,7 @@
       class="resize-x mobile:p-2 bg-linear-120 border-2 from-gray-200/7 to-indigo-400/10 min-w-full flex flex-col desktop-xl:min-w-[90rem]"
     >
       <dialog-header>
-        <dialog-title class="text-2xl flex gap-x-1">
+        <dialog-title class="text-lg tablet:text-2xl flex gap-x-1">
           <span>{{ $t('title.pages.game_details.actions.update') }}</span>
           <span
             class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-cyan-500"
