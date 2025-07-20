@@ -158,30 +158,12 @@
                       >
                         {{ $t('auth.login') }}
                       </router-link>
-
-                      <dropdown-menu v-else>
-                        <dropdown-menu-trigger as-child>
-                          <div
-                            class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm"
-                          >
-                            {{ getCookie('userAccessRights') }}
-                          </div>
-                        </dropdown-menu-trigger>
-                        <dropdown-menu-content class="!min-w-[40rem]" align="end">
-                          <dropdown-menu-label>
-                            <span class="flex w-full text-center font-extrabold">{{
-                              $t('auth.informations.user.profile.title')
-                            }}</span>
-                          </dropdown-menu-label>
-                          <dropdown-menu-separator />
-                          <dropdown-menu-group>
-                            <dropdown-menu-item class="cursor-pointer" @click="handleLogout">
-                              <LogOut class="text-white" />
-                              {{ $t('auth.logout') }}
-                            </dropdown-menu-item>
-                          </dropdown-menu-group>
-                        </dropdown-menu-content>
-                      </dropdown-menu>
+                      <div
+                        v-else
+                        class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm"
+                      >
+                        {{ getCookie('userAccessRights') }}
+                      </div>
                     </div>
                   </drawer-header>
                   <drawer-description class="hidden"> </drawer-description>
@@ -201,6 +183,13 @@
                       :to="{ name: 'SupportCenter' }"
                       >{{ $t('navigation.help') }}</router-link
                     >
+                    <button
+                      @click="handleLogout"
+                      class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                    >
+                      <LogOut class="text-white" />
+                      {{ $t('auth.logout') }}
+                    </button>
                   </drawer-footer>
                 </div>
               </drawer-content>
@@ -253,7 +242,6 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'

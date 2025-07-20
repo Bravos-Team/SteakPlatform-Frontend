@@ -1,9 +1,21 @@
 <template>
   <tooltip-provider>
     <div class="flex flex-col min-h-[20rem] justify-start h-full gap-y-6">
-      <span class="text-5xl font-extrabold">
-        {{ $t('title.pages.cart.title') }}
-      </span>
+      <div
+        class="w-full flex flex-col tablet:flex-row tablet:items-center gap-y-2 justify-between px-2"
+      >
+        <span class="text-3xl tablet:text-5xl font-extrabold">
+          {{ $t('title.pages.cart.title') }}
+        </span>
+        <button
+          :disabled="isMutateClearCart"
+          :class="{ 'cursor-progress': isMutateClearCart, 'cursor-pointer': !isMutateClearCart }"
+          @click="handleClearCart"
+          class="flex gap-x-3 items-center justify-center px-3 py-2 border-1 border-white-10 rounded-sm hover:bg-white/3"
+        >
+          {{ $t('title.pages.cart.actions.remove_all_from_cart') }}
+        </button>
+      </div>
       <div class="flex flex-col laptop:flex-row px-2 gap-y-10 gap-x-2 justify-between">
         <div class="flex w-full gap-y-3 flex-col">
           <div v-if="userCartData?.data?.items">
@@ -163,19 +175,23 @@ import { Info } from 'lucide-vue-next'
 import { computed } from 'vue'
 import { useUserCartList } from '@/hooks/store/cart/useUserCart'
 import { onMounted } from 'vue'
-import { useMutateRemoveFromCart, useMoveToWishList } from '@/hooks/store/cart/useUserCart'
-import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import {
+  useMutateRemoveFromCart,
+  useMoveToWishList,
+  useMutateClearCart,
+} from '@/hooks/store/cart/useUserCart'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const { mutateAsync: moveToWishlist, isPending: isMoveToWishlistPending } = useMoveToWishList()
 const { mutateAsync: mutateRemoveFromCart, isPending: isRemoveFromCartPending } =
   useMutateRemoveFromCart()
+const { mutateAsync: mutateClearCart, isPending: isMutateClearCart } = useMutateClearCart()
 
-const {
-  data: userCartData,
-  isFetching: isUserCartFetching,
-  refetch: userCartRefetch,
-} = useUserCartList()
+const { data: userCartData, refetch: userCartRefetch } = useUserCartList()
 
 const totalPrices = computed(() => {
   return Number(
@@ -193,7 +209,7 @@ const handleRemoveFromCart = async (gameId: bigint, gameTitle: string) => {
       )
     }
   } catch (error) {
-    toastSuccessNotificationPopup(`${t('title.pages.cart.actions.remove_from_cart_error')}`, ``)
+    toastErrorNotificationPopup(`${t('title.pages.cart.actions.remove_from_cart_error')}`, ``)
   }
 }
 
@@ -201,22 +217,30 @@ const handleMovedToWishlist = async (gameId: bigint, gameTitle: string) => {
   try {
     const response = await moveToWishlist(gameId)
     if (response.status === 200) {
-      // const removeResponse = await mutateRemoveFromCart(gameId)
-      // if (removeResponse.status === 200) {
-      //   toastSuccessNotificationPopup(
-      //     `${t('title.pages.cart.actions.move_to_wishlist_success')}`,
-      //     `${gameTitle} ${t('title.pages.cart.actions.has_been_moved_to_wishlist')}`,
-      //   )
-      // }
       toastSuccessNotificationPopup(
         `${t('title.pages.cart.actions.move_to_wishlist_success')}`,
         `${gameTitle} ${t('title.pages.cart.actions.has_been_moved_to_wishlist')}`,
       )
     }
   } catch (error) {
-    toastSuccessNotificationPopup(`${t('title.pages.cart.actions.move_to_wishlist_error')}`, ``)
+    toastErrorNotificationPopup(`${t('title.pages.cart.actions.move_to_wishlist_error')}`, ``)
   }
 }
+
+const handleClearCart = async () => {
+  try {
+    const response = await mutateClearCart()
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        `${t('title.pages.cart.actions.remove_all_from_cart_success')}`,
+        ``,
+      )
+    }
+  } catch (error: any) {
+    console.log(error)
+  }
+}
+
 onMounted(() => {
   userCartRefetch()
 })

@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import router from '@/router/index'
-import { removeCookie, removeCookies } from '@/utils/cookies/cookie-utils'
+import { removeCookies } from '@/utils/cookies/cookie-utils'
+import { useQueryClient } from '@tanstack/vue-query'
+
 export const SteakApi = axios.create({
   baseURL: import.meta.env.VITE_BASE_API_URL + '/api/v1',
   timeout: 5000,
@@ -17,6 +19,8 @@ SteakApi.interceptors.response.use(
     const route = router.currentRoute.value
     const status = error.response?.status
     if (status === 401 && route?.meta?.middleware) {
+      const queryClient = useQueryClient()
+      queryClient.clear()
       removeCookies(['userAccessRights', 'publisherAccessRights'])
       const group = (route.meta?.group ?? 'default') as keyof typeof messages
       const messages = {

@@ -34,7 +34,7 @@
         >
           {{ $t('title.store.wishlist') }}
         </router-link>
-        <div v-if="isFetchingCart">Hello</div>
+        <div v-if="isFetchingCart"><LoaderCircle class="animate-spin" /></div>
         <router-link
           v-else
           :to="{ name: 'CartManagementPage' }"
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ShoppingBag } from 'lucide-vue-next'
+import { ShoppingBag, LoaderCircle } from 'lucide-vue-next'
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
