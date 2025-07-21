@@ -25,7 +25,7 @@
       <!-- END SEARCH BAR -->
 
       <div
-        class="laptop:w-[845px] w-full text-[#fff]/70 h-[100px] flex flex-row tablet:w-full tablet:items-center justify-center laptop:justify-end ms-7 gap-x-2 laptop:gap-5 laptop:items-center items-center"
+        class="laptop:w-[845px] w-full text-[#fff]/70 h-[100px] flex flex-row tablet:w-full tablet:items-center justify-between laptop:justify-end ms-7 gap-x-2 laptop:gap-5 laptop:items-center items-center"
       >
         <router-link
           :to="{ name: 'WishlistManagementPage' }"

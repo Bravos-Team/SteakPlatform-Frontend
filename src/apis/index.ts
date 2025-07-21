@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import router from '@/router/index'
-import { removeCookies } from '@/utils/cookies/cookie-utils'
-import { useQueryClient } from '@tanstack/vue-query'
+import { removeCookie } from '@/utils/cookies/cookie-utils'
 
 export const SteakApi = axios.create({
   baseURL: import.meta.env.VITE_BASE_API_URL + '/api/v1',
@@ -19,10 +18,9 @@ SteakApi.interceptors.response.use(
     const route = router.currentRoute.value
     const status = error.response?.status
     if (status === 401 && route?.meta?.middleware) {
-      const queryClient = useQueryClient()
-      queryClient.clear()
-      removeCookies(['userAccessRights', 'publisherAccessRights'])
+      console.log('Unauthorized access, redirecting to login...')
       const group = (route.meta?.group ?? 'default') as keyof typeof messages
+
       const messages = {
         publisher: {
           msg: 'You need login to access authenication required page!',
@@ -42,6 +40,19 @@ SteakApi.interceptors.response.use(
       }
       const { msg, title, redirect } = messages[group] || messages.default
       toastErrorNotificationPopup(msg, title)
+
+      switch (group) {
+        case 'publisher':
+          removeCookie('publisherAccessRights')
+          break
+        case 'user':
+          removeCookie('userAccessRights')
+          break
+        default:
+          removeCookie('userAccessRights')
+          removeCookie('publisherAccessRights')
+          break
+      }
       await router.push(redirect)
     }
     return Promise.reject(error)

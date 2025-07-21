@@ -16,5 +16,11 @@ const CurrencyUtils = {
   calculatPriceAfterSale(price: number, salePercent: number) {
     return price - (price * salePercent) / 100
   },
+  formatCurrencyVND(value: number | undefined) {
+    return value?.toLocaleString('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    })
+  },
 }
 export default CurrencyUtils

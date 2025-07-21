@@ -115,6 +115,18 @@ export default {
       },
     },
     pages: {
+      payment_message: {
+        success: {
+          message: {},
+          title: 'Payment Successful',
+          description: 'Your payment has been processed successfully.',
+        },
+        error: {
+          message: {},
+          title: 'Payment Error',
+          description: 'There was an error processing your payment. Please try again later.',
+        },
+      },
       wishlist: {
         title: 'Your Wishlist',
         empty: 'Your wishlist is empty',
@@ -144,6 +156,14 @@ export default {
           remove_from_cart_error: 'Unable to remove from cart',
           move_to_wishlist_success: 'Moved to wishlist successfully',
           move_to_wishlist_error: 'Unable to move to wishlist',
+        },
+        checkout: {
+          title: 'Order Summary',
+          description: 'Please review your order before proceeding to payment.',
+          place_order_description:
+            'You are purchasing a digital license for this product. For full terms, see purchase policy. By selecting ‘Place Order’ below, you certify that you are over 18 and an authorized user of this payment method, and agree to the End User License Agreement.',
+          place_order: 'Place Order',
+          VAT_included: 'VAT included',
         },
       },
       payment: 'Payment',
@@ -312,7 +332,7 @@ export default {
               'The information you enter on this page will be used by the team at Steak Game Store to discover your title and consider you for additional help as part of Steak Community.',
             title: 'Consider Carefully',
             descriptions:
-              'Please only share information that you feel would help Steak understand your game better. If your game is confidential or you are working with a third party such as a publisher, please ensure that you are able to share this information with Epic. If you would like details of your project to be shared with partners we work with, you can let us know below. To make things easier, please share your information in English. Apologies for any hassle, and thanks for understanding!',
+              'Please only share information that you feel would help Steak understand your game better. If your game is confidential or you are working with a third party such as a publisher, please ensure that you are able to share this information with Steak. If you would like details of your project to be shared with partners we work with, you can let us know below. To make things easier, please share your information in English. Apologies for any hassle, and thanks for understanding!',
           },
           footer_message: 'Update your game details to keep your players informed.',
         },

@@ -3,55 +3,71 @@
     <card-content class="px-3 py-3">
       <!-- PRODUCT COUNT AND ACTIONS BUTTON -->
       <div class="flex flex-col lg:flex-row justify-between">
-        <div class="flex flex-col">
+        <div class="flex flex-col basis-1/3">
           <!-- <span class="font-bold text-2xl">Your Products({{ games?.length }})</span> -->
           <span class="font-normal text-md text-gray-400"
             >Manage products for the Steak Games Store and Steak Online Services.</span
           >
         </div>
-        <div class="flex items-center gap-x-3">
-          <!-- SEARCH BY KEYWORD -->
-          <label for="keyword">
-            <input
-              v-model="filters.keyword"
-              type="text"
-              id="keyword"
-              placeholder="Search by keyword"
-              autocomplete="off"
-              class="focus:ring-2 focus:ring-blue-500 outline-1 px-2 py-1 rounded-sm"
-              @keyup.enter="handleRefetchingPersonalProjects"
+        <div class="flex flex-col tablet:flex-row tablet:items-center gap-x-3">
+          <div class="flex items-center gap-x-2 mb-2 tablet:mb-0 justify-end">
+            <!-- REFRESH -->
+            <RotateCcw
+              :class="{
+                'cursor-progress animate-spin text-white/90 ': isReset,
+                'cursor-pointer': !isReset,
+              }"
+              class="transition-all duration-300 size-6 text-white/80"
+              @click="handleResetFilters"
             />
-          </label>
-          <!-- END SEARCH BY KEYWORD -->
-
-          <!-- SELECT STATUS -->
-          <Select v-model:model-value="selectedStatus">
-            <select-trigger>
-              <select-value
-                :placeholder="t('title.pages.game_management.filters.placeholder')"
-                :value="selectedStatusLabel"
+            <!-- END REFERSH -->
+            <!-- SEARCH BY KEYWORD -->
+            <label for="keyword">
+              <input
+                v-model="filters.keyword"
+                type="text"
+                id="keyword"
+                placeholder="Search by keyword"
+                autocomplete="off"
+                class="focus:ring-2 focus:ring-blue-500 outline-1 px-2 py-1 rounded-sm"
+                @keyup.enter="handleRefetchingPersonalProjects"
               />
-            </select-trigger>
-            <select-content>
-              <select-label>{{
-                $t('title.pages.game_management.filters.options.title')
-              }}</select-label>
-              <select-separator />
-              <select-group>
-                <select-item
-                  v-for="(option, index) in statusOptions"
-                  :key="index"
-                  :value="option.value"
-                  >{{ showI18n(option.label) }}</select-item
-                >
-              </select-group>
-            </select-content>
-          </Select>
-          <!-- END SELECT STATUS -->
+            </label>
+            <!-- END SEARCH BY KEYWORD -->
+          </div>
 
-          <!-- CREATE BUTTON -->
-          <create-product-button />
-          <!-- END CREATE BUTTON -->
+          <div
+            class="flex flex-col tablet:flex-row gap-y-2 w-full tablet:items-center gap-x-2 mb-2 tablet:mb-0 justify-end"
+          >
+            <!-- SELECT STATUS -->
+            <Select v-model:model-value="selectedStatus">
+              <select-trigger class="min-w-full tablet:min-w-fit">
+                <select-value
+                  :placeholder="t('title.pages.game_management.filters.placeholder')"
+                  :value="selectedStatusLabel"
+                />
+              </select-trigger>
+              <select-content>
+                <select-label>{{
+                  $t('title.pages.game_management.filters.options.title')
+                }}</select-label>
+                <select-separator />
+                <select-group>
+                  <select-item
+                    v-for="(option, index) in statusOptions"
+                    :key="index"
+                    :value="option.value"
+                    >{{ showI18n(option.label) }}</select-item
+                  >
+                </select-group>
+              </select-content>
+            </Select>
+            <!-- END SELECT STATUS -->
+
+            <!-- CREATE BUTTON -->
+            <create-product-button />
+            <!-- END CREATE BUTTON -->
+          </div>
         </div>
       </div>
       <!-- END  PRODUCT COUNT AND ACTIONS BUTTON -->
@@ -92,6 +108,7 @@ import { usePublisherGetPersonalProjects } from '@/hooks/publisher/project/usePu
 import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/project/PublisherPersonalProjectType'
 import { useI18n } from 'vue-i18n'
 import { watch } from 'vue'
+import { RotateCcw } from 'lucide-vue-next'
 const { t } = useI18n()
 const showI18n = (key: string) => {
   return t(key)
@@ -117,6 +134,20 @@ const statusOptions = [
   { value: 'PENDING_REVIEW', label: 'title.pages.game_management.filters.options.pending' },
 ]
 
+const isReset = ref(false)
+
+const handleResetFilters = async () => {
+  isReset.value = true
+  selectedStatus.value = null
+  filters.value = {
+    status: null,
+    page: 1,
+    size: 10,
+    keyword: undefined,
+  }
+  await refetchPersonalProjects()
+  isReset.value = false
+}
 const {
   data: games,
   refetch: refetchPersonalProjects,

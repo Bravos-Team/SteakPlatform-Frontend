@@ -79,8 +79,4 @@ const props = defineProps({
     default: () => [],
   },
 })
-
-onMounted(() => {
-  console.log('GameByCategoryList:', props.gameByCategoryList)
-})
 </script>

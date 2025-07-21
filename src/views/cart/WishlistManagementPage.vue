@@ -35,6 +35,7 @@
             <!-- CLEAR ALL -->
 
             <button
+              v-if="userWishlistData?.data.length > 0"
               :disabled="isMutateClearWishlist"
               :class="{
                 'cursor-progress': isMutateClearWishlist,
@@ -238,12 +239,12 @@ const handleClearWishlist = async () => {
     const response = await mutateClearWishlist()
     if (response.status === 200) {
       toastSuccessNotificationPopup(
-        `${t('title.pages.wishlist.actions.remove_all_from_wishlist_success')}`,
+        `${t('title.pages.cart.actions.remove_all_from_wishlist_success')}`,
         '',
       )
     } else {
       toastErrorNotificationPopup(
-        `${t('title.pages.wishlist.actions.remove_all_from_wishlist_error')}`,
+        `${t('title.pages.cart.actions.remove_all_from_wishlist_error')}`,
         '',
       )
     }
@@ -257,7 +258,7 @@ const handleMoveToCart = async (gameId: bigint, gameTitle: string) => {
     const response = await mutateMoveItemToCart(gameId)
     if (response.status === 200) {
       toastSuccessNotificationPopup(
-        `${gameTitle} ${t('title.pages.cart.actions.had_been_moved_to_cart')}`,
+        `${gameTitle} ${t('title.pages.cart.actions.has_been_moved_to_cart')}`,
         `${t('title.pages.cart.actions.add_to_cart_success')}`,
       )
     } else {
@@ -274,8 +275,8 @@ const handleRemoveFromWishlist = async (gameId: bigint, gameTitle: string) => {
     const response = await mutateRemoveGameFromWishlist(gameId)
     if (response.status === 200) {
       toastSuccessNotificationPopup(
-        `${t('title.pages.wishlist.actions.has_been_removed_from_wishlist_success')}`,
-        `${gameTitle} ${t('title.pages.wishlist.actions.has_been_removed_from_wishlist')}`,
+        `${t('title.pages.cart.actions.has_been_removed_from_wishlist_success')}`,
+        `${gameTitle} ${t('title.pages.cart.actions.has_been_removed_from_wishlist')}`,
       )
     } else {
       toastErrorNotificationPopup(``, ``)
