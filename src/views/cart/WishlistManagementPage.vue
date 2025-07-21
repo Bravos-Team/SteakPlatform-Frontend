@@ -8,25 +8,44 @@
         class="flex relative px-3 gap-y-5 flex-col-reverse desktop:flex-row gap-x-2 justify-start"
       >
         <div class="flex w-full h-full gap-y-3 flex-col">
-          <div class="flex gap-x-1 items-center">
-            <div class="text-white/50">{{ $t('features.filters.sortBy') }}:</div>
-            <Select>
-              <select-trigger>
-                <select-value :placeholder="$t('features.filters.type')" class="max-h-8 px-5" />
-              </select-trigger>
-              <select-content>
-                <select-group>
-                  <select-label class="text-white/30">{{
-                    $t('features.filters.sortType')
-                  }}</select-label>
-                  <select-item value="asc">{{ $t('features.filters.sorts.asc') }}</select-item>
+          <div
+            class="flex tablet:flex-row flex-col gap-x-1 gap-y-2 tablet:items-center justify-between"
+          >
+            <div class="flex gap-x-1 items-center">
+              <div class="text-white/50">{{ $t('features.filters.sortBy') }}:</div>
+              <Select>
+                <select-trigger>
+                  <select-value :placeholder="$t('features.filters.type')" class="max-h-8 px-5" />
+                </select-trigger>
+                <select-content>
+                  <select-group>
+                    <select-label class="text-white/30">{{
+                      $t('features.filters.sortType')
+                    }}</select-label>
+                    <select-item value="asc">{{ $t('features.filters.sorts.asc') }}</select-item>
 
-                  <select-item value="desc">{{ $t('features.filters.sorts.desc') }}</select-item>
-                  <select-item value="new">{{ $t('features.filters.sorts.new') }}</select-item>
-                  <select-item value="old">{{ $t('features.filters.sorts.old') }}</select-item>
-                </select-group>
-              </select-content>
-            </Select>
+                    <select-item value="desc">{{ $t('features.filters.sorts.desc') }}</select-item>
+                    <select-item value="new">{{ $t('features.filters.sorts.new') }}</select-item>
+                    <select-item value="old">{{ $t('features.filters.sorts.old') }}</select-item>
+                  </select-group>
+                </select-content>
+              </Select>
+            </div>
+
+            <!-- CLEAR ALL -->
+
+            <button
+              :disabled="isMutateClearWishlist"
+              :class="{
+                'cursor-progress': isMutateClearWishlist,
+                'cursor-pointer': !isMutateClearWishlist,
+              }"
+              @click="handleClearWishlist"
+              class="flex gap-x-3 items-center justify-center px-3 py-2 border-1 border-white-10 rounded-sm hover:bg-white/3"
+            >
+              {{ $t('title.pages.cart.actions.remove_all_from_wishlist') }}
+            </button>
+            <!-- END CLEAR ALL -->
           </div>
           <div
             v-if="userWishlistData?.data.length > 0"
@@ -200,15 +219,38 @@ import {
   useGetUserWishlist,
   useMutateRemoveGameFromWishlist,
   useMutateMoveWishlistItemToCart,
+  useMutateClearWishList,
 } from '@/hooks/store/wishlist/useWishlist'
 import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+
 const { mutateAsync: mutateMoveItemToCart, isPending: isMoveItemToCartPending } =
   useMutateMoveWishlistItemToCart()
 const { mutateAsync: mutateRemoveGameFromWishlist, isPending: isRemoveGameFromWishlistPending } =
   useMutateRemoveGameFromWishlist()
+const { mutateAsync: mutateClearWishlist, isPending: isMutateClearWishlist } =
+  useMutateClearWishList()
+
+const handleClearWishlist = async () => {
+  try {
+    const response = await mutateClearWishlist()
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        `${t('title.pages.wishlist.actions.remove_all_from_wishlist_success')}`,
+        '',
+      )
+    } else {
+      toastErrorNotificationPopup(
+        `${t('title.pages.wishlist.actions.remove_all_from_wishlist_error')}`,
+        '',
+      )
+    }
+  } catch (error: any) {
+    console.log('Error clearing wishlist:', error)
+  }
+}
 
 const handleMoveToCart = async (gameId: bigint, gameTitle: string) => {
   try {
