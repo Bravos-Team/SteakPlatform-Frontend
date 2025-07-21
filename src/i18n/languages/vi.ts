@@ -96,6 +96,14 @@ export default {
         title: 'Giỏ hàng của bạn',
         empty: 'Giỏ hàng của bạn đang trống',
         empty_description: 'Thêm game vào giỏ hàng để bắt đầu mua sắm.',
+        checkout: {
+          title: 'Tóm tắt đơn hàng',
+          description: 'Vui lòng kiểm tra đơn hàng của bạn trước khi tiến hành thanh toán.',
+          place_order_description:
+            'Bạn đang mua một giấy phép số cho sản phẩm này. Để biết đầy đủ các điều khoản, xem chính sách mua hàng. Bằng cách chọn ‘Đặt hàng’ dưới đây, bạn xác nhận rằng bạn trên 18 tuổi và là người dùng được ủy quyền của phương thức thanh toán này, đồng thời đồng ý với Thỏa thuận Giấy phép Người dùng Cuối.',
+          place_order: 'Đặt hàng',
+          VAT_included: 'Giá bao gồm thuế GTGT',
+        },
         actions: {
           add_to_cart_success: 'Đã thêm vào giỏ hàng',
           has_been_added_to_cart: 'đã được thêm vào giỏ hàng',
@@ -283,7 +291,7 @@ export default {
               'Thông tin bạn nhập trên trang này sẽ được nhóm tại Steak Game Store sử dụng để khám phá tiêu đề của bạn và xem xét bạn cho sự trợ giúp bổ sung như một phần của Cộng đồng Steak.',
             title: 'Xem Xét Kỹ Lưỡng',
             descriptions:
-              'Xin chỉ chia sẻ thông tin mà bạn cảm thấy sẽ giúp Steak hiểu rõ hơn về trò chơi của bạn. Nếu trò chơi của bạn là bí mật hoặc bạn đang làm việc với bên thứ ba như một nhà phát hành, xin vui lòng đảm bảo rằng bạn có thể chia sẻ thông tin này với Epic. Nếu bạn muốn chi tiết về dự án của bạn được chia sẻ với các đối tác mà chúng tôi hợp tác, bạn có thể cho chúng tôi biết bên dưới. Để mọi thứ dễ dàng hơn, xin vui lòng chia sẻ thông tin của bạn bằng tiếng Anh. Xin lỗi vì bất kỳ phiền phức nào, và cảm ơn vì đã hiểu!',
+              'Xin chỉ chia sẻ thông tin mà bạn cảm thấy sẽ giúp Steak hiểu rõ hơn về trò chơi của bạn. Nếu trò chơi của bạn là bí mật hoặc bạn đang làm việc với bên thứ ba như một nhà phát hành, xin vui lòng đảm bảo rằng bạn có thể chia sẻ thông tin này với Steak. Nếu bạn muốn chi tiết về dự án của bạn được chia sẻ với các đối tác mà chúng tôi hợp tác, bạn có thể cho chúng tôi biết bên dưới. Để mọi thứ dễ dàng hơn, xin vui lòng chia sẻ thông tin của bạn bằng tiếng Anh. Xin lỗi vì bất kỳ phiền phức nào, và cảm ơn vì đã hiểu!',
           },
           footer_message:
             'Cập nhật thông tin trò chơi của bạn để giữ cho người chơi được thông báo.',

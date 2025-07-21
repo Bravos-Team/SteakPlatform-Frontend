@@ -16,7 +16,7 @@
           {{ $t('title.pages.cart.actions.remove_all_from_cart') }}
         </button>
       </div>
-      <div class="flex flex-col laptop:flex-row px-2 gap-y-10 gap-x-2 justify-between">
+      <div class="flex flex-col desktop:flex-row px-2 gap-y-10 gap-x-2 justify-between">
         <div class="flex w-full gap-y-3 flex-col">
           <div v-if="userCartData?.data?.items">
             <div
@@ -145,7 +145,7 @@
             <div class="flex flex-col gap-y-3 py-3 border-b-1">
               <div class="flex justify-between">
                 <span class="text-white">{{ $t('features.filters.types.price') }}</span>
-                <span class="text-white">{{ totalPrices }}</span>
+                <span class="text-white">{{ CurrencyUtils.formatCurrencyVND(totalPrices) }}</span>
               </div>
 
               <div class="flex justify-between">
@@ -154,11 +154,17 @@
               </div>
             </div>
 
-            <button
-              class="text-center font-medium bg-blue-400/90 hover:bg-blue-400 cursor-pointer transition-colors duration-300 text-black text-sm w-full rounded-sm py-4"
-            >
-              {{ $t('title.store.payment') }}
-            </button>
+            <Dialog>
+              <dialog-trigger as-child>
+                <button
+                  @click="handleCheckout"
+                  class="text-center font-medium bg-blue-400/90 hover:bg-blue-400 cursor-pointer transition-colors duration-300 text-black text-sm w-full rounded-sm py-4"
+                >
+                  {{ $t('title.store.payment') }}
+                </button>
+              </dialog-trigger>
+              <checkout-page :games="userCartData?.data?.items" :total-price="totalPrices" />
+            </Dialog>
           </div>
         </div>
       </div>
@@ -167,6 +173,8 @@
 </template>
 
 <script setup lang="ts">
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import CheckoutPage from '@/components/publisher/common/payment/CheckoutPage.vue'
 import Tooltip from '@/components/ui/tooltip/Tooltip.vue'
 import TooltipContent from '@/components/ui/tooltip/TooltipContent.vue'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
@@ -185,6 +193,7 @@ import {
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
 import { useI18n } from 'vue-i18n'
+import CurrencyUtils from '@/services/common/CurrencyUtils'
 const { t } = useI18n()
 const { mutateAsync: moveToWishlist, isPending: isMoveToWishlistPending } = useMoveToWishList()
 const { mutateAsync: mutateRemoveFromCart, isPending: isRemoveFromCartPending } =
@@ -196,7 +205,7 @@ const { data: userCartData, refetch: userCartRefetch } = useUserCartList()
 const totalPrices = computed(() => {
   return Number(
     userCartData.value?.data?.items.reduce((total: any, game: any) => total + game.price, 0),
-  ).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+  )
 })
 
 const handleRemoveFromCart = async (gameId: bigint, gameTitle: string) => {
@@ -241,6 +250,7 @@ const handleClearCart = async () => {
   }
 }
 
+const handleCheckout = () => {}
 onMounted(() => {
   userCartRefetch()
 })
