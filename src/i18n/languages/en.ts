@@ -115,6 +115,18 @@ export default {
       },
     },
     pages: {
+      payment_message: {
+        success: {
+          message: {},
+          title: 'Payment Successful',
+          description: 'Your payment has been processed successfully.',
+        },
+        error: {
+          message: {},
+          title: 'Payment Error',
+          description: 'There was an error processing your payment. Please try again later.',
+        },
+      },
       wishlist: {
         title: 'Your Wishlist',
         empty: 'Your wishlist is empty',

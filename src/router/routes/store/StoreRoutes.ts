@@ -22,15 +22,7 @@ const storeRoutes: RouteRecordRaw = {
       name: 'game-details',
       component: () => import('@/views/store/game-store/game/GameDetailsPage.vue'),
     },
-    {
-      path: '/payment',
-      name: 'GameStorePayment',
-      component: () => import('@/views/store/payment/TempPayment.vue'),
-      meta: {
-        middleware: [user],
-        group: 'user',
-      },
-    },
+
     {
       path: '/cart',
       name: 'CartManagementPage',

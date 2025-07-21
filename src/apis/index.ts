@@ -18,6 +18,7 @@ SteakApi.interceptors.response.use(
     const route = router.currentRoute.value
     const status = error.response?.status
     if (status === 401 && route?.meta?.middleware) {
+      console.log('Unauthorized access, redirecting to login...')
       const group = (route.meta?.group ?? 'default') as keyof typeof messages
 
       const messages = {

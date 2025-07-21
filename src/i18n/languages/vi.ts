@@ -87,6 +87,18 @@ export default {
       game_details: 'Chi tiết game',
     },
     pages: {
+      payment_message: {
+        success: {
+          message: {},
+          title: 'Thanh toán thành công',
+          description: 'Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đang được xử lý.',
+        },
+        error: {
+          message: {},
+          title: 'Thanh toán thất bại',
+          description: 'Đã có lỗi xảy ra khi xử lý giao dịch. Vui lòng thử lại.',
+        },
+      },
       wishlist: {
         title: 'Danh sách mong muốn của bạn',
         empty: 'Danh sách mong muốn của bạn đang trống',

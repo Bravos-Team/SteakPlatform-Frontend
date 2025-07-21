@@ -8,6 +8,7 @@
           {{ $t('title.pages.cart.title') }}
         </span>
         <button
+          v-if="userCartData?.data?.items.length > 0"
           :disabled="isMutateClearCart"
           :class="{ 'cursor-progress': isMutateClearCart, 'cursor-pointer': !isMutateClearCart }"
           @click="handleClearCart"
@@ -154,17 +155,13 @@
               </div>
             </div>
 
-            <Dialog>
-              <dialog-trigger as-child>
-                <button
-                  @click="handleCheckout"
-                  class="text-center font-medium bg-blue-400/90 hover:bg-blue-400 cursor-pointer transition-colors duration-300 text-black text-sm w-full rounded-sm py-4"
-                >
-                  {{ $t('title.store.payment') }}
-                </button>
-              </dialog-trigger>
-              <checkout-page :games="userCartData?.data?.items" :total-price="totalPrices" />
-            </Dialog>
+            <router-link
+              :to="{ name: 'GameStorePayment' }"
+              @click="handleCheckout"
+              class="text-center font-medium bg-blue-400/90 hover:bg-blue-400 cursor-pointer transition-colors duration-300 text-black text-sm w-full rounded-sm py-4"
+            >
+              {{ $t('title.store.payment') }}
+            </router-link>
           </div>
         </div>
       </div>
@@ -173,8 +170,6 @@
 </template>
 
 <script setup lang="ts">
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import CheckoutPage from '@/components/publisher/common/payment/CheckoutPage.vue'
 import Tooltip from '@/components/ui/tooltip/Tooltip.vue'
 import TooltipContent from '@/components/ui/tooltip/TooltipContent.vue'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'

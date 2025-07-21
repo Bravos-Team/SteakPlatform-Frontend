@@ -1,23 +1,19 @@
 <template>
-  <dialog-content
-    v-if="games.length > 0"
+  <div
+    v-if="userCartData?.data.items.length > 0"
     :hide-close-button="true"
     class="bg-[#F2F2F2] !rounded-xs z-999 p-0 min-h-screen min-w-10/12 desktop:min-w-[70rem] text-black flex flex-col"
   >
-    <dialog-header
-      class="flex bg-white min-h-3/12 p-3 h-full flex-row justify-between items-center"
-    >
+    <div class="flex bg-white min-h-3/12 p-3 h-full flex-row justify-between items-center">
       <span class="text-lg tablet:text-2xl font-bold font-mono">{{
         $t('title.pages.cart.checkout.title')
       }}</span>
-      <dialog-close class="cursor-pointer">
-        <X class="text-black" />
-      </dialog-close>
-    </dialog-header>
-    <dialog-description class="p-3 min-h-full flex flex-1 flex-col gap-y-2">
+    </div>
+    <div class="p-3 min-h-full flex flex-1 flex-col gap-y-2">
       <div
+        v-if="!isUserCartFetching"
         class="flex rounded-xs overflow-hidden gap-x-3"
-        v-for="game in props.games"
+        v-for="game in userCartData?.data?.items"
         :key="game.id"
       >
         <img :src="game.thumbnail" class="object-cover h-20" alt="" />
@@ -26,8 +22,8 @@
           <span>{{ CurrencyUtils.formatCurrencyVND(game.price) }}</span>
         </span>
       </div>
-    </dialog-description>
-    <dialog-footer class="min-h-2/12 p-3 bg-white flex !flex-col gap-y-2">
+    </div>
+    <div class="min-h-2/12 p-3 bg-white flex !flex-col gap-y-2">
       <div class="flex gap-x-8 laptop:flex-row-reverse flex-col gap-y-4">
         <div class="flex flex-col gap-y-1 laptop:basis-7xl">
           <div class="flex justify-between items-center">
@@ -58,34 +54,28 @@
       >
         {{ $t('title.pages.cart.checkout.place_order') }}
       </button>
-    </dialog-footer>
-  </dialog-content>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {
-  DialogContent,
-  DialogClose,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-} from '@/components/ui/dialog'
-import { X } from 'lucide-vue-next'
 import CurrencyUtils from '@/services/common/CurrencyUtils'
 import { useMutateCheckout } from '@/hooks/payment/usePayment'
 import { computed, ref } from 'vue'
-import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import { useUserCartList } from '@/hooks/store/cart/useUserCart'
 const { isPending: isMutateCheckoutPending, mutateAsync: mutateAsyncCheckout } = useMutateCheckout()
+const { data: userCartData, isFetching: isUserCartFetching } = useUserCartList()
 
 const isCheckout = ref(false)
 
-const props = defineProps<{
-  games: any[]
-  totalPrice: number
-}>()
-
 const gameIdsList = computed(() => {
-  return props.games.map((game) => game.id)
+  return userCartData.value?.data.items.map((game: any) => game.id)
+})
+
+const totalPrice = computed(() => {
+  return userCartData.value?.data.items.reduce((total: number, game: any) => {
+    return total + game.price
+  }, 0)
 })
 
 const handleCheckout = async () => {
