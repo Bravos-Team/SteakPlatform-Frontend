@@ -129,8 +129,6 @@ export default {
           remove_from_cart_success: 'Đã xóa khỏi giỏ hàng',
           remove_all_from_cart: 'Xóa tất cả khỏi giỏ hàng',
           remove_all_from_cart_success: 'Đã xóa tất cả khỏi giỏ hàng',
-          remove_all_from_cart_error: 'Không thể xóa tất cả khỏi giỏ hàng',
-          remove_all_from_wishlist: 'Xóa tất cả khỏi danh sách mong muốn',
           remove_all_from_wishlist_success: 'Đã xóa tất cả khỏi danh sách mong muốn',
           remove_all_from_wishlist_error: 'Không thể xóa tất cả khỏi danh sách mong muốn',
           remove_from_cart_error: 'Không thể xóa khỏi giỏ hàng',
