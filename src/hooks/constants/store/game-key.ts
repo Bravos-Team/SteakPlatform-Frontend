@@ -21,4 +21,5 @@ export const GAME_STORE_LIST_QUERY_KEYS = {
     filters?.value.sortBy,
     filters?.value.sortOrder,
   ]) as QUERY_KEY_TYPE<GAME_FILTERED_PARAMS>,
+  DETAILS: (gameId: string) => ['store', 'games', 'details', gameId] as const,
 }

@@ -63,6 +63,7 @@ import CurrencyUtils from '@/services/common/CurrencyUtils'
 import { useMutateCheckout } from '@/hooks/payment/usePayment'
 import { computed, ref } from 'vue'
 import { useUserCartList } from '@/hooks/store/cart/useUserCart'
+import { useDebounceFn } from '@vueuse/core'
 const { isPending: isMutateCheckoutPending, mutateAsync: mutateAsyncCheckout } = useMutateCheckout()
 const { data: userCartData, isFetching: isUserCartFetching } = useUserCartList()
 
@@ -78,7 +79,7 @@ const totalPrice = computed(() => {
   }, 0)
 })
 
-const handleCheckout = async () => {
+const handleCheckout = useDebounceFn(async () => {
   try {
     if (isCheckout.value) return
     isCheckout.value = true
@@ -91,5 +92,5 @@ const handleCheckout = async () => {
   } finally {
     isCheckout.value = false
   }
-}
+}, 1000)
 </script>
