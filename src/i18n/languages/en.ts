@@ -340,6 +340,7 @@ export default {
           update: 'Update',
           informations: 'Informations',
           update_name: 'Update Name',
+          update_informations: 'Update Informations',
           hide: 'Hide',
           show: 'Show',
         },

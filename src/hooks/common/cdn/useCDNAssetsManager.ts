@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/vue-query'
 import {
   deleteImage,
+  deleteImages,
   getPresignedImageUrl,
   getPresignedImageUrls,
   postIntoPresignedUrl,
@@ -16,6 +17,23 @@ export const useDeleteImage = () => {
   const { data, isSuccess, isError, mutateAsync, isPending, error } = useMutation({
     mutationFn: async (url: string) => {
       return (await deleteImage(url)).data
+    },
+  })
+
+  return {
+    data,
+    mutateAsync,
+    error,
+    isSuccess,
+    isError,
+    isPending,
+  }
+}
+
+export const useDeleteImages = () => {
+  const { data, isSuccess, isError, mutateAsync, isPending, error } = useMutation({
+    mutationFn: async (url: string[]) => {
+      return (await deleteImages(url)).data
     },
   })
 

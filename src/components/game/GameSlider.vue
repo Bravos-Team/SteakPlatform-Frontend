@@ -6,12 +6,19 @@
     <!-- MAIN IMAGES SLIDERS -->
     <div
       v-if="game"
-      class="bg-gray-400 group/img-slider relative flex flex-row rounded-xl overflow-hidden xl:h-[584px] lg:h-[422px] shrink-0"
+      ref="container"
+      class="bg-gray-400/10 keen-slider snap-center group/img-slider relative flex flex-row rounded-xl overflow-hidden xl:min-h-[584px] lg:min-h-[422px]"
     >
-      <template v-for="(media, index) in game" :key="index">
-        <img :src="media.url" class="w-full shrink-0" />
-      </template>
+      <img
+        v-for="(media, index) in game"
+        :key="index"
+        :class="`number-slide${index + 1}`"
+        :src="media.url"
+        class="!w-full !shrink-0 keen-slider__slide"
+      />
+      <!-- BUTTONS PREV & NEXT  -->
       <button
+        @click="slider?.prev()"
         class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -left-20 group-hover/img-slider:left-0 h-full w-[50px] bg-gradient-to-l from-[#000]/0 to-[#000]/35"
       >
         <img
@@ -21,6 +28,7 @@
         />
       </button>
       <button
+        @click="slider?.next()"
         class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -right-20 group-hover/img-slider:right-0 h-full w-[50px] bg-gradient-to-r from-[#000]/0 to-[#000]/35"
       >
         <img
@@ -29,11 +37,15 @@
           alt=""
         />
       </button>
+      <!-- END BUTTONS PREV & NEXT  -->
     </div>
     <!-- END MAIN IMAGES SLIDERS -->
     <div class="flex flex-row justify-center gap-x-[5px] w-full h-[57px]">
       <div class="h-full flex justify-center items-center">
-        <button class="rounded-full size-[40px] bg-[#fff]/20 flex justify-center items-center">
+        <button
+          @click="slider?.prev()"
+          class="rounded-full cursor-pointer size-[40px] bg-[#fff]/20 flex justify-center items-center"
+        >
           <img
             class="w-[5px] rotate-180"
             src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg"
@@ -41,17 +53,24 @@
           />
         </button>
       </div>
-      <div class="h-[57px] flex gap-x-[10px] justify-center w-full overflow-x-scroll no-scrollbar">
+      <div
+        ref="thumbnail"
+        class="h-[57px] keen-slider thumbnail flex gap-x-[10px] justify-center w-full overflow-x-scroll no-scrollbar"
+      >
         <div
-          class="border-[1px] border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100 overflow-hidden shrink-0 rounded-sm"
+          class="keen-slider__slide border-[1px] p-0 !min-w-[7rem] !max-w-[7rem] !min-h-full border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100 overflow-hidden rounded-sm"
           v-for="(media, index) in game"
+          :class="`number-slide${index + 1}`"
           :key="index"
         >
-          <img :src="media.url" alt="" class="h-[57px]" />
+          <img :src="media.url" alt="" class="min-w-full !min-h-full object-cover" />
         </div>
       </div>
       <div class="h-full items-center justify-center flex">
-        <button class="rounded-full size-[40px] bg-[#fff]/20 flex justify-center items-center">
+        <button
+          @click="slider?.next()"
+          class="rounded-full cursor-pointer size-[40px] bg-[#fff]/20 flex justify-center items-center"
+        >
           <img
             class="w-[5px]"
             src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg"
@@ -65,7 +84,59 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, PropType } from 'vue'
+import { PropType } from 'vue'
+import { useKeenSlider } from 'keen-slider/vue.es'
+
+const [container, slider] = useKeenSlider({
+  loop: false,
+  mode: 'snap',
+})
+
+const ThumbnailPlugin = (main: any) => {
+  return (slider: any) => {
+    const removeActive = () => {
+      slider.slides.forEach((slide: any) => {
+        slide.classList.remove('active')
+      })
+    }
+
+    const addActive = (index: any) => {
+      slider.slides[index].classList.add('active')
+    }
+
+    const addClickEvents = () => {
+      slider.slides.forEach((slide: any, index: any) => {
+        slide.addEventListener('click', () => {
+          main.value.moveToIdx(index, true, { duration: 200, easing: (t: number) => t })
+        })
+      })
+    }
+
+    slider.on('created', () => {
+      addActive(slider.track.details.rel)
+      addClickEvents()
+      main.value.on('animationStarted', () => {
+        removeActive()
+        const next = main.value.animator.targetIdx || 0
+        addActive(main.value.track.absToRel(next))
+        slider.moveToIdx(Math.min(slider.track.details.maxIdx, next))
+      })
+    })
+  }
+}
+
+const [thumbnail] = useKeenSlider(
+  {
+    loop: false,
+    mode: 'snap',
+    slides: {
+      perView: 5,
+      origin: 'auto',
+    },
+    renderMode: 'performance',
+  },
+  [ThumbnailPlugin(slider)],
+)
 
 const props = defineProps({
   game: {
@@ -74,3 +145,15 @@ const props = defineProps({
   },
 })
 </script>
+
+<style scoped>
+@import url('keen-slider/keen-slider.css');
+</style>
+
+<style scoped>
+.active {
+  border-color: #fff;
+  border-width: 1px;
+  border-style: solid;
+}
+</style>

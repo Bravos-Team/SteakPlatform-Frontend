@@ -198,7 +198,8 @@
                   isGetPresignedImageUrlsPending ||
                   isPostIntoPresignedUrlPending ||
                   isPostIntoPresignedUrlsPending ||
-                  isCreateDraftProjectInformationsPending
+                  isCreateDraftProjectInformationsPending ||
+                  isDeleteImagesPending
                 "
                 class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
               >
@@ -213,6 +214,31 @@
               </button>
             </div>
             <!-- END SAVE AS DRAFT -->
+
+            <!-- UPDATE  -->
+            <div v-if="gamePreviewDetails.status === GAME_STATUS.ACCEPTED">
+              <button
+                v-if="
+                  isGetPresignedImageUrlPending ||
+                  isGetPresignedImageUrlsPending ||
+                  isPostIntoPresignedUrlPending ||
+                  isPostIntoPresignedUrlsPending ||
+                  isCreateDraftProjectInformationsPending ||
+                  isDeleteImagesPending
+                "
+                class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
+              >
+                {{ $t('title.pages.game_details.form.save_as_draft') }}
+              </button>
+              <button
+                v-else
+                @click="handleSaveAsDraft"
+                class="px-3 font-black cursor-pointer hover:bg-yellow-400/90 duration-300 transition-colors py-2 border bg-yellow-400/40 rounded-sm"
+              >
+                {{ $t('title.pages.game_details.actions.update_informations') }}
+              </button>
+            </div>
+            <!-- END UPDATE -->
 
             <!-- RESET FORM -->
             <button
@@ -297,6 +323,7 @@ import {
   usePostIntoPresignedUrl,
   useGetPresignedImageUrls,
   usePostIntoPresignedUrls,
+  useDeleteImages,
 } from '@/hooks/common/cdn/useCDNAssetsManager'
 import { MediaType } from '@/types/image/MediaAndImage'
 import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/CdnTypes'
@@ -309,6 +336,7 @@ const useComporessionImage = useImageCompressor()
 const useImageStore = useImageStored()
 const GAME_STATUS = {
   PENDING_REVIEW: 'PENDING_REVIEW',
+  ACCEPTED: 'ACCEPTED',
   PENDING: 'PENDING_REVIEW',
   DRAFT: 'DRAFT',
   VERIFY: 'VERIFY',
@@ -333,6 +361,7 @@ const {
 } = usePublisherCreateDraftProjectInformations()
 const { isPending: isVerifyPersonalProjectPending, mutateAsync: mutatePostVerifyProjectRequest } =
   usePublisherPostVerifyPersonalProject()
+const { isPending: isDeleteImagesPending, mutateAsync: mutateDeleteImages } = useDeleteImages()
 
 const props = defineProps<{
   gamePreviewDetails: GameType
@@ -531,11 +560,11 @@ const handleSaveAsDraft = async () => {
   } else {
     Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
     try {
-      useImageStore.media_files_stored = []
-      useSystem.resetSystemRequirements()
       const response = await mutateAsyncCreateDraftProject(diff)
       completedApis.value += 1
       if (response.status === 200) {
+        useImageStore.media_files_stored = []
+        useSystem.resetSystemRequirements()
         toastSuccessNotificationPopup(
           'Draft saved successfully',
           'Your game details have been saved as a draft.',
@@ -544,6 +573,11 @@ const handleSaveAsDraft = async () => {
         toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
       }
     } catch (error: any) {
+      if (gameToMutate.value?.media) {
+        await mutateDeleteImages(
+          gameToMutate.value.media?.map((media) => media.url).filter((url) => url !== undefined),
+        )
+      }
       toastErrorNotificationPopup(
         'Failed to save as draft. Please try again later.',
         `Error: ${error}`,

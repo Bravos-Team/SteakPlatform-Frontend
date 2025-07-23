@@ -7,6 +7,12 @@ export const deleteImage = async (url: string) => {
   })
 }
 
+export const deleteImages = async (url: string[]) => {
+  return await SteakApi.delete('/dev/upload/delete-images', {
+    data: url,
+  })
+}
+
 export const getPresignedImageUrl = async (fileName: string, fileSize: number) =>
   await SteakApi.post('/dev/upload/presigned-image-url', {
     fileName,

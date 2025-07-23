@@ -308,6 +308,7 @@ export default {
         },
         actions: {
           update: 'Cập nhật',
+          update_informations: 'Cập nhật thông tin',
           informations: 'Thông tin',
           update_name: 'Cập nhật tên',
           hide: 'Ẩn',
