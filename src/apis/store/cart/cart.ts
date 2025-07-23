@@ -1,21 +1,21 @@
 import SteakApi from '@/apis'
 
 export const getMyCart = (signal?: AbortSignal) => {
-  return SteakApi.get('/api/v1/store/public/cart/me', { signal: signal })
+  return SteakApi.get('/store/public/cart/me', { signal: signal })
 }
 
-export const addToCart = (gameId: bigint) => {
-  return SteakApi.post(`/api/v1/store/public/cart/add/${gameId}`)
+export const addToCart = (gameId: string) => {
+  return SteakApi.post(`/store/public/cart/add?gameId=${gameId}`)
 }
 
-export const removeFromCart = (gameId: bigint) => {
-  return SteakApi.post(`/api/v1/store/public/cart/remove/${gameId}`)
+export const removeFromCart = (gameId: string) => {
+  return SteakApi.delete(`/store/public/cart/remove?gameId=${gameId}`)
 }
 
 export const clearCart = () => {
-  return SteakApi.post('/api/v1/store/public/cart/clear')
+  return SteakApi.delete('/store/public/cart/clear')
 }
 
-export const moveToWishlist = (gameId: bigint) => {
-  return SteakApi.post(`/api/v1/store/public/cart/move-to-wishlist/${gameId}`)
+export const moveToWishlist = (gameId: string) => {
+  return SteakApi.post(`/store/public/cart/move-to-wishlist?gameId=${gameId}`)
 }

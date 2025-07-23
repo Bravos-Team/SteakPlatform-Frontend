@@ -7,6 +7,7 @@ import {
   moveToCart,
   removeFromWishlist,
 } from '@/apis/store/wishlist/wishlist'
+import { CART_STORE_QUERY_KEYS } from '@/hooks/constants/store/cart-key'
 
 export const useGetUserWishlist = () => {
   return useQuery({
@@ -18,7 +19,7 @@ export const useGetUserWishlist = () => {
 export const useMutateAddToWishlist = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (gameId: bigint) => await addToWishlist(gameId),
+    mutationFn: async (gameId: bigint) => await addToWishlist(gameId.toString()),
     onSuccess: () =>
       queryClient.invalidateQueries({
         queryKey: WISH_LIST_QUERY_KEYS.USER,
@@ -43,10 +44,14 @@ export const useMutateMoveWishlistItemToCart = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (gameId: bigint) => await moveToCart(gameId),
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: WISH_LIST_QUERY_KEYS.USER,
-      }),
+      })
+      queryClient.invalidateQueries({
+        queryKey: CART_STORE_QUERY_KEYS.USER,
+      })
+    },
   })
   return { mutateAsync, isPending }
 }

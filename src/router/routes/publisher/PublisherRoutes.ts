@@ -60,6 +60,7 @@ export const publisherRoutes: RouteRecordRaw[] = [
       baseName: 'Publisher',
       i18n: 'publisher',
       middleware: [publisher],
+      group: 'publisher',
     },
   },
   {

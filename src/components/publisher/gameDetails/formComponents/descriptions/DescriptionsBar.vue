@@ -43,7 +43,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
 import { Textarea } from '@/components/ui/textarea'
-
 const TextEditor = defineAsyncComponent(() => {
   return import('@/components/common/texteditor/TextEditor.vue')
 })

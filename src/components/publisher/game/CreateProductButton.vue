@@ -3,7 +3,7 @@
     <Dialog :open="showDialog" @update:open="showDialog = $event">
       <button
         @click="showDialog = true"
-        class="flex bg-[#343437]/70 hover:bg-[#343437]/90 cursor-pointer items-center rounded-md px-2 py-2 h-9/12 gap-x-1"
+        class="flex bg-[#343437]/70 min-w-full tablet:w-fit hover:bg-[#343437]/90 cursor-pointer items-center rounded-md px-2 py-2 h-9/12 gap-x-1"
       >
         <Plus class="w-5 h-5" />
         {{ $t('title.pages.game_management.noti.create') }}

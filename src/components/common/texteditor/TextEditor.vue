@@ -5,7 +5,9 @@
       v-if="editor"
     >
       <div class="flex gap-x-3 w-full justify-between">
-        <div class="flex gap-x-3 w-full justify-end">
+        <div
+          class="flex tablet:flex-row flex-col gap-x-3 w-full justify-center mobile:items-end tablet:justify-end"
+        >
           <!-- START CHARS COUNTS -->
           <div
             :class="{
@@ -36,18 +38,20 @@
           </div>
           <!-- END CHARS COUNTS -->
 
-          <!-- START INVERT COLOR -->
-          <div class="flex gap-x-3 items-center shrink-0">
-            <div class="flex gap-x-1 items-center shrink-0">
-              <span> {{ $t('title.pages.game_details.form.text_editor.invert_color') }}</span>
-              <Switch @update:model-value="invertDarkMode = $event" />
+          <div class="flex gap-x-3 w-full h-full justify-end">
+            <!-- START INVERT COLOR -->
+            <div class="flex gap-x-3 items-center shrink-0">
+              <div class="flex gap-x-1 items-center shrink-0">
+                <span> {{ $t('title.pages.game_details.form.text_editor.invert_color') }}</span>
+                <Switch @update:model-value="invertDarkMode = $event" />
+              </div>
             </div>
-          </div>
-          <!-- END INVERT COLOR -->
+            <!-- END INVERT COLOR -->
 
-          <!-- START TEXTEDITOR HELPS -->
-          <Helps />
-          <!-- END TEXTEDITOR HELPS -->
+            <!-- START TEXTEDITOR HELPS -->
+            <Helps />
+            <!-- END TEXTEDITOR HELPS -->
+          </div>
         </div>
       </div>
       <div class="w-full items-center flex flex-col">

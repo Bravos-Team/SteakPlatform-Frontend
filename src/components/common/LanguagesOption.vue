@@ -12,7 +12,7 @@
         </button>
       </div>
     </dropdown-menu-trigger>
-    <dropdown-menu-content>
+    <dropdown-menu-content align="end">
       <dropdown-menu-label class="text-xl">
         {{ $t('navigation.languages_label') }}
       </dropdown-menu-label>

@@ -39,14 +39,13 @@
     <!-- END HEADER CATEGORY LIST-->
 
     <!-- CATEGORY CONTENT LIST-->
-    <div class=" px-3 w-[{{ width }}] overflow-auto no-scrollbar snap-x  flex gap-x-[20px]">
+    <div class=" px-3 w-[{{ width }}] overflow-auto no-scrollbar snap-x  flex gap-x-[20px] ">
       <div
-        class="w-[211px] h-[422px] shrink-0 snap-start"
-        v-for="game in gameByCategoryList"
-        :key="game.id"
+        class="min-w-full h-[422px] shrink-0 snap-start"
+        v-for="(game, index) in gameByCategoryList"
       >
         <router-link
-          :to="{ name: 'game-details', params: { id: game.id } }"
+          :to="{ name: 'game-details', params: { id: game.id.toString() } }"
           class="w-[211px] h-[369px] cursor-pointer"
         >
           <game-card :game="game"></game-card>
@@ -57,8 +56,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { GAME_ITEM } from '@/types/store/game'
 import GameCard from '@/components/store/GameCard.vue'
+import { onMounted } from 'vue'
+import { PropType } from 'vue'
 const props = defineProps({
   height: {
     type: String,
@@ -73,10 +75,8 @@ const props = defineProps({
     default: 'not have category title yet',
   },
   gameByCategoryList: {
-    type: Array,
-    default() {
-      return []
-    },
+    type: Array as PropType<GAME_ITEM[]>,
+    default: () => [],
   },
 })
 </script>

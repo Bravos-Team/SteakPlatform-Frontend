@@ -7,6 +7,11 @@ export default {
       password_placeholder: 'Enter password...',
       forgot_password: 'Forgot password',
       isLogin: 'Logging in...',
+      user: {
+        profile: {
+          title: 'Your Profile',
+        },
+      },
     },
     login: 'Login',
     or_login_with: 'Or login with',
@@ -84,6 +89,9 @@ export default {
       sidebar: {
         publisher: {
           platform: 'Platform',
+          store: {
+            title: 'Steak Game Store',
+          },
           dashboard: {
             title: 'Dashboard',
             sub: {
@@ -107,8 +115,57 @@ export default {
       },
     },
     pages: {
-      wishlist: 'Your Wishlist',
-      cart: 'Your Cart',
+      payment_message: {
+        success: {
+          message: {},
+          title: 'Payment Successful',
+          description: 'Your payment has been processed successfully.',
+        },
+        error: {
+          message: {},
+          title: 'Payment Error',
+          description: 'There was an error processing your payment. Please try again later.',
+        },
+      },
+      wishlist: {
+        title: 'Your Wishlist',
+        empty: 'Your wishlist is empty',
+        empty_description: 'Add games to your wishlist to keep track of them.',
+      },
+      cart: {
+        title: 'Your Cart',
+        empty: 'Your cart is empty',
+        empty_description: 'Add games to your cart to start shopping.',
+        actions: {
+          add_to_cart_success: 'Added to cart successfully',
+          has_been_added_to_cart: 'has been added to the cart',
+          has_been_removed_from_cart: 'has been removed from the cart',
+          has_been_moved_to_cart: 'has been moved to the cart',
+          has_been_moved_to_wishlist: 'has been moved to the wishlist',
+          has_been_removed_from_wishlist: 'has been removed from the wishlist',
+          remove_all_from_cart: 'Remove all from cart',
+          remove_all_from_cart_success: 'Removed all from cart successfully',
+          remove_all_from_cart_error: 'Unable to remove all from cart',
+          remove_all_from_wishlist: 'Remove all from wishlist',
+          remove_all_from_wishlist_success: 'Removed all from wishlist successfully',
+          remove_all_from_wishlist_error: 'Unable to remove all from wishlist',
+          has_been_removed_from_wishlist_success: 'has been removed from the wishlist successfully',
+          already_in_cart: 'is already in the cart',
+          add_to_cart_error: 'Unable to add to cart',
+          remove_from_cart_success: 'Removed from cart successfully',
+          remove_from_cart_error: 'Unable to remove from cart',
+          move_to_wishlist_success: 'Moved to wishlist successfully',
+          move_to_wishlist_error: 'Unable to move to wishlist',
+        },
+        checkout: {
+          title: 'Order Summary',
+          description: 'Please review your order before proceeding to payment.',
+          place_order_description:
+            'You are purchasing a digital license for this product. For full terms, see purchase policy. By selecting ‘Place Order’ below, you certify that you are over 18 and an authorized user of this payment method, and agree to the End User License Agreement.',
+          place_order: 'Place Order',
+          VAT_included: 'VAT included',
+        },
+      },
       payment: 'Payment',
       order: 'Order',
       order_history: 'Order History',
@@ -116,6 +173,18 @@ export default {
       order_status: 'Order Status',
       order_summary: 'Order Summary',
       game_management: {
+        filters: {
+          placeholder: 'Filter by status',
+          options: {
+            title: 'Filter by Status',
+            all: 'All',
+            draft: 'Draft',
+            pending: 'Pending',
+            approved: 'Approved',
+            accepted: 'Accepted',
+            rejected: 'Rejected',
+          },
+        },
         your_organization: 'Your Organization',
         changes_profile: 'Change Profile',
         notifications: 'Notifications',
@@ -141,6 +210,12 @@ export default {
         form: {
           is_required_internet_connection: 'Require Internet Connection',
           update_at: 'Last updated',
+          mediabar: {
+            actions: {
+              title: 'Confirm Delete Media',
+              delete: 'Delete',
+            },
+          },
           cover_image: {
             title: 'Cover Image',
             input_suggestion: 'Drag and drop file here or click to select',
@@ -257,7 +332,7 @@ export default {
               'The information you enter on this page will be used by the team at Steak Game Store to discover your title and consider you for additional help as part of Steak Community.',
             title: 'Consider Carefully',
             descriptions:
-              'Please only share information that you feel would help Steak understand your game better. If your game is confidential or you are working with a third party such as a publisher, please ensure that you are able to share this information with Epic. If you would like details of your project to be shared with partners we work with, you can let us know below. To make things easier, please share your information in English. Apologies for any hassle, and thanks for understanding!',
+              'Please only share information that you feel would help Steak understand your game better. If your game is confidential or you are working with a third party such as a publisher, please ensure that you are able to share this information with Steak. If you would like details of your project to be shared with partners we work with, you can let us know below. To make things easier, please share your information in English. Apologies for any hassle, and thanks for understanding!',
           },
           footer_message: 'Update your game details to keep your players informed.',
         },
@@ -265,6 +340,7 @@ export default {
           update: 'Update',
           informations: 'Informations',
           update_name: 'Update Name',
+          update_informations: 'Update Informations',
           hide: 'Hide',
           show: 'Show',
         },

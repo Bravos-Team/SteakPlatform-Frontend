@@ -12,13 +12,14 @@ export const useUserCartList = () => {
   return useQuery({
     queryKey: CART_STORE_QUERY_KEYS.USER,
     queryFn: async ({ signal }) => await getMyCart(signal),
+    retry: 3,
   })
 }
 
 export const useMutateAddToCart = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (gameId: bigint) => await addToCart(gameId),
+    mutationFn: async (gameId: bigint) => await addToCart(gameId.toString()),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: CART_STORE_QUERY_KEYS.USER,
@@ -44,7 +45,7 @@ export const useMutateClearCart = () => {
 export const useMoveToWishList = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (gameId: bigint) => await moveToWishlist(gameId),
+    mutationFn: async (gameId: bigint) => await moveToWishlist(gameId.toString()),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: CART_STORE_QUERY_KEYS.USER,
@@ -57,7 +58,7 @@ export const useMoveToWishList = () => {
 export const useMutateRemoveFromCart = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (gameId: bigint) => await removeFromCart(gameId),
+    mutationFn: async (gameId: bigint) => await removeFromCart(gameId.toString()),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: CART_STORE_QUERY_KEYS.USER,

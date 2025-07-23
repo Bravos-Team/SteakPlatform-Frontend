@@ -7,6 +7,11 @@ export default {
       password_placeholder: 'Nhập mật khẩu...',
       forgot_password: 'Quên mật khẩu',
       isLogin: 'Đang đăng nhập...',
+      user: {
+        profile: {
+          title: 'Hồ sơ của bạn',
+        },
+      },
     },
     login: 'Đăng nhập',
     or_login_with: 'Hoặc đăng nhập với',
@@ -82,8 +87,55 @@ export default {
       game_details: 'Chi tiết game',
     },
     pages: {
-      wishlist: 'Danh sách mong muốn của bạn',
-      cart: 'Giỏ hàng của bạn',
+      payment_message: {
+        success: {
+          message: {},
+          title: 'Thanh toán thành công',
+          description: 'Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đang được xử lý.',
+        },
+        error: {
+          message: {},
+          title: 'Thanh toán thất bại',
+          description: 'Đã có lỗi xảy ra khi xử lý giao dịch. Vui lòng thử lại.',
+        },
+      },
+      wishlist: {
+        title: 'Danh sách mong muốn của bạn',
+        empty: 'Danh sách mong muốn của bạn đang trống',
+        empty_description: 'Thêm game vào danh sách mong muốn để theo dõi chúng.',
+      },
+      cart: {
+        title: 'Giỏ hàng của bạn',
+        empty: 'Giỏ hàng của bạn đang trống',
+        empty_description: 'Thêm game vào giỏ hàng để bắt đầu mua sắm.',
+        checkout: {
+          title: 'Tóm tắt đơn hàng',
+          description: 'Vui lòng kiểm tra đơn hàng của bạn trước khi tiến hành thanh toán.',
+          place_order_description:
+            'Bạn đang mua một giấy phép số cho sản phẩm này. Để biết đầy đủ các điều khoản, xem chính sách mua hàng. Bằng cách chọn ‘Đặt hàng’ dưới đây, bạn xác nhận rằng bạn trên 18 tuổi và là người dùng được ủy quyền của phương thức thanh toán này, đồng thời đồng ý với Thỏa thuận Giấy phép Người dùng Cuối.',
+          place_order: 'Đặt hàng',
+          VAT_included: 'Giá bao gồm thuế GTGT',
+        },
+        actions: {
+          add_to_cart_success: 'Đã thêm vào giỏ hàng',
+          has_been_added_to_cart: 'đã được thêm vào giỏ hàng',
+          has_been_removed_from_cart: 'đã được xóa khỏi giỏ hàng',
+          has_been_moved_to_cart: 'đã được chuyển đến giỏ hàng',
+          has_been_moved_to_wishlist: 'đã được chuyển đến danh sách mong muốn',
+          has_been_removed_from_wishlist: 'đã được xóa khỏi danh sách mong muốn',
+          has_been_removed_from_wishlist_success: 'đã được xóa khỏi danh sách mong muốn',
+          already_in_cart: 'đã có trong giỏ hàng',
+          add_to_cart_error: 'Không thể thêm vào giỏ hàng',
+          remove_from_cart_success: 'Đã xóa khỏi giỏ hàng',
+          remove_all_from_cart: 'Xóa tất cả khỏi giỏ hàng',
+          remove_all_from_cart_success: 'Đã xóa tất cả khỏi giỏ hàng',
+          remove_all_from_wishlist_success: 'Đã xóa tất cả khỏi danh sách mong muốn',
+          remove_all_from_wishlist_error: 'Không thể xóa tất cả khỏi danh sách mong muốn',
+          remove_from_cart_error: 'Không thể xóa khỏi giỏ hàng',
+          move_to_wishlist_success: 'Đã chuyển đến danh sách mong muốn',
+          move_to_wishlist_error: 'Không thể chuyển đến danh sách mong muốn',
+        },
+      },
       payment: 'Thanh toán',
       order: 'Đơn hàng',
       order_history: 'Lịch sử đơn hàng',
@@ -91,6 +143,18 @@ export default {
       order_status: 'Trạng thái đơn hàng',
       order_summary: 'Tóm tắt đơn hàng',
       game_management: {
+        filters: {
+          placeholder: 'Lọc theo trạng thái',
+          options: {
+            title: 'Lọc theo trạng thái',
+            all: 'Tất cả',
+            draft: 'Bản nháp',
+            pending: 'Đang chờ',
+            approved: 'Đã phê duyệt',
+            accepted: 'Đã chấp nhận',
+            rejected: 'Đã từ chối',
+          },
+        },
         your_organization: 'Tổ chức của bạn',
         changes_profile: 'Thay đổi hồ sơ',
         notifications: 'Thông báo',
@@ -121,6 +185,12 @@ export default {
             invert_color: 'Đảo ngược màu',
             help: {
               title: 'Trợ giúp',
+            },
+            mediabar: {
+              actions: {
+                title: 'Xác nhận xóa media',
+                delete: 'Xóa',
+              },
             },
             bold: 'In đậm',
             toggle_highlight: 'Bật/tắt tô sáng',
@@ -231,13 +301,14 @@ export default {
               'Thông tin bạn nhập trên trang này sẽ được nhóm tại Steak Game Store sử dụng để khám phá tiêu đề của bạn và xem xét bạn cho sự trợ giúp bổ sung như một phần của Cộng đồng Steak.',
             title: 'Xem Xét Kỹ Lưỡng',
             descriptions:
-              'Xin chỉ chia sẻ thông tin mà bạn cảm thấy sẽ giúp Steak hiểu rõ hơn về trò chơi của bạn. Nếu trò chơi của bạn là bí mật hoặc bạn đang làm việc với bên thứ ba như một nhà phát hành, xin vui lòng đảm bảo rằng bạn có thể chia sẻ thông tin này với Epic. Nếu bạn muốn chi tiết về dự án của bạn được chia sẻ với các đối tác mà chúng tôi hợp tác, bạn có thể cho chúng tôi biết bên dưới. Để mọi thứ dễ dàng hơn, xin vui lòng chia sẻ thông tin của bạn bằng tiếng Anh. Xin lỗi vì bất kỳ phiền phức nào, và cảm ơn vì đã hiểu!',
+              'Xin chỉ chia sẻ thông tin mà bạn cảm thấy sẽ giúp Steak hiểu rõ hơn về trò chơi của bạn. Nếu trò chơi của bạn là bí mật hoặc bạn đang làm việc với bên thứ ba như một nhà phát hành, xin vui lòng đảm bảo rằng bạn có thể chia sẻ thông tin này với Steak. Nếu bạn muốn chi tiết về dự án của bạn được chia sẻ với các đối tác mà chúng tôi hợp tác, bạn có thể cho chúng tôi biết bên dưới. Để mọi thứ dễ dàng hơn, xin vui lòng chia sẻ thông tin của bạn bằng tiếng Anh. Xin lỗi vì bất kỳ phiền phức nào, và cảm ơn vì đã hiểu!',
           },
           footer_message:
             'Cập nhật thông tin trò chơi của bạn để giữ cho người chơi được thông báo.',
         },
         actions: {
           update: 'Cập nhật',
+          update_informations: 'Cập nhật thông tin',
           informations: 'Thông tin',
           update_name: 'Cập nhật tên',
           hide: 'Ẩn',
@@ -273,6 +344,9 @@ export default {
               overview: 'Tổng quan về game',
               sub: {},
             },
+          },
+          store: {
+            title: 'Cửa hàng Steak',
           },
           support: {
             title: 'Trung tâm hỗ trợ',

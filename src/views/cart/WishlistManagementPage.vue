@@ -1,33 +1,56 @@
 <template>
   <tooltip-provider>
-    <div class="flex flex-col mb-3 justify-center h-full gap-y-6">
-      <span class="text-5xl font-extrabold">{{ $t('title.pages.wishlist') }}</span>
+    <div class="flex flex-col px-2 mt-6 mb-3 justify-start h-full gap-y-6">
+      <span class="text-2xl laptop:text-5xl font-extrabold">
+        {{ $t('title.pages.wishlist.title') }}
+      </span>
       <div
-        class="flex relative px-3 gap-y-5 flex-col-reverse desktop:flex-row gap-x-2 justify-between"
+        class="flex relative px-3 gap-y-5 flex-col-reverse desktop:flex-row gap-x-2 justify-start"
       >
-        <div class="flex w-full gap-y-3 flex-col">
-          <div class="flex gap-x-1 items-center">
-            <div class="text-white/50">{{ $t('features.filters.sortBy') }}:</div>
-            <Select>
-              <select-trigger>
-                <select-value :placeholder="$t('features.filters.type')" class="max-h-8 px-5" />
-              </select-trigger>
-              <select-content>
-                <select-group>
-                  <select-label class="text-white/30">{{
-                    $t('features.filters.sortType')
-                  }}</select-label>
-                  <select-item value="asc">{{ $t('features.filters.sorts.asc') }}</select-item>
+        <div class="flex w-full h-full gap-y-3 flex-col">
+          <div
+            class="flex tablet:flex-row flex-col gap-x-1 gap-y-2 tablet:items-center justify-between"
+          >
+            <div class="flex gap-x-1 items-center">
+              <div class="text-white/50">{{ $t('features.filters.sortBy') }}:</div>
+              <Select>
+                <select-trigger>
+                  <select-value :placeholder="$t('features.filters.type')" class="max-h-8 px-5" />
+                </select-trigger>
+                <select-content>
+                  <select-group>
+                    <select-label class="text-white/30">{{
+                      $t('features.filters.sortType')
+                    }}</select-label>
+                    <select-item value="asc">{{ $t('features.filters.sorts.asc') }}</select-item>
 
-                  <select-item value="desc">{{ $t('features.filters.sorts.desc') }}</select-item>
-                  <select-item value="new">{{ $t('features.filters.sorts.new') }}</select-item>
-                  <select-item value="old">{{ $t('features.filters.sorts.old') }}</select-item>
-                </select-group>
-              </select-content>
-            </Select>
+                    <select-item value="desc">{{ $t('features.filters.sorts.desc') }}</select-item>
+                    <select-item value="new">{{ $t('features.filters.sorts.new') }}</select-item>
+                    <select-item value="old">{{ $t('features.filters.sorts.old') }}</select-item>
+                  </select-group>
+                </select-content>
+              </Select>
+            </div>
+
+            <!-- CLEAR ALL -->
+
+            <button
+              v-if="userWishlistData?.data.length > 0"
+              :disabled="isMutateClearWishlist"
+              :class="{
+                'cursor-progress': isMutateClearWishlist,
+                'cursor-pointer': !isMutateClearWishlist,
+              }"
+              @click="handleClearWishlist"
+              class="flex gap-x-3 items-center justify-center px-3 py-2 border-1 border-white-10 rounded-sm hover:bg-white/3"
+            >
+              {{ $t('title.pages.cart.actions.remove_all_from_wishlist') }}
+            </button>
+            <!-- END CLEAR ALL -->
           </div>
           <div
-            v-for="game in mockProducts"
+            v-if="userWishlistData?.data.length > 0"
+            v-for="game in userWishlistData?.data"
             :key="game.id"
             class="w-full cursor-pointer p-6 rounded-lg bg-white/6 flex gap-x-3 gap-[20px]"
           >
@@ -105,11 +128,25 @@
 
               <!-- ACTION BUTTONS -->
               <div class="flex text-white/50 w-full items-center gap-x-3 justify-end">
-                <button class="hover:text-white/80 cursor-pointer transition-colors duration-300">
+                <button
+                  :disabled="isRemoveGameFromWishlistPending"
+                  :class="{
+                    'cursor-progress': isRemoveGameFromWishlistPending,
+                    'cursor-pointer': !isRemoveGameFromWishlistPending,
+                  }"
+                  @click="handleRemoveFromWishlist(game.id, game.title)"
+                  class="hover:text-white/80 transition-colors duration-300"
+                >
                   {{ $t('features.buttons.remove_from_wishlist') }}
                 </button>
                 <button
-                  class="text-black px-3 py-1.5 rounded-sm text-sm font-medium cursor-pointer transition-colors duration-300 bg-blue-400 hover:bg-blue-400/90"
+                  :disabled="isMoveItemToCartPending"
+                  :class="{
+                    'cursor-progress': isMoveItemToCartPending,
+                    'cursor-pointer': !isMoveItemToCartPending,
+                  }"
+                  @click="handleMoveToCart(game.id, game.title)"
+                  class="text-black px-3 py-1.5 rounded-sm text-sm font-medium transition-colors duration-300 bg-blue-400 hover:bg-blue-400/90"
                 >
                   {{ $t('features.buttons.add_to_cart') }}
                 </button>
@@ -118,9 +155,16 @@
             </div>
             <!-- END RIGHT CONTENT -->
           </div>
+          <div v-else>
+            <span class="text-lg font-black">
+              {{ $t('title.pages.wishlist.empty') }}
+            </span>
+          </div>
         </div>
+
+        <!-- FILTERS  -->
         <div
-          class="tablet:min-h-[326px] desktop:max-w-[20rem] laptop:relative top-25 sticky bg-[#101014] w-full px-3 gap-y-5 h-[10rem] flex flex-col"
+          class="desktop:max-w-[20rem] top-25 sticky bg-[#101014] w-full px-3 gap-y-5 h-[10rem] flex flex-col"
         >
           <div class="font-bold">{{ $t('features.filters.title') }}</div>
           <div class="border-y-1 border-white/40">
@@ -147,6 +191,7 @@
             </div>
           </div>
         </div>
+        <!-- END FILTERS  -->
       </div>
     </div>
   </tooltip-provider>
@@ -154,6 +199,7 @@
 
 <script setup lang="ts">
 import { Checkbox } from '@/components/ui/checkbox'
+
 import {
   Select,
   SelectContent,
@@ -168,68 +214,80 @@ import TooltipContent from '@/components/ui/tooltip/TooltipContent.vue'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import TooltipTrigger from '@/components/ui/tooltip/TooltipTrigger.vue'
 import { Info } from 'lucide-vue-next'
-import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+import {
+  useGetUserWishlist,
+  useMutateRemoveGameFromWishlist,
+  useMutateMoveWishlistItemToCart,
+  useMutateClearWishList,
+} from '@/hooks/store/wishlist/useWishlist'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
 
-const mockProducts = ref<{ id: number; title: string; thumbnail: string; price: number }[]>([
-  {
-    id: 1,
-    title: 'Product 1',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 250000,
-  },
-  {
-    id: 2,
-    title: 'Product 2',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 180000,
-  },
-  {
-    id: 3,
-    title: 'Product 3',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 99000,
-  },
-  {
-    id: 4,
-    title: 'Product 4',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 315000,
-  },
-  {
-    id: 5,
-    title: 'Product 5',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 279000,
-  },
-  {
-    id: 6,
-    title: 'Product 6',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 150000,
-  },
-  {
-    id: 7,
-    title: 'Product 7',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 65000,
-  },
-  {
-    id: 8,
-    title: 'Product 8',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 205000,
-  },
-  {
-    id: 9,
-    title: 'Product 9',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 420000,
-  },
-  {
-    id: 10,
-    title: 'Product 10',
-    thumbnail: 'https://ccdn.steak.io.vn/assets-desert.png',
-    price: 123000,
-  },
-])
+const { mutateAsync: mutateMoveItemToCart, isPending: isMoveItemToCartPending } =
+  useMutateMoveWishlistItemToCart()
+const { mutateAsync: mutateRemoveGameFromWishlist, isPending: isRemoveGameFromWishlistPending } =
+  useMutateRemoveGameFromWishlist()
+const { mutateAsync: mutateClearWishlist, isPending: isMutateClearWishlist } =
+  useMutateClearWishList()
+
+const handleClearWishlist = async () => {
+  try {
+    const response = await mutateClearWishlist()
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        `${t('title.pages.cart.actions.remove_all_from_wishlist_success')}`,
+        '',
+      )
+    } else {
+      toastErrorNotificationPopup(
+        `${t('title.pages.cart.actions.remove_all_from_wishlist_error')}`,
+        '',
+      )
+    }
+  } catch (error: any) {
+    console.log('Error clearing wishlist:', error)
+  }
+}
+
+const handleMoveToCart = async (gameId: bigint, gameTitle: string) => {
+  try {
+    const response = await mutateMoveItemToCart(gameId)
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        `${gameTitle} ${t('title.pages.cart.actions.has_been_moved_to_cart')}`,
+        `${t('title.pages.cart.actions.add_to_cart_success')}`,
+      )
+    } else {
+      toastErrorNotificationPopup('', `${t('title.pages.cart.actions.add_to_cart_error')}`)
+    }
+  } catch (error: any) {
+    console.error('Error moving item to cart:', error)
+    // toastErrorNotificationPopup('Error moving item to cart', error?.message || 'An error occurred')
+  }
+}
+
+const handleRemoveFromWishlist = async (gameId: bigint, gameTitle: string) => {
+  try {
+    const response = await mutateRemoveGameFromWishlist(gameId)
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        `${t('title.pages.cart.actions.has_been_removed_from_wishlist_success')}`,
+        `${gameTitle} ${t('title.pages.cart.actions.has_been_removed_from_wishlist')}`,
+      )
+    } else {
+      toastErrorNotificationPopup(``, ``)
+    }
+  } catch (error: any) {
+    console.error('Error removing item from wishlist:', error)
+    // toastErrorNotificationPopup(
+    //   'Error removing item from wishlist',
+    //   error?.message || 'An error occurred',
+    // )
+  }
+}
+const { data: userWishlistData, isFetching: isUserWishlistFetching } = useGetUserWishlist()
 </script>

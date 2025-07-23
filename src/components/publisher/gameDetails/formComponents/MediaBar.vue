@@ -13,10 +13,14 @@
         <!-- MEDIA DATA DRAFT -->
         <div
           v-if="mediaData"
-          class="flex flex-col gap-y-1"
+          class="flex flex-col gap-y-1 relative"
           v-for="(media, index) in mediaData"
           :key="index"
         >
+          <LoaderCircle
+            v-if="isDeleteImagePending"
+            class="absolute left-[45%] animate-spin size-10 z-10 top-[44%]"
+          />
           <Tooltip>
             <tooltip-trigger>
               <span class="flex gap-x-1 items-center">
@@ -29,7 +33,8 @@
                 class="w-full relative flex rounded-md overflow-hidden desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
               >
                 <div
-                  class="h-full items-center border-4 border-double rounded-xs overflow-hidden flex desktop:flex-row justify-center bg-white/10"
+                  :class="{ 'blur-2xl': isDeleteImagePending }"
+                  class="h-full items-center relative border-4 border-double rounded-xs overflow-hidden flex desktop:flex-row justify-center bg-white/10"
                 >
                   <!-- VIDEO AND IMAGE -->
                   <img
@@ -42,8 +47,6 @@
                     v-if="media.url && media.type === 'video'"
                     :src="media.url"
                     class="object-contain w-full h-full tablet:h-40"
-                    loop
-                    autoplay
                   ></video>
                   <!-- END VIDEO AND IMAGES -->
                 </div>
@@ -56,12 +59,41 @@
                     </div>
                   </div>
 
-                  <div
+                  <DropdownMenu>
+                    <DropdownMenuTrigger as-child>
+                      <div
+                        class="absolute top-1 right-1 z-10 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
+                      >
+                        <X class="size-3" />
+                      </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" :align-offset="10" side="top">
+                      <DropdownMenuLabel>
+                        {{ $t('title.pages.game_details.form.text_editor.mediabar.actions.title') }}
+                      </DropdownMenuLabel>
+                      <DropdownMenuItem>
+                        <button
+                          :class="{
+                            'cursor-not-allowed': isDeleteImagePending,
+                            'cursor-pointer': !isDeleteImagePending,
+                          }"
+                          :disabled="isDeleteImagePending"
+                          class="w-full text-left"
+                          @click="handleDeleteMediaUploaded(index, media.url)"
+                        >
+                          {{
+                            $t('title.pages.game_details.form.text_editor.mediabar.actions.delete')
+                          }}
+                        </button>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <!-- <div
                     class="absolute top-1 right-1 z-10 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
                     @click="handleDeleteMediaUploaded(index)"
                   >
                     <X class="size-3" />
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </tooltip-trigger>
@@ -109,7 +141,6 @@
                 accept="image/*,video/*"
                 @change="handleSelectFile(index, $event)"
               />
-
               <div
                 class="absolute -top-2 -right-2 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
                 @click="handleDeleteMediaInput(index)"
@@ -143,12 +174,19 @@
 </template>
 
 <script setup lang="ts">
-import { X, Shredder, CloudUpload, DiamondPlus } from 'lucide-vue-next'
+import { X, Shredder, CloudUpload, DiamondPlus, LoaderCircle } from 'lucide-vue-next'
 import { onMounted, ref, watch } from 'vue'
 import { useImageStored } from '@/stores/image/useImageStored'
 import { type MediaType } from '@/types/image/MediaAndImage'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu.vue'
+import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue'
+import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuContent.vue'
+import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue'
+import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue'
+import { useDeleteImage } from '@/hooks/common/cdn/useCDNAssetsManager'
+const { mutateAsync: mutateDeleteImage, isPending: isDeleteImagePending } = useDeleteImage()
 
 const useImageStore = useImageStored()
 
@@ -187,7 +225,8 @@ const handleDeleteMediaInput = (index: number) => {
   media_files.value.splice(index, 1)
   useImageStore.media_files_stored.splice(index, 1)
 }
-const handleDeleteMediaUploaded = (index: number) => {
+const handleDeleteMediaUploaded = async (index: number, url: string) => {
+  await mutateDeleteImage(url)
   emit('media-deleted-update', index)
 }
 

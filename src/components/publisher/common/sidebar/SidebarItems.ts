@@ -3,9 +3,9 @@ import {
   BadgeInfo,
   SquareDashedKanban,
   ChartNoAxesGantt,
-  HardDriveUpload,
   LogOut,
   Gamepad2,
+  Store,
 } from 'lucide-vue-next'
 import { ref } from 'vue'
 export const data = ref({
@@ -82,6 +82,12 @@ export const navItemsData = [
       //   icon: HardDriveUpload,
       // },
     ],
+  },
+  {
+    title: 'Steak Store',
+    name: 'store-home',
+    i18n: 'store.title',
+    icon: Store,
   },
   {
     title: 'Support',

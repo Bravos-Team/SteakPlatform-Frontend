@@ -32,3 +32,7 @@ export const publisherPostVerifyGameRequest = (id: bigint) => {
 export const publisherDeleteImageUploaded = (url: string) => {
   return SteakApi.delete('/dev/upload/delete-image', { data: { url } })
 }
+
+export const publisherDeleteImagesUploaded = (payload: { url: string }[]) => {
+  return SteakApi.delete('/dev/upload/delete-images', { data: { payload } })
+}
