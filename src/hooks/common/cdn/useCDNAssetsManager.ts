@@ -15,9 +15,7 @@ import {
 import { AxiosResponse } from 'axios'
 export const useDeleteImage = () => {
   const { data, isSuccess, isError, mutateAsync, isPending, error } = useMutation({
-    mutationFn: async (url: string) => {
-      return (await deleteImage(url)).data
-    },
+    mutationFn: async (url: string) => await deleteImage(url),
   })
 
   return {

@@ -334,6 +334,7 @@ import { ArrowDownToLine } from 'lucide-vue-next'
 const useSystem = useSystemRequirementsStore()
 const useComporessionImage = useImageCompressor()
 const useImageStore = useImageStored()
+
 const GAME_STATUS = {
   PENDING_REVIEW: 'PENDING_REVIEW',
   ACCEPTED: 'ACCEPTED',
@@ -378,9 +379,20 @@ const handleResetForm = () => {
   thumbnailUrlData.value = 'https://ccdn.steak.io.vn/assets-desert.png'
   longDescriptionsData.value = ''
 }
+
+const media_deleted_tracking = ref<{ url: string; type: string }[] | undefined>([])
+
 const handleDeleteMedia = (index: number) => {
+  if (!media_deleted_tracking.value) {
+    media_deleted_tracking.value = []
+  } else {
+    if (gameToMutate.value?.media?.[index]) {
+      media_deleted_tracking.value?.push(gameToMutate.value?.media?.[index])
+    }
+  }
   gameToMutate.value.media?.splice(index, 1)
 }
+
 const handleCancelForm = () => {
   emit('update:openDialogForm', false)
 }
@@ -466,7 +478,7 @@ const data_to_assigned = ref<
   }[]
 >([])
 const completedApis = ref(0)
-const totalApis = 5
+const totalApis = 6
 const progressValue = computed(() => Math.floor((completedApis.value / totalApis) * 100))
 const progressDisplay = ref(0)
 let animationInterval: any = null
@@ -565,6 +577,10 @@ const handleSaveAsDraft = async () => {
   } else {
     Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
     try {
+      if (media_deleted_tracking.value && media_deleted_tracking.value.length > 0)
+        await mutateDeleteImages(
+          media_deleted_tracking.value.map((media) => media.url).filter((url) => url !== undefined),
+        )
       const response = await mutateAsyncCreateDraftProject(diff)
       completedApis.value += 1
       if (response.status === 200) {
@@ -578,11 +594,11 @@ const handleSaveAsDraft = async () => {
         toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
       }
     } catch (error: any) {
-      if (data_to_assigned.value) {
+      if (data_to_assigned.value && data_to_assigned.value.length > 0)
         await mutateDeleteImages(
           data_to_assigned.value?.map((media) => media.url).filter((url) => url !== undefined),
         )
-      }
+
       toastErrorNotificationPopup(
         'Failed to save as draft. Please try again later.',
         `Error: ${error}`,
