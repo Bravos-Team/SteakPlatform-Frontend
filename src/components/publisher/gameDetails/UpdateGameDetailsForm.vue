@@ -459,7 +459,12 @@ const thumbnailUrlData = ref<string>(
     ? gameToMutate.value.thumbnail
     : 'https://ccdn.steak.io.vn/assets-desert.png',
 )
-
+const data_to_assigned = ref<
+  {
+    url: string
+    type: 'video' | 'image'
+  }[]
+>([])
 const completedApis = ref(0)
 const totalApis = 5
 const progressValue = computed(() => Math.floor((completedApis.value / totalApis) * 100))
@@ -526,7 +531,7 @@ const handleSaveAsDraft = async () => {
     )
     await mutatePostIntoPresignedUrls(dataPostIntoPresignedUrls)
     if (response) {
-      const data_to_assigned = response.map((file: PresignedUrlResponse, index: number) => {
+      data_to_assigned.value = response.map((file: PresignedUrlResponse, index: number) => {
         const { cdnFileName } = file
         return {
           url: `https://ccdn.steak.io.vn/${cdnFileName}`,
@@ -535,7 +540,7 @@ const handleSaveAsDraft = async () => {
       })
       await new Promise((resolve) => {
         setTimeout(() => {
-          data_to_assigned.forEach((media) => {
+          data_to_assigned.value.forEach((media) => {
             if (!gameToMutate.value.media) {
               gameToMutate.value.media = []
             }
@@ -573,9 +578,9 @@ const handleSaveAsDraft = async () => {
         toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
       }
     } catch (error: any) {
-      if (gameToMutate.value?.media) {
+      if (data_to_assigned.value) {
         await mutateDeleteImages(
-          gameToMutate.value.media?.map((media) => media.url).filter((url) => url !== undefined),
+          data_to_assigned.value?.map((media) => media.url).filter((url) => url !== undefined),
         )
       }
       toastErrorNotificationPopup(
