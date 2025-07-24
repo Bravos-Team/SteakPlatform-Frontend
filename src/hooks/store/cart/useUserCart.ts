@@ -6,12 +6,16 @@ import {
   clearCart,
   moveToWishlist,
   removeFromCart,
+  mergingCartFormAnotherDevice,
 } from '@/apis/store/cart/cart'
 
 export const useUserCartList = () => {
   return useQuery({
     queryKey: CART_STORE_QUERY_KEYS.USER,
-    queryFn: async ({ signal }) => await getMyCart(signal),
+    queryFn: async ({ signal }) => {
+      await mergingCartFormAnotherDevice()
+      await getMyCart(signal)
+    },
     retry: 3,
   })
 }
@@ -66,4 +70,16 @@ export const useMutateRemoveFromCart = () => {
     },
   })
   return { mutateAsync, isPending }
+}
+
+export const useMutateMergingCartFromAnotherDevide = () => {
+  const queryClient = useQueryClient()
+  const {} = useMutation({
+    mutationFn: async () => await mergingCartFormAnotherDevice(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: CART_STORE_QUERY_KEYS.USER,
+      })
+    },
+  })
 }

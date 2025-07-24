@@ -17,10 +17,6 @@
           v-for="(media, index) in mediaData"
           :key="index"
         >
-          <LoaderCircle
-            v-if="isDeleteImagePending"
-            class="absolute left-[45%] animate-spin size-10 z-10 top-[44%]"
-          />
           <Tooltip>
             <tooltip-trigger>
               <span class="flex gap-x-1 items-center">
@@ -33,7 +29,6 @@
                 class="w-full relative flex rounded-md overflow-hidden desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
               >
                 <div
-                  :class="{ 'blur-2xl': isDeleteImagePending }"
                   class="h-full items-center relative border-4 border-double rounded-xs overflow-hidden flex desktop:flex-row justify-center bg-white/10"
                 >
                   <!-- VIDEO AND IMAGE -->
@@ -59,35 +54,12 @@
                     </div>
                   </div>
 
-                  <DropdownMenu>
-                    <DropdownMenuTrigger as-child>
-                      <div
-                        class="absolute top-1 right-1 z-10 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
-                      >
-                        <X class="size-3" />
-                      </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" :align-offset="10" side="top">
-                      <DropdownMenuLabel>
-                        {{ $t('title.pages.game_details.form.text_editor.mediabar.actions.title') }}
-                      </DropdownMenuLabel>
-                      <DropdownMenuItem>
-                        <button
-                          :class="{
-                            'cursor-not-allowed': isDeleteImagePending,
-                            'cursor-pointer': !isDeleteImagePending,
-                          }"
-                          :disabled="isDeleteImagePending"
-                          class="w-full text-left"
-                          @click="handleDeleteMediaUploaded(index, media.url)"
-                        >
-                          {{
-                            $t('title.pages.game_details.form.text_editor.mediabar.actions.delete')
-                          }}
-                        </button>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <button
+                    @click="handleDeleteMediaUploaded(index, media.url)"
+                    class="absolute top-1 right-1 z-10 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
+                  >
+                    <X class="size-3" />
+                  </button>
                   <!-- <div
                     class="absolute top-1 right-1 z-10 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
                     @click="handleDeleteMediaUploaded(index)"
@@ -186,7 +158,6 @@ import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuConte
 import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue'
 import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue'
 import { useDeleteImage } from '@/hooks/common/cdn/useCDNAssetsManager'
-const { mutateAsync: mutateDeleteImage, isPending: isDeleteImagePending } = useDeleteImage()
 
 const useImageStore = useImageStored()
 
@@ -226,7 +197,6 @@ const handleDeleteMediaInput = (index: number) => {
   useImageStore.media_files_stored.splice(index, 1)
 }
 const handleDeleteMediaUploaded = async (index: number, url: string) => {
-  await mutateDeleteImage(url)
   emit('media-deleted-update', index)
 }
 

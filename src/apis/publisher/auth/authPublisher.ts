@@ -16,3 +16,7 @@ export const loginEmail = (data: PublisherLoginRequest) => {
 export const logout = () => {
   return SteakApi.get('/dev/auth/logout')
 }
+
+export const renewPublisherRefreshToken = async () => {
+  return await SteakApi.post('/dev/auth/refresh')
+}

@@ -13,3 +13,7 @@ export async function loginApiUserName(loginData: LoginRequest) {
 export async function loginApiEmail(loginData: LoginRequest) {
   return await SteakApi.post('/user/auth/email-login', loginData)
 }
+
+export const renewUserRefreshToken = async () => {
+  return await SteakApi.post('/user/auth/refresh')
+}
