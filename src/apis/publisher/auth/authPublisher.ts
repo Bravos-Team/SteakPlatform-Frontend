@@ -24,3 +24,10 @@ export const renewPublisherRefreshToken = async () => {
     deviceInfo: await generateDeviceInfo(),
   })
 }
+
+export const renewUserRefreshToken = async () => {
+  return await SteakApi.post('/user/auth/refresh', {
+    deviceId: await generateDeviceId(),
+    deviceInfo: await generateDeviceInfo(),
+  })
+}
