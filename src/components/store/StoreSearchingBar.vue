@@ -71,10 +71,12 @@ const props = defineProps({
   cartItems: {
     type: Array,
     default: () => [],
+    require: false,
   },
   isFetchingCart: {
     type: Boolean,
     default: false,
+    require: false,
   },
 })
 </script>
