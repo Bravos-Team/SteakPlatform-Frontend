@@ -33,7 +33,11 @@ const vueQueryPluginOptions: VueQueryPluginOptions = {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        retry: false,
+        refetchOnMount: false,
+        refetchOnReconnect: true,
+        retryOnMount: false,
+        staleTime: 1000 * 60 * 5,
+        retry: true,
       },
     },
   },
@@ -41,18 +45,6 @@ const vueQueryPluginOptions: VueQueryPluginOptions = {
 
 const app = createApp(App).use(Particles)
 
-// await setupI18n().then((i18n) => {
-//   app.use(i18n)
-//   app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions)
-
-//   router.afterEach((to: RouteLocationNormalized) => {
-//     if (to.meta?.title) {
-//       document.title = to.meta.title as string
-//     }
-//   })
-
-//   app.mount('#app')
-// })
 app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions).use(i18n)
 
 router.afterEach((to: RouteLocationNormalized) => {

@@ -1,5 +1,6 @@
 import SteakApi from '@/apis/index'
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
+import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
 
 export const register = (data: PublisherRegisterRequest) => {
   return SteakApi.post('/dev/auth/register', data)
@@ -15,4 +16,18 @@ export const loginEmail = (data: PublisherLoginRequest) => {
 
 export const logout = () => {
   return SteakApi.get('/dev/auth/logout')
+}
+
+export const renewPublisherRefreshToken = async () => {
+  return await SteakApi.post('/dev/auth/refresh', {
+    deviceId: await generateDeviceId(),
+    deviceInfo: await generateDeviceInfo(),
+  })
+}
+
+export const renewUserRefreshToken = async () => {
+  return await SteakApi.post('/user/auth/refresh', {
+    deviceId: await generateDeviceId(),
+    deviceInfo: await generateDeviceInfo(),
+  })
 }

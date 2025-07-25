@@ -19,3 +19,7 @@ export const clearCart = () => {
 export const moveToWishlist = (gameId: string) => {
   return SteakApi.post(`/store/public/cart/move-to-wishlist?gameId=${gameId}`)
 }
+
+export const mergingCartFormAnotherDevice = () => {
+  return SteakApi.post('/store/public/cart/merge')
+}
