@@ -3,7 +3,6 @@
     <div class="p-0">
       <store-top-bar></store-top-bar>
       <store-searching-bar
-        v-if="!isUserCartFetching"
         :cart-items="userCartData?.data?.items"
         :is-fetching-cart="isUserCartFetching"
       ></store-searching-bar>
