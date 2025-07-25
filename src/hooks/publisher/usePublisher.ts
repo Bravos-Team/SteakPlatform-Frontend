@@ -83,10 +83,13 @@ export const usePublisherLogout = () => {
 
 export const usePublisherRenewRefreshToken = () => {
   const queryClient = useQueryClient()
-  const { mutateAsync, isPending } = useMutation({
+  const { isPending } = useMutation({
     mutationFn: async () => await renewPublisherRefreshToken(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL })
     },
   })
+  return {
+    isPending,
+  }
 }

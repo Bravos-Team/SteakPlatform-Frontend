@@ -7,6 +7,8 @@ import { getCookie, setCookie } from '@/utils/cookies/cookie-utils'
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu'
 import PublisherContextMenu from '@/components/publisher/contextMenuBar/PublisherContextMenu.vue'
 import LanguagesOption from '@/components/common/LanguagesOption.vue'
+import { usePublisherRenewRefreshToken } from '@/hooks/publisher/usePublisher'
+const { isPending: isPublisherFetching } = usePublisherRenewRefreshToken()
 const defaultOpen = getCookie('sidebar_state') === 'true'
 const toggleNav = () => {
   setCookie('sidebar_state', (!defaultOpen).toString().trim())
@@ -14,7 +16,7 @@ const toggleNav = () => {
 </script>
 
 <template>
-  <sidebar-provider class="no-scrollbar">
+  <sidebar-provider v-if="!isPublisherFetching" class="no-scrollbar">
     <publisher-sidebar />
     <context-menu>
       <context-menu-trigger class="w-full">
