@@ -58,9 +58,11 @@ SteakApi.interceptors.response.use(
       try {
         switch (group) {
           case 'publisher':
+            console.log('Renewing publisher refresh token...')
             await renewPublisherRefreshToken()
             break
           case 'user':
+            console.log('Renewing user refresh token...')
             await renewUserRefreshToken()
             break
         }

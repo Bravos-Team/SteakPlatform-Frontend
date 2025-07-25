@@ -14,7 +14,7 @@ export const useUserCartList = () => {
     queryKey: CART_STORE_QUERY_KEYS.USER,
     queryFn: async ({ signal }) => {
       await mergingCartFormAnotherDevice()
-      await getMyCart(signal)
+      return await getMyCart(signal)
     },
     retry: 3,
   })
