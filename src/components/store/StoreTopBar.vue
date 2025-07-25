@@ -184,6 +184,7 @@
                       >{{ $t('navigation.help') }}</router-link
                     >
                     <button
+                      v-if="getCookie('userAccessRights')"
                       @click="handleLogout"
                       class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     >
