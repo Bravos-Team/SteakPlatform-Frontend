@@ -1,5 +1,5 @@
 <template>
-  <drawer v-if="!isUserFetching" direction="top" class="p-0 m-0">
+  <drawer direction="top" class="p-0 m-0">
     <div class="p-0">
       <store-top-bar></store-top-bar>
       <store-searching-bar
@@ -22,7 +22,5 @@ import StoreSearchingBar from '@/components/store/StoreSearchingBar.vue'
 import StoreTopBar from '@/components/store/StoreTopBar.vue'
 import { Drawer } from '@/components/ui/drawer'
 import { useUserCartList } from '@/hooks/store/cart/useUserCart'
-import { renewUserRefreshToken } from '@/apis/user/authUser'
-const { isFetching: isUserFetching } = renewUserRefreshToken()
 const { data: userCartData, isFetching: isUserCartFetching } = useUserCartList()
 </script>
