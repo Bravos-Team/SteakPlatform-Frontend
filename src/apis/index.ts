@@ -58,17 +58,14 @@ SteakApi.interceptors.response.use(
       try {
         switch (group) {
           case 'publisher':
-            console.log('Renewing publisher refresh token...')
             await renewPublisherRefreshToken()
             break
           case 'user':
-            console.log('Renewing user refresh token...')
             await renewUserRefreshToken()
             break
         }
         return await SteakApi.request(error.config)
       } catch (newError) {
-        console.error('Error renewing token:', error)
         toastErrorNotificationPopup(msg, title)
         await router.push(redirect)
         return Promise.reject(newError)

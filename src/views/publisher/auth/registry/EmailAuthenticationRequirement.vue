@@ -4,7 +4,7 @@
       <particles-base />
     </div>
     <div
-      class="flex text-black dark:text-white flex-col justify-center items-center px-4 backdrop-blur-sm h-screen"
+      class="flex text-black dark:text-white flex-col justify-center items-center px-4 backdrop-blur-sm will-change-transform h-screen"
     >
       <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="Logo Image" class="h-22" />
       <p class="dark:text-white xl:text-2xl font-extrabold mt-3 tracking-wide mb-10">

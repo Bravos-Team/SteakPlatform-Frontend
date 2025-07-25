@@ -1,9 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex flex-col laptop:flex-row gap-x-5">
-      <div
-        class="w-full hidden laptop:flex lg:w-[935px] xl:w-[1134px] xl:h-[638px] lg:h-[525px] overflow-hidden rounded-3xl bg-gray-200/5"
-      >
+      <div class="hidden laptop:flex w-10/12 overflow-hidden rounded-3xl bg-gray-200/5">
         <div class="!min-w-[10rem] !min-h-full keen-slider" ref="container">
           <img
             v-for="(game, index) in gameSliders"
@@ -17,7 +15,7 @@
 
       <!-- MOBILE SLIDER -->
       <div
-        class="w-full px-3 shrink-0 snap-mandatory laptop:hidden flex gap-x-10 lg:w-[935px] xl:w-[1134px] snap-x xl:h-[638px] lg:h-[525px] overflow-x-scroll no-scrollbar bg-gray-transparent"
+        class="w-full cursor-grab px-3 shrink-0 snap-mandatory laptop:hidden flex gap-x-10 lg:w-[935px] xl:w-[1134px] snap-x xl:h-[638px] lg:h-[525px] overflow-x-scroll no-scrollbar bg-gray-transparent"
       >
         <div
           v-for="(game, index) in gameSliders"
@@ -40,7 +38,7 @@
           :class="{ active: currentSlideIndex === index }"
           @click="goToSlide(index)"
         >
-          <img :src="game.img" alt="" class="w-10 h-12 rounded-md object-cover" />
+          <img :src="game.img" alt="" class="w-10 min-h-full rounded-md object-cover" />
           <p class="text-white text-sm font-medium truncate flex-1 ml-3">{{ game.name }}</p>
         </div>
       </div>
@@ -251,7 +249,6 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-height: 60px;
   border: 2px solid transparent;
   position: relative;
   overflow: hidden;

@@ -3,7 +3,7 @@
     <particles-base />
   </div>
   <div
-    class="min-h-screen backdrop-blur-sm bg-dark flex flex-col items-center justify-center p-4 invert dark:invert-0"
+    class="min-h-screen backdrop-blur-sm will-change-transform bg-dark flex flex-col items-center justify-center p-4 invert dark:invert-0"
   >
     <div class="max-w-md w-full bg-gray-900/60 rounded-xl shadow-2xl overflow-hidden">
       <div class="p-8">

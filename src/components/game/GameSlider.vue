@@ -1,7 +1,7 @@
 <template>
   <!-- CAROUSELS BAR -->
   <div
-    class="flex shrink-0 flex-col overflow-hidden xl:w-[1039px] xl:h-[663px] lg:h-[499px] gap-y-[20px]"
+    class="flex shrink-0 flex-col will-change-scroll transform-gpu overflow-hidden xl:w-[1039px] xl:h-[663px] lg:h-[499px] gap-y-[20px]"
   >
     <!-- MAIN IMAGES SLIDERS -->
     <div

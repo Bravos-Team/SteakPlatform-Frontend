@@ -1,7 +1,7 @@
 <template>
   <div class="relative z-[999]">
     <div
-      class="mx-auto bg-[#fff]/1 backdrop-blur-md text-white w-full px-4 p-0 flex items-center justify-between h-[72px]"
+      class="mx-auto bg-[#fff]/1 will-change-transform backdrop-blur-md text-white w-full px-4 p-0 flex items-center justify-between h-[72px]"
     >
       <!-- LOGO -->
       <div class="flex items-center h-full">

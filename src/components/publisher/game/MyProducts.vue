@@ -1,5 +1,5 @@
 <template>
-  <card class="py-3 px-1 bg-[#101014]/50 backdrop-blur-2xl w-full">
+  <card class="py-3 px-1 bg-[#101014]/50 will-change-transform backdrop-blur-2xl w-full">
     <card-content class="px-3 py-3">
       <!-- PRODUCT COUNT AND ACTIONS BUTTON -->
       <div class="flex flex-col lg:flex-row justify-between">

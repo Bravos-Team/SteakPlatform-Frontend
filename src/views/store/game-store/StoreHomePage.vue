@@ -3,14 +3,16 @@
   <store-sliders></store-sliders>
   <!-- END SLIDER -->
   <div
-    class="typewriter flex flex-col w-full gap-y-[64px] my-[64px] overflow-hidden items-center justify-center"
+    class="typewriter hidden flex-col w-full gap-y-[64px] my-[64px] overflow-hidden items-center justify-center"
   >
-    <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5">
+    <!-- <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5">
       <span class="text-3xl font-bold">Game Available</span>
-      <div v-for="(page, index) in useGameListData?.pages" :index="index">
-        <GameCard v-for="(game, index) in page?.data?.items" :key="index" :game="game" />
+      <div class="flex flex-col laptop:flex-row w-full h-full gap-x-5 gap-y-5">
+        <template v-for="(page, index) in useGameListData?.pages" :index="index">
+          <GameCard v-for="(game, index) in page?.data?.items" :key="index" :game="game" />
+        </template>
       </div>
-    </div>
+    </div> -->
     <!-- <div v-if="useGameListData?.pages"> -->
     <!-- <div v-if="isFetchingGameList"></div> -->
     <!-- game by category -->
@@ -66,6 +68,18 @@
       ></game-card-horizontal>
     </div> -->
     <!-- END LIST GAME HORIZONTAL BAR-->
+  </div>
+  <div class="flex flex-col @min-xl:w-full gap-y-[64px] my-[64px] items-center justify-center">
+    <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5 mobile:px-3">
+      <span class="text-3xl font-bold typewriter">Game Available</span>
+      <div
+        class="flex flex-wrap gap-x-10 items-center justify-center desktop:justify-start gap-y-10"
+      >
+        <template v-for="(page, index) in useGameListData?.pages" :index="index">
+          <GameCard v-for="(game, index) in page?.data?.items" :key="index" :game="game" />
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 
