@@ -19,7 +19,7 @@ export const logout = () => {
 }
 
 export const renewPublisherRefreshToken = async () => {
-  return await SteakApi.post('/dev/auth/refresh',{
+  return await SteakApi.post('/dev/auth/refresh', {
     deviceId: await generateDeviceId(),
     deviceInfo: await generateDeviceInfo(),
   })
