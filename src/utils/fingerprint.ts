@@ -2,9 +2,15 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs'
 
 export async function generateDeviceId(): Promise<string> {
   try {
+    const localStorageDeviceId = localStorage.getItem('deviceId')
+    if (localStorageDeviceId && localStorageDeviceId.length > 0) {
+      return localStorageDeviceId as string
+    }
     const fp = await FingerprintJS.load()
     const result = await fp.get()
-    return result.visitorId
+    const deviceId: string = result.visitorId
+    localStorage.setItem('deviceId', deviceId)
+    return deviceId
   } catch (error) {
     console.error('Error generating device ID', error)
     return ''
@@ -34,8 +40,8 @@ export async function generateDeviceInfo(): Promise<string> {
     } else if ((match = ua.match(/Edg\/([\d.]+)/))) {
       browser = 'Edge'
       version = match[1]
-    } else if ((match = ua.match(/OPR\/([\d.]+)/)) || (match = ua.match(/Opera\/([\d.]+)/))) {
-      browser = 'Opera'
+    } else if ((match = ua.match(/Brave\/([\d.]+)/))) {
+      browser = 'Brave'
       version = match[1]
     } else if (
       (match = ua.match(/Chrome\/([\d.]+)/)) &&
