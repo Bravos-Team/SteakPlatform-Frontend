@@ -4,7 +4,7 @@ export async function generateDeviceId(): Promise<string> {
   try {
     const localStorageDeviceId = localStorage.getItem('deviceId')
     if (localStorageDeviceId && localStorageDeviceId.length > 0) {
-      return localStorage.getItem('deviceId') as string
+      return localStorageDeviceId as string
     }
     const fp = await FingerprintJS.load()
     const result = await fp.get()
