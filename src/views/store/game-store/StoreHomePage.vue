@@ -73,7 +73,7 @@
     <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5 mobile:px-3">
       <span class="text-3xl font-bold typewriter">Game Available</span>
       <div
-        class="flex flex-wrap gap-x-10 items-center justify-center desktop:justify-start gap-y-10"
+        class="flex flex-wrap gap-x-10 items-center justify-center-safe tablet:justify-start gap-y-10"
       >
         <template v-for="(page, index) in useGameListData?.pages" :index="index">
           <GameCard v-for="(game, index) in page?.data?.items" :key="index" :game="game" />

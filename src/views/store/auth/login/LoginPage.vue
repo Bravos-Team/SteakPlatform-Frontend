@@ -196,13 +196,15 @@ const handleSubmission = async () => {
     } else {
       errors.value = {}
       try {
-        await mutateLoginByEmail({ ...commonData, email: form.usernameOrEmail })
-        if (isLoginByEmailSuccess)
+        const response = await mutateLoginByEmail({ ...commonData, email: form.usernameOrEmail })
+        if (response.status === 200) {
+          ;(window as any).api?.login(response.data)
           toastSuccessNotificationPopup(
             'Login successful',
             `Welcome back! ${loginByEmailData.value.data.displayName}`,
           )
-        else toastErrorNotificationPopup('Login failed', 'Please check your email or password.')
+          await router.push({ name: 'store-home' })
+        } else toastErrorNotificationPopup('Login failed', 'Please check your email or password.')
       } catch (error: any) {
         toastErrorNotificationPopup('Login failed', `Error: ${error.response.data.detail}`)
       }
@@ -229,9 +231,9 @@ const handleSubmission = async () => {
             'Login successful',
             `Welcome back! ${loginByUsernameData.value.data.displayName}`,
           )
+          await router.push({ name: 'store-home' })
         } else
           toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
-        await router.push({ name: 'store-home' })
       } catch (error: any) {
         toastErrorNotificationPopup('Login failed', `Error: ${error?.response?.data?.detail}`)
       }
