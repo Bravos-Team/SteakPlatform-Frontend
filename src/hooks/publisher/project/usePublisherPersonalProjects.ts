@@ -26,6 +26,9 @@ export const usePublisherGetPersonalProjects = (
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LIST(filters),
     queryFn: async ({ signal }) => await publisherGetPersonalProjectListApi(filters.value, signal),
     placeholderData: keepPreviousData,
+    enabled: true,
+    retry: 3,
+    staleTime: 1000 * 60 * 5,
   })
 }
 

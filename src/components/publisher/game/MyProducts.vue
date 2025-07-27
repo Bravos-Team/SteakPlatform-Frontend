@@ -83,7 +83,34 @@
         >
         </Card>
       </div>
-      <upload-game-bar :games="games?.data.content ?? []" v-else />
+      <div class="flex flex-col gap-y-3" v-else>
+        <upload-game-bar :games="games?.data.content ?? []" />
+        <pagination
+          @update:page="handlePageChange"
+          v-slot="{ page }"
+          :total="totalResults"
+          :items-per-page="8"
+          :default-page="filters.page ?? 1"
+        >
+          <pagination-content v-slot="{ items }">
+            <pagination-previous :disabled="page === 1" />
+            <template v-for="(item, index) in items" :key="index">
+              <pagination-item
+                v-if="item.type === 'page'"
+                :value="item.value"
+                :key="item.value"
+                :is-active="item.value === page"
+              >
+                {{ item.value }}
+              </pagination-item>
+            </template>
+            <pagination-ellipsis :index="8" />
+            <pagination-next
+              :disabled="page === Math.ceil(totalResults.value / (filters.size as number))"
+            />
+          </pagination-content>
+        </pagination>
+      </div>
       <!-- END UPLOAD GAME BAR -->
     </card-content>
   </card>
@@ -100,6 +127,7 @@ import {
   SelectSeparator,
   SelectValue,
 } from '@/components/ui/select'
+
 import { computed, ref } from 'vue'
 import CreateProductButton from '@/components/publisher/game/CreateProductButton.vue'
 import UploadGameBar from '@/components/publisher/game/UploadGameBar.vue'
@@ -109,6 +137,16 @@ import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/proje
 import { useI18n } from 'vue-i18n'
 import { watch } from 'vue'
 import { RotateCcw } from 'lucide-vue-next'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationFirst,
+  PaginationItem,
+  PaginationLast,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
 const { t } = useI18n()
 const showI18n = (key: string) => {
   return t(key)
@@ -123,7 +161,7 @@ const selectedStatusLabel = computed(() => {
 const filters = ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>({
   status: null,
   page: 1,
-  size: 10,
+  size: 8,
   keyword: undefined,
 })
 
@@ -136,13 +174,19 @@ const statusOptions = [
 
 const isReset = ref(false)
 
+const handlePageChange = async (newPage: number) => {
+  filters.value.page = newPage
+  await refetchPersonalProjects()
+}
+
 const handleResetFilters = async () => {
   isReset.value = true
   selectedStatus.value = null
   filters.value = {
     status: null,
     page: 1,
-    size: 10,
+    number: 0,
+    size: 8,
     keyword: undefined,
   }
   await refetchPersonalProjects()
@@ -158,6 +202,11 @@ const {
 const handleRefetchingPersonalProjects = async () => {
   await refetchPersonalProjects()
 }
+
+const totalResults = computed(() => {
+  return games.value?.data?.page?.totalElements ?? 0
+})
+
 watch(selectedStatus, async (newValue) => {
   filters.value.status = newValue
   handleRefetchingPersonalProjects()
