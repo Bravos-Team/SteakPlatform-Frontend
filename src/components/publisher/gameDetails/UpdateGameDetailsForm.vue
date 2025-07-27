@@ -471,6 +471,7 @@ const thumbnailUrlData = ref<string>(
     ? gameToMutate.value.thumbnail
     : 'https://ccdn.steak.io.vn/assets-desert.png',
 )
+
 const data_to_assigned = ref<
   {
     url: string

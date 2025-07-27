@@ -19,8 +19,9 @@ SteakApi.interceptors.response.use(
   async (error) => {
     const route = router.currentRoute.value
     const status = error.response?.status
-
-    if (status === 401 && route?.meta?.middleware) {
+    const originalRequest = error.config
+    if (status === 401 && route?.meta?.middleware && !originalRequest._retry) {
+      originalRequest._retry = true
       const messages = {
         publisher: {
           msg: 'You need login to access authenication required page!',
@@ -39,7 +40,6 @@ SteakApi.interceptors.response.use(
         },
       }
       const group = (route.meta?.group ?? 'default') as keyof typeof messages
-
       const { msg, title, redirect } = messages[group] || messages.default
 
       switch (group) {
