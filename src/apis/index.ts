@@ -3,7 +3,38 @@ import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificati
 import { renewPublisherRefreshToken } from '@/apis/publisher/auth/authPublisher'
 import { renewUserRefreshToken } from '@/apis/user/authUser'
 import router from '@/router/index'
-import { removeCookie } from '@/utils/cookies/cookie-utils'
+import { removeCookie, removeCookies } from '@/utils/cookies/cookie-utils'
+
+let isRefreshing = false
+let failedQueue: Array<{
+  resolve: (value: any) => void
+  reject: (error: any) => void
+}> = []
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) {
+      reject(error)
+    } else {
+      resolve(token)
+    }
+  })
+
+  failedQueue = []
+}
+
+const removeCookiesQueue = (group: string) => {
+  switch (group) {
+    case 'publisher':
+      removeCookie('publisherAccessRights')
+      break
+    case 'user':
+      removeCookie('userAccessRights')
+      break
+    default:
+      removeCookies(['userAccessRights', 'publisherAccessRights'])
+  }
+}
 
 export const SteakApi = axios.create({
   baseURL: import.meta.env.VITE_BASE_API_URL + '/api/v1',
@@ -21,7 +52,18 @@ SteakApi.interceptors.response.use(
     const status = error.response?.status
     const originalRequest = error.config
     if (status === 401 && route?.meta?.middleware && !originalRequest._retry) {
+      console.log(originalRequest._retry)
       originalRequest._retry = true
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject })
+        })
+          .then(() => {
+            return SteakApi.request(originalRequest)
+          })
+          .catch((err) => Promise.reject(err))
+      }
+
       const messages = {
         publisher: {
           msg: 'You need login to access authenication required page!',
@@ -39,21 +81,11 @@ SteakApi.interceptors.response.use(
           redirect: { name: 'NotFound' },
         },
       }
+
       const group = (route.meta?.group ?? 'default') as keyof typeof messages
       const { msg, title, redirect } = messages[group] || messages.default
 
-      switch (group) {
-        case 'publisher':
-          removeCookie('publisherAccessRights')
-          break
-        case 'user':
-          removeCookie('userAccessRights')
-          break
-        default:
-          removeCookie('userAccessRights')
-          removeCookie('publisherAccessRights')
-          break
-      }
+      isRefreshing = true
 
       try {
         switch (group) {
@@ -64,11 +96,17 @@ SteakApi.interceptors.response.use(
             await renewUserRefreshToken()
             break
         }
-        return await SteakApi.request(error.config)
-      } catch (newError) {
+
+        processQueue(null, 'success')
+        isRefreshing = false
+        return await SteakApi.request(originalRequest)
+      } catch (refreshError) {
+        processQueue(refreshError, null)
+        isRefreshing = false
+        removeCookiesQueue(group)
         toastErrorNotificationPopup(msg, title)
         await router.push(redirect)
-        return Promise.reject(newError)
+        return Promise.reject(refreshError)
       }
     }
 
