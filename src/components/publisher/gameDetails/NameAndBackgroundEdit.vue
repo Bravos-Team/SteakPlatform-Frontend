@@ -24,11 +24,11 @@
       class="absolute top-1/2 scale-120 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-spin"
     />
     <div
-      class="absolute bottom-0 w-full h-[6vh] lg:h-[10vh] bg-white-50 will-change-transform backdrop-blur-[8px] p-5"
+      class="absolute bottom-0 w-full h-[6vh] lg:h-[10vh] bg-white-50 will-change-transform backdrop-blur-[8px] p-6"
     >
       <div class="w-full h-full flex items-center">
         <div class="flex gap-x-2 justify-center items-center">
-          <span class="xl:text-2xl font-bold px-3 py-2 bg-gray-600/30 rounded-sm">
+          <span class="xl:text-2xl font-bold px-3 py-2 bg-gray-600/80 rounded-sm">
             {{ gameDetails.name }}
           </span>
           <name-edited-button :game-name="gameDetails.name" :game-id="gameDetails.id" />

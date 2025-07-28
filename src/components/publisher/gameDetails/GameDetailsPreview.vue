@@ -101,7 +101,9 @@
           <!-- END SUB MEDIA -->
 
           <!-- START SUB DES -->
-          <div class="w-full flex flex-col font-mono">{{ gameDetails?.shortDescription }}</div>
+          <div class="w-full flex flex-col font-mono text-wrap">
+            {{ gameDetails?.shortDescription }}
+          </div>
           <!-- END SUB DES -->
 
           <!-- START SUB TYPE BAR -->

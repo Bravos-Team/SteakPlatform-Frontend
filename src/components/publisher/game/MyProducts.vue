@@ -5,7 +5,7 @@
       <div class="flex flex-col lg:flex-row justify-between">
         <div class="flex flex-col basis-1/3">
           <!-- <span class="font-bold text-2xl">Your Products({{ games?.length }})</span> -->
-          <span class="font-normal text-md text-gray-400"
+          <span class="font-normal text-md text-gray-400 text-wrap"
             >Manage products for the Steak Games Store and Steak Online Services.</span
           >
         </div>

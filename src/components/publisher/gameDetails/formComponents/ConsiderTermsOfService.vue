@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full">
     <!-- TITLE DESCRIPTIONS ALERT -->
-    <div class="before:content-['*'] before:text-red-500">
+    <div class="before:content-['*'] before:text-red-500 text-wrap">
       {{ $t('title.pages.game_details.form.consider.header_title') }}
     </div>
     <!-- END TITLE DESCRIPTIONS ALERT -->

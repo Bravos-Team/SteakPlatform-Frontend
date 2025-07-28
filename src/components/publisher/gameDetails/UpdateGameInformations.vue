@@ -7,7 +7,7 @@
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" class="size-10" alt="" />
         <span class="font-bold text-lg lg:text-2xl">FOR DEVELOPER</span>
       </div>
-      <span class="text-lg">
+      <span class="text-lg text-wrap">
         As part of our support for the indie
         <span class="underline decoration-sky-500 inline-block">
           <div class="flex gap-x-1">
@@ -26,16 +26,14 @@
       </span>
     </div>
     <div class="flex w-full justify-end items-center">
-      <div class="">
-        <update-game-informations-button :game-informations="gameDetails" />
-      </div>
+      <update-game-informations-button :game-informations="gameDetails" />
     </div>
   </card>
 </template>
 
 <script setup lang="ts">
 import { Card } from '@/components/ui/card'
-import UpdateGameInformationsButton from './UpdateGameInformationsButton.vue'
+import UpdateGameInformationsButton from '@/components/publisher/gameDetails/UpdateGameInformationsButton.vue'
 import { SquareArrowUpRight } from 'lucide-vue-next'
 import { GameType } from '@/types/game/gameDetails/GameDetailsType'
 
