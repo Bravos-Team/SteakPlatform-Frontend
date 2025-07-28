@@ -6,7 +6,7 @@
 
     <div class="flex gap-x-2 w-full justify-between tablet:justify-end">
       <!-- START UPDATE AT INFORMATION -->
-      <div class="flex items-center gap-x-2">
+      <div class="flex items-center flex-wrap gap-x-2">
         <span>{{ $t('title.pages.game_details.form.update_at') }}:</span>
         <tooltip>
           <tooltip-trigger>

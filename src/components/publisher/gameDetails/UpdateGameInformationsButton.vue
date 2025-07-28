@@ -2,7 +2,7 @@
   <Dialog :open="showDialog" @update:open="showDialog = $event" class="!no-scrollbar">
     <button
       @click.seft="hanldeOpenDialog"
-      class="bg-white/10 hover:bg-white/20 w-full cursor-pointer px-5 py-3 rounded-md flex gap-x-2 flex-wrap"
+      class="bg-white/10 hover:bg-white/20 tablet:min-w-100 w-full cursor-pointer px-5 py-3 rounded-md flex gap-x-2 flex-wrap"
     >
       <square-dot class="shrink-0" />
       <span class="lg:text-md xl:text-[17px] flex gap-x-1 w-full flex-wrap">
@@ -14,7 +14,7 @@
       </span>
     </button>
     <dialog-scroll-content
-      class="resize-x mobile:p-2 bg-linear-120 border-2 from-gray-200/7 to-indigo-400/10 min-w-full flex flex-col desktop-xl:min-w-[90rem]"
+      class="bg-linear-120 border-2 from-gray-200/7 to-indigo-400/10 min-w-full flex flex-col desktop-xl:min-w-[90rem]"
     >
       <dialog-header>
         <dialog-title class="text-lg tablet:text-2xl flex gap-x-1">
@@ -33,7 +33,7 @@
         @update:open-dialog-form="showDialog = $event"
       />
       <!-- END <update-game-details-form /> -->
-      <dialog-description class="text-gray-400 text-center">
+      <dialog-description class="text-gray-400 text-center text-wrap">
         <span class="text-sm">{{ $t('title.pages.game_details.form.footer_message') }}</span>
       </dialog-description>
     </dialog-scroll-content>

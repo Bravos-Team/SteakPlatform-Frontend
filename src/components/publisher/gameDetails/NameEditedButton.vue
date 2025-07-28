@@ -13,7 +13,7 @@
           <tooltip-trigger as-child>
             <button
               @click="showDialog = !showDialog"
-              class="cursor-pointer w-12 h-10 rounded-sm bg-black/10 transition-colors duration-300 hover:bg-black/20 flex justify-center items-center"
+              class="cursor-pointer w-12 h-10 rounded-sm bg-black/40 transition-colors duration-300 hover:bg-black/20 flex justify-center items-center"
             >
               <pen-line class="w-5 h-5" />
             </button>

@@ -125,7 +125,7 @@
         <!-- END MEDIA INPUTS -->
       </div>
 
-      <div class="flex justify-end gap-x-2">
+      <div class="flex flex-wrap gap-y-3 justify-end gap-x-2">
         <button
           class="border-2 border-gray-300/20 px-2 rounded-sm py-1 bg-white/10 flex gap-x-1 cursor-pointer hover:bg-white/20 transition-colors duration-300"
           @click="handleClearAll"

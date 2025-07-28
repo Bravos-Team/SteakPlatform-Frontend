@@ -1,5 +1,5 @@
 <template>
-  <span class="text-white font-medium px-2">
+  <span class="text-white font-medium px-2 flex flex-wrap">
     {{ $t('title.pages.game_management.noti.message_logs') }}
     {{ new Date().toLocaleDateString('vi-VN') }}
   </span>
