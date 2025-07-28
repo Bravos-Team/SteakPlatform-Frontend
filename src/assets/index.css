@@ -9,8 +9,7 @@ body{
 }
 .safari-scrollable {
   white-space: nowrap;
-  -webkit-overflow-scrolling: inherit;
-  
+ -webkit-overflow-scrolling: touch !important;
 }
 
 @theme {

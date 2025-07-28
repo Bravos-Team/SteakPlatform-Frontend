@@ -23,6 +23,24 @@ const processQueue = (error: any, token: string | null = null) => {
   failedQueue = []
 }
 
+const messages = {
+  publisher: {
+    msg: 'You need login to access authenication required page!',
+    title: 'Publisher Authentication',
+    redirect: { name: 'PublisherAuthLogin' },
+  },
+  user: {
+    msg: 'You need login to access authenication required page!',
+    title: 'Steak Game Store Authentication',
+    redirect: { name: 'Login' },
+  },
+  default: {
+    msg: 'Something went wrong, please try again later!',
+    title: 'Steak Game Store Error',
+    redirect: { name: 'NotFound' },
+  },
+}
+
 const removeCookiesQueue = (group: string) => {
   switch (group) {
     case 'publisher':
@@ -51,8 +69,15 @@ SteakApi.interceptors.response.use(
     const route = router.currentRoute.value
     const status = error.response?.status
     const originalRequest = error.config
-    if (status === 401 && route?.meta?.middleware && !originalRequest._retry) {
-      console.log(originalRequest._retry)
+    const group = (route.meta?.group ?? 'default') as keyof typeof messages
+    const { msg, title, redirect } = messages[group] || messages.default
+    console.log('API Error:', error)
+    if (
+      status === 401 &&
+      route?.meta?.middleware &&
+      !originalRequest._retry &&
+      !error.response.config.url.includes('/refresh')
+    ) {
       originalRequest._retry = true
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -64,33 +89,12 @@ SteakApi.interceptors.response.use(
           .catch((err) => Promise.reject(err))
       }
 
-      const messages = {
-        publisher: {
-          msg: 'You need login to access authenication required page!',
-          title: 'Publisher Authentication',
-          redirect: { name: 'PublisherAuthLogin' },
-        },
-        user: {
-          msg: 'You need login to access authenication required page!',
-          title: 'Steak Game Store Authentication',
-          redirect: { name: 'Login' },
-        },
-        default: {
-          msg: 'Something went wrong, please try again later!',
-          title: 'Steak Game Store Error',
-          redirect: { name: 'NotFound' },
-        },
-      }
-
-      const group = (route.meta?.group ?? 'default') as keyof typeof messages
-      const { msg, title, redirect } = messages[group] || messages.default
-
       isRefreshing = true
 
       try {
         switch (group) {
           case 'publisher':
-            await renewPublisherRefreshToken()
+            const response = await renewPublisherRefreshToken()
             break
           case 'user':
             await renewUserRefreshToken()
@@ -101,6 +105,7 @@ SteakApi.interceptors.response.use(
         isRefreshing = false
         return await SteakApi.request(originalRequest)
       } catch (refreshError) {
+        console.log('Refresh token error:', refreshError)
         processQueue(refreshError, null)
         isRefreshing = false
         removeCookiesQueue(group)
