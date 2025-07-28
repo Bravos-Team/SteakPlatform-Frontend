@@ -269,7 +269,6 @@
 <script setup>
 import AboutsGame from '@/components/game/AboutsGame.vue'
 import GameSlider from '@/components/game/GameSlider.vue'
-import RelateFieldAndFeaturesBar from '@/components/game/RelateFieldAndFeaturesBar.vue'
 import RelateGamesByDeveloper from '@/components/game/RelateGamesByDeveloper.vue'
 import SubGameDetails from '@/components/game/SubGameDetails.vue'
 import { ref } from 'vue'

@@ -27,6 +27,7 @@
           >
             <!-- GAME IMAGE -->
             <div
+              v-if="game.status"
               class="inverted-radius !rounded-none"
               :style="{
                 '--x': xValueComputed(game.status) + 'px',
@@ -77,7 +78,11 @@
                   </button>
                 </div>
               </div>
-              <card-description>{{ game.descriptions }}</card-description>
+              <card-description class="justify-end flex">{{
+                new Date(Number(game.updatedAt)).toLocaleDateString('vi-VN', {
+                  dateStyle: 'medium',
+                })
+              }}</card-description>
             </div>
             <!-- END GAME NAME -->
 

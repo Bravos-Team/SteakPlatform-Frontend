@@ -2,6 +2,7 @@ export type PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS = {
   status?: string | undefined | null
   page?: number
   size?: number
+  number?: number
   keyword?: string | null | undefined
 }
 

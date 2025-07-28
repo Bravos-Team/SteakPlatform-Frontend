@@ -1,9 +1,12 @@
 <template>
   <drawer direction="top">
-    <store-header :isHiddenSearchingBar="isHiddenSearchingBar"></store-header>
-    <router-view></router-view>
-    <store-footer></store-footer>
+    <store-header
+      :isHiddenSearchingBar="isHiddenSearchingBar"
+      :isHiddenWhenMobile="false"
+    ></store-header>
   </drawer>
+  <router-view></router-view>
+  <store-footer></store-footer>
 </template>
 
 <script setup>

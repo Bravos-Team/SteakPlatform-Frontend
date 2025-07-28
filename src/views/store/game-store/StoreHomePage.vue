@@ -1,98 +1,34 @@
 <template>
-  <!-- SLIDER -->
-  <store-sliders></store-sliders>
-  <!-- END SLIDER -->
-  <div
-    class="typewriter hidden flex-col w-full gap-y-[64px] my-[64px] overflow-hidden items-center justify-center"
-  >
-    <!-- <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5">
-      <span class="text-3xl font-bold">Game Available</span>
-      <div class="flex flex-col laptop:flex-row w-full h-full gap-x-5 gap-y-5">
-        <template v-for="(page, index) in useGameListData?.pages" :index="index">
-          <GameCard v-for="(game, index) in page?.data?.items" :key="index" :game="game" />
-        </template>
-      </div>
-    </div> -->
-    <!-- <div v-if="useGameListData?.pages"> -->
-    <!-- <div v-if="isFetchingGameList"></div> -->
-    <!-- game by category -->
-    <!-- <div v-else>
-        <category-base-bar
-          v-if="useGameListData?.pages?.length > 0"
-          v-for="(page, index) in useGameListData?.pages"
-          :key="index"
-          :game-by-category-list="page?.data?.items"
-          :title-category="$t('title.component.discover')"
-        ></category-base-bar>
-      </div> -->
-    <!-- END GAME BY CATEGORY-->
-    <!-- </div> -->
-    <!-- COLLABORATORS BAR -->
-    <!-- <collaborators-bar :game-collaborators-list="gameCollaboratorsList"></collaborators-bar> -->
-    <!-- END COLLABORATORS BAR -->
-
-    <!-- GAME BY SAVINGS BAR -->
-    <!-- <category-base-bar
-      class=""
-      :game-by-category-list="gameBySavingsSpotlightList"
-      :title-category="$t('title.component.spotlight')"
-    ></category-base-bar> -->
-    <!-- END GAME BY SAVINGS BAR -->
-
-    <!-- DEALS BAR -->
-    <!-- <collaborators-bar
-      :gapCollacborationCardY="'15px'"
-      :game-collaborators-list="gameDealsNotableList"
-    ></collaborators-bar> -->
-    <!-- END DEALS BAR -->
-
-    <!-- FREE GAME BAR -->
-    <!-- <div class="px-3">
-      <free-game-bar :freeGameList="freeGameList"></free-game-bar>
-    </div> -->
-    <!-- END FREE GAME BAR -->
-
-    <!-- LIST GAME HORIZONTAL BAR -->
-    <!-- <div class="flex flex-col gap-y-5 laptop:flex-row w-full h-full">
-      <game-card-horizontal
-        :title="$t('title.component.top_sellers')"
-        :data="topSellersList"
-      ></game-card-horizontal>
-      <game-card-horizontal
-        :title="$t('title.component.most_played')"
-        :data="topSellersList"
-      ></game-card-horizontal>
-      <game-card-horizontal
-        :title="$t('title.component.top_upcoming_wishlisted')"
-        :data="topSellersList"
-      ></game-card-horizontal>
-    </div> -->
-    <!-- END LIST GAME HORIZONTAL BAR-->
-  </div>
-  <div class="flex flex-col @min-xl:w-full gap-y-[64px] my-[64px] items-center justify-center">
-    <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5 mobile:px-3">
-      <span class="text-3xl font-bold typewriter">Game Available</span>
+  <div class="!overflow-auto">
+    <!-- SLIDER -->
+    <store-sliders></store-sliders>
+    <!-- END SLIDER -->
+    <div
+      class="flex flex-col @min-xl:w-full gap-y-[64px] my-[64px] items-center justify-center h-full"
+    >
       <div
-        class="flex flex-wrap gap-x-10 items-center justify-center-safe tablet:justify-start gap-y-10"
+        v-if="useGameListData?.pages.length > 0"
+        class="w-full flex flex-col gap-y-5 mobile:px-3"
       >
-        <template v-for="(page, index) in useGameListData?.pages" :index="index">
-          <GameCard v-for="(game, index) in page?.data?.items" :key="index" :game="game" />
-        </template>
+        <span class="text-3xl font-bold">Game Available</span>
+        <div
+          class="flex flex-wrap gap-x-10 items-center justify-center-safe tablet:justify-start gap-y-10"
+        >
+          <template v-for="(page, index) in useGameListData?.pages" :index="index">
+            <GameCard v-for="(game, index) in page?.data?.items" :key="index" :game="game" />
+          </template>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import CategoryBaseBar from '@/components/common/CategoryBaseBar.vue'
-import CollaboratorsBar from '@/components/common/CollaboratorsBar.vue'
-import FreeGameBar from '@/components/common/FreeGameBar.vue'
-import GameCardHorizontal from '@/components/store/GameCardHorizontal.vue'
-
-import StoreSliders from '@/components/store/StoreSliders.vue'
-import { onMounted, ref } from 'vue'
+// import StoreSliders from '@/components/store/StoreSliders.vue'
+// import { onMounted, ref, nextTick, onBeforeMount } from 'vue'
 import { useGameStoreInfiniteQueryList } from '@/hooks/store/game/useGameStore'
 import GameCard from '@/components/store/GameCard.vue'
+import { onMounted, nextTick, defineAsyncComponent } from 'vue'
 const {
   data: useGameListData,
   fetchNextPage: fetchNextPageGameList,
@@ -101,6 +37,7 @@ const {
   hasNextPage: hasNextPageGameList,
 } = useGameStoreInfiniteQueryList()
 
+const StoreSliders = defineAsyncComponent(() => import('@/components/store/StoreSliders.vue'))
 // const gameByCategoryList = ref([
 //   {
 //     id: 1,
@@ -415,4 +352,32 @@ const {
 //     img: 'https://cdn1.epicgames.com/spt-assets/6109686c842a4bd9b9ef8959ec4d97c6/chuchel-1731b.png?resize=1&w=360&h=480&quality=medium',
 //   },
 // ])
+// In your store-home component
+onMounted(async () => {
+  await nextTick()
+
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    const app = document.getElementById('app')
+    if (app) {
+      app.style.overflow = 'auto'
+      app.style.webkitOverflowScrolling = 'touch'
+      app.style.height = 'auto'
+    }
+  }
+})
 </script>
+
+<style>
+.webkit-overflow-scrolling-touch {
+  -webkit-overflow-scrolling: touch;
+}
+
+.touch-action-manipulation {
+  touch-action: manipulation;
+}
+.ios-scroll-fix {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  touch-action: manipulation;
+}
+</style>

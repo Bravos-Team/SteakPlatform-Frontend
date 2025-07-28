@@ -1,6 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex flex-col laptop:flex-row gap-x-5">
+      <!-- LAPTOP SLIDER -->
       <div class="hidden laptop:flex w-10/12 overflow-hidden rounded-3xl bg-gray-200/5">
         <div class="!min-w-[10rem] !min-h-full keen-slider" ref="container">
           <img
@@ -12,19 +13,10 @@
           />
         </div>
       </div>
+      <!-- END LAPTOP SLIDER -->
 
       <!-- MOBILE SLIDER -->
-      <div
-        class="w-full cursor-grab px-3 shrink-0 snap-mandatory laptop:hidden flex gap-x-10 lg:w-[935px] xl:w-[1134px] snap-x xl:h-[638px] lg:h-[525px] overflow-x-scroll no-scrollbar bg-gray-transparent"
-      >
-        <div
-          v-for="(game, index) in gameSliders"
-          :key="game.id"
-          class="w-full tablet:min-w-[40rem] tablet:w-full snap-center rounded-sm overflow-hidden shrink-0 h-[40rem] flex"
-        >
-          <img :src="game.background" alt="" class="object-cover h-full w-full" />
-        </div>
-      </div>
+      <mobile-slider class="laptop:hidden flex" :gameSliders="gameSliders" />
       <!-- END MOBILE SLIDER -->
 
       <!-- SUB SLIDER BAR-->
@@ -48,9 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { nextTick, onUnmounted, ref } from 'vue'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/vue.es'
+import MobileSlider from '@/components/store/slider/MobileSlider.vue'
+
 const animation = { duration: 300, easing: (t: number) => t }
 let autoplayTimeout: NodeJS.Timeout | null = null
 const startAutoplay = (sliderInstance: any) => {
