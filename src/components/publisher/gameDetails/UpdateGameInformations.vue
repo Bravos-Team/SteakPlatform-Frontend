@@ -1,6 +1,6 @@
 <template>
   <card
-    class="bg-[var(--bg-card-base)]/50 xl:col-span-7 lg:col-span-4 p-4 border-double border-3 inset-shadow-blue-300 flex flex-col @container desktop-xl::flex-row justify-between"
+    class="bg-[var(--bg-card-base)]/50 xl:col-span-7 lg:col-span-4 p-4 border-double border-3 inset-shadow-blue-300 flex flex-col @container justify-between"
   >
     <div class="flex flex-col desktop-xl:w-7/12 gap-y-6 h-full w-full">
       <div class="flex w-full gap-x-2 items-center">
@@ -25,8 +25,10 @@
         to promising upcoming or recently released indie titles. Let us know about your game!
       </span>
     </div>
-    <div class="flex desktop-xl:w-5/12 w-full justify-center items-center">
-      <update-game-informations-button :game-informations="gameDetails" />
+    <div class="flex w-full justify-end items-center">
+      <div class="">
+        <update-game-informations-button :game-informations="gameDetails" />
+      </div>
     </div>
   </card>
 </template>

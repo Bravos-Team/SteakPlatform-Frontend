@@ -4,6 +4,15 @@
 /* @plugin "@tailwindcss/typography"; */
 @custom-variant dark (&:where(.dark, .dark *));
 
+body{
+  -webkit-overflow-scrolling: auto !important;
+}
+.safari-scrollable {
+  white-space: nowrap;
+  -webkit-overflow-scrolling: inherit;
+  
+}
+
 @theme {
   --breakpoint-mobile: 325px;
   --breakpoint-tablet: 640px;
@@ -316,7 +325,7 @@
   display: none;
 }
 .no-scrollbar {
-  -ms-overflow-style: none;
+  /* -ms-overflow-style: none; */
   scrollbar-width: none;
 }
 .custom-toast-animation {

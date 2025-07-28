@@ -1,1 +1,0 @@
-file nay ko co gi

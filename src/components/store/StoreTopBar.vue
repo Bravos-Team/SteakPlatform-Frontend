@@ -1,7 +1,7 @@
 <template>
   <header class="bg-[#fff]/10 backdrop-blur-md">
     <teleport to="header">
-      <div class="lg:relative z-[999]">
+      <div :class="{ 'hidden laptop:block': isHiddenWhenMobile }" class="lg:relative z-[999]">
         <div
           class="flex justify-between items-center peer/header lg:mx-auto lg:w-full text-white px-4 gap-x-[20px] h-[72px]"
         >
@@ -97,7 +97,7 @@
             <!-- Navigation -->
             <div class="ms-5 hidden lg:flex lg:items-center lg:h-full">
               <router-link
-                to="/store/home"
+                :to="{ name: 'store-home' }"
                 class="flex items-center text-nowrap hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
               >
                 {{ $t('navigation.store') }}
@@ -170,7 +170,7 @@
                   <drawer-footer class="flex flex-col gap-y-2">
                     <router-link
                       class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                      :to="{ name: 'store' }"
+                      :to="{ name: 'store-home' }"
                       >{{ $t('navigation.store') }}</router-link
                     >
                     <router-link
@@ -265,4 +265,10 @@ const handleLogout = async () => {
   toastSuccessNotificationPopup('Logout successfully')
   await router.push({ name: 'Login' })
 }
+const props = defineProps({
+  isHiddenWhenMobile: {
+    type: Boolean,
+    default: false,
+  },
+})
 </script>

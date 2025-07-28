@@ -2,12 +2,12 @@
   <Dialog :open="showDialog" @update:open="showDialog = $event" class="!no-scrollbar">
     <button
       @click.seft="hanldeOpenDialog"
-      class="bg-white/10 hover:bg-white/20 cursor-pointer px-5 py-3 rounded-md flex gap-x-2"
+      class="bg-white/10 hover:bg-white/20 w-full cursor-pointer px-5 py-3 rounded-md flex gap-x-2 flex-wrap"
     >
-      <square-dot />
-      <span class="lg:text-md xl:text-[17px] flex gap-x-1 flex-wrap">
+      <square-dot class="shrink-0" />
+      <span class="lg:text-md xl:text-[17px] flex gap-x-1 w-full flex-wrap">
         <span>{{ $t('title.pages.game_details.actions.update') }}</span>
-        <div class="flex gap-x-1">
+        <div class="flex gap-x-1 flex-wrap">
           <span class="font-bold text-nowrap"> '{{ gameInformations?.name }}' </span>
           <span>{{ $t('title.pages.game_details.actions.informations') }}</span>
         </div>
