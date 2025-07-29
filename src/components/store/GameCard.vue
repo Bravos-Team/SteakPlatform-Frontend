@@ -1,5 +1,5 @@
 <template>
-  <div v-if="game" class="group relative">
+  <div v-if="game && isReleased(game)" class="group relative px-1">
     <router-link
       :to="{ name: 'game-details', params: { id: game?.id.toString() } }"
       class="flex flex-col rounded-lg gap-y-6"
@@ -7,7 +7,7 @@
       <!-- IMAGE -->
       <div class="group relative w-full">
         <div
-          class="min-h-full tablet:size-[16rem] size-full laptop:size-[14rem] desktop:size-[18rem] desktop-xl:size-[20rem] rounded-md cursor-pointer peer-hover/category-img:cursor-pointer peer-hover/category-img:contrast-100 overflow-hidden hover:contrast-[.80] transition-all duration-250 relative"
+          class="min-h-full tablet:size-[16rem] size-full laptop:size-[14rem] desktop:size-[18rem] desktop-xl:size-[16rem] rounded-md cursor-pointer peer-hover/category-img:cursor-pointer peer-hover/category-img:contrast-100 overflow-hidden hover:contrast-[.80] transition-all duration-250 relative"
         >
           <img
             :src="game?.thumbnail"
@@ -64,6 +64,7 @@ import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+import { i } from '@tanstack/vue-query/build/legacy/queryClient-CAHOJcvF'
 const { isPending: isAddToCartPending, mutateAsync: mutateAddToCart } = useMutateAddToCart()
 
 const props = defineProps({
@@ -85,5 +86,8 @@ const handleAddToCart = async (gameId: bigint, name: string) => {
       t(`${name} ${t('title.pages.cart.actions.already_in_cart')}`),
     )
   }
+}
+const isReleased = (game: any): boolean => {
+  return game.releaseDate < new Date().getTime()
 }
 </script>

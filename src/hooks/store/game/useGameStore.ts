@@ -3,7 +3,7 @@ import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
 import { GAME_FILTERED_PARAMS } from '@/types/game/store/Game'
 import { useInfiniteQuery, useQuery } from '@tanstack/vue-query'
 
-export const useGameStoreInfiniteQueryList = (filters: GAME_FILTERED_PARAMS) => {
+export const useGameStoreInfiniteQueryList = (filters?: GAME_FILTERED_PARAMS) => {
   const {
     fetchNextPage,
     fetchPreviousPage,

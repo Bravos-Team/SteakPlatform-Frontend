@@ -10,6 +10,7 @@ import {
   publisherPostVerifyGameRequest,
   publisherDeleteImageUploaded,
   publisherResubmitProject,
+  publisherUpateProjectDetails,
 } from '@/apis/publisher/project/publisherPersonalProjects'
 import { Ref } from 'vue'
 import { GameResubmitRequestType, PartialGameType } from '@/types/game/gameDetails/GameDetailsType'
@@ -136,3 +137,19 @@ export const usePublisherResubmitProject = () => {
   }
 }
 
+export const usePublisherUpdateProjectDetails = () => {
+  const queryClient = useQueryClient()
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (payload: PartialGameType) => await publisherUpateProjectDetails(payload),
+    onSuccess: (_data, variables: PartialGameType) => {
+      if (variables.id)
+        queryClient.invalidateQueries({
+          queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
+        })
+    },
+  })
+  return {
+    mutateAsync,
+    isPending,
+  }
+}
