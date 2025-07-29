@@ -173,13 +173,15 @@
               </dialog-trigger>
               <dialog-content class="w-full tablet:min-w-full desktop:min-w-[40rem]">
                 <dialog-header class="w-full">
-                  <dialog-title class="font-black text-2xl w-full text-center">
+                  <dialog-title
+                    class="font-black tablet:text-2xl text-xl w-full text-center text-wrap"
+                  >
                     {{ $t('title.pages.game_details.form.verify_popup.title') }}
                   </dialog-title>
                   <dialog-description class="flex justify-center">
                     <button
                       @click="handleDownloadClientApp"
-                      class="px-6 py-3 flex items-center justify-center border rounded-sm border-white/20 hover:bg-white/20 bg-white/10 cursor-pointer text-white font-black"
+                      class="px-6 py-3 flex items-center text-wrap flex-wrap justify-center border rounded-sm border-white/20 hover:bg-white/20 bg-white/10 cursor-pointer text-white font-black"
                     >
                       {{ $t('title.pages.game_details.form.verify_popup.description') }}
                       <ArrowDownToLine />
@@ -228,7 +230,7 @@
                 "
                 class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
               >
-                {{ $t('title.pages.game_details.form.save_as_draft') }}
+                {{ $t('title.pages.game_details.actions.update_informations') }}
               </button>
               <button
                 v-else
@@ -249,6 +251,31 @@
               {{ $t('title.pages.game_details.form.reset_form') }}
             </button>
             <!-- END RESET FORM -->
+
+            <!-- RESUBMIT  -->
+            <div v-if="gamePreviewDetails.status === GAME_STATUS.REJECTED">
+              <button
+                v-if="
+                  isGetPresignedImageUrlPending ||
+                  isGetPresignedImageUrlsPending ||
+                  isPostIntoPresignedUrlPending ||
+                  isPostIntoPresignedUrlsPending ||
+                  isCreateDraftProjectInformationsPending ||
+                  isDeleteImagesPending
+                "
+                class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
+              >
+                {{ $t('title.pages.game_details.actions.resubmit') }}
+              </button>
+              <button
+                v-else
+                @click="handleResubmitProject"
+                class="px-3 font-black cursor-pointer hover:bg-green-500/90 duration-300 transition-colors py-2 border bg-green-500/40 rounded-sm"
+              >
+                {{ $t('title.pages.game_details.actions.resubmit') }}
+              </button>
+            </div>
+            <!-- END RESUBMIT -->
 
             <!-- CANCEL -->
             <button
@@ -309,6 +336,7 @@ import { computed, ref, watch } from 'vue'
 import {
   usePublisherCreateDraftProjectInformations,
   usePublisherPostVerifyPersonalProject,
+  usePublisherResubmitProject,
 } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 import {
@@ -330,6 +358,7 @@ import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/Cdn
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import { Progress } from '@/components/ui/progress'
 import { ArrowDownToLine } from 'lucide-vue-next'
+import { useDebounceFn } from '@vueuse/core'
 
 const useSystem = useSystemRequirementsStore()
 const useComporessionImage = useImageCompressor()
@@ -337,6 +366,7 @@ const useImageStore = useImageStored()
 
 const GAME_STATUS = {
   PENDING_REVIEW: 'PENDING_REVIEW',
+  REJECTED: 'REJECTED',
   ACCEPTED: 'ACCEPTED',
   PENDING: 'PENDING_REVIEW',
   DRAFT: 'DRAFT',
@@ -363,6 +393,8 @@ const {
 const { isPending: isVerifyPersonalProjectPending, mutateAsync: mutatePostVerifyProjectRequest } =
   usePublisherPostVerifyPersonalProject()
 const { isPending: isDeleteImagesPending, mutateAsync: mutateDeleteImages } = useDeleteImages()
+const { mutateAsync: mutateResubmitProject, isPending: isResubmitProjectPending } =
+  usePublisherResubmitProject()
 
 const props = defineProps<{
   gamePreviewDetails: GameType
@@ -484,11 +516,7 @@ const progressValue = computed(() => Math.floor((completedApis.value / totalApis
 const progressDisplay = ref(0)
 let animationInterval: any = null
 
-const handleSaveAsDraft = async () => {
-  // <-- handle upload cover image
-  completedApis.value = 0
-  progressDisplay.value = 0
-
+const handleResolveThumbnailImages = async () => {
   if (useImageStore.coverImage_stored) {
     const files: any = useImageStore.coverImage_stored
 
@@ -511,7 +539,9 @@ const handleSaveAsDraft = async () => {
   } else {
     completedApis.value += 1
   }
+}
 
+const handleResolveMediaFiles = async () => {
   if (useImageStore.media_files_stored.length > 0) {
     const media_files: any = useImageStore.media_files_stored
     const media_files_compressed = await Promise.all(
@@ -567,6 +597,18 @@ const handleSaveAsDraft = async () => {
   } else {
     completedApis.value += 1
   }
+}
+
+const handleSaveAsDraft = useDebounceFn(async () => {
+  // <-- handle upload cover image
+  completedApis.value = 0
+  progressDisplay.value = 0
+
+  // hanlde thumbnail
+  await handleResolveThumbnailImages()
+
+  // handle media files
+  await handleResolveMediaFiles()
 
   const diff = getObjectDiff(gameToMutate.value, props.gamePreviewDetails)
   if (!diff) {
@@ -578,10 +620,6 @@ const handleSaveAsDraft = async () => {
   } else {
     Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
     try {
-      if (media_deleted_tracking.value && media_deleted_tracking.value.length > 0)
-        await mutateDeleteImages(
-          media_deleted_tracking.value.map((media) => media.url).filter((url) => url !== undefined),
-        )
       const response = await mutateAsyncCreateDraftProject(diff)
       completedApis.value += 1
       if (response.status === 200) {
@@ -592,6 +630,12 @@ const handleSaveAsDraft = async () => {
           'Your game details have been saved as a draft.',
         )
       } else {
+        if (media_deleted_tracking.value && media_deleted_tracking.value.length > 0)
+          await mutateDeleteImages(
+            media_deleted_tracking.value
+              .map((media) => media.url)
+              .filter((url) => url !== undefined),
+          )
         toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
       }
     } catch (error: any) {
@@ -609,7 +653,51 @@ const handleSaveAsDraft = async () => {
       progressDisplay.value = 0
     }
   }
-}
+}, 500)
+
+const submitContentMessage = ref<string>('')
+
+const handleResubmitProject = useDebounceFn(async () => {
+  await handleResolveThumbnailImages()
+  await handleResolveMediaFiles()
+
+  const diff = getObjectDiff(gameToMutate.value, props.gamePreviewDetails)
+  if (!diff) {
+    toastNotificationPopup('No changes detected', 'Please make some changes before resubmitting.')
+    return
+  } else {
+    Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
+  }
+
+  try {
+    const response = await mutateResubmitProject({
+      submissionId: props.gamePreviewDetails.id,
+      attachments: diff.media?.map((media) => media.url) || [],
+      content: submitContentMessage.value,
+    })
+
+    setTimeout(() => {
+      if (completedApis.value < totalApis) completedApis.value += 1
+      else {
+        completedApis.value = totalApis
+      }
+    }, 500)
+
+    if (response.status === 200)
+      toastSuccessNotificationPopup(
+        'Project resubmitted successfully',
+        'Your project has been resubmitted for review.',
+      )
+  } catch (err: any) {
+    toastErrorNotificationPopup(
+      'Failed to resubmit project',
+      `Please try again later. Error: ${err.message}`,
+    )
+  } finally {
+    completedApis.value = 0
+    progressDisplay.value = 0
+  }
+}, 500)
 
 watch(progressValue, (newVal) => {
   if (animationInterval) clearInterval(animationInterval)

@@ -341,6 +341,7 @@ export default {
           informations: 'Informations',
           update_name: 'Update Name',
           update_informations: 'Update Informations',
+          resubmit: 'Resend the verification Project',
           hide: 'Hide',
           show: 'Show',
         },
