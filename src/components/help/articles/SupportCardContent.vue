@@ -8,7 +8,7 @@
     </div>
 
     <div class="flex">
-      <span class="text-[#c2c2c2]">{{ content.descriptions }}</span>
+      <span class="text-[#c2c2c2] text-wrap">{{ content.descriptions }}</span>
     </div>
 
     <div>

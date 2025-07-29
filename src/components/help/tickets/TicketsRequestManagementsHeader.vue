@@ -14,7 +14,7 @@
           ></div>
         </div>
 
-        <div class="relative group">
+        <div class="relative tablet:block group hidden">
           <router-link :to="{ name: 'SupportCenter' }" class="font-medium text-lg ease-in-out"
             >Support Center</router-link
           >
@@ -23,7 +23,7 @@
           ></div>
         </div>
 
-        <div class="relative group">
+        <div class="relative group tablet:block hidden">
           <router-link :to="{ name: 'Login' }" class="font-medium text-lg">Accounts</router-link>
           <div
             class="w-full group-hover:h-1 h-0 bg-white absolute bottom-0 left-0 transition-all duration-100"

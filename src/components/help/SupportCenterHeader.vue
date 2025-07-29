@@ -1,12 +1,12 @@
 <template>
   <div class="flex tablet:px-3 desktop-xl:px-[15rem] h-25">
     <div class="flex w-full h-full items-center justify-between">
-      <router-link to="#" class="flex items-center gap-2">
+      <router-link :to="{ name: 'store-home' }" class="flex items-center gap-2">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" />
         <span class="font-black text-xl capitalize">Steak {{ $t('navigation.help') }}</span>
       </router-link>
 
-      <div class="flex gap-x-6">
+      <div class="gap-x-6 hidden tablet:flex">
         <div class="relative group">
           <router-link :to="{ name: 'HomePage' }" class="font-medium text-lg">Steak</router-link>
           <div
@@ -42,7 +42,7 @@
       </div>
 
       <div class="flex gap-x-6 items-center">
-        <router-link :to="{ name: 'HomePage' }" class="flex gap-2">
+        <router-link :to="{ name: 'HomePage' }" class="tablet:flex gap-2 hidden">
           <span class="font-black text-lg"> steak.io.vn </span>
           <square-arrow-out-up-right class="size-6" />
         </router-link>

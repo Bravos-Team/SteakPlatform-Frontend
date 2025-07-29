@@ -32,15 +32,15 @@
         <div class="flex items-center gap-x-6 flex-row lg:gap-x-4 justify-end h-full">
           <languages-option />
 
-          <Drawer :prevent-scroll-restoration="true" direction="top" :fixed="true">
+          <Drawer :prevent-scroll-restoration="true" direction="top" :open="openDrawer">
             <drawer-trigger as-child>
-              <div class="block lg:hidden cursor-pointer">
+              <button @click="openDrawer = true" class="block lg:hidden cursor-pointer">
                 <img
                   src="https://ccdn.steak.io.vn/assets-menu-mobile-repo-white.svg"
                   class="w-6.5"
                   alt=""
                 />
-              </div>
+              </button>
             </drawer-trigger>
             <drawer-content class="h-full outline-0 bg-white/10 backdrop-blur-xl py-10">
               <div class="mx-auto w-full">
@@ -51,6 +51,7 @@
                   <span>{{ $t('menu.base') }}</span>
                   <div>
                     <router-link
+                      @click="openDrawer = false"
                       v-if="!getCookie('userAccessRights')"
                       :to="{ name: 'Login' }"
                       class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm"
@@ -68,16 +69,19 @@
                 <drawer-description class="hidden"> </drawer-description>
                 <drawer-footer class="flex flex-col gap-y-2">
                   <router-link
+                    @click="openDrawer = false"
                     class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'store-home' }"
                     >{{ $t('navigation.store') }}</router-link
                   >
                   <router-link
+                    @click="openDrawer = false"
                     class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'PublisherDashboard' }"
                     >{{ $t('navigation.development_workspace') }}</router-link
                   >
                   <router-link
+                    @click="openDrawer = false"
                     class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'SupportCenter' }"
                     >{{ $t('navigation.help') }}</router-link
@@ -157,8 +161,11 @@ import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 import { LogOut } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import { ref } from 'vue'
 const router = useRouter()
+const openDrawer = ref(false)
 const handleLogout = async () => {
+  openDrawer.value = false
   removeCookie('userAccessRights')
   toastSuccessNotificationPopup('Logout successfully')
   await router.push({ name: 'Login' })

@@ -62,7 +62,7 @@
             </label>
           </div>
           <button
-            class="font-black rounded-r-full px-3 bg-[#2cb67d]/80 h-full border-l-0 cursor-pointer"
+            class="font-black rounded-r-full px-3 bg-[#2cb67d]/80 min-h-full border-l-0 cursor-pointer"
           >
             Search
           </button>

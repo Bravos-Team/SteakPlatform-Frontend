@@ -1,6 +1,6 @@
 <template>
   <div>
-    <drawer>
+    <drawer className="sm:max-w-[425px]">
       <store-top-bar :isHiddenWhenMobile="true" />
     </drawer>
     <mobile-top-bar />

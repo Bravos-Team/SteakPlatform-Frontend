@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between border-b-1 pb-1">
+  <div class="flex justify-between border-b-1 pb-1 overflow-x-auto">
     <div class="flex gap-x-4">
       <button
         class="flex gap-x-2 focus:bg-[#2F2F2F] hover:bg-[#2F2F2F] rounded-full h-full px-2 py-0 items-center"

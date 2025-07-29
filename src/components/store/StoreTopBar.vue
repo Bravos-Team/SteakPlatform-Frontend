@@ -134,66 +134,72 @@
             </span>
             <div class="flex items-center gap-x-6 flex-row lg:gap-x-4 justify-end h-full">
               <languages-option />
-              <drawer-trigger as-child>
-                <div class="block lg:hidden cursor-pointer">
-                  <img
-                    src="https://ccdn.steak.io.vn/assets-menu-mobile-repo-white.svg"
-                    class="w-6.5"
-                    alt=""
-                  />
-                </div>
-              </drawer-trigger>
-              <drawer-content class="h-full outline-0 bg-white/10 backdrop-blur-xl py-10">
-                <div class="mx-auto w-full">
-                  <drawer-title class="hidden">Menu</drawer-title>
-                  <drawer-header
-                    class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row"
-                  >
-                    <span>{{ $t('menu.base') }}</span>
-                    <div>
-                      <router-link
-                        v-if="!getCookie('userAccessRights')"
-                        :to="{ name: 'Login' }"
-                        class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm"
-                      >
-                        {{ $t('auth.login') }}
-                      </router-link>
-                      <div
-                        v-else
-                        class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm"
-                      >
-                        {{ getCookie('userAccessRights') }}
+              <Drawer direction="top" :open="openDrawer">
+                <drawer-trigger as-child>
+                  <button @click="openDrawer = true" class="block lg:hidden cursor-pointer">
+                    <img
+                      src="https://ccdn.steak.io.vn/assets-menu-mobile-repo-white.svg"
+                      class="w-6.5"
+                      alt=""
+                    />
+                  </button>
+                </drawer-trigger>
+                <drawer-content class="h-full outline-0 bg-white/10 backdrop-blur-xl py-10">
+                  <div class="mx-auto w-full">
+                    <drawer-title class="hidden">Menu</drawer-title>
+                    <drawer-header
+                      class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row"
+                    >
+                      <span>{{ $t('menu.base') }}</span>
+                      <div>
+                        <router-link
+                          @click="openDrawer = false"
+                          v-if="!getCookie('userAccessRights')"
+                          :to="{ name: 'Login' }"
+                          class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm"
+                        >
+                          {{ $t('auth.login') }}
+                        </router-link>
+                        <div
+                          v-else
+                          class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm"
+                        >
+                          {{ getCookie('userAccessRights') }}
+                        </div>
                       </div>
-                    </div>
-                  </drawer-header>
-                  <drawer-description class="hidden"> </drawer-description>
-                  <drawer-footer class="flex flex-col gap-y-2">
-                    <router-link
-                      class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                      :to="{ name: 'store-home' }"
-                      >{{ $t('navigation.store') }}</router-link
-                    >
-                    <router-link
-                      class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                      :to="{ name: 'PublisherDashboard' }"
-                      >{{ $t('navigation.development_workspace') }}</router-link
-                    >
-                    <router-link
-                      class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                      :to="{ name: 'SupportCenter' }"
-                      >{{ $t('navigation.help') }}</router-link
-                    >
-                    <button
-                      v-if="getCookie('userAccessRights')"
-                      @click="handleLogout"
-                      class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                    >
-                      <LogOut class="text-white" />
-                      {{ $t('auth.logout') }}
-                    </button>
-                  </drawer-footer>
-                </div>
-              </drawer-content>
+                    </drawer-header>
+                    <drawer-description class="hidden"> </drawer-description>
+                    <drawer-footer class="flex flex-col gap-y-2">
+                      <router-link
+                        @click="openDrawer = false"
+                        class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                        :to="{ name: 'store-home' }"
+                        >{{ $t('navigation.store') }}</router-link
+                      >
+                      <router-link
+                        @click="openDrawer = false"
+                        class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                        :to="{ name: 'PublisherDashboard' }"
+                        >{{ $t('navigation.development_workspace') }}</router-link
+                      >
+                      <router-link
+                        @click="openDrawer = false"
+                        class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                        :to="{ name: 'SupportCenter' }"
+                        >{{ $t('navigation.help') }}</router-link
+                      >
+                      <button
+                        v-if="getCookie('userAccessRights')"
+                        @click="handleLogout"
+                        class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                      >
+                        <LogOut class="text-white" />
+                        {{ $t('auth.logout') }}
+                      </button>
+                    </drawer-footer>
+                  </div>
+                </drawer-content>
+              </Drawer>
 
               <div class="hidden laptop:block">
                 <div
@@ -253,12 +259,14 @@ import {
   DrawerTitle,
   DrawerHeader,
   DrawerTrigger,
+  Drawer,
 } from '@/components/ui/drawer'
 import LanguagesOption from '@/components/common/LanguagesOption.vue'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 import { LogOut } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import { ref } from 'vue'
 const router = useRouter()
 const handleLogout = async () => {
   removeCookie('userAccessRights')
@@ -271,4 +279,6 @@ const props = defineProps({
     default: false,
   },
 })
+
+const openDrawer = ref(false)
 </script>
