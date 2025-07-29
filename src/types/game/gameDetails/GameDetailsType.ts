@@ -154,3 +154,8 @@ export type GameType = z.infer<typeof GameSchema>
 export const getDefaultGameValue = (): GameType => GameSchema.parse({})
 export const PartialGameSchema = GameSchema.partial()
 export type PartialGameType = z.infer<typeof PartialGameSchema>
+export type GameResubmitRequestType = {
+  submissionId: bigint
+  content: string
+  attachments: string[]
+}

@@ -311,6 +311,7 @@ export default {
           update_informations: 'Cập nhật thông tin',
           informations: 'Thông tin',
           update_name: 'Cập nhật tên',
+          resubmit: 'Gửi lại yêu cầu xác minh',
           hide: 'Ẩn',
           show: 'Hiển thị',
         },

@@ -2,7 +2,7 @@
   <Dialog :open="showDialog" @update:open="showDialog = $event" class="!no-scrollbar">
     <button
       @click.seft="hanldeOpenDialog"
-      class="bg-white/10 hover:bg-white/20 tablet:min-w-100 w-full cursor-pointer px-5 py-3 rounded-md flex gap-x-2 flex-wrap"
+      class="bg-white/10 hover:bg-white/20 tablet:w-100 w-full cursor-pointer px-5 py-3 rounded-md flex gap-x-2 tablet:flex-wrap laptop:flex-nowrap"
     >
       <square-dot class="shrink-0" />
       <span class="lg:text-md xl:text-[17px] flex gap-x-1 w-full flex-wrap">

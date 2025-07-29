@@ -90,7 +90,7 @@
           v-slot="{ page }"
           :total="totalResults"
           :items-per-page="8"
-          :default-page="filters.page ?? 1"
+          :default-page="games?.data.page.number + 1"
         >
           <pagination-content v-slot="{ items }">
             <pagination-previous :disabled="page === 1" />
