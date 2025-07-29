@@ -43,7 +43,7 @@
       </div>
     </section>
     <section class="flex flex-col gap-y-3 justify-between">
-      <div class="flex flex-col justify-ween w-[840px] gap-[40px]">
+      <div class="flex flex-col justify-ween w-[840px] gap-[40px] w-full">
         <span class="text-[12px] text-[#ffffffa6] text-wrap"
           >© 2025, Epic Games, Inc. All rights reserved. Epic, Epic Games, the Epic Games logo,
           Fortnite, the Fortnite logo, Unreal, Unreal Engine, the Unreal Engine logo, Unreal
