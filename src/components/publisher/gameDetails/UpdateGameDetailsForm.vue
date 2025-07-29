@@ -337,6 +337,7 @@ import {
   usePublisherCreateDraftProjectInformations,
   usePublisherPostVerifyPersonalProject,
   usePublisherResubmitProject,
+  usePublisherUpdateProjectDetails,
 } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 import {
@@ -395,6 +396,8 @@ const { isPending: isVerifyPersonalProjectPending, mutateAsync: mutatePostVerify
 const { isPending: isDeleteImagesPending, mutateAsync: mutateDeleteImages } = useDeleteImages()
 const { mutateAsync: mutateResubmitProject, isPending: isResubmitProjectPending } =
   usePublisherResubmitProject()
+const { mutateAsync: mutateAsyncUpdateProjectDetails, isPending: isUpdateProjectDetailsPending } =
+  usePublisherUpdateProjectDetails()
 
 const props = defineProps<{
   gamePreviewDetails: GameType
@@ -620,7 +623,16 @@ const handleSaveAsDraft = useDebounceFn(async () => {
   } else {
     Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
     try {
-      const response = await mutateAsyncCreateDraftProject(diff)
+      let response
+      if (props.gamePreviewDetails.status === GAME_STATUS.ACCEPTED) {
+        console.log('Updating project details...')
+        const { id, ...diffUpdate } = { ...diff, gameId: props.gamePreviewDetails.id }
+
+        response = await mutateAsyncUpdateProjectDetails(diffUpdate)
+      } else {
+        console.log('Creating draft project...')
+        response = await mutateAsyncCreateDraftProject(diff)
+      }
       completedApis.value += 1
       if (response.status === 200) {
         useImageStore.media_files_stored = []
@@ -639,6 +651,8 @@ const handleSaveAsDraft = useDebounceFn(async () => {
         toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
       }
     } catch (error: any) {
+      useImageStore.media_files_stored = []
+      useSystem.resetSystemRequirements()
       if (data_to_assigned.value && data_to_assigned.value.length > 0)
         await mutateDeleteImages(
           data_to_assigned.value?.map((media) => media.url).filter((url) => url !== undefined),

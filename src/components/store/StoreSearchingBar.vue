@@ -1,7 +1,7 @@
 <template>
-  <div class="sticky z-10 top-0 h-full w-full">
+  <div class="sticky z-10 -top-[2px] h-full w-full">
     <div
-      class="flex flex-col laptop:flex-row bg-[#101014] py-3 px-[2rem] tablet:px-[5rem] laptop:px-[6rem] desktop:px-[15rem] items-center justify-between w-full h-full"
+      class="flex flex-col laptop:flex-row bg-[#101014] py-3 gap-y-2 px-[2rem] tablet:px-[5rem] laptop:px-[6rem] desktop:px-[15rem] items-center justify-between w-full h-full"
     >
       <!-- SEARCH BAR -->
       <div class="flex justify-center items-center w-full">
@@ -25,7 +25,7 @@
       <!-- END SEARCH BAR -->
 
       <div
-        class="laptop:w-[845px] w-full mobile:py-3 text-[#fff]/70 tablet:h-[100px] flex flex-row tablet:w-full tablet:items-center justify-between laptop:justify-end ms-7 gap-x-2 laptop:gap-5 laptop:items-center items-center"
+        class="laptop:w-[845px] flex-wrap gap-y-2 w-full mobile:py-3 text-[#fff]/70 tablet:h-[100px] flex flex-row tablet:w-full tablet:items-center justify-between laptop:justify-end ms-7 gap-x-2 laptop:gap-5 laptop:items-center items-center"
       >
         <router-link
           :to="{ name: 'WishlistManagementPage' }"
