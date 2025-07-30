@@ -87,7 +87,10 @@ import {
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
 // import { LoaderCircle } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { onMounted, Ref, ref } from 'vue'
+import { useQueryClient } from '@tanstack/vue-query'
+import { PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS } from '@/hooks/constants/publisher/project/publisherPersonalProjectConstant'
+import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/project/PublisherPersonalProjectType'
 
 const { isPending: isPublisherCreateProjectPending, mutateAsync: mutateAsyncPublisherProject } =
   usePublisherCreatePersonalProject()
@@ -100,26 +103,28 @@ const formSchema = toTypedSchema(
   }),
 )
 
+const props = defineProps<{
+  filters: PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS
+}>()
+const queryClient = useQueryClient()
+const filtersRef = ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>({ ...props.filters })
 const onSubmit = async (values: { name: string }) => {
   try {
-    const response = await mutateAsyncPublisherProject(values.name)
+    const response = await mutateAsyncPublisherProject(values.name.toString(), {
+      onSuccess: async () =>
+        await queryClient.invalidateQueries({
+          queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LIST(filtersRef),
+        }),
+    })
+    showDialog.value = false
     if (response.status === 200) {
       toastSuccessNotificationPopup(
         'Create Product Success',
         `Product "${values.name}" created successfully!`,
       )
-      showDialog.value = false
-    } else {
-      toastErrorNotificationPopup(
-        'Create Product Error',
-        `Failed to create product: ${values.name}. Please try again.`,
-      )
     }
   } catch (error: any) {
-    toastErrorNotificationPopup(
-      'Create Product Error',
-      error instanceof Error ? error.message : `An unexpected error occurred. Please try again.`,
-    )
+    toastErrorNotificationPopup('Create Product Error', `${error?.response?.data?.detail}.`)
   }
 }
 </script>

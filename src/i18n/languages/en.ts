@@ -79,10 +79,12 @@ export default {
     routers: {
       publisher: 'Publisher',
       dashboard: 'Dashboard',
-      game_management: 'Game Management',
-      game_management_overview: 'Game Management Overview',
+      game_management: 'Project Management',
+      game_management_overview: 'Project Management Overview',
+      game_management_draft: 'Draft Project Management',
+      game_not_release_yet: 'Game Not Released Yet',
       support: 'Support Center',
-      game_details: 'Game Details',
+      game_details: 'Project Details',
     },
     subPagesCompo: {
       game_and_apps_summary_price: 'Games and Apps Summary Price',
@@ -102,6 +104,8 @@ export default {
             title: 'Game Management',
             items: {
               overview: 'Overview',
+              draft: 'Draft Project',
+              published: 'Project Published',
               sub: {},
             },
           },

@@ -81,10 +81,12 @@ export default {
     routers: {
       publisher: 'Nhà phát hành',
       dashboard: 'Bảng điều khiển',
-      game_management: 'Quản lý game',
-      game_management_overview: 'Tổng quan quản lý game',
+      game_management: 'Quản lý dự án',
+      game_management_draft: 'Dự án nháp',
+      game_management_overview: 'Tổng quan quản lý dự án',
+      game_not_release_yet: 'Dự án chưa được phát hành',
       support: 'Trung tâm hỗ trợ',
-      game_details: 'Chi tiết game',
+      game_details: 'Chi tiết dự án',
     },
     pages: {
       payment_message: {
@@ -342,7 +344,9 @@ export default {
           game_management: {
             title: 'Quản lý game',
             items: {
-              overview: 'Tổng quan về game',
+              overview: 'Tổng quan',
+              draft: 'Dự án nháp',
+              published: 'Dự án đã xuất bản',
               sub: {},
             },
           },

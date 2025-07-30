@@ -28,12 +28,12 @@ export const publisherRoutes: RouteRecordRaw[] = [
         redirect: { name: 'PublisherGameManagementOverview' },
         children: [
           {
-            path: '',
-            name: 'PublisherGameManagementOverview',
-            component: () => import('@/views/publisher/home/game/features/GameOverviewManage.vue'),
+            path: 'draft',
+            name: 'PublisherGameManagementDraft',
+            component: () => import('@/views/publisher/home/game/features/GameDraftManagement.vue'),
             meta: {
-              baseName: 'Game Overview',
-              i18n: 'game_management_overview',
+              baseName: 'Game Draft',
+              i18n: 'game_management_draft',
             },
           },
           {
@@ -47,10 +47,10 @@ export const publisherRoutes: RouteRecordRaw[] = [
           },
           {
             path: 'pending',
-            name: 'PublisherGameManagementPending',
-            component: () => import('@/views/publisher/home/game/features/GamePendingManage.vue'),
+            name: 'PublisherGameAcceptedManagement',
+            component: () => import('@/views/publisher/home/game/features/GameAcceptedManage.vue'),
             meta: {
-              baseName: 'Game Pending',
+              baseName: 'Game Published',
             },
           },
         ],

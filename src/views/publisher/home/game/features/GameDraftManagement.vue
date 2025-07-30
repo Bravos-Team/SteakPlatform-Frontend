@@ -1,5 +1,10 @@
 <template>
   <card class="py-3 px-1 bg-[#101014]/50 will-change-transform backdrop-blur-2xl w-full">
+    <card-header>
+      <card-title class="text-3xl font-bold">
+        {{ $t('title.subPagesCompo.sidebar.publisher.game_management.items.draft') }}
+      </card-title>
+    </card-header>
     <card-content class="px-3 py-3">
       <!-- PRODUCT COUNT AND ACTIONS BUTTON -->
       <div class="flex flex-col lg:flex-row justify-between">
@@ -40,7 +45,7 @@
             class="flex flex-col tablet:flex-row gap-y-2 w-full tablet:items-center gap-x-2 mb-2 tablet:mb-0 justify-end"
           >
             <!-- SELECT STATUS -->
-            <Select v-model:model-value="selectedStatus">
+            <Select v-model:model-value="filters.status">
               <select-trigger class="min-w-full tablet:min-w-fit">
                 <select-value
                   :placeholder="t('title.pages.game_management.filters.placeholder')"
@@ -65,7 +70,7 @@
             <!-- END SELECT STATUS -->
 
             <!-- CREATE BUTTON -->
-            <create-product-button />
+            <create-product-button :filters="filters" />
             <!-- END CREATE BUTTON -->
           </div>
         </div>
@@ -78,7 +83,7 @@
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 w-full py-3'"
       >
         <Card
-          v-for="obj in Array(4)"
+          v-for="obj in Array(8)"
           class="animate-pulse bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem] relative"
         >
         </Card>
@@ -86,15 +91,16 @@
       <div class="flex flex-col gap-y-3" v-else>
         <upload-game-bar :games="games?.data.content ?? []" />
         <pagination
-          @update:page="handlePageChange"
           v-slot="{ page }"
           :total="totalResults"
-          :items-per-page="8"
-          :default-page="games?.data.page.number + 1"
+          :items-per-page="filters?.size ?? 8"
+          :default-page="1"
+          @update:page="filters.page = $event"
         >
           <pagination-content v-slot="{ items }">
-            <pagination-previous :disabled="page === 1" />
-            <template v-for="(item, index) in items" :key="index">
+            <pagination-first class="cursor-pointer" />
+            <pagination-previous :disabled="page === 1" class="cursor-pointer" />
+            <template v-for="(item, index) in items" :key="index" class="cursor-pointer">
               <pagination-item
                 v-if="item.type === 'page'"
                 :value="item.value"
@@ -106,7 +112,12 @@
             </template>
             <pagination-ellipsis :index="8" />
             <pagination-next
-              :disabled="page === Math.ceil(totalResults.value / (filters.size as number))"
+              :disabled="page === games?.data?.page.totalPages"
+              class="cursor-pointer"
+            />
+            <pagination-last
+              :disabled="page === games?.data?.page.totalPages"
+              class="cursor-pointer"
             />
           </pagination-content>
         </pagination>
@@ -128,10 +139,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import CreateProductButton from '@/components/publisher/game/CreateProductButton.vue'
 import UploadGameBar from '@/components/publisher/game/UploadGameBar.vue'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePublisherGetPersonalProjects } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/project/PublisherPersonalProjectType'
 import { useI18n } from 'vue-i18n'
@@ -159,48 +170,43 @@ const selectedStatusLabel = computed(() => {
 })
 
 const filters = ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>({
-  status: null,
+  status: 'DRAFT',
   page: 1,
   size: 8,
-  keyword: undefined,
+  keyword: null,
 })
 
 const statusOptions = [
   { value: 'DRAFT', label: 'title.pages.game_management.filters.options.draft' },
-  { value: 'ACCEPTED', label: 'title.pages.game_management.filters.options.accepted' },
+  // { value: 'ACCEPTED', label: 'title.pages.game_management.filters.options.accepted' },
   { value: 'REJECTED', label: 'title.pages.game_management.filters.options.rejected' },
   { value: 'PENDING_REVIEW', label: 'title.pages.game_management.filters.options.pending' },
 ]
 
 const isReset = ref(false)
 
-const handlePageChange = async (newPage: number) => {
-  filters.value.page = newPage
-  await refetchPersonalProjects()
-}
-
 const handleResetFilters = async () => {
   isReset.value = true
   selectedStatus.value = null
   filters.value = {
-    status: null,
+    status: 'DRAFT',
     page: 1,
     number: 0,
     size: 8,
     keyword: undefined,
   }
-  await refetchPersonalProjects()
+  // await refetchPersonalProjects()
   isReset.value = false
 }
+
 const {
   data: games,
-  refetch: refetchPersonalProjects,
   isRefetching: isRefetchingPersonalProjects,
   isLoading: isLoadingPersonalProjects,
 } = usePublisherGetPersonalProjects(filters)
 
 const handleRefetchingPersonalProjects = async () => {
-  await refetchPersonalProjects()
+  // await refetchPersonalProjects()
 }
 
 const totalResults = computed(() => {
@@ -209,6 +215,5 @@ const totalResults = computed(() => {
 
 watch(selectedStatus, async (newValue) => {
   filters.value.status = newValue
-  handleRefetchingPersonalProjects()
 })
 </script>

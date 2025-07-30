@@ -14,7 +14,7 @@ import {
 } from '@/apis/publisher/project/publisherPersonalProjects'
 import { Ref } from 'vue'
 import { GameResubmitRequestType, PartialGameType } from '@/types/game/gameDetails/GameDetailsType'
-import { QueryClient } from '@tanstack/vue-query'
+// import { QueryClient } from '@tanstack/vue-query'
 
 export const usePublisherGetPersonalProjects = (
   filters: Ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>,
@@ -22,9 +22,7 @@ export const usePublisherGetPersonalProjects = (
   return useQuery({
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LIST(filters),
     queryFn: async ({ signal }) => await publisherGetPersonalProjectListApi(filters.value, signal),
-    placeholderData: keepPreviousData,
-    enabled: true,
-    retry: 3,
+    // placeholderData: keepPreviousData,
     staleTime: 1000 * 60 * 5,
   })
 }
@@ -75,12 +73,8 @@ export const usePublisherUpdateProjectName = () => {
 }
 
 export const usePublisherCreatePersonalProject = () => {
-  const queryClient = useQueryClient()
   const { mutateAsync, isPending, data } = useMutation({
     mutationFn: async (name: string) => await publisherCreatePersonalProjectApi(name),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LIST() })
-    },
   })
   return {
     mutateAsync,
