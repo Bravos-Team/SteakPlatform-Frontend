@@ -203,9 +203,11 @@
                   isCreateDraftProjectInformationsPending ||
                   isDeleteImagesPending
                 "
-                class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
+                class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
               >
                 {{ $t('title.pages.game_details.form.save_as_draft') }}
+
+                <LoaderCircle class="animate-spin size-6" />
               </button>
               <button
                 v-else
@@ -226,11 +228,14 @@
                   isPostIntoPresignedUrlPending ||
                   isPostIntoPresignedUrlsPending ||
                   isCreateDraftProjectInformationsPending ||
-                  isDeleteImagesPending
+                  isDeleteImagesPending ||
+                  isUpdateProjectDetailsPending ||
+                  isResubmitProjectPending
                 "
-                class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
+                class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
               >
                 {{ $t('title.pages.game_details.actions.update_informations') }}
+                <LoaderCircle class="animate-spin size-6" />
               </button>
               <button
                 v-else
@@ -261,7 +266,9 @@
                   isPostIntoPresignedUrlPending ||
                   isPostIntoPresignedUrlsPending ||
                   isCreateDraftProjectInformationsPending ||
-                  isDeleteImagesPending
+                  isDeleteImagesPending ||
+                  isUpdateProjectDetailsPending ||
+                  isResubmitProjectPending
                 "
                 class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
               >
@@ -293,7 +300,9 @@
             isGetPresignedImageUrlsPending ||
             isPostIntoPresignedUrlPending ||
             isPostIntoPresignedUrlsPending ||
-            isCreateDraftProjectInformationsPending
+            isCreateDraftProjectInformationsPending ||
+            isUpdateProjectDetailsPending ||
+            isResubmitProjectPending
           "
           :model-value="progressDisplay"
           class="transition-all duration-500 w-full"
@@ -358,7 +367,7 @@ import { MediaType } from '@/types/image/MediaAndImage'
 import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/CdnTypes'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import { Progress } from '@/components/ui/progress'
-import { ArrowDownToLine } from 'lucide-vue-next'
+import { ArrowDownToLine, LoaderCircle } from 'lucide-vue-next'
 import { useDebounceFn } from '@vueuse/core'
 
 const useSystem = useSystemRequirementsStore()

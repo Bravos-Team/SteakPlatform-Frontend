@@ -1,3 +1,5 @@
+import DraftCustomIcon from '@/components/common/icons/DraftCustomIcon.vue'
+import PublishedCustomIcon from '@/components/common/icons/PublishedCustomIcon.vue'
 import {
   LayoutDashboard,
   BadgeInfo,
@@ -70,17 +72,24 @@ export const navItemsData = [
     name: 'PublisherGameManagement',
     icon: Gamepad2,
     items: [
-      {
-        title: 'Game Overview',
-        i18n: 'game_management.items.overview',
-        name: 'PublisherGameManagementOverview',
-        icon: SquareDashedKanban,
-      },
       // {
-      //   title: 'Game Pending',
-      //   name: 'PublisherGameManagementPending',
-      //   icon: HardDriveUpload,
+      //   title: 'Game Overview',
+      //   i18n: 'game_management.items.overview',
+      //   name: 'PublisherGameManagementOverview',
+      //   icon: SquareDashedKanban,
       // },
+      {
+        title: 'Game Draft',
+        i18n: 'game_management.items.draft',
+        name: 'PublisherGameManagementDraft',
+        icon: DraftCustomIcon,
+      },
+      {
+        title: 'Game Published',
+        i18n: 'game_management.items.published',
+        name: 'PublisherGameAcceptedManagement',
+        icon: PublishedCustomIcon,
+      },
     ],
   },
   {
