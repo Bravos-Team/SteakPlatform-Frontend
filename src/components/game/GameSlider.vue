@@ -9,13 +9,22 @@
       ref="container"
       class="bg-gray-400/10 keen-slider snap-center group/img-slider relative flex flex-row rounded-xl overflow-hidden xl:min-h-[584px] lg:min-h-[422px]"
     >
-      <img
-        v-for="(media, index) in game"
-        :key="index"
-        :class="`number-slide${index + 1}`"
-        :src="media.url"
-        class="!w-full !shrink-0 keen-slider__slide"
-      />
+      <div v-for="(media, index) in game" :key="index">
+        <img
+          v-if="media.type === 'image'"
+          :class="`number-slide${index + 1}`"
+          :src="media.url"
+          class="!w-full !shrink-0 keen-slider__slide"
+        />
+        <video
+          v-else-if="media.type === 'video'"
+          :class="`number-slide${index + 1}`"
+          :src="media.url"
+          class="!w-full !shrink-0 keen-slider__slide"
+          controls
+          preload="metadata"
+        />
+      </div>
       <!-- BUTTONS PREV & NEXT  -->
       <button
         @click="slider?.prev()"
@@ -63,7 +72,17 @@
           :class="`number-slide${index + 1}`"
           :key="index"
         >
-          <img :src="media.url" alt="" class="min-w-full !min-h-full object-cover" />
+          <img
+            v-if="media.type === 'image'"
+            :src="media.url"
+            alt=""
+            class="min-w-full !min-h-full object-cover"
+          />
+          <video
+            v-else-if="media.type === 'video'"
+            :src="media.url"
+            class="min-w-full !min-h-full object-cover"
+          />
         </div>
       </div>
       <div class="h-full items-center justify-center flex">

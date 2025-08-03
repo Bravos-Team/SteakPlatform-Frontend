@@ -83,6 +83,7 @@ export default {
       dashboard: 'Bảng điều khiển',
       game_management: 'Quản lý dự án',
       game_management_draft: 'Dự án nháp',
+      game_management_accepted: 'Dự án đã xuất bản',
       game_management_overview: 'Tổng quan quản lý dự án',
       game_not_release_yet: 'Dự án chưa được phát hành',
       support: 'Trung tâm hỗ trợ',

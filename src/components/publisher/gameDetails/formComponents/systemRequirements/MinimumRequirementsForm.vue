@@ -8,7 +8,7 @@
     <div class="grid grid-cols-1 laptop:grid-cols-2 gap-x-2 gap-y-3">
       <!-- START OS -->
       <div
-        class="flex hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
+        class="flex flex-wrap hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
       >
         <span class="text-sm font-bold">OS</span>
         <OsVersionTags
@@ -20,7 +20,7 @@
 
       <!-- START CPU -->
       <div
-        class="flex hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
+        class="flex flex-wrap hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
       >
         <span class="text-sm font-bold">CPU</span>
         <cpu-tags v-model:emit-cpu-data="minimum.cpu" :cpus="systemRequirementSuggestions?.cpu" />
@@ -29,7 +29,7 @@
 
       <!-- START GPU -->
       <div
-        class="flex gap-x-1 items-center border-1 px-2 border-white/20 hover:bg-gray-200/10 transition-colors duration-300 text-gray-200/70"
+        class="flex gap-x-1 items-center flex-wrap border-1 px-2 border-white/20 hover:bg-gray-200/10 transition-colors duration-300 text-gray-200/70"
       >
         <span class="text-sm font-bold">GPU</span>
         <gpu-tags v-model:emit-gpu-data="minimum.gpu" :gpus="systemRequirementSuggestions?.gpu" />
@@ -38,7 +38,7 @@
 
       <!-- START MEMORY -->
       <div
-        class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
+        class="flex gap-x-1 items-center border-1 px-2 flex-wrap border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
         <span class="text-sm font-bold">MEMORY</span>
         <memory-tags
@@ -50,7 +50,7 @@
 
       <!-- START DIRECTX -->
       <div
-        class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
+        class="flex gap-x-1 items-center border-1 px-2 flex-wrap border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
         <span class="text-sm font-bold">DIRECTX</span>
         <direct-x-tags
@@ -62,7 +62,7 @@
 
       <!-- START STORAGE -->
       <div
-        class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
+        class="flex gap-x-1 items-center border-1 px-2 border-white/20 flex-wrap text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
         <span class="text-sm font-bold">STORAGE</span>
         <storage-tags

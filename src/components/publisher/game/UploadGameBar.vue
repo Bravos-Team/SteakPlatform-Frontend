@@ -3,14 +3,15 @@
     <div
       :class="{
         'grid !grid-rows-4': isCollaped,
-        'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 w-full py-3': !isCollaped,
+        'grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 desktop-xl:grid-cols-4 gap-x-3 gap-y-6 w-full py-3':
+          !isCollaped,
       }"
     >
       <tooltip v-for="(game, index) in games" :key="index">
         <tooltip-trigger as-child>
           <card
             :key="index"
-            class="bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] max-h-[18rem] min-h-[18rem] relative"
+            class="bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] min-h-[18rem] relative"
           >
             <div class="flex flex-col gap-y-2 w-full h-full">
               <router-link :to="{ name: 'PublisherEditGame', params: { id: game.id } }">
@@ -35,13 +36,13 @@
                   >
                     <img
                       v-if="game.thumbnail"
-                      class="object-cover scale-160 w-full"
+                      class="object-cover scale-200 w-full"
                       :src="game.thumbnail"
                       alt=""
                     />
                     <img
                       v-else
-                      class="object-cover w-full scale-140"
+                      class="object-cover w-full scale-200"
                       src="https://ccdn.steak.io.vn/assets-desert.png"
                       alt=""
                     />
@@ -79,7 +80,9 @@
                     class="flex items-center gap-x-2 justify-between"
                   >
                     <div class="overflow-hidden col-span-3">
-                      <span class="font-bold text-3xl lg:text-2xl truncate">{{ game.name }}</span>
+                      <span class="font-bold text-2xl lg:text-2xl truncate text-wrap">{{
+                        game.name
+                      }}</span>
                     </div>
                     <div class="flex justify-end me-2">
                       <GameSettingButton />
@@ -99,14 +102,13 @@
                 <!-- END GAME NAME -->
 
                 <div
-                  v-if="game.status === 'ACCEPTED'"
                   class="flex flex-col text-lg sm:text-[12px] md:text-[14px] lg:text-[12px] xl:text-[16px]"
                 >
                   <card-action
-                    v-if="game.updatedAt"
+                    v-if="game.estimatedReleaseDate"
                     as-child
                     class="w-full"
-                    :hidden="Number(game.updatedAt) < new Date().getTime()"
+                    :hidden="Number(game.estimatedReleaseDate) < new Date().getTime()"
                   >
                     <router-link
                       :to="{ name: 'game-details', params: { id: game?.id.toString() } }"
@@ -120,7 +122,9 @@
                   <card-action
                     as-child
                     class="w-full"
-                    :hidden="Number(game.updatedAt) < new Date().getTime()"
+                    :hidden="
+                      new Date(Number(game.estimatedReleaseDate)).getTime() < new Date().getTime()
+                    "
                   >
                     <button
                       class="flex bg-[--bg-base] gap-x-2 cursor-pointer items-center hover:bg-[#4B4B4E] w-full rounded-sm p-1"

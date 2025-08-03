@@ -1,10 +1,10 @@
 <template>
   <card class="bg-[#101014]/50 backdrop-blur-2xl w-full lg:w-5/12 z-10">
     <card-content class="flex flex-col gap-2">
-      <card-header class="text-3xl font-bold">{{
+      <card-header class="tablet:text-3xl text-xl font-bold text-wrap">{{
         $t('title.pages.game_management.your_organization')
       }}</card-header>
-      <card-content class="flex lg:flex-row justify-start items-center lg:items-start">
+      <card-content class="flex lg:flex-row justify-start items-center lg:items-start flex-wrap">
         <img
           class="w-30 rounded-sm"
           src="https://ccdn.steak.io.vn/assets-guts-profile-pic.png"
@@ -33,11 +33,11 @@
     class="bg-[#101014]/50 backdrop-blur-2xl w-full lg:w-7/12 border-dashed border-gray-500/30 border-2 z-10"
   >
     <card-content class="flex flex-col gap-1">
-      <card-header class="text-3xl font-bold">
+      <card-header class="tablet:text-3xl text-xl font-bold">
         {{ $t('title.pages.game_management.notifications') }}
       </card-header>
-      <card-content class="flex flex-wrap gap-y-1 min-h-9/12">
-        <Alert class="h-18 bg-[#101014]/60">
+      <card-content class="flex flex-wrap gap-y-1 h-full p-0 tablet:px-6">
+        <Alert class="h-full bg-[#101014]/60">
           <Rocket class="h-4 w-4" />
           <AlertTitle>Heads up!</AlertTitle>
           <AlertDescription> You can add components to your app using the cli. </AlertDescription>
@@ -47,11 +47,11 @@
         </Alert>
       </card-content>
 
-      <card-footer>
+      <card-footer class="p-0 tablet:px-6">
         <card-action as-child>
           <Button
             variant="outline"
-            class="text-md !border-red-200/20 hover:!bg-red-400/10 cursor-pointer font-black"
+            class="text-md !border-red-200/20 hover:!bg-red-400/10 cursor-pointer font-black w-full"
           >
             {{ $t('title.pages.game_management.clear_all') }}</Button
           >

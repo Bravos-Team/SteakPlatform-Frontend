@@ -1,6 +1,6 @@
 <template>
   <card
-    class="bg-[var(--bg-card-base)]/50 xl:col-span-7 lg:col-span-4 p-4 border-double border-3 inset-shadow-blue-300 flex flex-col @container justify-between"
+    class="bg-[var(--bg-card-base)]/50 xl:col-span-7 lg:col-span-4 p-4 border-double border-3 inset-shadow-blue-300 flex flex-col @container justify-between w-full"
   >
     <div class="flex flex-col desktop-xl:w-7/12 gap-y-6 h-full w-full">
       <div class="flex w-full gap-x-2 items-center">

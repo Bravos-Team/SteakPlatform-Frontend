@@ -42,7 +42,10 @@
                 />
               </button>
             </drawer-trigger>
-            <drawer-content class="h-full outline-0 bg-white/10 backdrop-blur-xl py-10">
+            <drawer-content
+              @interact-outside="openDrawer = false"
+              class="h-full outline-0 bg-white/10 backdrop-blur-xl py-10"
+            >
               <div class="mx-auto w-full">
                 <drawer-title class="hidden">Menu</drawer-title>
                 <drawer-header

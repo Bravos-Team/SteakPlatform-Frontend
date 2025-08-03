@@ -171,8 +171,8 @@
                   <span v-else> {{ $t('title.pages.game_details.form.verify_request') }}</span>
                 </button>
               </dialog-trigger>
-              <dialog-content class="w-full tablet:min-w-full desktop:min-w-[40rem]">
-                <dialog-header class="w-full">
+              <dialog-content class="w-full">
+                <dialog-header class="">
                   <dialog-title
                     class="font-black tablet:text-2xl text-xl w-full text-center text-wrap"
                   >
@@ -218,34 +218,6 @@
               </button>
             </div>
             <!-- END SAVE AS DRAFT -->
-
-            <!-- UPDATE  -->
-            <div v-if="gamePreviewDetails.status === GAME_STATUS.ACCEPTED">
-              <button
-                v-if="
-                  isGetPresignedImageUrlPending ||
-                  isGetPresignedImageUrlsPending ||
-                  isPostIntoPresignedUrlPending ||
-                  isPostIntoPresignedUrlsPending ||
-                  isCreateDraftProjectInformationsPending ||
-                  isDeleteImagesPending ||
-                  isUpdateProjectDetailsPending ||
-                  isResubmitProjectPending
-                "
-                class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
-              >
-                {{ $t('title.pages.game_details.actions.update_informations') }}
-                <LoaderCircle class="animate-spin size-6" />
-              </button>
-              <button
-                v-else
-                @click="handleSaveAsDraft"
-                class="px-3 font-black cursor-pointer hover:bg-yellow-400/90 duration-300 transition-colors py-2 border bg-yellow-400/40 rounded-sm"
-              >
-                {{ $t('title.pages.game_details.actions.update_informations') }}
-              </button>
-            </div>
-            <!-- END UPDATE -->
 
             <!-- RESET FORM -->
             <button

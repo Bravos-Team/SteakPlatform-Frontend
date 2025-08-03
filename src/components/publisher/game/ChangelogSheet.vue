@@ -1,5 +1,5 @@
 <template>
-  <span class="text-white font-medium px-2 flex flex-wrap">
+  <span class="text-white font-medium px-2 flex flex-wrap text-wrap">
     {{ $t('title.pages.game_management.noti.message_logs') }}
     {{ new Intl.DateTimeFormat(locale, { dateStyle: 'full' }).format(new Date()) }}
   </span>

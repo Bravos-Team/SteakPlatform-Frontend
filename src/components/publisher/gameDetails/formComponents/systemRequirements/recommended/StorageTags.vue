@@ -6,7 +6,7 @@
     <select-content>
       <select-group>
         <select-item v-for="storage in storages" :key="storage" :value="storage">
-          <select-item-text>{{ storage }}</select-item-text>
+          <select-item-text class="text-wrap">{{ storage }}</select-item-text>
         </select-item>
       </select-group>
     </select-content>

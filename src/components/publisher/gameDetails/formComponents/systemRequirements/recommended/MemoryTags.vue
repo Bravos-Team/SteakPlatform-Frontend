@@ -6,7 +6,7 @@
     <select-content>
       <select-group>
         <select-item v-for="memory in memories" :key="memory" :value="memory">
-          <select-item-text>{{ memory }}</select-item-text>
+          <select-item-text class="text-wrap">{{ memory }}</select-item-text>
         </select-item>
       </select-group>
     </select-content>

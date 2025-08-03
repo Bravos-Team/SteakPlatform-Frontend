@@ -6,7 +6,7 @@
     <select-content>
       <select-group>
         <select-item v-for="version in osVersion" :key="version" :value="version">
-          <select-item-text>{{ version }}</select-item-text>
+          <select-item-text class="text-wrap">{{ version }}</select-item-text>
         </select-item>
       </select-group>
     </select-content>

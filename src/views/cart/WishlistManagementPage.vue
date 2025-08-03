@@ -1,9 +1,31 @@
 <template>
   <tooltip-provider>
     <div class="flex flex-col px-2 mt-6 mb-3 justify-start h-full gap-y-6">
-      <span class="text-2xl laptop:text-5xl font-extrabold">
-        {{ $t('title.pages.wishlist.title') }}
-      </span>
+      <div class="flex gap-y-5 tablet:justify-between justify-end flex-wrap">
+        <span class="text-2xl laptop:text-5xl font-extrabold text-wrap px-3">
+          {{ $t('title.pages.wishlist.title') }}
+        </span>
+
+        <router-link
+          :to="{ name: 'CartManagementPage' }"
+          class="group group flex gap-x-1 relative justify-end px-5"
+        >
+          <div class="relative">
+            <span
+              class="fill-white/30 border-b-1 group-hover:border-b-3 border-white transition-all duration-100"
+            >
+              {{ $t('title.store.cart') }}</span
+            >
+
+            <div
+              v-if="userCartData?.data"
+              class="absolute -top-4 -right-4 rounded-full bg-blue-500/50 group-hover:bg-blue-500 transition-colors duration-300 size-6 text-xs flex items-center justify-center"
+            >
+              {{ userCartData.data.items.length }}
+            </div>
+          </div>
+        </router-link>
+      </div>
       <div
         class="flex relative px-3 gap-y-5 flex-col-reverse desktop:flex-row gap-x-2 justify-start"
       >
@@ -156,7 +178,7 @@
             <!-- END RIGHT CONTENT -->
           </div>
           <div v-else>
-            <span class="text-lg font-black">
+            <span class="text-lg font-black text-wrap">
               {{ $t('title.pages.wishlist.empty') }}
             </span>
           </div>
@@ -226,7 +248,10 @@ import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+import { useUserCartList } from '@/hooks/store/cart/useUserCart'
+import user from '@/router/middlewares/user'
 
+const { data: userCartData, refetch: userCartRefetch } = useUserCartList()
 const { mutateAsync: mutateMoveItemToCart, isPending: isMoveItemToCartPending } =
   useMutateMoveWishlistItemToCart()
 const { mutateAsync: mutateRemoveGameFromWishlist, isPending: isRemoveGameFromWishlistPending } =

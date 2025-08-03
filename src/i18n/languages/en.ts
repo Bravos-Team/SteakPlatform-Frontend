@@ -82,6 +82,7 @@ export default {
       game_management: 'Project Management',
       game_management_overview: 'Project Management Overview',
       game_management_draft: 'Draft Project Management',
+      game_management_accepted: 'Published Project Management',
       game_not_release_yet: 'Game Not Released Yet',
       support: 'Support Center',
       game_details: 'Project Details',

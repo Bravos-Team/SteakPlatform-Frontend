@@ -35,15 +35,6 @@ export const publisherDeleteImagesUploaded = (payload: { url: string }[]) =>
 export const publisherResubmitProject = (request: GameResubmitRequestType) =>
   SteakApi.post('/dev/project/resubmit', request)
 
-export const publisherUpateProjectDetails = (payload: PartialGameType) =>
-  SteakApi.post('/dev/game-management/update-game-details', payload)
-
-export const publisherUpdateProjectStatus = (payload: { gameId: string; status: string }) =>
-  SteakApi.post('/dev/game-management/update-game-status', payload)
-
-export const publisherUpdateGamePrice = (payload: { gameId: string; price: number }) =>
-  SteakApi.post('/dev/game-management/update-game-price', payload)
-
 export const publisherDeleteDraftProjectVersion = (payload: {
   gameId: string
   versionId: string
@@ -56,5 +47,5 @@ export const markAsLatestVersion = (payload: { gameId: string; versionId: string
     `/dev/game-management/mark-as-latest-stable?gameId=${payload.gameId}&versionId=${payload.versionId}`,
   )
 
-export const getAllProjectVersions = (gameId: string, signal?: AbortSignal) =>
-  SteakApi.get(`/api/v1/dev/game-management/get-all-version?gameId=${gameId}`, { signal })
+export const publisherUpateProjectDetails = (payload: PartialGameType) =>
+  SteakApi.post('/dev/game-management/update-game-details', payload)
