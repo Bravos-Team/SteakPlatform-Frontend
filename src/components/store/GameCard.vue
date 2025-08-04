@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="game && isReleased(game)"
-    class="group relative px-1 tablet:size-full desktop:size-full rounded-2xl"
+    class="group relative px-1 size-[13rem] tablet:size-full desktop:size-full rounded-2xl"
   >
     <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
       <!-- IMAGE -->

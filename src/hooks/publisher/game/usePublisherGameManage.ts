@@ -11,6 +11,7 @@ import {
   createNewGameVersion,
   publisherUpdateDraftGameVersion,
   publisherDeleteDraftGameVersion,
+  getGameDetails,
 } from '@/apis/publisher/game/publisherGame'
 import {
   DELETE_GAME_DRAFT_VERSION_TYPE,
@@ -138,4 +139,11 @@ export const mutateDeleteDraftGameVersion = () => {
     mutateAsync,
     isPending,
   }
+}
+
+export const usePublisherGameDetails = (gameId: bigint) => {
+  return useQuery({
+    queryKey: GAME_MANAGE_QUERY_KEYS.GAME(gameId.toString()),
+    queryFn: async ({ signal }) => await getGameDetails(gameId.toString(), signal),
+  })
 }

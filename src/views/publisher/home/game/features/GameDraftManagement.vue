@@ -28,15 +28,28 @@
           <!-- SEARCH BY KEYWORD -->
           <label for="keyword">
             <input
-              v-model.lazy="filters.keyword"
               type="text"
+              v-model="searchValue"
               id="keyword"
               placeholder="Search by keyword"
               autocomplete="off"
               class="focus:ring-2 focus:ring-blue-500 outline-1 px-2 py-1 rounded-sm"
-              @keyup.enter="handleRefetchingPersonalProjects"
+              @blur="nextTick(() => handleRefetchingPersonalProjects())"
+              @keyup.enter="nextTick(() => handleRefetchingPersonalProjects)"
             />
           </label>
+
+          <button
+            :class="{
+              'cursor-progress animate-spin text-white/90 ': isRefetchingPersonalProjects,
+              'cursor-pointer': !isRefetchingPersonalProjects,
+            }"
+            :disabled="isRefetchingPersonalProjects"
+            class="w-20 rounded-sm border-1 h-[2rem]"
+            @click="handleRefetchingPersonalProjects()"
+          >
+            Search
+          </button>
           <!-- END SEARCH BY KEYWORD -->
         </div>
 
@@ -92,7 +105,7 @@
           v-slot="{ page }"
           :total="totalResults"
           :items-per-page="filters?.size ?? 8"
-          :default-page="1"
+          :default-page="games?.data.page.number + 1"
           @update:page="filters.page = $event"
         >
           <pagination-content v-slot="{ items }">
@@ -146,6 +159,7 @@ import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/proje
 import { useI18n } from 'vue-i18n'
 import { watch } from 'vue'
 import { RotateCcw } from 'lucide-vue-next'
+import { useDebounceFn } from '@vueuse/core'
 import {
   Pagination,
   PaginationContent,
@@ -203,9 +217,11 @@ const {
   isLoading: isLoadingPersonalProjects,
 } = usePublisherGetPersonalProjects(filters)
 
-const handleRefetchingPersonalProjects = async () => {
-  // await refetchPersonalProjects()
-}
+const searchValue = ref('')
+const handleRefetchingPersonalProjects = useDebounceFn(async () => {
+  filters.value.keyword = searchValue.value
+  filters.value.page = 1
+}, 500)
 
 const totalResults = computed(() => {
   return games.value?.data?.page?.totalElements ?? 0

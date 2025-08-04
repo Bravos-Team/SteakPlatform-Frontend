@@ -1,15 +1,13 @@
 <template>
   <!-- CAROUSELS BAR -->
-  <div
-    class="flex shrink-0 flex-col will-change-scroll transform-gpu overflow-hidden xl:w-[1039px] xl:h-[663px] lg:h-[499px] gap-y-[20px]"
-  >
+  <div class="flex shrink-0 flex-col will-change-scroll transform-gpu overflow-hidden gap-y-[20px]">
     <!-- MAIN IMAGES SLIDERS -->
     <div
       v-if="game"
       ref="container"
-      class="bg-gray-400/10 keen-slider snap-center group/img-slider relative flex flex-row rounded-xl overflow-hidden xl:min-h-[584px] lg:min-h-[422px]"
+      class="bg-gray-400/10 keen-slider snap-center group/img-slider relative flex flex-row rounded-xl overflow-hidden"
     >
-      <div v-for="(media, index) in game" :key="index">
+      <div v-for="(media, index) in game" :key="index" class="cursor-grab active:cursor-grabbing">
         <img
           v-if="media.type === 'image'"
           :class="`number-slide${index + 1}`"
@@ -67,7 +65,7 @@
         class="h-[57px] keen-slider thumbnail flex gap-x-[10px] justify-center w-full overflow-x-scroll no-scrollbar"
       >
         <div
-          class="keen-slider__slide border-[1px] p-0 !min-w-[7rem] !max-w-[7rem] !min-h-full border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100 overflow-hidden rounded-sm"
+          class="keen-slider__slide border-[1px] cursor-pointer p-0 !min-w-[7rem] !max-w-[7rem] !min-h-full border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100 overflow-hidden rounded-sm"
           v-for="(media, index) in game"
           :class="`number-slide${index + 1}`"
           :key="index"

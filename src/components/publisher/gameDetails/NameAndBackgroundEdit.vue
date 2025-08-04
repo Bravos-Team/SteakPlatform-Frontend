@@ -1,6 +1,6 @@
 <template>
   <card
-    class="max-h-[20rem] relative overflow-hidden flex flex-col-reverse justify-between min-h-[20rem] basis-7/12"
+    class="max-h-[20rem] relative overflow-hidden flex flex-col-reverse justify-between basis-7/12 py-1"
   >
     <img
       :class="{
@@ -25,7 +25,7 @@
       class="absolute top-1/2 scale-120 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-spin"
     />
 
-    <div class="w-full bg-white-50 z-10 px-2 py-2 justify-end flex backdrop:blur-[8px]">
+    <div class="w-full bg-white-50 z-10 px-3 justify-end flex backdrop:blur-[8px]">
       <div class="flex gap-x-2 justify-center items-center flex-wrap">
         <span
           class="gap-y-10 h-full xl:text-2xl backdrop-blur-sm gap-x-3 font-bold px-3 py-2 bg-gray-600/10 rounded-sm text-wrap flex items-center"
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Upload Button -->
-    <div class="w-full z-50 flex justify-end">
+    <div class="w-full z-50 flex justify-end px-3">
       <label
         v-if="
           isUpdateDraftProjectInformations ||

@@ -1,16 +1,16 @@
 <template>
-  <edit-game-details-skeleton v-if="isProjectByIdPending" />
+  <edit-game-details-skeleton v-if="isGameByIdPending" />
   <div v-else class="px-2 py-4 flex flex-col gap-y-3 @container">
     <div class="h-full flex flex-col laptop:flex-row gap-2">
-      <name-and-background-edit :game-details="projectById?.data" />
-      <update-game-informations :game-details="projectById?.data" />
+      <name-and-background-edit :game-details="gameById?.data" />
+      <update-game-informations :game-details="gameById?.data" />
     </div>
     <!-- PREVIEW -->
     <div class="w-full @container">
       <card class="bg-[var(--bg-card-base)]/50 lg:px-[4rem] @container">
         <game-details-preview
-          v-if="!isProjectByIdPending && projectById?.data"
-          :game-details="projectById.data"
+          v-if="!isGameByIdPending && gameById?.data"
+          :game-details="gameById.data"
         />
         <skeleton-preview-form v-else />
       </card>
@@ -24,41 +24,16 @@ import EditGameDetailsSkeleton from '@/components/publisher/gameDetails/EditGame
 import { Card } from '@/components/ui/card'
 import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPreviewForm.vue'
 import GameDetailsPreview from '@/components/publisher/gameDetails/GameDetailsPreview.vue'
-import { nextTick, onBeforeMount, watch } from 'vue'
 import NameAndBackgroundEdit from '@/components/publisher/gameDetails/NameAndBackgroundEdit.vue'
 import UpdateGameInformations from '@/components/publisher/gameDetails/UpdateGameInformations.vue'
 import { useRoute } from 'vue-router'
-import { usePublisherGetPersonalProjectById } from '@/hooks/publisher/project/usePublisherPersonalProjects'
 
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
+import { usePublisherGameDetails } from '@/hooks/publisher/game/usePublisherGameManage'
 const useSystem = useSystemRequirementsStore()
 const route = useRoute()
 
-const {
-  data: projectById,
-  isPending: isProjectByIdPending,
-  refetch: refetchingProjectData,
-} = usePublisherGetPersonalProjectById(route?.params?.id as unknown as bigint)
-
-watch(
-  projectById,
-  async () => {
-    await nextTick()
-    if (projectById.value?.data.systemRequirements) {
-      useSystem.resetSystemRequirements()
-      if (projectById.value.data.systemRequirements.minimum)
-        useSystem.minimumRequirement = projectById.value.data.systemRequirements.minimum
-      if (projectById.value.data.systemRequirements.recommended)
-        useSystem.recommendRequirement = projectById.value.data.systemRequirements.recommended
-    } else {
-      useSystem.resetSystemRequirements()
-    }
-  },
-  { deep: true },
+const { data: gameById, isPending: isGameByIdPending } = usePublisherGameDetails(
+  route?.params?.id as unknown as bigint,
 )
-
-onBeforeMount(async () => {
-  await refetchingProjectData()
-  await nextTick()
-})
 </script>

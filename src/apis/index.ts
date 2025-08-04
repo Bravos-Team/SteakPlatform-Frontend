@@ -72,6 +72,12 @@ SteakApi.interceptors.response.use(
     const group = (route.meta?.group ?? 'default') as keyof typeof messages
     const { msg, title, redirect } = messages[group] || messages.default
     console.log('API Error:', error)
+    if (status === 401 && error.response.config.url.includes('/store/private/order/create')) {
+      removeCookie('userAccessRights')
+      // toastErrorNotificationPopup(msg, title)
+      await router.push({ name: 'Login' })
+      return Promise.reject(error)
+    }
     if (
       status === 401 &&
       route?.meta?.middleware &&

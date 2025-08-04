@@ -30,6 +30,9 @@ export const getGamesList = async (
 ): Promise<{ data: GAME_RESPONSE_TYPE[] }> =>
   await SteakApi.get('/dev/game-management/list', { params: filters, signal })
 
+export const getGameDetails = async (gameId: string, signal: AbortSignal) =>
+  await SteakApi.get(`/dev/game-management/details/${gameId}`, { signal })
+
 export const publisherUpdateDraftGameVersion = async (payload: GAME_NEW_VERSION_PAYLOAD_TYPE) =>
   await SteakApi.post('/dev/game-management/update-draft-version', payload)
 

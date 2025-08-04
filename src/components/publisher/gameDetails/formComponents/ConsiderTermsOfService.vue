@@ -18,7 +18,7 @@
           :class="{ 'w-full': consider.showConsider == false }"
         >
           <badge-alert />
-          <span>
+          <span class="text-wrap">
             {{ $t('title.pages.game_details.form.consider.title') }}
           </span>
         </div>
@@ -26,7 +26,7 @@
           :class="{ hidden: consider.showConsider == false }"
           class="flex flex-col gap-y-1 lg:gap-y-0 px-1 lg:px-11"
         >
-          <span>
+          <span class="text-wrap">
             {{ $t('title.pages.game_details.form.consider.descriptions') }}
           </span>
           <div class="flex justify-end">

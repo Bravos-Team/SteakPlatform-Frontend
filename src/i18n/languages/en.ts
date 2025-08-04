@@ -109,6 +109,15 @@ export default {
               published: 'Project Published',
               sub: {},
             },
+            actions: {
+              draft: {
+                delete_project: {
+                  title: 'Delete Project',
+                  description:
+                    'Are you sure you want to delete this project? This action cannot be undone.',
+                },
+              },
+            },
           },
           support: {
             title: 'Support',
@@ -402,6 +411,7 @@ export default {
       buttons: {
         add_to_cart: 'Add to Cart',
         buy_now: 'Buy Now',
+        already_in_library: 'Already in Library',
         view_details: 'View Details',
         remove_from_wishlist: 'Remove from Wishlist',
         move_to_wishlist: 'Move to Wishlist',

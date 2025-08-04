@@ -350,6 +350,15 @@ export default {
               published: 'Dự án đã xuất bản',
               sub: {},
             },
+            actions: {
+              draft: {
+                delete_project: {
+                  title: 'Xóa dự án',
+                  description:
+                    'Bạn có chắc chắn muốn xóa dự án này? Hành động này không thể hoàn tác.',
+                },
+              },
+            },
           },
           store: {
             title: 'Cửa hàng Steak',
@@ -403,6 +412,7 @@ export default {
     buttons: {
       add_to_cart: 'Thêm vào giỏ hàng',
       buy_now: 'Mua ngay',
+      already_in_library: 'Đã có trong thư viện',
       view_details: 'Xem chi tiết',
       remove_from_wishlist: 'Xóa khỏi danh sách mong muốn',
       add_to_wishlist: 'Thêm vào danh sách mong muốn',

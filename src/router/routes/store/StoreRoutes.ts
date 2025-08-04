@@ -37,6 +37,11 @@ const storeRoutes: RouteRecordRaw = {
         group: 'user',
       },
     },
+    {
+      path: '/me/profiles',
+      name: 'UserProfiles',
+      component: () => import('@/views/store/auth/profile/UserProfileDetails.vue'),
+    },
   ],
 }
 export default storeRoutes

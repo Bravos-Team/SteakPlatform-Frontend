@@ -1,6 +1,6 @@
 <template>
   <div
-    class="laptop:h-[884px] h-full w-full laptop:w-[350px] desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]"
+    class="laptop:h-[884px] col-span-12 laptop:col-span-3 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]"
   >
     <div class="flex justify-center items-center p-[20px]">
       <div class="flex justify-center items-center">
@@ -35,6 +35,13 @@
 
     <div class="flex flex-col gap-y-[10px]">
       <button
+        v-if="rightContentsData.isOwned"
+        class="py-[12px] px-[20px] align-middle bg-[#26bbff]/30 cursor-not-allowed text-black rounded-[10px] flex justify-center items-center"
+      >
+        {{ $t('features.buttons.already_in_library') }}
+      </button>
+      <button
+        v-else
         :class="{
           'cursor-not-allowed': isMutateCheckoutPending,
           'cursor-pointer': !isMutateCheckoutPending,
@@ -46,12 +53,17 @@
         {{ $t('features.buttons.buy_now') }}
       </button>
       <button
+        :class="{
+          'cursor-not-allowed': rightContentsData.isOwned || isMutateCheckoutPending,
+          'cursor-pointer': !rightContentsData.isOwned && !isMutateCheckoutPending,
+        }"
+        :disabled="rightContentsData.isOwned || isMutateCheckoutPending"
         class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center"
       >
         {{ $t('features.buttons.add_to_cart') }}
       </button>
       <button
-        class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center"
+        class="text-wrap py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center"
       >
         {{ $t('features.buttons.add_to_wishlist') }}
       </button>
@@ -69,7 +81,9 @@
           />
         </span>
       </div> -->
-      <div class="flex border-b-[0.5px] border-b-[#ffffff37] justify-between py-[10px] px-[0px]">
+      <div
+        class="flex flex-wrap border-b-[0.5px] border-b-[#ffffff37] justify-between py-[10px] px-[0px]"
+      >
         <span class="text-[#ffffffa6]">Refund Type</span>
         <span class="text-white">{{ 'ChargeBack 80%' }}</span>
       </div>
@@ -119,6 +133,7 @@ import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificati
 import { removeCookie } from '@/utils/cookies/cookie-utils'
 import { useRouter } from 'vue-router'
 import { useDebounceFn } from '@vueuse/core'
+import { onMounted } from 'vue'
 const router = useRouter()
 const { isPending: isMutateCheckoutPending, mutateAsync: mutateAsyncCheckout } = useMutateCheckout()
 

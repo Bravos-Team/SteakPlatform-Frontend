@@ -85,7 +85,7 @@
                       }}</span>
                     </div>
                     <div class="flex justify-end me-2">
-                      <GameSettingButton />
+                      <GameSettingButton :game-id="game.id.toString()" />
                     </div>
                   </div>
                   <card-description class="justify-start flex">
