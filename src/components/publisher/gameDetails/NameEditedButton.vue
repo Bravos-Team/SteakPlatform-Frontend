@@ -122,7 +122,10 @@ const { isPending: isUpdateProjectGamePending, mutateAsync: mutateAsyncUpdatePro
   usePublisherUpdateProjectName()
 const showDialog = ref(false)
 const updateNameSchema = z.object({
-  name: z.string().min(6, i18n.global.t('title.pages.game_details.dialog.error.update_name')),
+  name: z
+    .string()
+    .min(6, i18n.global.t('title.pages.game_details.dialog.error.update_name'))
+    .max(50, i18n.global.t('title.pages.game_details.dialog.error.update_name_max_length')),
 })
 const formSchema = toTypedSchema(updateNameSchema)
 type updateType = z.infer<typeof updateNameSchema>

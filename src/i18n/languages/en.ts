@@ -82,6 +82,7 @@ export default {
       game_management: 'Project Management',
       game_management_overview: 'Project Management Overview',
       game_management_draft: 'Draft Project Management',
+      game_management_accepted: 'Published Project Management',
       game_not_release_yet: 'Game Not Released Yet',
       support: 'Support Center',
       game_details: 'Project Details',
@@ -107,6 +108,15 @@ export default {
               draft: 'Draft Project',
               published: 'Project Published',
               sub: {},
+            },
+            actions: {
+              draft: {
+                delete_project: {
+                  title: 'Delete Project',
+                  description:
+                    'Are you sure you want to delete this project? This action cannot be undone.',
+                },
+              },
             },
           },
           support: {
@@ -401,6 +411,7 @@ export default {
       buttons: {
         add_to_cart: 'Add to Cart',
         buy_now: 'Buy Now',
+        already_in_library: 'Already in Library',
         view_details: 'View Details',
         remove_from_wishlist: 'Remove from Wishlist',
         move_to_wishlist: 'Move to Wishlist',

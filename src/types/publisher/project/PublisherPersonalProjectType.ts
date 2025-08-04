@@ -15,6 +15,7 @@ export type PUBLISHER_PERSONAL_PROJECT = {
   updatedAt?: string
   thumbnail?: string
   buildInfo?: any
+  estimatedReleaseDate?: string
 }
 
 export type PUBLISHER_PERSONAL_PROJECT_LIST = {

@@ -46,7 +46,7 @@
             @click="isPassword = !isPassword"
           />
         </div>
-        <label v-if="errors.password" class="peer-invalid:block text-red-500">
+        <label v-if="errors.password" class="peer-invalid:block text-red-500 text-wrap">
           {{ errors.password }}
         </label>
       </div>

@@ -47,8 +47,9 @@ const toggleNav = () => {
             <LanguagesOption />
           </header>
 
-          <router-view />
-
+          <div class="p-3 z-11">
+            <router-view />
+          </div>
           <spark
             :colorChanges="'#64403b'"
             :top="'850'"

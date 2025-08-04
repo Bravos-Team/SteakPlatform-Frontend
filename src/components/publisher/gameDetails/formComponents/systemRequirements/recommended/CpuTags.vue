@@ -6,7 +6,7 @@
     <select-content>
       <select-group>
         <select-item v-for="cpu in cpus" :key="cpu" :value="cpu">
-          <select-item-text>{{ cpu }}</select-item-text>
+          <select-item-text class="text-wrap">{{ cpu }}</select-item-text>
         </select-item>
       </select-group>
     </select-content>

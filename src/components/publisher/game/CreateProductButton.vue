@@ -99,7 +99,10 @@ const showDialog = ref(false)
 const handleCloseDialog = () => (showDialog.value = false)
 const formSchema = toTypedSchema(
   z.object({
-    name: z.string().min(6, { message: 'Product name must be at least 6 characters long' }),
+    name: z
+      .string()
+      .min(6, { message: 'Product name must be at least 6 characters long' })
+      .max(55, { message: 'Product name must be at most 55 characters long' }),
   }),
 )
 

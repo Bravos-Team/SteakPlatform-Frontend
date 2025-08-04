@@ -1,33 +1,21 @@
 <template>
-  <div v-if="game && isReleased(game)" class="group relative px-1">
-    <router-link
-      :to="{ name: 'game-details', params: { id: game?.id.toString() } }"
-      class="flex flex-col rounded-lg gap-y-6"
-    >
+  <div
+    v-if="game && isReleased(game)"
+    class="group relative px-1 size-[13rem] tablet:size-full desktop:size-full rounded-2xl"
+  >
+    <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
       <!-- IMAGE -->
-      <div class="group relative w-full">
-        <div
-          class="min-h-full tablet:size-[16rem] size-full laptop:size-[14rem] desktop:size-[18rem] desktop-xl:size-[16rem] rounded-md cursor-pointer peer-hover/category-img:cursor-pointer peer-hover/category-img:contrast-100 overflow-hidden hover:contrast-[.80] transition-all duration-250 relative"
-        >
-          <img
-            :src="game?.thumbnail"
-            :alt="game.name"
-            class="min-w-full min-h-full outline-0 bg-white/10"
-          />
-        </div>
+      <div class="group relative w-full rounded-2xl overflow-hidden">
+        <img :src="game?.thumbnail" :alt="game.name" class="min-w-full min-h-full outline-0" />
       </div>
       <!-- END IMAGE -->
 
       <!-- TITLE AND PRICE -->
-      <div class="flex flex-col cursor-pointer gap-y-1 px-3 py-2">
-        <div class="flex flex-col">
-          <p
-            class="text-white mb-[15px] capitalize font-bold text-[16.1px] leading-[20px] tracking-[0.32px] mb-"
-          >
-            {{ game?.name }}
-          </p>
+      <div class="flex flex-col gap-y-3 px-3 py-2 text-white">
+        <div class="w-full break-words leading-tight text-wrap font-bold text-xl">
+          {{ game?.name }}
         </div>
-        <div class="flex flex-row flex-nowrap">
+        <div class="flex flex-row flex-wrap">
           <p class="text-white leading-[18px]">
             {{ CurrencyUtils.formatCurrency(game?.price, '₫') }}
           </p>

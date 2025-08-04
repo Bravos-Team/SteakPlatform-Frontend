@@ -3,7 +3,10 @@
     <div class="flex flex-col laptop:flex-row gap-x-5">
       <!-- LAPTOP SLIDER -->
       <div class="hidden laptop:flex w-10/12 overflow-hidden rounded-3xl bg-gray-200/5">
-        <div class="!min-w-[10rem] !min-h-full keen-slider" ref="container">
+        <div
+          class="!min-w-[10rem] !min-h-full keen-slider cursor-grab active:cursor-grabbing"
+          ref="container"
+        >
           <img
             v-for="(game, index) in gameSliders"
             :key="game.id"
@@ -91,7 +94,7 @@ const goToSlide = (index: number) => {
 }
 
 const tempImage =
-  'https://cdn2.unrealengine.com/egs-blades-of-fire-carousel-desktop-1920x1080-d2399d7a8fcb.jpg?resize=1&w=1280&h=720&quality=medium'
+  'https://cdn2.unrealengine.com/egs-arena-breakout-infinite-carousel-desktop-1920x1080-1518db0300b5.jpg?resize=1&w=1280&h=720&quality=medium'
 
 const gameSliders = ref([
   {
@@ -161,8 +164,9 @@ const gameSliders = ref([
     message: '',
     prices: 0,
     status: 1,
-    img: 'https://cdn2.unrealengine.com/egs-split-fiction-carousel-thumb-1200x1600-9b5a96bf6479.jpg?resize=1&w=96&h=128&quality=medium',
-    background: tempImage,
+    img: 'https://cdn2.unrealengine.com/egs-arena-breakout-infinite-carousel-thumb-1200x1600-fc9163d2f0bb.jpg?resize=1&w=96&h=128&quality=medium',
+    background:
+      'https://cdn2.unrealengine.com/egs-arena-breakout-infinite-carousel-desktop-1920x1080-1518db0300b5.jpg?resize=1&w=1280&h=720&quality=medium',
   },
 ])
 

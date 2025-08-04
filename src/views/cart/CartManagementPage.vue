@@ -7,15 +7,24 @@
         <span class="text-3xl tablet:text-5xl font-extrabold">
           {{ $t('title.pages.cart.title') }}
         </span>
-        <button
-          v-if="userCartData?.data?.items.length > 0"
-          :disabled="isMutateClearCart"
-          :class="{ 'cursor-progress': isMutateClearCart, 'cursor-pointer': !isMutateClearCart }"
-          @click="handleClearCart"
-          class="flex gap-x-3 items-center justify-center px-3 py-2 border-1 border-white-10 rounded-sm hover:bg-white/3"
-        >
-          {{ $t('title.pages.cart.actions.remove_all_from_cart') }}
-        </button>
+
+        <div class="flex items-center gap-x-6 flex-wrap gap-y-2">
+          <router-link
+            :to="{ name: 'WishlistManagementPage' }"
+            class="relative border-b-1 hover:border-b-3 border-white transition-all duration-100 group flex gap-x-1 items-end"
+          >
+            {{ $t('title.store.wishlist') }}
+          </router-link>
+          <button
+            v-if="userCartData?.data?.items.length > 0"
+            :disabled="isMutateClearCart"
+            :class="{ 'cursor-progress': isMutateClearCart, 'cursor-pointer': !isMutateClearCart }"
+            @click="handleClearCart"
+            class="flex gap-x-3 items-center justify-center px-3 py-2 border-1 border-white-10 rounded-sm hover:bg-white/3"
+          >
+            {{ $t('title.pages.cart.actions.remove_all_from_cart') }}
+          </button>
+        </div>
       </div>
       <div class="flex flex-col desktop:flex-row px-2 gap-y-10 gap-x-2 justify-between">
         <div class="flex w-full gap-y-3 flex-col">
@@ -24,7 +33,7 @@
               v-if="userCartData?.data.items.length > 0"
               v-for="game in userCartData.data.items"
               :key="game.id"
-              class="w-full cursor-pointer p-6 rounded-lg bg-white/6 flex gap-x-3 gap-[20px]"
+              class="w-full cursor-pointer p-6 rounded-lg bg-white/6 flex gap-x-3 gap-[20px] flex-col laptop:flex-row items-center"
             >
               <!-- LEFT CONTENT -->
               <div class="flex flex-col gap-y-2">
@@ -64,7 +73,7 @@
 
                 <!-- AGES -->
                 <div class="flex items-start gap-y-3 flex-col">
-                  <span class="font-extrabold text-2xl">{{ game.title }}</span>
+                  <span class="font-extrabold text-2xl text-wrap">{{ game.title }}</span>
                   <div class="w-full rounded-lg border-1 p-4 border-white/20 flex gap-x-3">
                     <img
                       alt="12+"
@@ -87,8 +96,8 @@
 
                 <!-- SELF-REFUNDABLE -->
                 <div class="flex gap-x-2">
-                  <span>{{ $t('noti_note.cart.self_refundable') }}</span>
-                  <div class="rounded-full">
+                  <span class="text-wrap">{{ $t('noti_note.cart.self_refundable') }}</span>
+                  <div class="rounded-full flex">
                     <tooltip>
                       <tooltip-trigger>
                         <router-link :to="{ name: 'SupportCenter' }">
@@ -104,7 +113,7 @@
                 <!-- END SELF-REFUNDABLE -->
 
                 <!-- ACTION BUTTONS -->
-                <div class="flex text-white/50 w-full items-center gap-x-6 justify-end">
+                <div class="flex text-white/50 w-full items-center gap-x-6 justify-end flex-wrap">
                   <button
                     :disabled="isRemoveFromCartPending"
                     :class="{
@@ -123,7 +132,7 @@
                       'cursor-pointer': !isMoveToWishlistPending,
                     }"
                     @click="handleMovedToWishlist(game.id, game.title)"
-                    class="hover:text-white/80 transition-colors duration-300"
+                    class="hover:text-white/80 transition-colors duration-300 text-wrap"
                   >
                     {{ $t('features.buttons.move_to_wishlist') }}
                   </button>
@@ -139,7 +148,7 @@
           v-if="userCartData?.data.items.length > 0"
           class="min-w-[296px] min-h-[326px] px-3 gap-y-5 flex flex-col"
         >
-          <span class="text-3xl font-extrabold">{{
+          <span class="text-3xl text-wrap font-extrabold">{{
             $t('title.subPagesCompo.game_and_apps_summary_price')
           }}</span>
           <div class="flex flex-col gap-y-3">

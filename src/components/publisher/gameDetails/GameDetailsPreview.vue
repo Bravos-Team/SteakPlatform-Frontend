@@ -1,17 +1,10 @@
 <template>
   <!-- START GAME TITLE  -->
   <card-header class="text-2xl font-bold">
-    <card-title class="!text-[40px] text-white/80 font-black">{{ gameDetails?.name }}</card-title>
+    <card-title class="!text-[40px] !text-wrap max-w-[50rem] text-white/80 font-black">{{
+      gameDetails?.name
+    }}</card-title>
     <div class="flex flex-col gap-y-2">
-      <!-- <div
-        class="px-0 rounded-sm w-70 tablet:w-120 laptop:w-140 font-normal text-lg font-mono h-10"
-      >
- <span v-if="gameDetails?.shortDescription"> {{ gameDetails?.shortDescription }}</span>
-        <div
-          v-else
-          class="px-2 rounded-sm text-center w-70 tablet:w-120 laptop:w-140 h-10 bg-white/10"
-        ></div> 
-      </div> -->
       <div
         v-if="gameDetails?.developerTeams"
         class="flex gap-x-3 w-full flex-wrap desktop:w-[40rem]"
@@ -36,7 +29,7 @@
   <!-- END GAME TITLE  -->
 
   <!-- START PREVIEW CONTENT -->
-  <card-content class="flex flex-col gap-y-1 laptop:gap-y-3 @container">
+  <card-content class="flex flex-col gap-y-1 laptop:gap-y-3 p-0 !w-full">
     <!-- START PREVIEW TOP NAV -->
     <!-- <div class="flex gap-x-2 gap-y-2">
       <div class="bg-white/10 tablet:w-25 w-20 h-8" v-for="i in 3" />
@@ -44,14 +37,14 @@
     <!-- END PREVIEW TOP NAV -->
 
     <!-- START PREVIEW MAIN CONTENT -->
-    <div class="flex w-full items-start mobile:flex-col laptop:flex-row gap-y-6 gap-x-[5rem]">
+    <div class="gap-y-6 !w-full grid tablet:grid-cols-12 px-6 gap-x-3 laptop:px-0">
       <!-- START LEFT CONTENT -->
-      <div class="flex flex-col gap-y-3 @min-[1200px]:!w-[10cqw] @xl:min-w-[70cqw] w-full">
+      <div class="flex flex-col gap-y-3 min-w-full col-span-9">
         <!--- PREVIEW MEDIA BAR -->
         <div class="flex items-center flex-col gap-y-8 h-full w-full">
           <!-- START MEDIA -->
           <div
-            class="w-full overflow-hidden max-h-[34rem] desktop:h-120 laptop:h-100 tablet:h-70 desktop-xl:h-145 bg-white/10 flex items-center justify-center rounded-sm"
+            class="w-full overflow-hidden bg-white/10 flex items-center justify-center rounded-sm"
           >
             <img
               v-if="gameDetails?.thumbnail"
@@ -72,7 +65,7 @@
               <chevron-left class="w-6 h-6 stroke-3 text-white/30" />
             </div>
             <div
-              class="flex flex-nowrap laptop:gap-x-3 gap-x-2 items-center justify-center w-full !overflow-hidden"
+              class="flex flex-nowrap laptop:gap-x-3 max-w-[40rem] gap-x-2 items-center justify-center w-full !overflow-hidden"
             >
               <div
                 v-if="gameDetails?.media"
@@ -92,7 +85,7 @@
                 />
               </div>
 
-              <div v-else v-for="i in 8" class="!w-25 h-14 bg-white/10 rounded-sm shrink-0" />
+              <div v-else v-for="i in 6" class="!w-25 h-14 bg-white/10 rounded-sm shrink-0" />
             </div>
             <div class="rounded-full size-12 shrink-0 bg-white/10 flex items-center justify-center">
               <chevron-right class="w-6 h-6 stroke-3 text-white/30" />
@@ -107,7 +100,7 @@
           <!-- END SUB DES -->
 
           <!-- START SUB TYPE BAR -->
-          <div class="flex w-full flex-col laptop:flex-row gap-y-2 gap-x-2">
+          <div class="w-full grid tablet:grid-cols-2 gap-y-2 gap-x-2 justify-between">
             <div
               class="w-6/12 px-2 flex-wrap laptop:border-r-1 border-b-1 pb-1 laptop:pb-0 border-white/30 laptop:border-b-0 flex flex-col gap-y-2"
             >
@@ -179,13 +172,13 @@
       <!-- END LEFT CONTENT -->
 
       <!-- START RIGHT CONTENT -->
-      <div class="w-full sticky top-0 flex-col gap-y-[15px]">
+      <div class="sticky top-0 flex-col gap-y-[15px] col-span-3">
         <!-- START GAME THUMBNAIL -->
-        <div class="tablet:flex justify-center items-center p-[20px] hidden">
+        <div class="justify-center items-center flex flex-col">
           <div v-if="gameDetails?.thumbnail" class="flex justify-center items-center w-full">
             <img :src="gameDetails.thumbnail" alt="" />
           </div>
-          <div v-else class="flex justify-center items-center w-full">
+          <div v-else class="flex justify-center items-center mt-3 w-full">
             <div class="w-full bg-white/10 rounded-sm laptop:w-40 h-40" />
           </div>
         </div>
@@ -193,15 +186,15 @@
 
         <!-- START AGE RATING BAR -->
         <div
-          class="flex p-[15px] gap-x-[15px] justify-start rounded-[10px] items-center border-[#fff]/20 border w-full"
+          class="flex flex-wrap p-[15px] gap-x-[15px] gap-y-2 justify-start rounded-[10px] items-center border-[#fff]/20 border w-full mt-3"
         >
-          <div class="flex justify-center items-center">
+          <div class="flex justify-center w-full items-center">
             <div class="w-16 bg-white/10 rounded-sm h-15" />
           </div>
 
-          <div class="flex flex-col gap-y-2 justify-between">
-            <div class="w-16 h-5 bg-white/10 rounded-sm" />
-            <div class="w-46 h-5 bg-white/10 rounded-sm" />
+          <div class="flex flex-col w-full gap-y-1 justify-between">
+            <div class="laptop:w-16 w-full h-5 bg-white/10 rounded-sm" />
+            <div class="min-w-full h-5 bg-white/10 rounded-sm" />
           </div>
         </div>
         <!-- END AGE RATING BAR -->
@@ -233,7 +226,7 @@
             {{ $t('features.buttons.add_to_cart') }}
           </button>
           <button
-            class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center"
+            class="text-wrap py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center"
           >
             {{ $t('features.buttons.add_to_wishlist') }}
           </button>

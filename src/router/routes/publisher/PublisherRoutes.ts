@@ -18,42 +18,36 @@ export const publisherRoutes: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'game-management',
-        name: 'PublisherGameManagement',
-        component: () => import('@/views/publisher/home/game/PublisherGameManagement.vue'),
+        path: 'draft',
+        name: 'PublisherGameManagementDraft',
+        component: () => import('@/views/publisher/home/game/features/GameDraftManagement.vue'),
         meta: {
-          baseName: 'Game Manage',
-          i18n: 'game_management',
+          baseName: 'Game Draft',
+          i18n: 'game_management_draft',
         },
-        redirect: { name: 'PublisherGameManagementOverview' },
-        children: [
-          {
-            path: 'draft',
-            name: 'PublisherGameManagementDraft',
-            component: () => import('@/views/publisher/home/game/features/GameDraftManagement.vue'),
-            meta: {
-              baseName: 'Game Draft',
-              i18n: 'game_management_draft',
-            },
-          },
-          {
-            path: 'game-edited/:id',
-            name: 'PublisherEditGame',
-            component: () => import('@/views/publisher/home/game/gameDetails/EditGameDetails.vue'),
-            meta: {
-              baseName: 'Edit Game',
-              i18n: 'game_details',
-            },
-          },
-          {
-            path: 'pending',
-            name: 'PublisherGameAcceptedManagement',
-            component: () => import('@/views/publisher/home/game/features/GameAcceptedManage.vue'),
-            meta: {
-              baseName: 'Game Published',
-            },
-          },
-        ],
+      },
+      {
+        path: 'game-edited/:id',
+        name: 'PublisherEditGame',
+        component: () => import('@/views/publisher/home/game/gameDetails/EditGameDetails.vue'),
+        meta: {
+          baseName: 'Edit Game',
+          i18n: 'game_details',
+        },
+      },
+      {
+        path: 'accepted',
+        name: 'PublisherGameAcceptedManagement',
+        component: () => import('@/views/publisher/home/game/features/GameAcceptedManage.vue'),
+        meta: {
+          baseName: 'Game Published',
+          i18n: 'game_management_accepted',
+        },
+      },
+      {
+        path: 'accepted/details/:id',
+        name: 'PublisherGameAcceptedDetails',
+        component: () => import('@/views/publisher/home/game/gameDetails/GameAcceptedDetails.vue'),
       },
     ],
     meta: {

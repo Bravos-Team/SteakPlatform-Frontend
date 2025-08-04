@@ -14,8 +14,7 @@ export const useGameStoreInfiniteQueryList = (filters?: GAME_FILTERED_PARAMS) =>
     ...result
   } = useInfiniteQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
-    queryFn: async ({ pageParam, signal }) =>
-      await useGetGameListStore({ cursor: pageParam, ...filters }, signal),
+    queryFn: async ({ signal }) => await useGetGameListStore({}, signal),
     initialPageParam: 9074997337759744,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? null,
   })

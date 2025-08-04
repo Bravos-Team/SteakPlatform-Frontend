@@ -12,7 +12,7 @@
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
-      <h1 class="text-2xl font-bold text-red-600 mb-2">
+      <h1 class="text-2xl font-bold text-red-600 mb-2 text-wrap">
         {{ $t('title.pages.payment_message.error.title') }} !
       </h1>
       <p class="text-gray-600 mb-6">
