@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full py-[2rem]">
-    <div class="flex flex-col laptop:flex-row gap-x-6 gap-y-3 laptop:px-[7rem] px-[1rem]">
+    <div class="flex flex-col laptop:flex-row gap-x-6 gap-y-8 laptop:px-[7rem] px-[1rem]">
       <div class="h-full bg-[#202024] rounded-lg basis-4/12">
         <div
           v-for="(option, index) in manageOptions"
@@ -17,7 +17,7 @@
               class="flex gap-x-2 py-1 w-full hover:bg-[#444447]/50 transition-colors duration-300 ease-in-out cursor-pointer px-2 rounded-sm"
             >
               <component :is="sub.icon" class="text-blue-300" />
-              <span> {{ sub.title }}</span>
+              <span class="text-wrap"> {{ sub.title }}</span>
             </button>
           </div>
         </div>

@@ -1,8 +1,9 @@
-import { useMutation, useQueryClient, QueryClient } from '@tanstack/vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { removeCookie, setCookie } from '@/utils/cookies/cookie-utils'
 import { LoginRequest, RegisterRequest } from '@/types/auth/AuthType'
 import { renewUserRefreshToken } from '@/apis/user/authUser'
 import { CART_STORE_QUERY_KEYS } from '@/hooks/constants/store/cart-key'
+
 export const useRegisterMutation = () => {
   const { isPending, mutateAsync, isSuccess } = useMutation<any, unknown, RegisterRequest>({
     mutationKey: ['user', 'auth', 'register'],

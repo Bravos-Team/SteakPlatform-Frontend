@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="game && isReleased(game)"
-    class="group relative px-1 size-[13rem] tablet:size-full desktop:size-full rounded-2xl"
+    class="group relative px-1 size-[16rem] tablet:size-full desktop:size-full rounded-2xl"
   >
     <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
       <!-- IMAGE -->
@@ -16,7 +16,7 @@
           {{ game?.name }}
         </div>
         <div class="flex flex-row flex-wrap">
-          <p class="text-white leading-[18px]">
+          <p class="text-white">
             {{ CurrencyUtils.formatCurrency(game?.price, '₫') }}
           </p>
         </div>

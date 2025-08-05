@@ -10,6 +10,6 @@ export const queryGetCountriesList = (filters?: Ref<string[]>) => {
     queryFn: async ({ signal }) => (await getCountriesIndependent(filters?.value, signal)).data,
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 15,
+    staleTime: 1000 * 60 * 30,
   })
 }

@@ -4,6 +4,7 @@ import {
   useLoginByEmailMutationDefault,
   useLoginByUsernameMutationDefault,
 } from '@/hooks/mutationDefaults/store/auth'
+
 export const mutationDefaults: MutationDefaults[] = [
   userRegisterMutationDefault,
   useLoginByEmailMutationDefault,
