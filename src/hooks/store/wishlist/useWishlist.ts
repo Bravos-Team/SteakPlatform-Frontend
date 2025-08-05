@@ -13,6 +13,7 @@ export const useGetUserWishlist = () => {
   return useQuery({
     queryKey: WISH_LIST_QUERY_KEYS.USER,
     queryFn: async ({ signal }) => await getMyWishlist(signal),
+    staleTime: 1000 * 60 * 60,
   })
 }
 

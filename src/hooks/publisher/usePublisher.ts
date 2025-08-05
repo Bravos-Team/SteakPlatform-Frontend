@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { setCookie } from '@/utils/cookies/cookie-utils'
+import { removeCookie, setCookie } from '@/utils/cookies/cookie-utils'
 import {
   loginEmail,
   loginUserName,
@@ -66,11 +66,11 @@ export const usePublisherLoginEmail = () => {
 }
 
 export const usePublisherLogout = () => {
-  const queryClient = useQueryClient()
   return useQuery({
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LOGOUT(),
     queryFn: async () => {
       // queryClient.clear()
+      removeCookie('publisherAccessRights')
       await logout()
     },
     enabled: false,

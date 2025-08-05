@@ -174,6 +174,16 @@
                     <drawer-description class="hidden"> </drawer-description>
                     <drawer-footer class="flex flex-col gap-y-2">
                       <router-link
+                        v-if="getCookie('userAccessRights')"
+                        :to="{ name: 'UserProfiles' }"
+                        class="flex justify-between gap-x-2 items-center w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                      >
+                        <span class="text-center align-middle">
+                          {{ $t('auth.informations.user.profile.title') }}</span
+                        >
+                        <UserStar class="text-white" />
+                      </router-link>
+                      <router-link
                         @click="openDrawer = false"
                         class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                         :to="{ name: 'store-home' }"
@@ -212,11 +222,13 @@
               <div class="hidden laptop:block">
                 <div
                   v-if="!getCookie('userAccessRights')"
-                  class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full"
+                  class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full rounded-sm"
                 >
-                  <router-link to="/login" class="flex justify-center items-center mx-auto">{{
-                    $t('auth.login')
-                  }}</router-link>
+                  <router-link
+                    to="/login"
+                    class="flex justify-center items-center mx-auto px-2 py-2"
+                    >{{ $t('auth.login') }}</router-link
+                  >
                 </div>
 
                 <dropdown-menu v-else>

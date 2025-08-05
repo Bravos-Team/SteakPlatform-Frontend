@@ -19,7 +19,7 @@
           :class="`number-slide${index + 1}`"
           :src="media.url"
           class="!w-full !shrink-0 keen-slider__slide"
-          controls
+          autoplay
           preload="metadata"
         />
       </div>

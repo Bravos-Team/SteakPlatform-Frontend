@@ -40,7 +40,19 @@ const storeRoutes: RouteRecordRaw = {
     {
       path: '/me/profiles',
       name: 'UserProfiles',
-      component: () => import('@/views/store/auth/profile/UserProfileDetails.vue'),
+      component: () => import('@/layouts/user/ProfileManageLayout.vue'),
+      redirect: { name: 'UserProfileSettings' },
+      children: [
+        {
+          path: 'settings',
+          name: 'UserProfileSettings',
+          component: () => import('@/views/store/auth/profile/UserProfileDetails.vue'),
+        },
+      ],
+      meta: {
+        middleware: [user],
+        group: 'user',
+      },
     },
   ],
 }

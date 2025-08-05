@@ -8,6 +8,19 @@ export default {
       forgot_password: 'Quên mật khẩu',
       isLogin: 'Đang đăng nhập...',
       user: {
+        account: {
+          children: {
+            settings: 'Cài đặt tài khoản',
+            passwordAndSecurity: 'Mật khẩu và bảo mật',
+          },
+          router: {
+            settings: {
+              title: 'Cài đặt tài khoản',
+              descriptions: 'Quản lý cài đặt tài khoản của bạn',
+              profile_informations: 'Thông tin hồ sơ',
+            },
+          },
+        },
         profile: {
           title: 'Hồ sơ của bạn',
         },

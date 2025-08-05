@@ -13,8 +13,11 @@ import {
   publisherUpateProjectDetails,
 } from '@/apis/publisher/project/publisherPersonalProjects'
 import { Ref } from 'vue'
-import { GameResubmitRequestType, PartialGameType } from '@/types/game/gameDetails/GameDetailsType'
-// import { QueryClient } from '@tanstack/vue-query'
+import {
+  GameResubmitRequestType,
+  GameType,
+  PartialGameType,
+} from '@/types/game/gameDetails/GameDetailsType'
 
 export const usePublisherGetPersonalProjects = (
   filters: Ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>,
@@ -22,8 +25,8 @@ export const usePublisherGetPersonalProjects = (
   return useQuery({
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LIST(filters),
     queryFn: async ({ signal }) => await publisherGetPersonalProjectListApi(filters.value, signal),
-    // placeholderData: keepPreviousData,
-    staleTime: 1000 * 60 * 5,
+    placeholderData: keepPreviousData,
+    staleTime: 1000 * 60 * 60,
   })
 }
 
@@ -32,18 +35,21 @@ export const usePublisherGetPersonalProjectById = (id: bigint) => {
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(id.toString()),
     queryFn: async ({ signal }) => await publisherGetPersonalProjectByIdApi(id, signal),
     retry: 3,
+    staleTime: 1000 * 60 * 60,
   })
 }
 
 export const usePublisherCreateDraftProjectInformations = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (payload: PartialGameType) =>
-      await publisherCreateDraftProjectInformationsApi(payload),
+    mutationFn: async (payload: PartialGameType) => {
+      if (payload) await publisherCreateDraftProjectInformationsApi(payload as GameType)
+    },
     onSuccess: (_data, variables: PartialGameType) => {
-      queryClient.invalidateQueries({
-        queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
-      })
+      if (variables.id)
+        queryClient.invalidateQueries({
+          queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
+        })
     },
   })
   return {

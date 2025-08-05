@@ -72,6 +72,17 @@
                 <drawer-description class="hidden"> </drawer-description>
                 <drawer-footer class="flex flex-col gap-y-2">
                   <router-link
+                    v-if="getCookie('userAccessRights')"
+                    :to="{ name: 'UserProfiles' }"
+                    @click="openDrawer = false"
+                    class="flex justify-between gap-x-2 items-center w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                  >
+                    <span class="text-center align-middle">
+                      {{ $t('auth.informations.user.profile.title') }}</span
+                    >
+                    <UserStar class="text-white" />
+                  </router-link>
+                  <router-link
                     @click="openDrawer = false"
                     class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'store-home' }"
@@ -90,6 +101,12 @@
                     >{{ $t('navigation.help') }}</router-link
                   >
                   <button
+                    @click="handleRedirectDownload"
+                    class="w-full text-lg text-start font-mono bg-blue-300/20 px-3 py-1 rounded-xs hover:bg-blue-400/30 transition-all duration-300 font-black cursor-pointer"
+                  >
+                    {{ $t('Download') }}
+                  </button>
+                  <button
                     v-if="getCookie('userAccessRights')"
                     @click="handleLogout"
                     class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
@@ -101,38 +118,6 @@
               </div>
             </drawer-content>
           </Drawer>
-          <div class="hidden laptop:block">
-            <div
-              v-if="!getCookie('userAccessRights')"
-              class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full"
-            >
-              <router-link to="/login" class="flex justify-center items-center mx-auto">{{
-                $t('auth.login')
-              }}</router-link>
-            </div>
-
-            <dropdown-menu v-else>
-              <dropdown-menu-trigger as-child>
-                <div class="flex items-center gap-x-2 cursor-pointer h-full font-black">
-                  {{ getCookie('userAccessRights') }}
-                </div>
-              </dropdown-menu-trigger>
-              <dropdown-menu-content align="end">
-                <dropdown-menu-label>
-                  <span class="flex w-full text-center font-extrabold">{{
-                    $t('auth.informations.user.profile.title')
-                  }}</span>
-                </dropdown-menu-label>
-                <dropdown-menu-separator />
-                <dropdown-menu-group>
-                  <dropdown-menu-item class="cursor-pointer" @click="handleLogout">
-                    <LogOut class="text-white" />
-                    {{ $t('auth.logout') }}
-                  </dropdown-menu-item>
-                </dropdown-menu-group>
-              </dropdown-menu-content>
-            </dropdown-menu>
-          </div>
         </div>
       </div>
       <!-- END OPTIONAL-->
@@ -161,7 +146,7 @@ import {
 } from '@/components/ui/drawer'
 import LanguagesOption from '@/components/common/LanguagesOption.vue'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
-import { LogOut } from 'lucide-vue-next'
+import { LogOut, UserStar } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import { ref } from 'vue'
@@ -173,4 +158,12 @@ const handleLogout = async () => {
   toastSuccessNotificationPopup('Logout successfully')
   await router.push({ name: 'Login' })
 }
+const handleRedirectDownload = () =>
+  window.open(
+    decodeURI(
+      atob(
+        'aHR0cHM6Ly9naXRodWIuY29tL0JyYXZvcy1UZWFtL1N0ZWFrQ2xpZW50L3JlbGVhc2VzL2Rvd25sb2FkL2xhc3Rlc3QvU3RlYWtDbGllbnRBcHBsaWNhdGlvbi56aXA',
+      ),
+    ),
+  )
 </script>

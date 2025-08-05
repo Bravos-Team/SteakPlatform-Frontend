@@ -29,6 +29,7 @@ export const usePublisherGameList = (filters: Ref<GAME_MANAGE_FILTERS_TYPE>) => 
   return useQuery({
     queryKey: GAME_MANAGE_QUERY_KEYS.LIST(filters),
     queryFn: async ({ signal }) => await getGamesList(filters.value, signal),
+    staleTime: 1000 * 60 * 60,
   })
 }
 
@@ -145,5 +146,6 @@ export const usePublisherGameDetails = (gameId: bigint) => {
   return useQuery({
     queryKey: GAME_MANAGE_QUERY_KEYS.GAME(gameId.toString()),
     queryFn: async ({ signal }) => await getGameDetails(gameId.toString(), signal),
+    staleTime: 1000 * 60 * 60,
   })
 }

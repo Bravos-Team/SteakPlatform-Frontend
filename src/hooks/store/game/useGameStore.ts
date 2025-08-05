@@ -17,6 +17,7 @@ export const useGameStoreInfiniteQueryList = (filters?: GAME_FILTERED_PARAMS) =>
     queryFn: async ({ signal }) => await useGetGameListStore({}, signal),
     initialPageParam: 9074997337759744,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? null,
+    staleTime: 1000 * 60 * 5,
   })
 
   return {
@@ -38,5 +39,6 @@ export const useGameStoreDetailsQuery = (gameId: bigint) => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,
+    staleTime: 1000 * 60 * 30,
   })
 }
