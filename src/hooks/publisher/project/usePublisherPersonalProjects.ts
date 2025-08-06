@@ -43,7 +43,7 @@ export const usePublisherCreateDraftProjectInformations = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: PartialGameType) => {
-      if (payload) await publisherCreateDraftProjectInformationsApi(payload as GameType)
+      if (payload) return await publisherCreateDraftProjectInformationsApi(payload as GameType)
     },
     onSuccess: (_data, variables: PartialGameType) => {
       if (variables.id)

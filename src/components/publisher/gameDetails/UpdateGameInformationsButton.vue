@@ -29,6 +29,7 @@
       </dialog-header>
       <!-- START <update-game-details-form /> -->
       <update-game-details-form
+        :is-update-game-opening="isUpdateGameOpening"
         :game-preview-details="gameInformations"
         @update:open-dialog-form="showDialog = $event"
       />
@@ -60,5 +61,6 @@ const hanldeOpenDialog = () => {
 }
 const props = defineProps<{
   gameInformations: GameType
+  isUpdateGameOpening?: boolean
 }>()
 </script>

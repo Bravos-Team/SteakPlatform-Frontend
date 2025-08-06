@@ -1,16 +1,22 @@
 <template>
   <edit-game-details-skeleton v-if="isGameByIdPending" />
   <div v-else class="px-2 py-4 flex flex-col gap-y-3 @container">
-    <div class="h-full flex flex-col laptop:flex-row gap-2">
-      <name-and-background-edit :game-details="gameById?.data" />
-      <update-game-informations :game-details="gameById?.data" />
+    <div v-if="gameById?.data" class="h-full flex flex-col laptop:flex-row gap-2">
+      <name-and-game-background-edit
+        :is-update-game-opening="true"
+        :game-details="gameById?.data.details"
+      />
+      <update-game-opening-details
+        :game-informations="{ ...gameById.data.details, price: gameById.data.game.price }"
+        :game-details="{ ...gameById.data.details, price: gameById.data.game.price }"
+      />
     </div>
     <!-- PREVIEW -->
     <div class="w-full @container">
       <card class="bg-[var(--bg-card-base)]/50 lg:px-[4rem] @container">
         <game-details-preview
-          v-if="!isGameByIdPending && gameById?.data"
-          :game-details="gameById.data"
+          v-if="gameById?.data"
+          :game-details="{ ...gameById.data.details, price: gameById.data.game.price }"
         />
         <skeleton-preview-form v-else />
       </card>
@@ -24,8 +30,8 @@ import EditGameDetailsSkeleton from '@/components/publisher/gameDetails/EditGame
 import { Card } from '@/components/ui/card'
 import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPreviewForm.vue'
 import GameDetailsPreview from '@/components/publisher/gameDetails/GameDetailsPreview.vue'
-import NameAndBackgroundEdit from '@/components/publisher/gameDetails/NameAndBackgroundEdit.vue'
-import UpdateGameInformations from '@/components/publisher/gameDetails/UpdateGameInformations.vue'
+import NameAndGameBackgroundEdit from '@/components/publisher/game/NameAndGameBackgroundEdit.vue'
+import UpdateGameOpeningDetails from '@/components/publisher/game/UpdateGameOpeningDetails.vue'
 import { useRoute } from 'vue-router'
 
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'

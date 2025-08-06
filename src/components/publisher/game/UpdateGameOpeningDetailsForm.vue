@@ -3,6 +3,7 @@
     <form @submit.prevent class="text-md flex flex-col gap-y-4 flex-wrap w-full">
       <!-- START SELECTED TOP BAR ${data} -->
       <selected-top-bar
+        :is-hide-internet-switching="true"
         v-model:update-at="updateAtStatus"
         v-model:get-internet-connected-required-data="internetRequiredData"
       />
@@ -27,10 +28,6 @@
       <!-- START DEVELOPER TEAM INPUTS ${data} -->
       <your-developer-teams v-model:develop-teams="developTeamsData" />
       <!-- END DEVELOPER TEAM INPUTS -->
-
-      <!-- RELEASE DATE & ESTIMATED MONTH ${data}-->
-      <release-estimated-date v-model:estimated-release-date="estimatedReleaseDateData" />
-      <!-- END RELEASE DATE & ESTIMATED MONTH ${data}-->
 
       <!-- START DESCRIPTIONS BAR ${data} -->
       <descriptions-bar
@@ -119,142 +116,31 @@
         <!-- START ACTIONS -->
         <div class="flex flex-row-reverse items-center">
           <div class="flex flex-row-reverse gap-x-2 flex-wrap gap-y-2 justify-end items-center">
-            <!--  IS NOT UPLOAD PROJECT YET -->
+            <!-- SAVE UPDATE -->
             <button
-              v-if="gamePreviewDetails.buildInfo && gamePreviewDetails.status === GAME_STATUS.DRAFT"
-              :disabled="isVerifyPersonalProjectPending"
-              :class="{ '!cursor-not-allowed': isVerifyPersonalProjectPending }"
-              @click="mutatePostVerifyProjectRequest(gamePreviewDetails.id)"
-              class="px-3 font-black cursor-pointer hover:bg-green-400/70 duration-300 transition-colors py-2 border bg-green-500/50 rounded-sm"
-            >
-              <span v-if="isVerifyPersonalProjectPending">
-                {{ $t('title.pages.game_details.form.verify_pending') }}
-              </span>
-              <span v-else> {{ $t('title.pages.game_details.form.verify_request') }}</span>
-            </button>
-            <!-- END IS NOT UPLOAD PROJECT YET -->
-
-            <!-- IS PENDING PREVIEW -->
-            <tooltip
-              v-else-if="
-                gamePreviewDetails.buildInfo &&
-                gamePreviewDetails.status === GAME_STATUS.PENDING_REVIEW
+              v-if="
+                isGetPresignedImageUrlPending ||
+                isGetPresignedImageUrlsPending ||
+                isPostIntoPresignedUrlPending ||
+                isPostIntoPresignedUrlsPending ||
+                isDeleteImagesPending ||
+                isUpdateGameOpeningPending ||
+                isUpdateGamePricePending
               "
+              class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-yellow-400/30 rounded-sm"
             >
-              <tooltip-trigger as-child>
-                <button
-                  disabled
-                  @click="mutatePostVerifyProjectRequest(gamePreviewDetails.id)"
-                  class="px-3 font-black cursor-not-allowed py-2 border bg-green-500/50 rounded-sm"
-                >
-                  <span>
-                    {{ $t('title.pages.game_details.form.pending_review') }}
-                  </span>
-                </button>
-              </tooltip-trigger>
-              <tooltip-content>
-                {{ $t('title.pages.game_details.form.pending_message') }}
-              </tooltip-content>
-            </tooltip>
-            <!-- END IS PENDING PREVIEW-->
+              {{ $t('title.pages.game_details.form.update_game_opening') }}
 
-            <!-- MUST DOWNLOAD CLIENT APP -->
-            <Dialog>
-              <dialog-trigger>
-                <button
-                  v-if="gamePreviewDetails.buildInfo === null"
-                  class="px-3 font-black cursor-pointer hover:bg-green-400/70 duration-300 transition-colors py-2 border bg-green-500/50 rounded-sm"
-                >
-                  <span v-if="isVerifyPersonalProjectPending">
-                    {{ $t('title.pages.game_details.form.verify_pending') }}
-                  </span>
-                  <span v-else> {{ $t('title.pages.game_details.form.verify_request') }}</span>
-                </button>
-              </dialog-trigger>
-              <dialog-content class="w-full">
-                <dialog-header class="">
-                  <dialog-title
-                    class="font-black tablet:text-2xl text-xl w-full text-center text-wrap"
-                  >
-                    {{ $t('title.pages.game_details.form.verify_popup.title') }}
-                  </dialog-title>
-                  <dialog-description class="flex justify-center">
-                    <button
-                      @click="handleDownloadClientApp"
-                      class="px-6 py-3 flex items-center text-wrap flex-wrap justify-center border rounded-sm border-white/20 hover:bg-white/20 bg-white/10 cursor-pointer text-white font-black"
-                    >
-                      {{ $t('title.pages.game_details.form.verify_popup.description') }}
-                      <ArrowDownToLine />
-                    </button>
-                  </dialog-description>
-                </dialog-header>
-              </dialog-content>
-            </Dialog>
-            <!-- END MUST DOWNLOAD CLIENT APP -->
-
-            <!-- SAVE AS DRAFT -->
-            <div v-if="gamePreviewDetails.status === GAME_STATUS.DRAFT">
-              <button
-                v-if="
-                  isGetPresignedImageUrlPending ||
-                  isGetPresignedImageUrlsPending ||
-                  isPostIntoPresignedUrlPending ||
-                  isPostIntoPresignedUrlsPending ||
-                  isCreateDraftProjectInformationsPending ||
-                  isDeleteImagesPending
-                "
-                class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
-              >
-                {{ $t('title.pages.game_details.form.save_as_draft') }}
-
-                <LoaderCircle class="animate-spin size-6" />
-              </button>
-              <button
-                v-else
-                @click="handleSaveAsDraft"
-                class="px-3 font-black cursor-pointer hover:bg-white/30 duration-300 transition-colors py-2 border bg-white/10 rounded-sm"
-              >
-                {{ $t('title.pages.game_details.form.save_as_draft') }}
-              </button>
-            </div>
-            <!-- END SAVE AS DRAFT -->
-
-            <!-- RESET FORM -->
-            <button
-              v-if="gamePreviewDetails.status === GAME_STATUS.DRAFT"
-              class="px-2 font-black cursor-pointer hover:bg-sky-400/80 duration-300 transition-colors py-2 border bg-sky-400/60 rounded-sm"
-              @click="handleResetForm"
-            >
-              {{ $t('title.pages.game_details.form.reset_form') }}
+              <LoaderCircle class="animate-spin size-6" />
             </button>
-            <!-- END RESET FORM -->
-
-            <!-- RESUBMIT  -->
-            <div v-if="gamePreviewDetails.status === GAME_STATUS.REJECTED">
-              <button
-                v-if="
-                  isGetPresignedImageUrlPending ||
-                  isGetPresignedImageUrlsPending ||
-                  isPostIntoPresignedUrlPending ||
-                  isPostIntoPresignedUrlsPending ||
-                  isCreateDraftProjectInformationsPending ||
-                  isDeleteImagesPending ||
-                  isUpdateProjectDetailsPending ||
-                  isResubmitProjectPending
-                "
-                class="px-3 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm"
-              >
-                {{ $t('title.pages.game_details.actions.resubmit') }}
-              </button>
-              <button
-                v-else
-                @click="handleResubmitProject"
-                class="px-3 font-black cursor-pointer hover:bg-green-500/90 duration-300 transition-colors py-2 border bg-green-500/40 rounded-sm"
-              >
-                {{ $t('title.pages.game_details.actions.resubmit') }}
-              </button>
-            </div>
-            <!-- END RESUBMIT -->
+            <button
+              v-else
+              @click="handleUpdateGameDetails"
+              class="px-3 font-black cursor-pointer hover:bg-yellow-400/90 duration-300 transition-colors py-2 border bg-yellow-400/70 rounded-sm"
+            >
+              {{ $t('title.pages.game_details.form.update_game_opening') }}
+            </button>
+            <!-- END UPDATE -->
 
             <!-- CANCEL -->
             <button
@@ -272,9 +158,8 @@
             isGetPresignedImageUrlsPending ||
             isPostIntoPresignedUrlPending ||
             isPostIntoPresignedUrlsPending ||
-            isCreateDraftProjectInformationsPending ||
-            isUpdateProjectDetailsPending ||
-            isResubmitProjectPending
+            isUpdateGameOpeningPending ||
+            isUpdateGamePricePending
           "
           :model-value="progressDisplay"
           class="transition-all duration-500 w-full"
@@ -287,18 +172,8 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import YourDeveloperTeams from '@/components/publisher/gameDetails/formComponents/developerTeam/YourDeveloperTeams.vue'
 import RegionTagsPicker from '@/components/publisher/gameDetails/formComponents/region/RegionTagsPicker.vue'
-import ReleaseEstimatedDate from '@/components/publisher/gameDetails/formComponents/ReleaseEstimatedDate.vue'
 import ConsiderTermsOfService from '@/components/publisher/gameDetails/formComponents/ConsiderTermsOfService.vue'
 import CoverImageUpdate from '@/components/publisher/gameDetails/formComponents/CoverImageUpdate.vue'
 import LanguagesSupportedPicker from '@/components/publisher/gameDetails/formComponents/region/LanguagesSupportedPicker.vue'
@@ -309,17 +184,10 @@ import DescriptionsBar from '@/components/publisher/gameDetails/formComponents/d
 import MediaBar from '@/components/publisher/gameDetails/formComponents/MediaBar.vue'
 import { getObjectDiff } from '@/utils/compare/comparationObject'
 import {
-  getDefaultGameValue,
   getDefaultValueRequirements,
   type GameType,
 } from '@/types/game/gameDetails/GameDetailsType'
 import { computed, ref, watch } from 'vue'
-import {
-  usePublisherCreateDraftProjectInformations,
-  usePublisherPostVerifyPersonalProject,
-  usePublisherResubmitProject,
-  usePublisherUpdateProjectDetails,
-} from '@/hooks/publisher/project/usePublisherPersonalProjects'
 import { useSystemRequirementsStore } from '@/stores/SystemRequirements/useSystemRequirements'
 import {
   toastErrorNotificationPopup,
@@ -339,26 +207,17 @@ import { MediaType } from '@/types/image/MediaAndImage'
 import { PostIntoPresignedURLsType, PresignedUrlResponse } from '@/types/cdn/CdnTypes'
 import TooltipProvider from '@/components/ui/tooltip/TooltipProvider.vue'
 import { Progress } from '@/components/ui/progress'
-import { ArrowDownToLine, LoaderCircle } from 'lucide-vue-next'
+import { LoaderCircle } from 'lucide-vue-next'
 import { useDebounceFn } from '@vueuse/core'
+import {
+  mutatePublisherUpdateGameDetails,
+  mutatePublisherUpdateGamePrice,
+} from '@/hooks/publisher/game/usePublisherGameManage'
+
 const useSystem = useSystemRequirementsStore()
 const useComporessionImage = useImageCompressor()
 const useImageStore = useImageStored()
 
-const GAME_STATUS = {
-  PENDING_REVIEW: 'PENDING_REVIEW',
-  REJECTED: 'REJECTED',
-  ACCEPTED: 'ACCEPTED',
-  PENDING: 'PENDING_REVIEW',
-  DRAFT: 'DRAFT',
-  VERIFY: 'VERIFY',
-}
-
-const handleDownloadClientApp = async () => {
-  window.open(
-    'https://github.com/Bravos-Team/SteakPublisherClient/releases/download/lastest/SteakDev.zip',
-  )
-}
 const { mutateAsync: mutateGetPresignedImageUrl, isPending: isGetPresignedImageUrlPending } =
   useGetPresignedImageUrl()
 const { mutateAsync: mutateGetPresignedImageUrls, isPending: isGetPresignedImageUrlsPending } =
@@ -367,17 +226,12 @@ const { mutateAsync: mutatePostIntoPresignedUrl, isPending: isPostIntoPresignedU
   usePostIntoPresignedUrl()
 const { mutateAsync: mutatePostIntoPresignedUrls, isPending: isPostIntoPresignedUrlsPending } =
   usePostIntoPresignedUrls()
-const {
-  mutateAsync: mutateAsyncCreateDraftProject,
-  isPending: isCreateDraftProjectInformationsPending,
-} = usePublisherCreateDraftProjectInformations()
-const { isPending: isVerifyPersonalProjectPending, mutateAsync: mutatePostVerifyProjectRequest } =
-  usePublisherPostVerifyPersonalProject()
+
 const { isPending: isDeleteImagesPending, mutateAsync: mutateDeleteImages } = useDeleteImages()
-const { mutateAsync: mutateResubmitProject, isPending: isResubmitProjectPending } =
-  usePublisherResubmitProject()
-const { mutateAsync: mutateAsyncUpdateProjectDetails, isPending: isUpdateProjectDetailsPending } =
-  usePublisherUpdateProjectDetails()
+const { mutateAsync: mutateUpdateGameOpeningDetails, isPending: isUpdateGameOpeningPending } =
+  mutatePublisherUpdateGameDetails()
+const { mutateAsync: mutateUpdateGamePrice, isPending: isUpdateGamePricePending } =
+  mutatePublisherUpdateGamePrice()
 
 const props = defineProps<{
   gamePreviewDetails: GameType
@@ -388,12 +242,6 @@ const isAssignedMediaFiles = ref<boolean>(false)
 const isAddSystemRequirements = ref<boolean>(false)
 
 const emit = defineEmits(['update:openDialogForm'])
-const handleResetForm = () => {
-  gameToMutate.value = getDefaultGameValue()
-  useSystem.resetSystemRequirements()
-  thumbnailUrlData.value = 'https://ccdn.steak.io.vn/assets-desert.png'
-  longDescriptionsData.value = ''
-}
 
 const media_deleted_tracking = ref<{ url: string; type: string }[] | undefined>([])
 
@@ -436,20 +284,12 @@ const updateAtStatus = computed({
     }
   },
 })
+
 const developTeamsData = computed({
   get: () => gameToMutate.value?.developerTeams ?? [],
   set: (val) => {
     if (gameToMutate.value) {
       gameToMutate.value.developerTeams = val
-    }
-  },
-})
-
-const estimatedReleaseDateData = computed({
-  get: () => gameToMutate.value?.estimatedReleaseDate ?? '',
-  set: (val) => {
-    if (gameToMutate.value) {
-      gameToMutate.value.estimatedReleaseDate = val
     }
   },
 })
@@ -462,6 +302,7 @@ const shortDescriptionsData = computed({
     }
   },
 })
+
 const longDescriptionsData = computed({
   get: () => gameToMutate.value?.longDescription ?? '',
   set: (val) => {
@@ -582,7 +423,7 @@ const handleResolveMediaFiles = async () => {
   }
 }
 
-const handleSaveAsDraft = useDebounceFn(async () => {
+const handleUpdateGameDetails = useDebounceFn(async () => {
   // <-- handle upload cover image
   completedApis.value = 0
   progressDisplay.value = 0
@@ -603,14 +444,27 @@ const handleSaveAsDraft = useDebounceFn(async () => {
   } else {
     Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
     try {
-      const response = await mutateAsyncCreateDraftProject(diff)
+      delete diff.id
+      const response = await mutateUpdateGameOpeningDetails({
+        ...diff,
+        gameId: props.gamePreviewDetails.id,
+      })
+      if (diff.price) {
+        const priceResponse = await mutateUpdateGamePrice({
+          gameId: props.gamePreviewDetails.id,
+          price: diff.price,
+        })
+        if (priceResponse.status !== 200) {
+          throw new Error('Failed to update game price')
+        }
+      }
       completedApis.value += 1
       if (response.status === 200) {
         useImageStore.media_files_stored = []
         useSystem.resetSystemRequirements()
         toastSuccessNotificationPopup(
-          'Draft saved successfully',
-          'Your game details have been saved as a draft.',
+          'Updated Game successfully',
+          'Your game details have been updated successfully.',
         )
       } else {
         if (media_deleted_tracking.value && media_deleted_tracking.value.length > 0)
@@ -619,7 +473,7 @@ const handleSaveAsDraft = useDebounceFn(async () => {
               .map((media) => media.url)
               .filter((url) => url !== undefined),
           )
-        toastErrorNotificationPopup('Failed to save as draft', 'Please try again later.')
+        toastErrorNotificationPopup('Failed to update game', 'Please try again later.')
       }
     } catch (error: any) {
       useImageStore.media_files_stored = []
@@ -630,7 +484,7 @@ const handleSaveAsDraft = useDebounceFn(async () => {
         )
 
       toastErrorNotificationPopup(
-        'Failed to save as draft. Please try again later.',
+        'Failed to update game. Please try again later.',
         `Error: ${error}`,
       )
     } finally {
@@ -638,51 +492,7 @@ const handleSaveAsDraft = useDebounceFn(async () => {
       progressDisplay.value = 0
     }
   }
-}, 500)
-
-const submitContentMessage = ref<string>('')
-
-const handleResubmitProject = useDebounceFn(async () => {
-  await handleResolveThumbnailImages()
-  await handleResolveMediaFiles()
-
-  const diff = getObjectDiff(gameToMutate.value, props.gamePreviewDetails)
-  if (!diff) {
-    toastNotificationPopup('No changes detected', 'Please make some changes before resubmitting.')
-    return
-  } else {
-    Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
-  }
-
-  try {
-    const response = await mutateResubmitProject({
-      submissionId: props.gamePreviewDetails.id,
-      attachments: diff.media?.map((media) => media.url) || [],
-      content: submitContentMessage.value,
-    })
-
-    setTimeout(() => {
-      if (completedApis.value < totalApis) completedApis.value += 1
-      else {
-        completedApis.value = totalApis
-      }
-    }, 500)
-
-    if (response.status === 200)
-      toastSuccessNotificationPopup(
-        'Project resubmitted successfully',
-        'Your project has been resubmitted for review.',
-      )
-  } catch (err: any) {
-    toastErrorNotificationPopup(
-      'Failed to resubmit project',
-      `Please try again later. Error: ${err.message}`,
-    )
-  } finally {
-    completedApis.value = 0
-    progressDisplay.value = 0
-  }
-}, 500)
+}, 200)
 
 watch(progressValue, (newVal) => {
   if (animationInterval) clearInterval(animationInterval)

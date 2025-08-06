@@ -305,9 +305,6 @@ import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card'
 import { ChevronRight, ChevronLeft } from 'lucide-vue-next'
 import DOMPurify from 'dompurify'
 import { GameType } from '@/types/game/gameDetails/GameDetailsType'
-
-// import { Skeleton } from '@/components/ui/skeleton'
-
 const props = defineProps<{
   gameDetails: GameType | null
 }>()

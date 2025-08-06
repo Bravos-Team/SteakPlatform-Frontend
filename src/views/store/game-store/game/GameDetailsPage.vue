@@ -26,7 +26,7 @@
 
     <!-- MAIN CONTENT -->
     <div class="grid grid-cols-12 justify-between gap-x-4 w-full">
-      <div class="flex flex-col gap-y-[0px] relative col-span-12 laptop:col-span-9 w-full">
+      <div class="flex flex-col gap-y-[10px] relative col-span-12 laptop:col-span-9 w-full">
         <!-- LEFT CONTENT -->
         <div
           :class="{ '!min-h-full !max-h-full overflow-visible': showMore }"
@@ -48,7 +48,7 @@
 
           <!-- RELATED GAMES BY DEVELOPER -->
           <relate-games-by-developer
-            :develop-teams="gameDetailData.data?.details.developersTeams"
+            :develop-teams="gameDetailData.data?.details.developerTeams"
           ></relate-games-by-developer>
           <!-- END RELATED GAMES BY DEVELOPER -->
 
@@ -63,7 +63,7 @@
           <div class="w-full bg-[#101014] h-[26px] flex justify-start relative">
             <div
               v-if="!showMore"
-              class="h-[100px] w-full absolute bottom-1 bg-gradient-to-t from-[#101014] to-black/0 pointer-events-none z-[4]"
+              class="h-[100px] w-full absolute -bottom-3 bg-gradient-to-t from-[#101014] to-black/0 pointer-events-none z-[4]"
             ></div>
             <button
               @click="showMore = !showMore"
@@ -284,7 +284,6 @@ import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPrev
 
 const showMore = ref(false)
 const route = useRoute()
-const game = ref({})
 const { data: gameDetailData, isFetching: isGameDetailsFetching } = useGameStoreDetailsQuery(
   route.params.id,
 )

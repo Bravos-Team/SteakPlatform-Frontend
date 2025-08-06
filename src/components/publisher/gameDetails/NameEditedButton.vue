@@ -55,7 +55,7 @@
             </form>
             <dialog-footer>
               <Button
-                v-if="isUpdateProjectGamePending"
+                v-if="isUpdateProjectGamePending || isUpdateProjectGameOpeningPending"
                 variant="default"
                 class="min-w-32 cursor-not-allowed"
               >
@@ -118,6 +118,12 @@ import {
 } from '@/composables/toast/toastNotificationPopup'
 import { cn } from '@/lib/utils'
 import i18n from '@/i18n'
+import { mutatePublisherUpdateGameDetails } from '@/hooks/publisher/game/usePublisherGameManage'
+
+const {
+  isPending: isUpdateProjectGameOpeningPending,
+  mutateAsync: mutateAsyncUpdateProjectGameOpening,
+} = mutatePublisherUpdateGameDetails()
 const { isPending: isUpdateProjectGamePending, mutateAsync: mutateAsyncUpdateProjectGame } =
   usePublisherUpdateProjectName()
 const showDialog = ref(false)
@@ -133,13 +139,22 @@ type updateType = z.infer<typeof updateNameSchema>
 const props = defineProps<{
   gameName: string
   gameId: bigint
+  isUpdateGameOpening?: boolean
 }>()
 
 const isGameNameValid = ref<boolean>(true)
 
 const onSubmitUpdateName = async (name: updateType) => {
   try {
-    const response = await mutateAsyncUpdateProjectGame({ id: props.gameId, name: name.name })
+    let response = null
+    if (props.isUpdateGameOpening) {
+      response = await mutateAsyncUpdateProjectGameOpening({
+        gameId: props.gameId,
+        title: name.name,
+      })
+    } else {
+      response = await mutateAsyncUpdateProjectGame({ id: props.gameId, name: name.name })
+    }
     if (response.status === 200) {
       showDialog.value = false
       toastSuccessNotificationPopup(

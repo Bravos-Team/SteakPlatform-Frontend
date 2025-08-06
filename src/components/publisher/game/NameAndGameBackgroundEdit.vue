@@ -28,10 +28,14 @@
     <div class="w-full bg-white-50 z-10 px-3 justify-end flex backdrop:blur-[8px]">
       <div class="flex gap-x-2 justify-center items-center flex-wrap">
         <span
-          class="gap-y-10 h-full xl:text-2xl backdrop-blur-sm gap-x-3 font-bold px-3 py-2 bg-gray-600/10 rounded-sm text-wrap flex items-center"
+          class="gap-y-10 text-lg h-full xl:text-2xl backdrop-blur-sm gap-x-3 font-bold px-3 py-2 bg-gray-600/40 rounded-sm text-wrap flex items-center"
         >
-          <span> {{ gameDetails.name }}</span>
-          <name-edited-button :game-name="gameDetails.name" :game-id="gameDetails.id" />
+          <span> {{ gameDetails.title }}</span>
+          <name-edited-button
+            :is-update-game-opening="isUpdateGameOpening"
+            :game-name="gameDetails.title"
+            :game-id="gameDetails.id"
+          />
         </span>
       </div>
     </div>
@@ -60,7 +64,7 @@
       <label
         v-else
         for="file-upload"
-        class="flex gap-x-2 items-center cursor-pointer rounded-sm bg-black/10 backdrop-blur-[8px] hover:bg-black/30 transition-colors duration-300 px-5 py-2"
+        class="flex gap-x-2 items-center cursor-pointer rounded-sm bg-black/30 backdrop-blur-[8px] hover:bg-black/30 transition-colors duration-300 px-5 py-2"
       >
         <Download class="w-5 h-5" />
         <span class="font-medium text-md">
@@ -88,29 +92,40 @@ import { Card } from '@/components/ui/card'
 import { Download, LoaderCircle } from 'lucide-vue-next'
 
 import NameEditedButton from '@/components/publisher/gameDetails/NameEditedButton.vue'
-import { GameType } from '@/types/game/gameDetails/GameDetailsType'
+import { GAME_OPENING_DETAILS_TYPE } from '@/types/game/gameDetails/GameDetailsType'
 import {
   useGetPresignedImageUrl,
   usePostIntoPresignedUrl,
+  useDeleteImage,
 } from '@/hooks/common/cdn/useCDNAssetsManager'
-import { usePublisherCreateDraftProjectInformations } from '@/hooks/publisher/project/usePublisherPersonalProjects'
+import { mutatePublisherUpdateGameDetails } from '@/hooks/publisher/game/usePublisherGameManage'
 import { useImageCompressor } from '@/composables/image/useImageCompression'
-import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
+import { ref } from 'vue'
 
+const {
+  mutateAsync: mutateUpdateDraftProjectInformations,
+  isPending: isUpdateDraftProjectInformations,
+} = mutatePublisherUpdateGameDetails()
 const imageComporessorHandler = useImageCompressor()
 const { isPending: isGetPresignedImageURLPending, mutateAsync: mutateAsyncGetPresignedURL } =
   useGetPresignedImageUrl()
 const { isPending: isPostIntoPresignedURLPending, mutateAsync: mutateAsyncIntoPresignedURL } =
   usePostIntoPresignedUrl()
-const {
-  isPending: isUpdateDraftProjectInformations,
-  mutateAsync: mutateUpdateDraftProjectInformations,
-} = usePublisherCreateDraftProjectInformations()
+const { mutateAsync: mutateDeleteImage } = useDeleteImage()
 
 const props = defineProps<{
-  gameDetails: GameType
+  gameDetails: GAME_OPENING_DETAILS_TYPE
+  isUpdateGameOpening?: boolean
 }>()
 
+const dataUpdated = ref({
+  gameId: 0n,
+  thumbnail: '',
+})
 const handleFileUpload = async (event: Event) => {
   const files = (event.target as HTMLInputElement).files
   if (files && files.length) {
@@ -132,14 +147,21 @@ const handleFileUpload = async (event: Event) => {
             file: image_compressed,
           })
 
-          const dataUpdated = {
-            id: props.gameDetails.id,
+          dataUpdated.value = {
+            gameId: props.gameDetails.id,
             thumbnail: 'https://ccdn.steak.io.vn/' + response.cdnFileName,
           }
 
-          await mutateUpdateDraftProjectInformations(dataUpdated)
+          const gameUpdateResposne = await mutateUpdateDraftProjectInformations(dataUpdated.value)
+          if (gameUpdateResposne.status === 200) {
+            toastSuccessNotificationPopup(
+              'Image uploaded successfully',
+              'Your game cover image has been updated.',
+            )
+          }
         }
       } catch (error: any) {
+        await mutateDeleteImage(dataUpdated.value.thumbnail)
         toastErrorNotificationPopup(
           'Error uploading image',
           error.message || 'An unexpected error occurred.',

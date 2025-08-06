@@ -310,6 +310,7 @@ export default {
             description: 'Download our project upload software',
           },
           save_as_draft: 'Save as Draft',
+          update_game_opening: 'Update Game Opening',
           reset_form: 'Reset Form',
           cancel: 'Cancel',
           system_requirements: {
