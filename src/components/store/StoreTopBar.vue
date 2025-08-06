@@ -202,6 +202,11 @@
                         >{{ $t('navigation.help') }}</router-link
                       >
                       <button
+                        :class="{
+                          '!cursor-not-allowed opacity-50': !invalidDevice,
+                          'cursor-pointer': invalidDevice,
+                        }"
+                        :disabled="!invalidDevice"
                         @click="handleRedirectDownload"
                         class="w-full text-lg text-start font-mono bg-blue-300/20 px-3 py-1 rounded-xs hover:bg-blue-400/30 transition-all duration-300 font-black cursor-pointer"
                       >
@@ -268,8 +273,13 @@
                 </dropdown-menu>
               </div>
               <button
+                :class="{
+                  '!cursor-not-allowed opacity-50': !invalidDevice,
+                  'cursor-pointer': invalidDevice,
+                }"
+                :disabled="!invalidDevice"
                 @click="handleRedirectDownload"
-                class="px-10 hidden laptop:block rounded-sm font-black hover:bg-blue-500/80 cursor-pointer py-2 bg-blue-500"
+                class="px-10 hidden laptop:block rounded-sm font-black hover:bg-blue-500/80 py-2 bg-blue-500"
               >
                 Download
               </button>
@@ -306,7 +316,8 @@ import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 import { LogOut, UserStar } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
-import { ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { generateDeviceInfo } from '@/utils/fingerprint'
 const router = useRouter()
 const handleLogout = async () => {
   removeCookie('userAccessRights')
@@ -321,12 +332,27 @@ const props = defineProps({
 })
 
 const openDrawer = ref(false)
-const handleRedirectDownload = () =>
-  window.open(
-    decodeURI(
-      atob(
-        'aHR0cHM6Ly9naXRodWIuY29tL0JyYXZvcy1UZWFtL1N0ZWFrQ2xpZW50L3JlbGVhc2VzL2Rvd25sb2FkL2xhc3Rlc3QvU3RlYWtDbGllbnRBcHBsaWNhdGlvbi56aXA',
+
+const invalidDevice = computed(
+  () => navigator.platform.includes('Windows') || navigator.platform.includes('Linux'),
+)
+const handleRedirectDownload = async () => {
+  if (navigator.platform.includes('Windows'))
+    window.open(
+      decodeURI(
+        atob(
+          'aHR0cHM6Ly9naXRodWIuY29tL0JyYXZvcy1UZWFtL1N0ZWFrQ2xpZW50L3JlbGVhc2VzL2Rvd25sb2FkL2xhc3Rlc3QvU3RlYWtTZXR1cC5leGU=',
+        ),
       ),
-    ),
-  )
+    )
+  else if (navigator.platform.includes('Linux'))
+    window.open(
+      decodeURI(
+        atob(
+          'aHR0cHM6Ly9naXRodWIuY29tL0JyYXZvcy1UZWFtL1N0ZWFrQ2xpZW50L3JlbGVhc2VzL2Rvd25sb2FkL2xhc3Rlc3Qvc3RlYWtfMC4xLjBfYW1kNjQuZGVi',
+        ),
+      ),
+    )
+  openDrawer.value = false
+}
 </script>

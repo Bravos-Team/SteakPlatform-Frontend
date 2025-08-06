@@ -41,11 +41,11 @@
 
           <button
             :class="{
-              'cursor-progress animate-spin text-white/90 ': isRefetchingPersonalProjects,
+              'cursor-progress  text-white/90 ': isRefetchingPersonalProjects,
               'cursor-pointer': !isRefetchingPersonalProjects,
             }"
             :disabled="isRefetchingPersonalProjects"
-            class="w-20 rounded-sm border-1 h-[2rem]"
+            class="w-20 rounded-sm border-1 h-[2rem] bg-white/10 hover:bg-white/30 transition-colors duration-300"
             @click="handleRefetchingPersonalProjects()"
           >
             Search

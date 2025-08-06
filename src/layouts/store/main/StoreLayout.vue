@@ -4,8 +4,8 @@
       <store-top-bar :isHiddenWhenMobile="true" />
     </drawer>
     <mobile-top-bar />
-    <div class="desktop-xl:px-[14rem] desktop:px-[6rem] laptop:px-[3rem] tablet:px-[2rem]">
-      <div class="@container flex w-full h-full flex-col">
+    <div class="desktop-xl:px-[14rem] desktop:px-[6rem] laptop:px-[3rem]">
+      <div class="@container flex w-full h-full flex-col py-10">
         <router-view></router-view>
       </div>
     </div>

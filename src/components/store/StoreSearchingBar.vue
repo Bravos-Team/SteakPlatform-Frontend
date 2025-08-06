@@ -1,7 +1,7 @@
 <template>
   <div class="sticky z-10 -top-[2px] h-full w-full">
     <div
-      class="flex flex-col laptop:flex-row bg-[#101014] py-3 gap-y-2 items-center justify-between w-full h-full px-6"
+      class="flex flex-col laptop:flex-row bg-[#101014] py-3 gap-y-2 items-center justify-between min-w-full h-full px-6"
     >
       <!-- SEARCH BAR -->
       <div class="flex justify-center items-center w-full px-4">

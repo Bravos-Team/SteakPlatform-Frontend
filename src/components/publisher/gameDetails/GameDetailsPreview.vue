@@ -39,12 +39,12 @@
     <!-- START PREVIEW MAIN CONTENT -->
     <div class="gap-y-6 !w-full grid tablet:grid-cols-12 px-6 gap-x-3 laptop:px-0">
       <!-- START LEFT CONTENT -->
-      <div class="flex flex-col gap-y-3 min-w-full col-span-9">
+      <div class="flex flex-col gap-y-3 min-w-full col-span-12 desktop:col-span-9">
         <!--- PREVIEW MEDIA BAR -->
         <div class="flex items-center flex-col gap-y-8 h-full w-full">
           <!-- START MEDIA -->
           <div
-            class="w-full overflow-hidden bg-white/10 flex items-center justify-center rounded-sm"
+            class="w-full min-h-[35rem] overflow-hidden bg-white/10 flex items-center justify-center rounded-sm"
           >
             <img
               v-if="gameDetails?.thumbnail"
@@ -53,7 +53,9 @@
               class="object-cover w-full"
             />
 
-            <span v-else class="text-center font-bold text-20 laptop:text-[100px] text-white/30"
+            <span
+              v-else
+              class="text-center font-bold text-7xl text-20 laptop:text-[100px] text-white/30"
               >MEDIA</span
             >
           </div>
@@ -172,7 +174,7 @@
       <!-- END LEFT CONTENT -->
 
       <!-- START RIGHT CONTENT -->
-      <div class="sticky top-0 flex-col gap-y-[15px] col-span-3">
+      <div class="sticky top-0 flex-col gap-y-[15px] col-span-12 desktop:col-span-3">
         <!-- START GAME THUMBNAIL -->
         <div class="justify-center items-center flex flex-col">
           <div v-if="gameDetails?.thumbnail" class="flex justify-center items-center w-full">
