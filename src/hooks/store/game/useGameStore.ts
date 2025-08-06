@@ -39,6 +39,6 @@ export const useGameStoreDetailsQuery = (gameId: bigint) => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,
-    staleTime: 1000 * 60 * 30,
+    staleTime: 1000 * 60 * 5,
   })
 }

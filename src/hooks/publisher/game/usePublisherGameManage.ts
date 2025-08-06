@@ -24,6 +24,7 @@ import {
   GAME_MANAGE_QUERY_KEYS,
   GAME_VERSIONS_QUERY_KEYS,
 } from '@/hooks/constants/publisher/game/gameManage-key'
+import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
 
 export const usePublisherGameList = (filters: Ref<GAME_MANAGE_FILTERS_TYPE>) => {
   return useQuery({
@@ -36,12 +37,16 @@ export const usePublisherGameList = (filters: Ref<GAME_MANAGE_FILTERS_TYPE>) => 
 export const mutatePublisherUpdateGameDetails = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (payload: PartialGameType) => await publisherUpdateGameDetails(payload),
-    onSuccess: (_data, variables: PartialGameType) => {
-      if (variables.id)
-        queryClient.invalidateQueries({
-          queryKey: GAME_MANAGE_QUERY_KEYS.GAME(variables?.id.toString()),
+    mutationFn: async (payload: any) => await publisherUpdateGameDetails(payload),
+    onSuccess: async (_data, variables: any) => {
+      if (variables.gameId) {
+        await queryClient.invalidateQueries({
+          queryKey: GAME_MANAGE_QUERY_KEYS.GAME(variables?.gameId.toString()),
         })
+        await queryClient.invalidateQueries({
+          queryKey: GAME_STORE_LIST_QUERY_KEYS.DETAILS(variables?.gameId.toString()),
+        })
+      }
     },
   })
   return {

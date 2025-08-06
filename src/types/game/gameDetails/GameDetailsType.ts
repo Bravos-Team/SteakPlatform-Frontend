@@ -159,3 +159,33 @@ export type GameResubmitRequestType = {
   content: string
   attachments: string[]
 }
+
+export type GAME_OPENING_TYPE = {
+  id: bigint
+  name: string
+  price: number
+  status: string
+  releaseDate: number
+  genres: string[]
+  tags: string[]
+  createdAt: number
+  updatedAt: number
+}
+export type GAME_OPENING_DETAILS_TYPE = {
+  id: bigint
+  title: string
+  developerTeams: string[]
+  regions: string[]
+  thumbnail: string
+  media: { type: string; url: string }[]
+  shortDescription: string
+  longDescription: string
+  platforms: string[]
+  systemRequirements: MinimumAndrecommendedType
+  languageSupported: string[]
+  updatedAt: bigint
+}
+export type GAME_OPENING_DATA_TYPE = {
+  game: GAME_OPENING_TYPE
+  details: GAME_OPENING_DETAILS_TYPE
+}

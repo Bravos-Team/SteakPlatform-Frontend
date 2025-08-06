@@ -255,6 +255,7 @@ export default {
           price_preview: 'Xem trước giá',
           verify_request: 'Gửi yêu cầu xác minh',
           save_as_draft: 'Lưu dưới dạng bản nháp',
+          update_game_opening: 'Cập nhật thông tin Game',
           verify_pending: 'Đang gửi yêu cầu...',
           reset_form: 'Đặt lại biểu mẫu',
           pending_review: 'Yêu cầu đang được xem xét',

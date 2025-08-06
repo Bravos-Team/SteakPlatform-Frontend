@@ -26,7 +26,10 @@
       </span>
     </div>
     <div class="flex w-full justify-end items-center">
-      <update-game-informations-button :game-informations="gameDetails" />
+      <update-game-informations-button
+        :is-update-game-opening="isUpdateGameOpening"
+        :game-informations="gameDetails"
+      />
     </div>
   </card>
 </template>
@@ -39,5 +42,6 @@ import { GameType } from '@/types/game/gameDetails/GameDetailsType'
 
 const props = defineProps<{
   gameDetails: GameType
+  isUpdateGameOpening?: boolean
 }>()
 </script>
