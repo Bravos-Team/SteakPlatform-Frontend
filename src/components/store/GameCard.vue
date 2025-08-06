@@ -1,18 +1,24 @@
 <template>
   <div
     v-if="game && isReleased(game)"
-    class="group relative px-1 size-[16rem] tablet:size-full desktop:size-full rounded-2xl"
+    class="group relative px-1 tablet:w-[16rem] desktop:w-[16rem] desktop-xl:w-[18rem] tablet:col-span-4 col-span-6 laptop:col-span-3 rounded-2xl"
   >
     <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
       <!-- IMAGE -->
-      <div class="group relative w-full rounded-2xl overflow-hidden">
-        <img :src="game?.thumbnail" :alt="game.name" class="min-w-full min-h-full outline-0" />
+      <div
+        class="group relative w-full rounded-2xl overflow-hidden filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]"
+      >
+        <img
+          :src="game?.thumbnail"
+          :alt="game.name"
+          class="tablet:size-[16rem] desktop-xl:size-[18rem] desktop:size-[16rem]"
+        />
       </div>
       <!-- END IMAGE -->
 
       <!-- TITLE AND PRICE -->
-      <div class="flex flex-col gap-y-3 px-3 py-2 text-white">
-        <div class="w-full break-words leading-tight text-wrap font-bold text-xl">
+      <div class="flex flex-col gap-y-3 px-3 py-2 text-white w-fit">
+        <div class="w-fit break-words leading-tight text-wrap font-bold text-xl">
           {{ game?.name }}
         </div>
         <div class="flex flex-row flex-wrap">

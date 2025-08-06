@@ -3,7 +3,7 @@
     <div
       v-for="(img, index) in imageList"
       :key="index"
-      class="keen-slider__slide !w-[200px] cursor-pointer"
+      class="keen-slider__slide !w-[200px] cursor-grab active:cursor-grabbing"
       :class="`number-slide${index}`"
     >
       <img :src="img" alt="" class="object-cover h-full w-full" />
