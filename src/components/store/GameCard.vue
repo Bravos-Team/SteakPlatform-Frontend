@@ -1,22 +1,25 @@
 <template>
   <div v-if="game && isReleased(game)"
-    class="group relative px-1 tablet:w-[16rem] desktop:w-[16rem] desktop-xl:w-[18rem] tablet:col-span-4 col-span-6 laptop:col-span-3 rounded-2xl">
+    class="group relative px-1 tablet:w-[16rem] desktop:w-[16rem] desktop-xl:w-[18rem] tablet:col-span-4 col-span-12 laptop:col-span-3 rounded-2xl">
     <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
       <!-- IMAGE -->
       <div
-        class="group relative w-full rounded-2xl overflow-hidden filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]">
+        class="group relative w-full rounded-2xl overflow-hidden h-[10rem] filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]">
         <img :src="game?.thumbnail" :alt="game.name"
-          class="tablet:size-[16rem] desktop-xl:size-[18rem] desktop:size-[16rem] object-cover" />
+          class="tablet:size-[16rem] desktop-xl:size-[18rem] desktop:size-[16rem]  object-cover" />
       </div>
       <!-- END IMAGE -->
 
       <!-- TITLE AND PRICE -->
-      <div class="flex flex-col gap-y-3 px-3 py-2 text-white w-fit">
-        <div class="w-fit break-words leading-tight text-wrap font-bold text-xl">
+      <div class="flex flex-col gap-y-3 px-3 py-2 text-white w-fit justify-between h-fit">
+        <div class="w-fit break-words leading-tight text-wrap font-bold tablet:text-xl text-sm">
           {{ game?.name }}
         </div>
         <div class="flex flex-row flex-wrap">
-          <p class="text-white">
+          <p v-if="game?.price === 0" class="text-white text-sm tablettext-lg font-mono">
+            Free
+          </p>
+          <p v-else class="text-white text-sm tablettext-lg">
             {{ CurrencyUtils.formatCurrency(game?.price, '₫') }}
           </p>
         </div>
@@ -39,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+
 import CurrencyUtils from '@/services/common/CurrencyUtils'
 import { GAME_ITEM } from '@/types/store/game'
 import { PropType } from 'vue'
@@ -49,7 +53,6 @@ import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
-import { i } from '@tanstack/vue-query/build/legacy/queryClient-CAHOJcvF'
 const { isPending: isAddToCartPending, mutateAsync: mutateAddToCart } = useMutateAddToCart()
 
 const props = defineProps({

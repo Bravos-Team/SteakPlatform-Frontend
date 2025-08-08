@@ -10,7 +10,9 @@ export type GAME_LIST_ITEM = {
 
 export type GAME_LIST_RESPONSE = {
   items: GAME_LIST_ITEM[]
-  nextCursor: number | null
+  nextCursor?: number | null
+  hasNextCursor?: boolean
+  maxCursor?: bigint
 }
 
 export type GAME_FILTERED_PARAMS = {
@@ -23,5 +25,12 @@ export type GAME_FILTERED_PARAMS = {
   cursor?: number
   minPrice?: number
   maxPrice?: number
+  hasNextCursor?: boolean
+  maxCursor?: bigint
   status?: string
+}
+
+export type PageAndSize = {
+  page: number
+  size: number
 }
