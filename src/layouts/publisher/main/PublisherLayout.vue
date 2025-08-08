@@ -38,7 +38,7 @@ const toggleNav = () => {
             class="z-0"
           />
           <header
-            class="backdrop-blur-3xl justify-between w-full bg-[#101014]/10 border-b-1 border-b-gray-100/10 z-10 lg:border-b-0 flex h-16 px-2 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
+            class="backdrop-blur-3xl will-change-transform justify-between w-full bg-[#101014]/10 border-b-1 border-b-gray-100/10 z-10 lg:border-b-0 flex h-16 px-2 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
           >
             <div class="flex items-center justify-center">
               <sidebar-trigger @click="toggleNav" class="flex items-center gap-2 p-1" />
@@ -46,8 +46,10 @@ const toggleNav = () => {
             </div>
             <LanguagesOption />
           </header>
-          <router-view />
 
+          <div class="p-3 z-11">
+            <router-view />
+          </div>
           <spark
             :colorChanges="'#64403b'"
             :top="'850'"

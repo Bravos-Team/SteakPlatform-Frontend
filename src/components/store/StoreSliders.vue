@@ -1,10 +1,12 @@
 <template>
   <div class="w-full">
     <div class="flex flex-col laptop:flex-row gap-x-5">
-      <div
-        class="w-full hidden laptop:flex lg:w-[935px] xl:w-[1134px] xl:h-[638px] lg:h-[525px] overflow-hidden rounded-3xl bg-gray-200/5"
-      >
-        <div class="!min-w-[10rem] !min-h-full keen-slider" ref="container">
+      <!-- LAPTOP SLIDER -->
+      <div class="hidden laptop:flex w-10/12 overflow-hidden rounded-3xl bg-gray-200/5">
+        <div
+          class="!min-w-[10rem] !min-h-full keen-slider cursor-grab active:cursor-grabbing"
+          ref="container"
+        >
           <img
             v-for="(game, index) in gameSliders"
             :key="game.id"
@@ -14,19 +16,10 @@
           />
         </div>
       </div>
+      <!-- END LAPTOP SLIDER -->
 
       <!-- MOBILE SLIDER -->
-      <div
-        class="w-full px-3 shrink-0 snap-mandatory laptop:hidden flex gap-x-10 lg:w-[935px] xl:w-[1134px] snap-x xl:h-[638px] lg:h-[525px] overflow-x-scroll no-scrollbar bg-gray-transparent"
-      >
-        <div
-          v-for="(game, index) in gameSliders"
-          :key="game.id"
-          class="w-full tablet:min-w-[40rem] tablet:w-full snap-center rounded-sm overflow-hidden shrink-0 h-[40rem] flex"
-        >
-          <img :src="game.background" alt="" class="object-cover h-full w-full" />
-        </div>
-      </div>
+      <mobile-slider class="laptop:hidden flex" :gameSliders="gameSliders" />
       <!-- END MOBILE SLIDER -->
 
       <!-- SUB SLIDER BAR-->
@@ -40,7 +33,7 @@
           :class="{ active: currentSlideIndex === index }"
           @click="goToSlide(index)"
         >
-          <img :src="game.img" alt="" class="w-10 h-12 rounded-md object-cover" />
+          <img :src="game.img" alt="" class="w-10 min-h-full rounded-md object-cover" />
           <p class="text-white text-sm font-medium truncate flex-1 ml-3">{{ game.name }}</p>
         </div>
       </div>
@@ -50,9 +43,11 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { nextTick, onUnmounted, ref } from 'vue'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/vue.es'
+import MobileSlider from '@/components/store/slider/MobileSlider.vue'
+
 const animation = { duration: 300, easing: (t: number) => t }
 let autoplayTimeout: NodeJS.Timeout | null = null
 const startAutoplay = (sliderInstance: any) => {
@@ -99,7 +94,7 @@ const goToSlide = (index: number) => {
 }
 
 const tempImage =
-  'https://cdn2.unrealengine.com/egs-blades-of-fire-carousel-desktop-1920x1080-d2399d7a8fcb.jpg?resize=1&w=1280&h=720&quality=medium'
+  'https://cdn2.unrealengine.com/egs-arena-breakout-infinite-carousel-desktop-1920x1080-1518db0300b5.jpg?resize=1&w=1280&h=720&quality=medium'
 
 const gameSliders = ref([
   {
@@ -169,8 +164,9 @@ const gameSliders = ref([
     message: '',
     prices: 0,
     status: 1,
-    img: 'https://cdn2.unrealengine.com/egs-split-fiction-carousel-thumb-1200x1600-9b5a96bf6479.jpg?resize=1&w=96&h=128&quality=medium',
-    background: tempImage,
+    img: 'https://cdn2.unrealengine.com/egs-arena-breakout-infinite-carousel-thumb-1200x1600-fc9163d2f0bb.jpg?resize=1&w=96&h=128&quality=medium',
+    background:
+      'https://cdn2.unrealengine.com/egs-arena-breakout-infinite-carousel-desktop-1920x1080-1518db0300b5.jpg?resize=1&w=1280&h=720&quality=medium',
   },
 ])
 
@@ -251,7 +247,6 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-height: 60px;
   border: 2px solid transparent;
   position: relative;
   overflow: hidden;

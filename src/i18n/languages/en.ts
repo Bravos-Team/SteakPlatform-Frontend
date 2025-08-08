@@ -79,10 +79,13 @@ export default {
     routers: {
       publisher: 'Publisher',
       dashboard: 'Dashboard',
-      game_management: 'Game Management',
-      game_management_overview: 'Game Management Overview',
+      game_management: 'Project Management',
+      game_management_overview: 'Project Management Overview',
+      game_management_draft: 'Draft Project Management',
+      game_management_accepted: 'Published Project Management',
+      game_not_release_yet: 'Game Not Released Yet',
       support: 'Support Center',
-      game_details: 'Game Details',
+      game_details: 'Project Details',
     },
     subPagesCompo: {
       game_and_apps_summary_price: 'Games and Apps Summary Price',
@@ -102,7 +105,18 @@ export default {
             title: 'Game Management',
             items: {
               overview: 'Overview',
+              draft: 'Draft Project',
+              published: 'Project Published',
               sub: {},
+            },
+            actions: {
+              draft: {
+                delete_project: {
+                  title: 'Delete Project',
+                  description:
+                    'Are you sure you want to delete this project? This action cannot be undone.',
+                },
+              },
             },
           },
           support: {
@@ -296,6 +310,7 @@ export default {
             description: 'Download our project upload software',
           },
           save_as_draft: 'Save as Draft',
+          update_game_opening: 'Update Game Opening',
           reset_form: 'Reset Form',
           cancel: 'Cancel',
           system_requirements: {
@@ -341,6 +356,7 @@ export default {
           informations: 'Informations',
           update_name: 'Update Name',
           update_informations: 'Update Informations',
+          resubmit: 'Resend the verification Project',
           hide: 'Hide',
           show: 'Show',
         },
@@ -396,6 +412,7 @@ export default {
       buttons: {
         add_to_cart: 'Add to Cart',
         buy_now: 'Buy Now',
+        already_in_library: 'Already in Library',
         view_details: 'View Details',
         remove_from_wishlist: 'Remove from Wishlist',
         move_to_wishlist: 'Move to Wishlist',

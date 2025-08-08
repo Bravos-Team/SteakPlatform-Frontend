@@ -8,67 +8,79 @@
     <div class="grid grid-cols-1 laptop:grid-cols-2 gap-x-2 gap-y-3">
       <!-- START OS -->
       <div
-        class="flex hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
+        class="grid grid-cols-12 hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
       >
-        <span class="text-sm font-bold">OS</span>
-        <OsVersionTags
-          v-model:emit-minimum-os-versions="minimum.osVersion"
-          :os-version="systemRequirementSuggestions?.osVersion"
-        />
+        <span class="col-span-1 text-sm font-bold">OS</span>
+        <div class="col-span-11 laptop:col-span-10">
+          <OsVersionTags
+            v-model:emit-minimum-os-versions="minimum.osVersion"
+            :os-version="systemRequirementSuggestions?.osVersion"
+          />
+        </div>
       </div>
       <!-- END OS -->
 
       <!-- START CPU -->
       <div
-        class="flex hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
+        class="grid grid-cols-12 hover:bg-gray-200/10 transition-colors duration-300 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70"
       >
-        <span class="text-sm font-bold">CPU</span>
-        <cpu-tags v-model:emit-cpu-data="minimum.cpu" :cpus="systemRequirementSuggestions?.cpu" />
+        <span class="col-span-1 text-sm font-bold">CPU</span>
+        <div class="col-span-11">
+          <cpu-tags v-model:emit-cpu-data="minimum.cpu" :cpus="systemRequirementSuggestions?.cpu" />
+        </div>
       </div>
       <!-- END CPU-->
 
       <!-- START GPU -->
       <div
-        class="flex gap-x-1 items-center border-1 px-2 border-white/20 hover:bg-gray-200/10 transition-colors duration-300 text-gray-200/70"
+        class="grid grid-cols-12 gap-x-1 items-center flex-wrap border-1 px-2 border-white/20 hover:bg-gray-200/10 transition-colors duration-300 text-gray-200/70"
       >
-        <span class="text-sm font-bold">GPU</span>
-        <gpu-tags v-model:emit-gpu-data="minimum.gpu" :gpus="systemRequirementSuggestions?.gpu" />
+        <span class="col-span-3 text-sm font-bold">GPU</span>
+        <div class="col-span-9">
+          <gpu-tags v-model:emit-gpu-data="minimum.gpu" :gpus="systemRequirementSuggestions?.gpu" />
+        </div>
       </div>
       <!-- END GPU-->
 
       <!-- START MEMORY -->
       <div
-        class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
+        class="grid grid-cols-12 gap-x-1 items-center flex-wrap border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
-        <span class="text-sm font-bold">MEMORY</span>
-        <memory-tags
-          v-model:emit-memory-data="minimum.memory"
-          :memories="systemRequirementSuggestions?.memory"
-        />
+        <span class="col-span-3 text-sm font-bold">MEMORY</span>
+        <div class="col-span-9">
+          <memory-tags
+            v-model:emit-memory-data="minimum.memory"
+            :memories="systemRequirementSuggestions?.memory"
+          />
+        </div>
       </div>
       <!-- END MEMORY-->
 
       <!-- START DIRECTX -->
       <div
-        class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
+        class="grid grid-cols-12 gap-x-1 items-center flex-wrap border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
-        <span class="text-sm font-bold">DIRECTX</span>
-        <direct-x-tags
-          v-model:emit-directx-data="minimum.directX"
-          :directxs="systemRequirementSuggestions?.directX"
-        />
+        <span class="col-span-3 text-sm font-bold">DIRECTX</span>
+        <div class="col-span-9">
+          <direct-x-tags
+            v-model:emit-directx-data="minimum.directX"
+            :directxs="systemRequirementSuggestions?.directX"
+          />
+        </div>
       </div>
       <!-- END DIRECTX-->
 
       <!-- START STORAGE -->
       <div
-        class="flex gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
+        class="grid grid-cols-12 gap-x-1 items-center border-1 px-2 border-white/20 text-gray-200/70 hover:bg-gray-200/10 transition-colors duration-300"
       >
-        <span class="text-sm font-bold">STORAGE</span>
-        <storage-tags
-          v-model:emit-storage-data="minimum.storage"
-          :storages="systemRequirementSuggestions?.storage"
-        />
+        <span class="col-span-3 text-sm font-bold">STORAGE</span>
+        <div class="col-span-9">
+          <storage-tags
+            v-model:emit-storage-data="minimum.storage"
+            :storages="systemRequirementSuggestions?.storage"
+          />
+        </div>
       </div>
       <!-- END STORAGE -->
     </div>

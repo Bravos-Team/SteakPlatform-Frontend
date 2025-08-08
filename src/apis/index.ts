@@ -3,7 +3,56 @@ import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificati
 import { renewPublisherRefreshToken } from '@/apis/publisher/auth/authPublisher'
 import { renewUserRefreshToken } from '@/apis/user/authUser'
 import router from '@/router/index'
-import { removeCookie } from '@/utils/cookies/cookie-utils'
+import { removeCookie, removeCookies } from '@/utils/cookies/cookie-utils'
+
+let isRefreshing = false
+let failedQueue: Array<{
+  resolve: (value: any) => void
+  reject: (error: any) => void
+}> = []
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) {
+      reject(error)
+    } else {
+      resolve(token)
+    }
+  })
+
+  failedQueue = []
+}
+
+const messages = {
+  publisher: {
+    msg: 'You need login to access authenication required page!',
+    title: 'Publisher Authentication',
+    redirect: { name: 'PublisherAuthLogin' },
+  },
+  user: {
+    msg: 'You need login to access authenication required page!',
+    title: 'Steak Game Store Authentication',
+    redirect: { name: 'Login' },
+  },
+  default: {
+    msg: 'Something went wrong, please try again later!',
+    title: 'Steak Game Store Error',
+    redirect: { name: 'NotFound' },
+  },
+}
+
+const removeCookiesQueue = (group: string) => {
+  switch (group) {
+    case 'publisher':
+      removeCookie('publisherAccessRights')
+      break
+    case 'user':
+      removeCookie('userAccessRights')
+      break
+    default:
+      removeCookies(['userAccessRights', 'publisherAccessRights'])
+  }
+}
 
 export const SteakApi = axios.create({
   baseURL: import.meta.env.VITE_BASE_API_URL + '/api/v1',
@@ -19,59 +68,77 @@ SteakApi.interceptors.response.use(
   async (error) => {
     const route = router.currentRoute.value
     const status = error.response?.status
+    const originalRequest = error.config
+    const group = (route.meta?.group ?? 'default') as keyof typeof messages
+    const { msg, title, redirect } = messages[group] || messages.default
+    console.log('API Error:', error)
 
-    if (status === 401 && route?.meta?.middleware) {
-      const messages = {
-        publisher: {
-          msg: 'You need login to access authenication required page!',
-          title: 'Publisher Authentication',
-          redirect: { name: 'PublisherAuthLogin' },
-        },
-        user: {
-          msg: 'You need login to access authenication required page!',
-          title: 'Steak Game Store Authentication',
-          redirect: { name: 'Login' },
-        },
-        default: {
-          msg: 'Something went wrong, please try again later!',
-          title: 'Steak Game Store Error',
-          redirect: { name: 'NotFound' },
-        },
+    if (
+      (status === 401 && error.response.config.url.includes('dev/auth/username-login')) ||
+      error.response.config.url.includes('dev/auth/email-login') ||
+      error.response.config.url.includes('user/auth/username-login') ||
+      error.response.config.url.includes('user/auth/email-login')
+    ) {
+      console.log(group)
+      if (group === 'publisher') {
+        removeCookie('publisherAccessRights')
+        await router.push({ name: 'PublisherAuthLogin' })
+      } else {
+        removeCookie('userAccessRights')
+        await router.push({ name: 'Login' })
       }
-      const group = (route.meta?.group ?? 'default') as keyof typeof messages
+      return Promise.reject(error)
+    }
 
-      const { msg, title, redirect } = messages[group] || messages.default
+    if (status === 401 && error.response.config.url.includes('/store/private/order/create')) {
+      removeCookie('userAccessRights')
+      // toastErrorNotificationPopup(msg, title)
+      await router.push({ name: 'Login' })
+      return Promise.reject(error)
+    }
 
-      switch (group) {
-        case 'publisher':
-          removeCookie('publisherAccessRights')
-          break
-        case 'user':
-          removeCookie('userAccessRights')
-          break
-        default:
-          removeCookie('userAccessRights')
-          removeCookie('publisherAccessRights')
-          break
+    if (error.response.config.url.includes('/refresh')) {
+      removeCookies(['userAccessRights', 'publisherAccessRights'])
+      toastErrorNotificationPopup(msg, title)
+      await router.push(redirect)
+      return Promise.reject(error)
+    }
+
+    if (status === 401 && route?.meta?.middleware && !originalRequest._retry) {
+      originalRequest._retry = true
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject })
+        })
+          .then(() => {
+            return SteakApi.request(originalRequest)
+          })
+          .catch((err) => Promise.reject(err))
       }
+
+      isRefreshing = true
 
       try {
         switch (group) {
           case 'publisher':
-            console.log('Renewing publisher refresh token...')
-            await renewPublisherRefreshToken()
+            const response = await renewPublisherRefreshToken()
             break
           case 'user':
-            console.log('Renewing user refresh token...')
             await renewUserRefreshToken()
             break
         }
-        return await SteakApi.request(error.config)
-      } catch (newError) {
-        console.error('Error renewing token:', error)
+
+        processQueue(null, 'success')
+        isRefreshing = false
+        return await SteakApi.request(originalRequest)
+      } catch (refreshError) {
+        console.log('Refresh token error:', refreshError)
+        processQueue(refreshError, null)
+        isRefreshing = false
+        removeCookiesQueue(group)
         toastErrorNotificationPopup(msg, title)
         await router.push(redirect)
-        return Promise.reject(newError)
+        return Promise.reject(refreshError)
       }
     }
 

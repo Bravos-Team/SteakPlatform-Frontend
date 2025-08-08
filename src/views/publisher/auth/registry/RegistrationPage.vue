@@ -13,7 +13,7 @@
   <div class="flex justify-center items-center py-25 px-5">
     <!-- FORM BOXED -->
     <div
-      class="backdrop-blur-[7px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[100vh] p-3 mx-auto rounded-md flex flex-col gap-[10px] border-1 border-gray-500/50"
+      class="backdrop-blur-[7px] will-change-transform hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[100vh] p-3 mx-auto rounded-md flex flex-col gap-[10px] border-1 border-gray-500/50"
     >
       <!-- LOGO AND FORM TITLE -->
       <div class="flex flex-col justify-center items-center gap-y-2 text-white">

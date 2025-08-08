@@ -5,9 +5,11 @@
       <div class="flex flex-col">
         <div class="flex gap-x-2">
           <chart-no-axes-gantt class="size-10 m-0 p-0" />
-          <span class="text-4xl font-bold flex gap-x-2 m-0 p-0"> Tickets Management</span>
+          <span class="laptop:text-4xl tablet:text-3xl text-2xl font-bold flex gap-x-2 m-0 p-0">
+            Tickets Management</span
+          >
         </div>
-        <span class="font-light text-sm"
+        <span class="font-light text-sm text-wrap"
           >Track ticket, create ticket, and stay focused — all in one minimal board
         </span>
       </div>

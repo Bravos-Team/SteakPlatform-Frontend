@@ -3,29 +3,21 @@
     <popover-trigger as-child>
       <button
         class="w-full border-2 gap-x-1 items-center px-3 border-double rounded-sm flex text-left font-normal bg-white/10 cursor-pointer"
-        :class="cn(!value && 'text-muted-foreground')"
-      >
+        :class="cn(!value && 'text-muted-foreground')">
         <calendar-icon class="mr-2 size-4" />
         {{ displayDateText }}
       </button>
     </popover-trigger>
-    <popover-content
-      side="bottom"
-      class="flex w-auto flex-col gap-y-1 outline-0 ring-0 border-0 overflow-hidden p-2"
-    >
-      <Select
-        @update:model-value="
-          (v: any) => {
-            if (!v) return
-            value = today(getLocalTimeZone()).add({ days: Number(v) })
-          }
-        "
-      >
+    <popover-content side="bottom" class="flex w-auto flex-col gap-y-1 outline-0 ring-0 border-0 overflow-hidden p-2">
+      <Select @update:model-value="
+        (v: any) => {
+          if (!v) return
+          value = today(getLocalTimeZone()).add({ days: Number(v) })
+        }
+      ">
         <select-trigger class="w-full flex">
-          <select-value
-            :placeholder="emitEstimatedReleaseDate ? '' : 'Pick your release date'"
-            class="w-full flex"
-          ></select-value>
+          <select-value :placeholder="emitEstimatedReleaseDate ? '' : 'Pick your release date'"
+            class="w-full flex"></select-value>
         </select-trigger>
         <select-content side="right">
           <select-item :value="item.value.toString()" v-for="item in items" :key="item.value">{{
@@ -59,6 +51,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 
 const dateFormatter = new DateFormatter('vi-VN', {
   dateStyle: 'long',
@@ -79,6 +72,10 @@ watch(
   () => value.value,
   (newVal) => {
     if (newVal) {
+      if (newVal.toDate(getLocalTimeZone()).getTime() < new Date().getTime()) {
+        toast.error('Release date cannot be in the past.')
+        return
+      }
       const isoDate = newVal.toString() // => YYYY-MM-DD (ISO)
       const longDate = newVal.toDate(getLocalTimeZone()).getTime()
       const formatted = dateFormatter.format(newVal.toDate(getLocalTimeZone()))

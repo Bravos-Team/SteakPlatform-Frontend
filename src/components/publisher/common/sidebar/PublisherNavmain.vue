@@ -20,7 +20,7 @@
           <sidebar-menu-item>
             <!-- PARENT TRIGGER -->
             <collapsible-trigger as-child>
-              <sidebar-menu-button :tooltip="value?.title">
+              <sidebar-menu-button :tooltip="value?.title" class="cursor-pointer">
                 <component :is="value?.icon" />
                 <span>{{
                   getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value.i18n)

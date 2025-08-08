@@ -2,7 +2,6 @@ import SteakApi from '@/apis/index'
 import axios from 'axios'
 
 export const deleteImage = async (url: string) => {
-  console.log('Deleting image:', url)
   return await SteakApi.delete('/dev/upload/delete-image', {
     data: url,
   })

@@ -6,7 +6,7 @@
     <select-content>
       <select-group>
         <select-item v-for="directx in directxs" :key="directx" :value="directx">
-          <select-item-text>{{ directx }}</select-item-text>
+          <select-item-text class="text-wrap">{{ directx }}</select-item-text>
         </select-item>
       </select-group>
     </select-content>

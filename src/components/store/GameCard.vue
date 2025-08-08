@@ -1,46 +1,39 @@
 <template>
-  <div v-if="game" class="group relative w-[211px]">
-    <router-link
-      :to="{ name: 'game-details', params: { id: game?.id.toString() } }"
-      class="flex flex-col gap-y-2 rounded-lg"
-    >
-      <div class="group relative">
-        <div
-          class="w-[211px] min-h-full cursor-pointer peer-hover/category-img:cursor-pointer peer-hover/category-img:contrast-100 overflow-hidden hover:contrast-[.80] transition-all duration-250 relative"
-        >
-          <div class="relative rounded-md overflow-hidden min-h-[240px]">
-            <div class="rounded-md overflow-hidden h-full w-full">
-              <img class="min-h-full w-full object-cover" :src="game?.thumbnail" alt="" />
-            </div>
-          </div>
-        </div>
+  <div v-if="game && isReleased(game)"
+    class="group relative px-1 tablet:w-[16rem] desktop:w-[16rem] desktop-xl:w-[18rem] tablet:col-span-4 col-span-12 laptop:col-span-3 rounded-2xl">
+    <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
+      <!-- IMAGE -->
+      <div
+        class="group relative w-full rounded-2xl overflow-hidden h-[10rem] filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]">
+        <img :src="game?.thumbnail" :alt="game.name"
+          class="tablet:size-[16rem] desktop-xl:size-[18rem] desktop:size-[16rem]  object-cover" />
       </div>
-      <div class="flex flex-col cursor-pointer gap-y-1 px-3 py-2">
-        <div class="flex flex-col">
-          <p
-            class="text-white mb-[15px] capitalize font-bold text-[16.1px] leading-[20px] tracking-[0.32px] mb-"
-          >
-            {{ game?.name }}
-          </p>
+      <!-- END IMAGE -->
+
+      <!-- TITLE AND PRICE -->
+      <div class="flex flex-col gap-y-3 px-3 py-2 text-white w-fit justify-between h-fit">
+        <div class="w-fit break-words leading-tight text-wrap font-bold tablet:text-xl text-sm">
+          {{ game?.name }}
         </div>
-        <div class="flex flex-row flex-nowrap">
-          <p class="text-white leading-[18px]">
+        <div class="flex flex-row flex-wrap">
+          <p v-if="game?.price === 0" class="text-white text-sm tablettext-lg font-mono">
+            Free
+          </p>
+          <p v-else class="text-white text-sm tablettext-lg">
             {{ CurrencyUtils.formatCurrency(game?.price, '₫') }}
           </p>
         </div>
       </div>
     </router-link>
+    <!-- END TITLE AND PRICE -->
 
     <!-- ADD TO CART -->
-    <button
-      :disabled="isAddToCartPending"
-      :class="{
-        'cursor-progress': isAddToCartPending,
-        'cursor-pointer': !isAddToCartPending,
-      }"
+    <button :disabled="isAddToCartPending" :class="{
+      'cursor-progress': isAddToCartPending,
+      'cursor-pointer': !isAddToCartPending,
+    }"
       class="peer/category-img absolute group-hover:opacity-100 opacity-0 transition-all duration-300 top-[10px] right-[10px]"
-      @click="handleAddToCart(game.id, game.name)"
-    >
+      @click="handleAddToCart(game.id, game.name)">
       <img src="https://ccdn.steak.io.vn/assets-ico-plus-white.svg" alt="" />
     </button>
 
@@ -49,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+
 import CurrencyUtils from '@/services/common/CurrencyUtils'
 import { GAME_ITEM } from '@/types/store/game'
 import { PropType } from 'vue'
@@ -80,5 +74,8 @@ const handleAddToCart = async (gameId: bigint, name: string) => {
       t(`${name} ${t('title.pages.cart.actions.already_in_cart')}`),
     )
   }
+}
+const isReleased = (game: any): boolean => {
+  return game.releaseDate < new Date().getTime()
 }
 </script>

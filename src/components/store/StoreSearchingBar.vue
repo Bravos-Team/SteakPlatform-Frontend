@@ -1,10 +1,10 @@
 <template>
-  <div class="sticky z-10 top-0 h-full w-full">
+  <div class="sticky z-10 -top-[2px] h-full w-full">
     <div
-      class="flex flex-col laptop:flex-row bg-[#101014] px-[2rem] tablet:px-[5rem] laptop:px-[6rem] desktop:px-[15rem] items-center justify-between w-full h-full"
+      class="flex flex-col laptop:flex-row bg-[#101014] py-3 gap-y-2 items-center justify-between min-w-full h-full px-6"
     >
       <!-- SEARCH BAR -->
-      <div class="flex justify-center items-center w-full">
+      <div class="flex justify-center items-center w-full px-4">
         <input type="text" placeholder="Search..." class="sr-only shrink-0" />
         <div
           class="bg-[#202024] relative hover:bg-[#404044] rounded-full w-full outline-none h-[40px] text-gray-400 px-10"
@@ -25,7 +25,7 @@
       <!-- END SEARCH BAR -->
 
       <div
-        class="laptop:w-[845px] w-full text-[#fff]/70 h-[100px] flex flex-row tablet:w-full tablet:items-center justify-between laptop:justify-end ms-7 gap-x-2 laptop:gap-5 laptop:items-center items-center"
+        class="flex-wrap gap-y-2 w-full mobile:py-3 text-[#fff]/70 tablet:h-[100px] flex flex-row tablet:w-full tablet:items-center justify-between laptop:justify-end laptop:gap-5 laptop:items-center items-center"
       >
         <router-link
           :to="{ name: 'WishlistManagementPage' }"
@@ -58,7 +58,6 @@
 import { ShoppingBag, LoaderCircle } from 'lucide-vue-next'
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
-
 const route = useRoute()
 
 const isActiveWishlistRouter = computed(() => {

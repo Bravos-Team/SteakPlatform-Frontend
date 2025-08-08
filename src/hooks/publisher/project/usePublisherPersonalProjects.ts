@@ -1,10 +1,4 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  keepPreviousData,
-  QueryClient,
-} from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient, keepPreviousData } from '@tanstack/vue-query'
 import { PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS } from '@/types/publisher/project/PublisherPersonalProjectType'
 import { PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS } from '@/hooks/constants/publisher/project/publisherPersonalProjectConstant'
 import {
@@ -15,9 +9,15 @@ import {
   publisherUpdateGameNameApi,
   publisherPostVerifyGameRequest,
   publisherDeleteImageUploaded,
+  publisherResubmitProject,
+  publisherUpateProjectDetails,
 } from '@/apis/publisher/project/publisherPersonalProjects'
 import { Ref } from 'vue'
-import { PartialGameType } from '@/types/game/gameDetails/GameDetailsType'
+import {
+  GameResubmitRequestType,
+  GameType,
+  PartialGameType,
+} from '@/types/game/gameDetails/GameDetailsType'
 
 export const usePublisherGetPersonalProjects = (
   filters: Ref<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>,
@@ -26,6 +26,7 @@ export const usePublisherGetPersonalProjects = (
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LIST(filters),
     queryFn: async ({ signal }) => await publisherGetPersonalProjectListApi(filters.value, signal),
     placeholderData: keepPreviousData,
+    staleTime: 1000 * 60 * 60,
   })
 }
 
@@ -34,18 +35,21 @@ export const usePublisherGetPersonalProjectById = (id: bigint) => {
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(id.toString()),
     queryFn: async ({ signal }) => await publisherGetPersonalProjectByIdApi(id, signal),
     retry: 3,
+    staleTime: 1000 * 60 * 60,
   })
 }
 
 export const usePublisherCreateDraftProjectInformations = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (payload: PartialGameType) =>
-      await publisherCreateDraftProjectInformationsApi(payload),
+    mutationFn: async (payload: PartialGameType) => {
+      if (payload) return await publisherCreateDraftProjectInformationsApi(payload as GameType)
+    },
     onSuccess: (_data, variables: PartialGameType) => {
-      queryClient.invalidateQueries({
-        queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
-      })
+      if (variables.id)
+        queryClient.invalidateQueries({
+          queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
+        })
     },
   })
   return {
@@ -75,12 +79,8 @@ export const usePublisherUpdateProjectName = () => {
 }
 
 export const usePublisherCreatePersonalProject = () => {
-  const queryClient = useQueryClient()
   const { mutateAsync, isPending, data } = useMutation({
     mutationFn: async (name: string) => await publisherCreatePersonalProjectApi(name),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LIST() })
-    },
   })
   return {
     mutateAsync,
@@ -114,6 +114,38 @@ export const usePublisherDeleteImageUploaded = () => {
       queryClient.invalidateQueries({
         queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
       })
+    },
+  })
+  return {
+    mutateAsync,
+    isPending,
+  }
+}
+
+export const usePublisherResubmitProject = () => {
+  const queryClient = useQueryClient()
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (request: GameResubmitRequestType) => await publisherResubmitProject(request),
+    onSuccess: (_data, variables) =>
+      queryClient.invalidateQueries({
+        queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables.submissionId.toString()),
+      }),
+  })
+  return {
+    mutateAsync,
+    isPending,
+  }
+}
+
+export const usePublisherUpdateProjectDetails = () => {
+  const queryClient = useQueryClient()
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (payload: PartialGameType) => await publisherUpateProjectDetails(payload),
+    onSuccess: (_data, variables: PartialGameType) => {
+      if (variables.id)
+        queryClient.invalidateQueries({
+          queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.PROJECT(variables?.id.toString()),
+        })
     },
   })
   return {

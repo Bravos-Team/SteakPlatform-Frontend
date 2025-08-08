@@ -6,7 +6,7 @@
     <select-content>
       <select-group>
         <select-item v-for="gpu in gpus" :key="gpu" :value="gpu">
-          <select-item-text>{{ gpu }}</select-item-text>
+          <select-item-text class="text-wrap">{{ gpu }}</select-item-text>
         </select-item>
       </select-group>
     </select-content>

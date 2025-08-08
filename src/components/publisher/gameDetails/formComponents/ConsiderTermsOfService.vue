@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full">
     <!-- TITLE DESCRIPTIONS ALERT -->
-    <div class="before:content-['*'] before:text-red-500">
+    <div class="before:content-['*'] before:text-red-500 text-wrap">
       {{ $t('title.pages.game_details.form.consider.header_title') }}
     </div>
     <!-- END TITLE DESCRIPTIONS ALERT -->
@@ -18,7 +18,7 @@
           :class="{ 'w-full': consider.showConsider == false }"
         >
           <badge-alert />
-          <span>
+          <span class="text-wrap">
             {{ $t('title.pages.game_details.form.consider.title') }}
           </span>
         </div>
@@ -26,7 +26,7 @@
           :class="{ hidden: consider.showConsider == false }"
           class="flex flex-col gap-y-1 lg:gap-y-0 px-1 lg:px-11"
         >
-          <span>
+          <span class="text-wrap">
             {{ $t('title.pages.game_details.form.consider.descriptions') }}
           </span>
           <div class="flex justify-end">

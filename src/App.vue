@@ -1,5 +1,5 @@
 <template>
-  <toaster
+  <!-- <toaster
     :toast-options="{
       // unstyled: true,
       classes: {
@@ -19,8 +19,19 @@
     <template #fallback>
       <div>Loading...</div>
     </template>
-  </Suspense>
+  </Suspense> -->
   <vue-query-devtools />
+  <toaster />
+  <Suspense>
+    <template #default>
+      <router-view class="ios-safe-area"></router-view>
+    </template>
+    <template #fallback>
+      <div class="min-h-screen flex items-center justify-center ios-loading">
+        <div>Loading...</div>
+      </div>
+    </template>
+  </Suspense>
 </template>
 
 <script setup>
@@ -58,3 +69,16 @@ import 'vue-sonner/style.css'
 //   console.log('gameList', gameList)
 // })
 </script>
+<style>
+.ios-safe-area {
+  min-height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ios-loading {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: manipulation;
+}
+</style>

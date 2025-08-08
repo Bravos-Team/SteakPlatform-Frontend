@@ -9,10 +9,7 @@ export const PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS = {
     'publisher',
     'personal-projects',
     'list',
-    filters?.value.status ?? '',
-    filters?.value.page ?? 1,
-    filters?.value.size ?? 10,
-    filters?.value.keyword ?? '',
+    filters,
   ]) as QUERY_KEY_TYPE<PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS>,
   LOGOUT: () => ['publisher', 'logout'] as const,
 }

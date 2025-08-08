@@ -2,6 +2,7 @@ export type PUBLISHER_PERSONAL_PROJECT_TYPE_FILTERS = {
   status?: string | undefined | null
   page?: number
   size?: number
+  number?: number
   keyword?: string | null | undefined
 }
 
@@ -14,6 +15,7 @@ export type PUBLISHER_PERSONAL_PROJECT = {
   updatedAt?: string
   thumbnail?: string
   buildInfo?: any
+  estimatedReleaseDate?: string
 }
 
 export type PUBLISHER_PERSONAL_PROJECT_LIST = {

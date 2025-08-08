@@ -8,6 +8,19 @@ export default {
       forgot_password: 'Quên mật khẩu',
       isLogin: 'Đang đăng nhập...',
       user: {
+        account: {
+          children: {
+            settings: 'Cài đặt tài khoản',
+            passwordAndSecurity: 'Mật khẩu và bảo mật',
+          },
+          router: {
+            settings: {
+              title: 'Cài đặt tài khoản',
+              descriptions: 'Quản lý cài đặt tài khoản của bạn',
+              profile_informations: 'Thông tin hồ sơ',
+            },
+          },
+        },
         profile: {
           title: 'Hồ sơ của bạn',
         },
@@ -81,10 +94,13 @@ export default {
     routers: {
       publisher: 'Nhà phát hành',
       dashboard: 'Bảng điều khiển',
-      game_management: 'Quản lý game',
-      game_management_overview: 'Tổng quan quản lý game',
+      game_management: 'Quản lý dự án',
+      game_management_draft: 'Dự án nháp',
+      game_management_accepted: 'Dự án đã xuất bản',
+      game_management_overview: 'Tổng quan quản lý dự án',
+      game_not_release_yet: 'Dự án chưa được phát hành',
       support: 'Trung tâm hỗ trợ',
-      game_details: 'Chi tiết game',
+      game_details: 'Chi tiết dự án',
     },
     pages: {
       payment_message: {
@@ -239,6 +255,7 @@ export default {
           price_preview: 'Xem trước giá',
           verify_request: 'Gửi yêu cầu xác minh',
           save_as_draft: 'Lưu dưới dạng bản nháp',
+          update_game_opening: 'Cập nhật thông tin Game',
           verify_pending: 'Đang gửi yêu cầu...',
           reset_form: 'Đặt lại biểu mẫu',
           pending_review: 'Yêu cầu đang được xem xét',
@@ -311,6 +328,7 @@ export default {
           update_informations: 'Cập nhật thông tin',
           informations: 'Thông tin',
           update_name: 'Cập nhật tên',
+          resubmit: 'Gửi lại yêu cầu xác minh',
           hide: 'Ẩn',
           show: 'Hiển thị',
         },
@@ -341,8 +359,19 @@ export default {
           game_management: {
             title: 'Quản lý game',
             items: {
-              overview: 'Tổng quan về game',
+              overview: 'Tổng quan',
+              draft: 'Dự án nháp',
+              published: 'Dự án đã xuất bản',
               sub: {},
+            },
+            actions: {
+              draft: {
+                delete_project: {
+                  title: 'Xóa dự án',
+                  description:
+                    'Bạn có chắc chắn muốn xóa dự án này? Hành động này không thể hoàn tác.',
+                },
+              },
             },
           },
           store: {
@@ -397,6 +426,7 @@ export default {
     buttons: {
       add_to_cart: 'Thêm vào giỏ hàng',
       buy_now: 'Mua ngay',
+      already_in_library: 'Đã có trong thư viện',
       view_details: 'Xem chi tiết',
       remove_from_wishlist: 'Xóa khỏi danh sách mong muốn',
       add_to_wishlist: 'Thêm vào danh sách mong muốn',

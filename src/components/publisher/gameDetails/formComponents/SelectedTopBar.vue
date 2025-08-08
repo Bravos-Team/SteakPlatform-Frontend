@@ -1,12 +1,15 @@
 <template>
   <div class="flex tablet:flex-row flex-col w-full gap-y-2 justify-between gap-x-2">
     <!-- START INTERNET CONNECTED SWITCHER -->
-    <internet-connected-switcher v-model:model-value="getInternetConnectedRequiredData" />
+    <internet-connected-switcher
+      v-if="!isHideInternetSwitching"
+      v-model:model-value="getInternetConnectedRequiredData"
+    />
     <!-- END INTERNET CONNECTED SWITCHER -->
 
     <div class="flex gap-x-2 w-full justify-between tablet:justify-end">
       <!-- START UPDATE AT INFORMATION -->
-      <div class="flex items-center gap-x-2">
+      <div class="flex items-center flex-wrap gap-x-2">
         <span>{{ $t('title.pages.game_details.form.update_at') }}:</span>
         <tooltip>
           <tooltip-trigger>
@@ -42,4 +45,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 // const getVersionSelected = defineModel<string>('getVersionSelected')
 const getInternetConnectedRequiredData = defineModel<boolean>('getInternetConnectedRequiredData')
 const updateAt = defineModel<string | number | Date>('updateAt')
+const props = defineProps<{
+  isHideInternetSwitching?: boolean
+}>()
 </script>

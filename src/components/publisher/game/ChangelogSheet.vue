@@ -1,7 +1,7 @@
 <template>
-  <span class="text-white font-medium px-2">
+  <span class="text-white font-medium px-2 flex flex-wrap text-wrap">
     {{ $t('title.pages.game_management.noti.message_logs') }}
-    {{ new Date().toLocaleDateString('vi-VN') }}
+    {{ new Intl.DateTimeFormat(locale, { dateStyle: 'full' }).format(new Date()) }}
   </span>
   <sheet>
     <sheet-trigger as-child>
@@ -30,4 +30,6 @@ import {
 } from '@/components/ui/sheet'
 
 import ChangelogAccordion from '@/components/publisher/game/ChangelogAccordion.vue'
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
 </script>

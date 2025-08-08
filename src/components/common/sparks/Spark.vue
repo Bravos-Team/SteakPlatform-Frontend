@@ -6,7 +6,7 @@
       right: props.right + 'px',
       bottom: props.bottom + 'px',
     }"
-    class="absolute z-0 w-full h-full flex items-center justify-center"
+    class="absolute mobile:hidden z-0 w-full h-full flex items-center justify-center"
   >
     <div
       :id="idSpark"

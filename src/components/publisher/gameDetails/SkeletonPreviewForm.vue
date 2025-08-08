@@ -1,12 +1,12 @@
 <template>
   <!-- START GAME TITLE  -->
-  <card-header class="text-2xl font-bold">
+  <card-header class="text-2xl font-bold mb-3">
     <card-title class="!text-[40px] text-white/80 font-black">Game Preview</card-title>
     <div class="flex flex-col gap-y-2">
       <div
         class="px-2 rounded-sm text-center w-70 tablet:w-120 laptop:w-140 h-10 bg-white/10"
       ></div>
-      <div class="flex gap-x-2">
+      <div class="flex gap-x-2 gap-y-1">
         <div class="tablet:w-25 w-15 bg-white/10 h-4" />
         <div class="tablet:w-15 h-4 w-15 bg-white/10" />
         <div class="tablet:w-20 h-4 w-15 bg-white/10" />
@@ -58,11 +58,9 @@
           <!-- END SUB MEDIA -->
 
           <!-- START SUB DES -->
-          <div class="w-full flex flex-col">
-            <div class="w-full bg-white/10 h-8 rounded-bl-none rounded-br-sm rounded-t-sm" />
-            <div
-              class="desktop-xl:w-220 desktop:w-170 laptop:w-100 tablet:w-90 w-50 bg-white/10 h-7 rounded-b-sm rounded-t-none"
-            />
+          <div class="w-full flex flex-col gap-y-1">
+            <div class="w-80 bg-white/10 h-8 rounded-bl-none rounded-br-sm rounded-t-sm" />
+            <div class="tablet:w-100 w-50 bg-white/10 h-7 rounded-sm" />
           </div>
           <!-- END SUB DES -->
 

@@ -1,7 +1,7 @@
 <template>
   <edit-game-details-skeleton v-if="isProjectByIdPending" />
   <div v-else class="px-2 py-4 flex flex-col gap-y-3 @container">
-    <div class="grid grid-rows-1 h-full lg:grid-cols-6 xl:grid-cols-12 gap-2">
+    <div class="h-full flex flex-col laptop:flex-row gap-2">
       <name-and-background-edit :game-details="projectById?.data" />
       <update-game-informations :game-details="projectById?.data" />
     </div>

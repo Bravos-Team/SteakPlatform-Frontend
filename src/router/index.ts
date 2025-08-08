@@ -3,6 +3,7 @@ import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
 import middlewarePipeLine from '@/router/middlewares/middlewarePipeLine'
 import authRoutes from '@/router/routes/store/AuthRoutes'
+// import userRoutes from '@/router/routes/user/UserRoute'
 import homeRoutes from '@/router/routes/store/HomeRoutes'
 import storeRoutes from '@/router/routes/store/StoreRoutes'
 import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
@@ -17,6 +18,7 @@ const routes: RouteRecordRaw[] = [
   homeRoutes,
   authRoutes,
   storeRoutes,
+  // userRoutes,
   ...paymentRoute,
   ...publisherRoutes,
   ...supportCenterRoutes,
@@ -33,7 +35,7 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) return savedPosition
     else if (to.hash) return { el: to.hash, behavior: 'smooth' }
-    else return { top: 0 }
+    return { top: 0 }
   },
 })
 

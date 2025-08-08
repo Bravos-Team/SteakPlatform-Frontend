@@ -13,10 +13,10 @@ export const useUserCartList = () => {
   return useQuery({
     queryKey: CART_STORE_QUERY_KEYS.USER,
     queryFn: async ({ signal }) => {
-      await mergingCartFormAnotherDevice()
       return await getMyCart(signal)
     },
     retry: 3,
+    staleTime: 1000 * 60 * 5,
   })
 }
 

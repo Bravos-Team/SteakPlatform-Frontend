@@ -19,13 +19,13 @@
     >
       <div class="bg-[#422277] !left-10 w-[55rem] h-[35rem] rounded-full blur-[10rem]"></div>
     </div>
-    <sidebar-header class="bg-[#101014]/50 backdrop-blur-2xl">
+    <sidebar-header class="bg-[#101014]/50 will-change-transform backdrop-blur-2xl">
       <user-profile-nav :user="userData?.data" />
     </sidebar-header>
-    <sidebar-content class="bg-[#101014]/50 backdrop-blur-2xl no-scrollbar">
+    <sidebar-content class="bg-[#101014]/50 will-change-transform backdrop-blur-2xl no-scrollbar">
       <publisher-navmain :items="navItemsData" />
     </sidebar-content>
-    <sidebar-footer class="bg-[#101014]/50 backdrop-blur-2xl" />
+    <sidebar-footer class="bg-[#101014]/50 will-change-transform backdrop-blur-2xl" />
     <sidebar-rail />
   </sidebar>
 </template>

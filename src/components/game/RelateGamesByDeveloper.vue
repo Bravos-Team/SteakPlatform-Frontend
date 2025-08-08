@@ -16,7 +16,7 @@
         <span
           v-for="(team, idx) in developTeams"
           :key="idx"
-          class="whitespace-nowrap font-medium border border-white/20 text-white/80 text-sm px-3 py-1 rounded-[4px] bg-white/10 hover:bg-white/15 transition-colors duration-150"
+          class="whitespace-nowrap cursor-pointer font-medium border border-white/20 text-white/80 text-sm px-3 py-1 rounded-[4px] bg-white/10 hover:bg-white/15 transition-colors duration-150"
         >
           {{ team }}
         </span>

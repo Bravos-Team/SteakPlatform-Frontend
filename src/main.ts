@@ -11,8 +11,22 @@ import { RouteLocationNormalized } from 'vue-router'
 import i18n from '@/i18n/index'
 import './assets/index.css'
 import { mutationDefaults } from '@/hooks/mutationDefaults/mutations'
+import { queryDefaults } from '@/hooks/queryDefaults/queries'
 const queryClient = new QueryClient()
 
+queryDefaults.forEach((query) => {
+  queryClient.setQueryDefaults(query.key, {
+    queryFn: query.fn,
+    retry: query?.retry,
+    refetchOnMount: query?.refetchOnMount,
+    refetchOnWindowFocus: query?.refetchOnWindowFocus,
+    refetchInterval: query?.refetchInterval,
+    refetchOnReconnect: query?.refetchOnReconnect,
+    select: query?.select,
+    enabled: query?.enabled,
+    staleTime: query?.staleTime,
+  })
+})
 mutationDefaults.forEach((mutation) => {
   queryClient.setMutationDefaults(mutation.key, {
     mutationFn: mutation.fn,
@@ -32,11 +46,11 @@ const vueQueryPluginOptions: VueQueryPluginOptions = {
   queryClientConfig: {
     defaultOptions: {
       queries: {
+        staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: true,
         retryOnMount: false,
-        staleTime: 1000 * 60 * 5,
         retry: true,
       },
     },

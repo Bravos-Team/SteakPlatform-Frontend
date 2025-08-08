@@ -37,6 +37,28 @@ const storeRoutes: RouteRecordRaw = {
         group: 'user',
       },
     },
+    {
+      path: '/me/profiles',
+      name: 'UserProfiles',
+      component: () => import('@/layouts/user/ProfileManageLayout.vue'),
+      redirect: { name: 'UserProfileSettings' },
+      children: [
+        {
+          path: 'settings',
+          name: 'UserProfileSettings',
+          component: () => import('@/views/store/auth/profile/UserProfileDetails.vue'),
+        },
+      ],
+      meta: {
+        middleware: [user],
+        group: 'user',
+      },
+    },
+    {
+      path: '/download',
+      name: 'DownloadApplicationPage',
+      component: () => import('@/views/download/DownloadRedirectPage.vue'),
+    },
   ],
 }
 export default storeRoutes

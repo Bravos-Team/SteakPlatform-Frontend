@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-[#101014] px-4">
     <div
-      class="max-w-md text-center bg-white/90 backdrop-blur-3xl shadow-xl rounded-2xl p-8 border border-green-100"
+      class="max-w-md text-center bg-white/90 backdrop-blur-3xl will-change-transform shadow-xl rounded-2xl p-8 border border-green-100"
     >
       <svg
         class="mx-auto mb-6 h-16 w-16 text-green-500"
@@ -12,7 +12,7 @@
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
       </svg>
-      <h1 class="text-2xl font-bold text-green-600 mb-2">
+      <h1 class="text-2xl font-bold text-green-600 mb-2 text-wrap">
         {{ $t('title.pages.payment_message.success.title') }} !
       </h1>
       <p class="text-gray-600 mb-6">{{ $t('title.pages.payment_message.success.description') }}</p>

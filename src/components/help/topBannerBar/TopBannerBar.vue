@@ -46,7 +46,7 @@
           :class="{ 'ring-3': isForcused }"
         >
           <div
-            class="flex py-3 z-1 px-3 bg-[#7f5af0]/20 backdrop-blur-sm cursor-pointer rounded-l-full w-full laptop:w-200 border-r-1"
+            class="flex py-3 z-1 px-3 bg-[#7f5af0]/20 will-change-transform backdrop-blur-sm cursor-pointer rounded-l-full w-full laptop:w-200 border-r-1"
           >
             <label for="search" class="w-full flex items-center gap-x-2 z-1">
               <search class="size-6" />
@@ -62,7 +62,7 @@
             </label>
           </div>
           <button
-            class="font-black rounded-r-full px-3 bg-[#2cb67d]/80 h-full border-l-0 cursor-pointer"
+            class="font-black rounded-r-full px-3 bg-[#2cb67d]/80 min-h-full border-l-0 cursor-pointer"
           >
             Search
           </button>

@@ -1,7 +1,14 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
     <div class="relative">
-      <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
+      <div class="fixed inset-0 z-[-1]">
+        <img
+          src="https://ccdn.steak.io.vn/assets-desert.png"
+          alt=""
+          class="w-full h-full object-cover blur-[4px]"
+        />
+      </div>
+
       <particles-base class="absolute opacity-80" />
       <div class="bg-black absolute inset-0 opacity-35"></div>
 
@@ -12,7 +19,7 @@
   </div>
   <div class="flex justify-center items-center h-screen px-5">
     <div
-      class="backdrop-blur-[6px] hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-5 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
+      class="backdrop-blur-[6px] will-change-transform hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-5 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
     >
       <div class="flex flex-col justify-center items-center gap-y-3 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
@@ -50,7 +57,7 @@
 
             <div class="flex text-white gap-2 flex-col w-full">
               <span class="font-black"> {{ $t('auth.password') }}</span>
-              <div class="relative">
+              <div class="relative flex-col flex">
                 <input
                   :type="isPassword ? 'password' : 'text'"
                   v-model="form.password"
