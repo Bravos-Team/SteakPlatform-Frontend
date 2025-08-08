@@ -9,3 +9,13 @@ export const useGetGameListStore = async (
 
 export const useGetGameDetails = async (gameId: string, signal?: AbortSignal) =>
   SteakApi.get(`/store/public/games/details?gameId=${gameId}`, { signal: signal })
+
+export const getGameComingSoon = async (
+  signal?: AbortSignal,
+  paginate?: { page: number; size: number },
+) => {
+  return SteakApi.get('/store/public/games/coming-soon', {
+    params: { ...paginate },
+    signal: signal,
+  })
+}

@@ -7,19 +7,21 @@
       <div v-for="(media, index) in game" :key="index" class="cursor-grab active:cursor-grabbing">
         <img v-if="media.type === 'image'" :class="`number-slide${index + 1}`" :src="media.url"
           class="!w-full !shrink-0 keen-slider__slide" />
-        <video v-else-if="media.type === 'video'" :class="`number-slide${index + 1}`" :src="media.url"
-          class="!w-full !shrink-0 keen-slider__slide" preload="metadata" />
+        <video autoplay controls muted v-else-if="media.type === 'video'" :class="`number-slide${index + 1}`"
+          :src="media.url" class="!w-full !shrink-0 keen-slider__slide" preload="metadata" />
       </div>
       <!-- BUTTONS PREV & NEXT  -->
       <button @click="slider?.prev()"
         class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -left-20 group-hover/img-slider:left-0 h-full w-[50px] bg-gradient-to-l from-[#000]/0 to-[#000]/35">
-        <img class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500 rotate-180"
-          src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
+        <div class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500 rotate-180">
+          <img src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
+        </div>
       </button>
-      <button @click="slider?.next()"
+      <button
         class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -right-20 group-hover/img-slider:right-0 h-full w-[50px] bg-gradient-to-r from-[#000]/0 to-[#000]/35">
-        <img class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500"
-          src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
+        <div class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500">
+          <img @click="slider?.next()" src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
+        </div>
       </button>
       <!-- END BUTTONS PREV & NEXT  -->
     </div>

@@ -96,12 +96,14 @@ SteakApi.interceptors.response.use(
       await router.push({ name: 'Login' })
       return Promise.reject(error)
     }
+
     if (error.response.config.url.includes('/refresh')) {
       removeCookies(['userAccessRights', 'publisherAccessRights'])
       toastErrorNotificationPopup(msg, title)
       await router.push(redirect)
       return Promise.reject(error)
     }
+
     if (status === 401 && route?.meta?.middleware && !originalRequest._retry) {
       originalRequest._retry = true
       if (isRefreshing) {
