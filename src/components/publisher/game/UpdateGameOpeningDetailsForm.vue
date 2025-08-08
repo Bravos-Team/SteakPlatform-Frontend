@@ -102,7 +102,6 @@
             " :disabled="isUpdating"
               class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-yellow-400/30 rounded-sm">
               {{ $t('title.pages.game_details.form.update_game_opening') }}
-
               <LoaderCircle class="animate-spin size-6" />
             </button>
             <button :disabled="isUpdating" v-else @click="handleUpdateGameDetails"

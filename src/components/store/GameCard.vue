@@ -4,9 +4,8 @@
     <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
       <!-- IMAGE -->
       <div
-        class="group relative w-full rounded-2xl overflow-hidden h-[10rem] filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]">
-        <img :src="game?.thumbnail" :alt="game.name"
-          class="tablet:size-[16rem] desktop-xl:size-[18rem] desktop:size-[16rem]  object-cover" />
+        class="group relative w-full rounded-2xl overflow-hidden   filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]">
+        <img :src="game?.thumbnail" :alt="game.name" class="object-cotain rounded-2xl" />
       </div>
       <!-- END IMAGE -->
 
