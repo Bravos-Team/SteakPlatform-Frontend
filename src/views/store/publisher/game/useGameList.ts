@@ -7,7 +7,7 @@ export const useGameStoreList = defineStore(
   () => {
     const pagination = ref<GAME_MANAGE_FILTERS_TYPE>({
       page: 1,
-      size: 100,
+      size: 8,
       status: 'OPENING',
     })
 

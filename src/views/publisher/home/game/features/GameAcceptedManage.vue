@@ -8,31 +8,22 @@
       </card-header>
       <card-content class="px-3 py-3 gap-y-2 flex flex-col">
         <!-- UPLOAD GAME BAR -->
-        <div
-          v-if="isFetchingGameList"
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 w-full py-3'"
-        >
-          <Card
-            v-for="obj in Array(8)"
-            class="animate-pulse bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem] relative"
-          >
+        <div v-if="isFetchingGameList"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 w-full py-3'">
+          <Card v-for="obj in Array(8)"
+            class="animate-pulse bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] h-[24rem] lg:h-[20rem] xl:h-[25rem] relative">
           </Card>
         </div>
-        <div
-          class="flex flex-col tablet:grid tablet:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-4 gap-y-6 gap-x-3"
-          v-else-if="gamesList?.data && !isFetchingGameList"
-        >
-          <div v-for="(game, index) in gamesList?.data" :key="index">
+        <div class="flex flex-col tablet:grid tablet:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-4 gap-y-6 gap-x-3"
+          v-else-if="gamesList?.data && !isFetchingGameList">
+          <div v-for="(game, index) in gamesList?.data.content" :key="index">
             <card
-              class="cursor-pointer bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] min-h-[18rem] relative"
-            >
+              class="cursor-pointer bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] min-h-[18rem] relative">
               <div class="flex flex-col gap-y-2 w-full h-full">
-                <router-link
-                  :to="{
-                    name: 'PublisherGameAcceptedDetails',
-                    params: { id: game.gameId as any },
-                  }"
-                >
+                <router-link :to="{
+                  name: 'PublisherGameAcceptedDetails',
+                  params: { id: game.gameId as any },
+                }">
                   <div class="flex max-h-[15rem] overflow-hidden">
                     <img :src="game.thumbnail" class="object-cover w-full h-full" alt="" />
                   </div>
@@ -45,24 +36,14 @@
           </div>
         </div>
 
-        <pagination
-          v-if="gamesList"
-          v-slot="{ page }"
-          :total="8"
-          :page="useGameListStore.pagination.page"
-          :items-per-page="8"
-          :default-page="1"
-          @update:page="useGameListStore.pagination.page = $event"
-        >
+        <pagination v-if="gamesList?.data.page" v-slot="{ page }" :total="gamesList.data.page.totalElements"
+          :page="gamesList.data.page.number + 1" :items-per-page="filters.size!"
+          :default-page="gamesList.data.page.number + 1" @update:page="filters.page = $event">
           <pagination-content v-slot="{ items }">
             <pagination-previous :disabled="page === 1" class="cursor-pointer" />
             <template v-for="(item, index) in items" :key="index" class="cursor-pointer">
-              <pagination-item
-                v-if="item.type === 'page'"
-                :value="item.value"
-                :key="item.value"
-                :is-active="item.value === page"
-              >
+              <pagination-item v-if="item.type === 'page'" :value="item.value" :key="item.value"
+                :is-active="item.value === page">
                 {{ item.value }}
               </pagination-item>
             </template>
@@ -95,8 +76,8 @@ import { nextTick, onMounted, ref, watch } from 'vue'
 const useGameListStore = useGameStoreList()
 
 const filters = ref<GAME_MANAGE_FILTERS_TYPE>({
-  ...useGameListStore.pagination,
-  size: 100,
+  size: 8,
+  page: 1,
 })
 
 const { t } = useI18n()

@@ -72,18 +72,36 @@ SteakApi.interceptors.response.use(
     const group = (route.meta?.group ?? 'default') as keyof typeof messages
     const { msg, title, redirect } = messages[group] || messages.default
     console.log('API Error:', error)
+
+    if (
+      (status === 401 && error.response.config.url.includes('dev/auth/username-login')) ||
+      error.response.config.url.includes('dev/auth/email-login') ||
+      error.response.config.url.includes('user/auth/username-login') ||
+      error.response.config.url.includes('user/auth/email-login')
+    ) {
+      if (group === 'publisher') {
+        removeCookie('publisherAccessRights')
+        await router.push({ name: 'PublisherAuthLogin' })
+      } else {
+        removeCookie('userAccessRights')
+        await router.push({ name: 'Login' })
+      }
+      return Promise.reject(error)
+    }
+
     if (status === 401 && error.response.config.url.includes('/store/private/order/create')) {
       removeCookie('userAccessRights')
       // toastErrorNotificationPopup(msg, title)
       await router.push({ name: 'Login' })
       return Promise.reject(error)
     }
-    if (
-      status === 401 &&
-      route?.meta?.middleware &&
-      !originalRequest._retry &&
-      !error.response.config.url.includes('/refresh')
-    ) {
+    if (error.response.config.url.includes('/refresh')) {
+      removeCookies(['userAccessRights', 'publisherAccessRights'])
+      toastErrorNotificationPopup(msg, title)
+      await router.push(redirect)
+      return Promise.reject(error)
+    }
+    if (status === 401 && route?.meta?.middleware && !originalRequest._retry) {
       originalRequest._retry = true
       if (isRefreshing) {
         return new Promise((resolve, reject) => {

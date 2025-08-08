@@ -1,18 +1,12 @@
 <template>
-  <div
-    v-if="game && isReleased(game)"
-    class="group relative px-1 tablet:w-[16rem] desktop:w-[16rem] desktop-xl:w-[18rem] tablet:col-span-4 col-span-6 laptop:col-span-3 rounded-2xl"
-  >
+  <div v-if="game && isReleased(game)"
+    class="group relative px-1 tablet:w-[16rem] desktop:w-[16rem] desktop-xl:w-[18rem] tablet:col-span-4 col-span-6 laptop:col-span-3 rounded-2xl">
     <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
       <!-- IMAGE -->
       <div
-        class="group relative w-full rounded-2xl overflow-hidden filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]"
-      >
-        <img
-          :src="game?.thumbnail"
-          :alt="game.name"
-          class="tablet:size-[16rem] desktop-xl:size-[18rem] desktop:size-[16rem]"
-        />
+        class="group relative w-full rounded-2xl overflow-hidden filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]">
+        <img :src="game?.thumbnail" :alt="game.name"
+          class="tablet:size-[16rem] desktop-xl:size-[18rem] desktop:size-[16rem] object-cover" />
       </div>
       <!-- END IMAGE -->
 
@@ -31,15 +25,12 @@
     <!-- END TITLE AND PRICE -->
 
     <!-- ADD TO CART -->
-    <button
-      :disabled="isAddToCartPending"
-      :class="{
-        'cursor-progress': isAddToCartPending,
-        'cursor-pointer': !isAddToCartPending,
-      }"
+    <button :disabled="isAddToCartPending" :class="{
+      'cursor-progress': isAddToCartPending,
+      'cursor-pointer': !isAddToCartPending,
+    }"
       class="peer/category-img absolute group-hover:opacity-100 opacity-0 transition-all duration-300 top-[10px] right-[10px]"
-      @click="handleAddToCart(game.id, game.name)"
-    >
+      @click="handleAddToCart(game.id, game.name)">
       <img src="https://ccdn.steak.io.vn/assets-ico-plus-white.svg" alt="" />
     </button>
 

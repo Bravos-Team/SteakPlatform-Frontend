@@ -25,6 +25,7 @@ export const useMutateAddToWishlist = () => {
       queryClient.invalidateQueries({
         queryKey: WISH_LIST_QUERY_KEYS.USER,
       }),
+    retry: 1,
   })
   return { mutateAsync, isPending }
 }
