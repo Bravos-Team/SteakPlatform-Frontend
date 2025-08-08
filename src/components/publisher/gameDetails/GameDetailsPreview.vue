@@ -5,16 +5,11 @@
       gameDetails?.name
     }}</card-title>
     <div class="flex flex-col gap-y-2">
-      <div
-        v-if="gameDetails?.developerTeams"
-        class="flex gap-x-3 w-full flex-wrap desktop:w-[40rem]"
-      >
+      <div v-if="gameDetails?.developerTeams" class="flex gap-x-3 w-full flex-wrap desktop:w-[40rem]">
         <span class="text-nowrap text-lg">Develop Team:</span>
         <div
           class="text-sm flex flex-wrap bg-white/10 rounded-sm items-center justify-center px-1 font-mono font-normal"
-          v-for="(developerTeam, index) in gameDetails?.developerTeams"
-          :key="index"
-        >
+          v-for="(developerTeam, index) in gameDetails?.developerTeams" :key="index">
           {{ developerTeam }}
         </div>
       </div>
@@ -43,21 +38,10 @@
         <!--- PREVIEW MEDIA BAR -->
         <div class="flex items-center flex-col gap-y-8 h-full w-full">
           <!-- START MEDIA -->
-          <div
-            class="w-full min-h-[35rem] overflow-hidden bg-white/10 flex items-center justify-center rounded-sm"
-          >
-            <img
-              v-if="gameDetails?.thumbnail"
-              :src="gameDetails?.thumbnail"
-              alt=""
-              class="object-cover w-full"
-            />
+          <div class="w-full  overflow-hidden bg-white/10 flex items-center justify-center rounded-sm">
+            <img v-if="gameDetails?.thumbnail" :src="gameDetails?.thumbnail" alt="" class="object-cover w-full" />
 
-            <span
-              v-else
-              class="text-center font-bold text-7xl text-20 laptop:text-[100px] text-white/30"
-              >MEDIA</span
-            >
+            <span v-else class="text-center font-bold text-7xl text-20 laptop:text-[100px] text-white/30">MEDIA</span>
           </div>
           <!-- END MEDIA -->
 
@@ -67,24 +51,13 @@
               <chevron-left class="w-6 h-6 stroke-3 text-white/30" />
             </div>
             <div
-              class="flex flex-nowrap laptop:gap-x-3 max-w-[40rem] gap-x-2 items-center justify-center w-full !overflow-hidden"
-            >
-              <div
-                v-if="gameDetails?.media"
-                v-for="media in gameDetails?.media"
-                class="shrink-0 min-w-[100px] h-14 bg-white/10 rounded-sm flex justify-center"
-              >
-                <img
-                  v-if="media.type === 'image'"
-                  :src="media.url"
-                  class="w-full h-full object-cover rounded-sm"
-                  alt="Game Media"
-                />
-                <video
-                  v-else-if="media.type === 'video'"
-                  :src="media.url"
-                  class="w-full h-full object-cover rounded-sm"
-                />
+              class="flex flex-nowrap laptop:gap-x-3 max-w-[40rem] gap-x-2 items-center justify-center w-full !overflow-hidden">
+              <div v-if="gameDetails?.media" v-for="media in gameDetails?.media"
+                class="shrink-0 min-w-[100px] h-14 bg-white/10 rounded-sm flex justify-center">
+                <img v-if="media.type === 'image'" :src="media.url" class="w-full h-full object-cover rounded-sm"
+                  alt="Game Media" />
+                <video v-else-if="media.type === 'video'" :src="media.url"
+                  class="w-full h-full object-cover rounded-sm" />
               </div>
 
               <div v-else v-for="i in 6" class="!w-25 h-14 bg-white/10 rounded-sm shrink-0" />
@@ -104,16 +77,12 @@
           <!-- START SUB TYPE BAR -->
           <div class="w-full grid tablet:grid-cols-2 gap-y-2 gap-x-2 justify-between">
             <div
-              class="w-6/12 px-2 flex-wrap laptop:border-r-1 border-b-1 pb-1 laptop:pb-0 border-white/30 laptop:border-b-0 flex flex-col gap-y-2"
-            >
+              class="w-6/12 px-2 flex-wrap laptop:border-r-1 border-b-1 pb-1 laptop:pb-0 border-white/30 laptop:border-b-0 flex flex-col gap-y-2">
               <template v-if="gameDetails?.regions">
                 <div class="w-16 font-black h-5 rounded-xs">Regions:</div>
                 <div class="flex flex-wrap gap-y-2 gap-x-2">
-                  <div
-                    class="px-1 flex items-center justify-center bg-white/10 h-5 rounded-xs text-nowrap"
-                    v-for="(region, index) in gameDetails.regions"
-                    :key="index"
-                  >
+                  <div class="px-1 flex items-center justify-center bg-white/10 h-5 rounded-xs text-nowrap"
+                    v-for="(region, index) in gameDetails.regions" :key="index">
                     {{ region }}
                   </div>
                 </div>
@@ -129,11 +98,8 @@
               <template v-if="gameDetails?.languageSupported">
                 <div class="h-5 font-black rounded-xs">Languages Supported:</div>
                 <div class="flex flex-wrap gap-x-2 gap-y-2">
-                  <div
-                    class="px-1 flex items-center justify-center bg-white/10 h-5 rounded-xs text-nowrap"
-                    v-for="(language, index) in gameDetails.languageSupported"
-                    :key="index"
-                  >
+                  <div class="px-1 flex items-center justify-center bg-white/10 h-5 rounded-xs text-nowrap"
+                    v-for="(language, index) in gameDetails.languageSupported" :key="index">
                     {{ language }}
                   </div>
                 </div>
@@ -152,12 +118,8 @@
 
           <div v-if="gameDetails?.longDescription" class="flex flex-col gap-y-3 w-full">
             <span class="bg-white/10 px-2 rounded-xs text-white/30 font-bold">
-              {{ $t('title.pages.game_details.form.long_descriptions.title') }}</span
-            >
-            <span
-              class="text-sm text-white/80 text-pretty"
-              v-html="DOMPurify.sanitize(gameDetails.longDescription)"
-            >
+              {{ $t('title.pages.game_details.form.long_descriptions.title') }}</span>
+            <span class="text-sm text-white/80 text-pretty" v-html="DOMPurify.sanitize(gameDetails.longDescription)">
             </span>
           </div>
           <div v-else class="flex flex-col gap-y-3 w-full">
@@ -188,8 +150,7 @@
 
         <!-- START AGE RATING BAR -->
         <div
-          class="flex flex-wrap p-[15px] gap-x-[15px] gap-y-2 justify-start rounded-[10px] items-center border-[#fff]/20 border w-full mt-3"
-        >
+          class="flex flex-wrap p-[15px] gap-x-[15px] gap-y-2 justify-start rounded-[10px] items-center border-[#fff]/20 border w-full mt-3">
           <div class="flex justify-center w-full items-center">
             <div class="w-16 bg-white/10 rounded-sm h-15" />
           </div>
@@ -203,8 +164,7 @@
 
         <div class="flex justify-start w-full mt-2">
           <button
-            class="rounded-[4px] py-[1px] justify-center px-[8px] flex items-center bg-[#ffffff26] w-23 h-7"
-          ></button>
+            class="rounded-[4px] py-[1px] justify-center px-[8px] flex items-center bg-[#ffffff26] w-23 h-7"></button>
         </div>
         <div class="flex justify-start w-full font-bold text-[18px] text-white/50">
           {{
@@ -217,67 +177,48 @@
 
         <div class="flex flex-col gap-y-[10px]">
           <button
-            class="py-[12px] text-white/30 px-[20px] align-middle bg-[#26bbff]/30 rounded-[10px] flex justify-center items-center"
-          >
+            class="py-[12px] text-white/30 px-[20px] align-middle bg-[#26bbff]/30 rounded-[10px] flex justify-center items-center">
             <!-- {{ $t('title.pages.game_details.form.long_descriptions') }} -->
             {{ $t('features.buttons.buy_now') }}
           </button>
           <button
-            class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center"
-          >
+            class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center">
             {{ $t('features.buttons.add_to_cart') }}
           </button>
           <button
-            class="text-wrap py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center"
-          >
+            class="text-wrap py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 text-white/40 rounded-[10px] flex justify-center items-center">
             {{ $t('features.buttons.add_to_wishlist') }}
           </button>
         </div>
 
         <div class="flex flex-col text-[15px]">
-          <div
-            class="flex border-b-[0.5px] border-b-[#ffffff37] justify-between py-[10px] px-[0px]"
-          >
+          <div class="flex border-b-[0.5px] border-b-[#ffffff37] justify-between py-[10px] px-[0px]">
             <span class="text-[#ffffffa6]">
               <div class="w-25 h-4 rounded-xs bg-white/10" />
             </span>
             <span class="text-white flex gap-x-[10px] items-center">
               <div v-if="gameDetails?.platforms" class="w-20 h-4 rounded-xs bg-white/10"></div>
               <div v-else class="w-20 h-4 rounded-xs bg-white/10" />
-              <img
-                class="w-5"
-                src="https://ccdn.steak.io.vn/assets-5-percent-rewards-blue.svg"
-                alt=""
-              />
+              <img class="w-5" src="https://ccdn.steak.io.vn/assets-5-percent-rewards-blue.svg" alt="" />
             </span>
           </div>
-          <div
-            class="flex border-b-[0.5px] border-b-[#ffffff37] justify-between py-[10px] px-[0px]"
-          >
+          <div class="flex border-b-[0.5px] border-b-[#ffffff37] justify-between py-[10px] px-[0px]">
             <div class="w-23 h-4 rounded-xs bg-white/10" />
             <div class="w-15 h-4 rounded-xs bg-white/10" />
           </div>
-          <div
-            class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]"
-          >
+          <div class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
             <div class="w-28 h-4 rounded-xs bg-white/10" />
             <div class="w-15 h-4 rounded-xs bg-white/10" />
           </div>
-          <div
-            class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]"
-          >
+          <div class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
             <div class="w-23 h-4 rounded-xs bg-white/10" />
             <div class="w-15 h-4 rounded-xs bg-white/10" />
           </div>
-          <div
-            class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]"
-          >
+          <div class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
             <div class="w-20 h-4 rounded-xs bg-white/10" />
             <div class="w-15 h-4 rounded-xs bg-white/10" />
           </div>
-          <div
-            class="flex justify-between items-center py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]"
-          >
+          <div class="flex justify-between items-center py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
             <div class="w-28 h-4 rounded-xs bg-white/10" />
             <div class="w-8 h-8 rounded-xs bg-white/10" />
           </div>

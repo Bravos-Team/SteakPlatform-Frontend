@@ -61,6 +61,9 @@ export const publisherRoutes: RouteRecordRaw[] = [
     path: '/publisher/login',
     name: 'PublisherAuthLogin',
     component: () => import('@/views/publisher/auth/login/LoginPage.vue'),
+    meta: {
+      group: 'publisher',
+    },
   },
   {
     path: '/publisher/register',

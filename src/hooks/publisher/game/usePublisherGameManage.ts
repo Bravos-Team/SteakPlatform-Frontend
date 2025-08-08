@@ -30,7 +30,8 @@ export const usePublisherGameList = (filters: Ref<GAME_MANAGE_FILTERS_TYPE>) => 
   return useQuery({
     queryKey: GAME_MANAGE_QUERY_KEYS.LIST(filters),
     queryFn: async ({ signal }) => await getGamesList(filters.value, signal),
-    staleTime: 1000 * 60 * 60,
+    placeholderData: keepPreviousData,
+    retry: 3,
   })
 }
 

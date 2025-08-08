@@ -10,6 +10,7 @@ import {
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
 import { PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS } from '@/hooks/constants/publisher/project/publisherPersonalProjectConstant'
 import { useQuery } from '@tanstack/vue-query'
+import { GAME_MANAGE_QUERY_KEYS } from '../constants/publisher/game/gameManage-key'
 
 export const usePublisherRegister = () => {
   const { isPending, mutateAsync, reset } = useMutation({
@@ -38,7 +39,6 @@ export const usePublisherLoginUserName = () => {
       setCookie('publisherAccessRights', response.data?.username, {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       })
-
     },
   })
   return {
@@ -67,10 +67,17 @@ export const usePublisherLoginEmail = () => {
 }
 
 export const usePublisherLogout = () => {
+  const queryClient = useQueryClient()
   return useQuery({
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LOGOUT(),
     queryFn: async () => {
-      // queryClient.clear()
+      queryClient.clear()
+      // await queryClient.invalidateQueries({
+      //   queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL,
+      // })
+      // await queryClient.invalidateQueries({
+      //   queryKey: GAME_MANAGE_QUERY_KEYS.ALL,
+      // })
       removeCookie('publisherAccessRights')
       await logout()
     },

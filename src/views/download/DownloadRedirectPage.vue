@@ -82,8 +82,11 @@
 
                 <!-- Checksum  -->
                 <div v-if="isLinux && releaseInfoLinux"
-                    class="mt-8 text-gray-300 text-sm bg-gray-900/70 p-4 rounded-xl border border-gray-700">
-                    <p><span class="text-white font-medium">SHA-256:</span> {{ releaseInfoLinux.digest }}</p>
+                    class="mt-8 text-gray-300 text-sm bg-gray-900/70 p-4 rounded-xl border border-gray-700 flex gap-x-1">
+                    <span class="text-white  font-medium">SHA-256:</span>
+                    <span class="text-wrap truncate"> {{
+                        releaseInfoLinux.digest
+                        }}</span>
                     <!-- <p><span class="text-white font-medium">MD5:</span> 1bc29b36f623ba82aaf6724fd3b16718</p> -->
                 </div>
                 <div v-if="isWindows && releaseInfoWindows"

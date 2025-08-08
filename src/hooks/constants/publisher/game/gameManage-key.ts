@@ -3,8 +3,8 @@ import QUERY_KEY_TYPE from '@/hooks/constants/query-key-type'
 import { Ref } from 'vue'
 
 export const GAME_MANAGE_QUERY_KEYS = {
+  ALL: ['publisher', 'game'] as const,
   GAME: (id: string) => ['publisher', 'game', 'manage', 'details', id] as const,
-  ALL: ['publisher', 'game', 'manage', 'list'],
   LIST: ((filters: Ref<GAME_FILTERED_PARAMS>) => [
     'publisher',
     'game',
