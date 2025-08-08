@@ -1,28 +1,16 @@
 <template>
   <tooltip-provider>
     <tooltip>
-      <Form
-        v-if="gameName"
-        :validate-on-mount="false"
-        :initial-touched="{ name: false }"
-        :keep-values="true"
-        :validation-schema="formSchema"
-        v-slot="{ handleSubmit, values }"
-      >
+      <Form :validate-on-mount="false" :initial-touched="{ name: false }" :keep-values="true"
+        :validation-schema="formSchema" v-slot="{ handleSubmit, values }">
         <Dialog :open="showDialog" @update:open="showDialog = $event">
           <tooltip-trigger as-child>
-            <button
-              @click="showDialog = !showDialog"
-              class="cursor-pointer w-12 h-10 rounded-sm bg-black/40 transition-colors duration-300 hover:bg-black/20 flex justify-center items-center"
-            >
+            <button @click="showDialog = !showDialog"
+              class="cursor-pointer w-12 h-10 rounded-sm bg-black/40 transition-colors duration-300 hover:bg-black/20 flex justify-center items-center">
               <pen-line class="w-5 h-5" />
             </button>
           </tooltip-trigger>
-          <tooltip-content
-            :color="1"
-            :class="' bg-[#101014]/20 backdrop-blur-xl text-white'"
-            :arrow="false"
-          >
+          <tooltip-content :color="1" :class="' bg-[#101014]/20 backdrop-blur-xl text-white'" :arrow="false">
             <span> {{ $t('title.pages.game_details.actions.update_name') }}</span>
           </tooltip-content>
           <dialog-content>
@@ -40,11 +28,7 @@
                     </span>
                   </form-label>
                   <form-control>
-                    <Input
-                      placeholder="Product Name..."
-                      :default-value="gameName"
-                      v-bind="componentField"
-                    />
+                    <Input placeholder="Product Name..." :default-value="gameName" v-bind="componentField" />
                   </form-control>
                   <form-description>
                     {{ $t('title.pages.game_details.dialog.description') }}
@@ -54,21 +38,14 @@
               </form-field>
             </form>
             <dialog-footer>
-              <Button
-                v-if="isUpdateProjectGamePending || isUpdateProjectGameOpeningPending"
-                variant="default"
-                class="min-w-32 cursor-not-allowed"
-              >
+              <Button v-if="isUpdateProjectGamePending || isUpdateProjectGameOpeningPending" variant="default"
+                class="min-w-32 cursor-not-allowed">
                 <LoaderCircle class="animate-spin" />
               </Button>
               <tooltip v-else>
                 <tooltip-trigger>
-                  <Button
-                    variant="default"
-                    :class="cn(isGameNameValid ? '' : 'cursor-not-allowed')"
-                    class="min-w-32"
-                    form="updateProductNameForm"
-                  >
+                  <Button variant="default" :class="cn(isGameNameValid ? '' : 'cursor-not-allowed')" class="min-w-32"
+                    form="updateProductNameForm">
                     <span> {{ $t('title.pages.game_details.dialog.button') }}</span>
                   </Button>
                 </tooltip-trigger>

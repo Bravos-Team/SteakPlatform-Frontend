@@ -2,11 +2,8 @@
   <TooltipProvider>
     <form @submit.prevent class="text-md flex flex-col gap-y-4 flex-wrap w-full">
       <!-- START SELECTED TOP BAR ${data} -->
-      <selected-top-bar
-        :is-hide-internet-switching="true"
-        v-model:update-at="updateAtStatus"
-        v-model:get-internet-connected-required-data="internetRequiredData"
-      />
+      <selected-top-bar :is-hide-internet-switching="true" v-model:update-at="updateAtStatus"
+        v-model:get-internet-connected-required-data="internetRequiredData" />
       <!-- END SELECTED TOP BAR ${data}-->
 
       <!-- CONSIDER TERMS OF SERVICE -->
@@ -18,11 +15,8 @@
       <!-- END COVER IAMGE ${data}-->
 
       <!-- START MEDIAS & IMAGES BAR ${data} -->
-      <media-bar
-        :is-assigned-media-files="isAssignedMediaFiles"
-        @media-deleted-update="handleDeleteMedia"
-        :media-data="gameToMutate.media"
-      />
+      <media-bar :is-assigned-media-files="isAssignedMediaFiles" @media-deleted-update="handleDeleteMedia"
+        :media-data="gameToMutate.media" />
       <!-- END MEDIAS & IMAGES BAR -->
 
       <!-- START DEVELOPER TEAM INPUTS ${data} -->
@@ -30,17 +24,13 @@
       <!-- END DEVELOPER TEAM INPUTS -->
 
       <!-- START DESCRIPTIONS BAR ${data} -->
-      <descriptions-bar
-        v-model:get-short-descriptions="shortDescriptionsData"
-        v-model:get-preview-long-descriptions-data="longDescriptionsData"
-      />
+      <descriptions-bar v-model:get-short-descriptions="shortDescriptionsData"
+        v-model:get-preview-long-descriptions-data="longDescriptionsData" />
 
       <!-- END DESCRIPTIONS BAR ${data} -->
 
       <!-- START TAGS SELECTED BAR ${data} -->
-      <div
-        class="grid tablet:grid-cols-2 laptop:grid-cols-2 desktop:grid-cols-3 gap-x-3 w-full flex-wrap gap-y-3"
-      >
+      <div class="grid tablet:grid-cols-2 laptop:grid-cols-2 desktop:grid-cols-3 gap-x-3 w-full flex-wrap gap-y-3">
         <!-- START AVAILABLE COUNTRIES PICKER -->
         <div class="flex flex-col desktop:col-span-1 justify-center w-full">
           <span class="flex items-center text-sm">
@@ -55,9 +45,7 @@
           <span class="flex items-center text-sm">
             {{ $t('title.pages.game_details.form.languages_supported.title') }}
           </span>
-          <languages-supported-picker
-            v-model:get-languages-supported-data="gameToMutate.languageSupported"
-          />
+          <languages-supported-picker v-model:get-languages-supported-data="gameToMutate.languageSupported" />
         </div>
         <!-- END LANGUAGES SUPPORTED PICKER -->
 
@@ -74,11 +62,9 @@
       <!-- END TAGS SELECTED BAR ${data} -->
 
       <!-- START SYSTEM REQUIREMENTS BAR -->
-      <system-requirements
-        v-model:is-init-system-requirements="isAddSystemRequirements"
+      <system-requirements v-model:is-init-system-requirements="isAddSystemRequirements"
         :minimum-data="gameToMutate.systemRequirements?.minimum"
-        :recommend-data="gameToMutate.systemRequirements?.recommend"
-      />
+        :recommend-data="gameToMutate.systemRequirements?.recommend" />
       <!-- END SYSTEM REQUIREMENTS BAR-->
 
       <!-- START FOOTER FORM -->
@@ -89,25 +75,19 @@
             <span class="text-white/80 font-black">
               {{ $t('features.filters.types.price') }}:
             </span>
-            <input
-              type="text"
-              v-model.lazy="gameToMutate.price"
-              @blur="
-                () => {
-                  gameToMutate.price = isNaN(Number(gameToMutate.price))
-                    ? 0
-                    : Number(gameToMutate.price)
-                }
-              "
-              placeholder="0"
-              class="w-full outline-1 outline-white/30 bg-white/10 rounded-sm px-2 py-1 focus:outline-gray-400 focus:outline-2"
-            />
+            <input type="text" v-model.lazy="gameToMutate.price" @blur="
+              () => {
+                gameToMutate.price = isNaN(Number(gameToMutate.price))
+                  ? 0
+                  : Number(gameToMutate.price)
+              }
+            " placeholder="0"
+              class="w-full outline-1 outline-white/30 bg-white/10 rounded-sm px-2 py-1 focus:outline-gray-400 focus:outline-2" />
           </div>
 
           <div class="flex gap-y-2 gap-x-2 items-end">
             <span class="text-white/80 font-black">
-              {{ $t('title.pages.game_details.form.price_preview') }}:</span
-            >
+              {{ $t('title.pages.game_details.form.price_preview') }}:</span>
             <span class="text-white/80 font-medium">{{ pricePreview }}</span>
           </div>
         </div>
@@ -117,53 +97,31 @@
         <div class="flex flex-row-reverse items-center">
           <div class="flex flex-row-reverse gap-x-2 flex-wrap gap-y-2 justify-end items-center">
             <!-- SAVE UPDATE -->
-            <button
-              v-if="
-                isGetPresignedImageUrlPending ||
-                isGetPresignedImageUrlsPending ||
-                isPostIntoPresignedUrlPending ||
-                isPostIntoPresignedUrlsPending ||
-                isDeleteImagesPending ||
-                isUpdateGameOpeningPending ||
-                isUpdateGamePricePending
-              "
-              class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-yellow-400/30 rounded-sm"
-            >
+            <button v-if="
+              isUpdating
+            " :disabled="isUpdating"
+              class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-yellow-400/30 rounded-sm">
               {{ $t('title.pages.game_details.form.update_game_opening') }}
 
               <LoaderCircle class="animate-spin size-6" />
             </button>
-            <button
-              v-else
-              @click="handleUpdateGameDetails"
-              class="px-3 font-black cursor-pointer hover:bg-yellow-400/90 duration-300 transition-colors py-2 border bg-yellow-400/70 rounded-sm"
-            >
+            <button :disabled="isUpdating" v-else @click="handleUpdateGameDetails"
+              class="px-3 font-black cursor-pointer hover:bg-yellow-400/90 duration-300 transition-colors py-2 border bg-yellow-400/70 rounded-sm">
               {{ $t('title.pages.game_details.form.update_game_opening') }}
             </button>
             <!-- END UPDATE -->
 
             <!-- CANCEL -->
-            <button
-              @click="handleCancelForm"
-              class="px-3 cursor-pointer duration-300 transition-all py-2 underline text-red-500"
-            >
+            <button @click="handleCancelForm"
+              class="px-3 cursor-pointer duration-300 transition-all py-2 underline text-red-500">
               {{ $t('title.pages.game_details.form.cancel') }}
             </button>
             <!-- END CANCEL -->
           </div>
         </div>
-        <Progress
-          v-if="
-            isGetPresignedImageUrlPending ||
-            isGetPresignedImageUrlsPending ||
-            isPostIntoPresignedUrlPending ||
-            isPostIntoPresignedUrlsPending ||
-            isUpdateGameOpeningPending ||
-            isUpdateGamePricePending
-          "
-          :model-value="progressDisplay"
-          class="transition-all duration-500 w-full"
-        />
+        <Progress v-if="
+          isUpdating
+        " :model-value="progressDisplay" class="transition-all duration-500 w-full" />
         <!-- END ACTIONS -->
       </div>
       <!-- END FOOTER FORM -->
@@ -218,19 +176,19 @@ const useSystem = useSystemRequirementsStore()
 const useComporessionImage = useImageCompressor()
 const useImageStore = useImageStored()
 
-const { mutateAsync: mutateGetPresignedImageUrl, isPending: isGetPresignedImageUrlPending } =
+const { mutateAsync: mutateGetPresignedImageUrl } =
   useGetPresignedImageUrl()
-const { mutateAsync: mutateGetPresignedImageUrls, isPending: isGetPresignedImageUrlsPending } =
+const { mutateAsync: mutateGetPresignedImageUrls } =
   useGetPresignedImageUrls()
-const { mutateAsync: mutatePostIntoPresignedUrl, isPending: isPostIntoPresignedUrlPending } =
+const { mutateAsync: mutatePostIntoPresignedUrl } =
   usePostIntoPresignedUrl()
-const { mutateAsync: mutatePostIntoPresignedUrls, isPending: isPostIntoPresignedUrlsPending } =
+const { mutateAsync: mutatePostIntoPresignedUrls } =
   usePostIntoPresignedUrls()
 
 const { isPending: isDeleteImagesPending, mutateAsync: mutateDeleteImages } = useDeleteImages()
-const { mutateAsync: mutateUpdateGameOpeningDetails, isPending: isUpdateGameOpeningPending } =
+const { mutateAsync: mutateUpdateGameOpeningDetails } =
   mutatePublisherUpdateGameDetails()
-const { mutateAsync: mutateUpdateGamePrice, isPending: isUpdateGamePricePending } =
+const { mutateAsync: mutateUpdateGamePrice } =
   mutatePublisherUpdateGamePrice()
 
 const props = defineProps<{
@@ -423,6 +381,7 @@ const handleResolveMediaFiles = async () => {
   }
 }
 
+const isUpdating = ref(false)
 const handleUpdateGameDetails = useDebounceFn(async () => {
   // <-- handle upload cover image
   completedApis.value = 0
@@ -436,12 +395,14 @@ const handleUpdateGameDetails = useDebounceFn(async () => {
 
   const diff = getObjectDiff(gameToMutate.value, props.gamePreviewDetails)
   if (!diff) {
+    isUpdating.value = false
     toastNotificationPopup(
       'No changes detected',
       'Please make some changes before saving as draft.',
     )
     return
   } else {
+    isUpdating.value = true
     Object.assign(diff, { ...diff, id: props.gamePreviewDetails.id })
     try {
       delete diff.id
@@ -466,6 +427,7 @@ const handleUpdateGameDetails = useDebounceFn(async () => {
           'Updated Game successfully',
           'Your game details have been updated successfully.',
         )
+        isUpdating.value = false
       } else {
         if (media_deleted_tracking.value && media_deleted_tracking.value.length > 0)
           await mutateDeleteImages(
@@ -488,6 +450,7 @@ const handleUpdateGameDetails = useDebounceFn(async () => {
         `Error: ${error}`,
       )
     } finally {
+      isUpdating.value = false
       completedApis.value = 0
       progressDisplay.value = 0
     }

@@ -27,8 +27,17 @@ export const createNewGameVersion = async (payload: GAME_NEW_VERSION_PAYLOAD_TYP
 export const getGamesList = async (
   filters?: GAME_MANAGE_FILTERS_TYPE,
   signal?: AbortSignal,
-): Promise<{ data: GAME_RESPONSE_TYPE[] }> =>
-  await SteakApi.get('/dev/game-management/list', { params: filters, signal })
+): Promise<{
+  data: {
+    content: GAME_RESPONSE_TYPE[]
+    page: {
+      size: number
+      number: number
+      totalElements: number
+      totalPages: number
+    }
+  }
+}> => await SteakApi.get('/dev/game-management/list', { params: filters, signal })
 
 export const getGameDetails = async (gameId: string, signal: AbortSignal) =>
   await SteakApi.get(`/dev/game-management/details/${gameId}`, { signal })

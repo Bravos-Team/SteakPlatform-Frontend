@@ -54,6 +54,11 @@ const storeRoutes: RouteRecordRaw = {
         group: 'user',
       },
     },
+    {
+      path: '/download',
+      name: 'DownloadApplicationPage',
+      component: () => import('@/views/download/DownloadRedirectPage.vue'),
+    },
   ],
 }
 export default storeRoutes

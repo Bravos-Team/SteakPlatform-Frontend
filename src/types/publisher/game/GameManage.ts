@@ -3,7 +3,8 @@ import { bigint } from 'zod'
 export type GAME_MANAGE_FILTERS_TYPE = {
   status?: string | null
   page: number
-  size: number
+  number?: number
+  size?: number
 }
 
 export type GAME_RESPONSE_TYPE = {
