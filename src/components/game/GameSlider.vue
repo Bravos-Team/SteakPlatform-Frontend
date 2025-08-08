@@ -33,13 +33,12 @@
           <img class="w-[5px] rotate-180" src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
         </button>
       </div>
-      <div ref="thumbnail"
-        class="h-[57px] keen-slider thumbnail flex gap-x-[10px] justify-center w-full overflow-x-scroll no-scrollbar">
+      <div ref="thumbnail" class="h-[57px] keen-slider  flex  justify-center w-full overflow-x-scroll   no-scrollbar">
         <div
-          class="keen-slider__slide border-[1px] cursor-pointer p-0 !min-w-[7rem] !max-w-[7rem] !min-h-full border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100 overflow-hidden rounded-sm"
+          class=" keen-slider__slide border-[1px] cursor-pointer p-0   shrink-0 snap-center !min-h-full border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100  rounded-sm"
           v-for="(media, index) in game" :class="`number-slide${index + 1}`" :key="index">
-          <img v-if="media.type === 'image'" :src="media.url" alt="" class="min-w-full !min-h-full object-cover" />
-          <video v-else-if="media.type === 'video'" :src="media.url" class="min-w-full !min-h-full object-cover" />
+          <img v-if="media.type === 'image'" :src="media.url" alt="" class="object-cover snap-center" />
+          <video v-else-if="media.type === 'video'" :src="media.url" class="object-cover snap-center" />
         </div>
       </div>
       <div class="h-full items-center justify-center flex">
@@ -83,13 +82,15 @@ const ThumbnailPlugin = (main: any) => {
     }
 
     slider.on('created', () => {
-      addActive(slider.track.details.rel)
+      addActive(main.value.track.details.rel)
       addClickEvents()
       main.value.on('animationStarted', () => {
         removeActive()
         const next = main.value.animator.targetIdx || 0
         addActive(main.value.track.absToRel(next))
-        slider.moveToIdx(Math.min(slider.track.details.maxIdx, next))
+        // if (next === 10) {
+        //   slider.moveToIdx(Math.min(slider.track.details.maxIdx, next))
+        // }
       })
     })
   }
@@ -122,6 +123,12 @@ const props = defineProps({
 
 <style scoped>
 .active {
+  border-color: #fff;
+  border-width: 1px;
+  border-style: solid;
+}
+
+:deep(.active) {
   border-color: #fff;
   border-width: 1px;
   border-style: solid;
