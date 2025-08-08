@@ -118,22 +118,8 @@ const invalidDevice = computed(
   () => navigator.platform.includes('Windows') || navigator.platform.includes('Win32') || navigator.platform.includes('Linux'),
 )
 const handleRedirectDownload = async () => {
-  if (navigator.platform.includes('Windows') || navigator.platform.includes('Win32'))
-    window.open(
-      decodeURI(
-        atob(
-          'aHR0cHM6Ly9naXRodWIuY29tL0JyYXZvcy1UZWFtL1N0ZWFrQ2xpZW50L3JlbGVhc2VzL2Rvd25sb2FkL2xhc3Rlc3QvU3RlYWtTZXR1cC5leGU=',
-        ),
-      ),
-    )
-  else if (navigator.platform.includes('Linux'))
-    window.open(
-      decodeURI(
-        atob(
-          'aHR0cHM6Ly9naXRodWIuY29tL0JyYXZvcy1UZWFtL1N0ZWFrQ2xpZW50L3JlbGVhc2VzL2Rvd25sb2FkL2xhc3Rlc3Qvc3RlYWtfMC4xLjBfYW1kNjQuZGVi',
-        ),
-      ),
-    )
+  await router.push({ name: 'DownloadApplicationPage' })
+  openDrawer.value = false
   openDrawer.value = false
 }
 </script>

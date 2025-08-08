@@ -79,6 +79,7 @@ SteakApi.interceptors.response.use(
       error.response.config.url.includes('user/auth/username-login') ||
       error.response.config.url.includes('user/auth/email-login')
     ) {
+      console.log(group)
       if (group === 'publisher') {
         removeCookie('publisherAccessRights')
         await router.push({ name: 'PublisherAuthLogin' })
