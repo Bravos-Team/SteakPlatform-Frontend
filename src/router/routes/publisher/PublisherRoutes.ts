@@ -49,6 +49,16 @@ export const publisherRoutes: RouteRecordRaw[] = [
         name: 'PublisherGameAcceptedDetails',
         component: () => import('@/views/publisher/home/game/gameDetails/GameAcceptedDetails.vue'),
       },
+      {
+        path: 'accounts',
+        name: 'PublisherAccountManagement',
+        component: () => import('@/views/publisher/accounts/AccountManagementPage.vue'),
+      },
+      {
+        path: 'permissions',
+        name: 'PublisherPermissionsManagement',
+        component: () => import('@/views/publisher/accounts/PermissionManagementPage.vue'),
+      },
     ],
     meta: {
       baseName: 'Publisher',

@@ -186,6 +186,12 @@ export default {
       order_details: 'Order Details',
       order_status: 'Order Status',
       order_summary: 'Order Summary',
+      accounts_management: {
+        title: 'Account member management',
+      },
+      permission: {
+        title: 'Permissions',
+      },
       game_management: {
         filters: {
           placeholder: 'Filter by status',
