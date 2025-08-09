@@ -9,10 +9,17 @@ export type GAME_LIST_ITEM = {
 }
 
 export type GAME_LIST_RESPONSE = {
-  items: GAME_LIST_ITEM[]
-  nextCursor?: number | null
-  hasNextCursor?: boolean
-  maxCursor?: bigint
+  data: {
+    items: GAME_LIST_ITEM[]
+    nextCursor?: number | null
+    hasNextCursor?: boolean
+    maxCursor?: bigint
+  }
+}
+
+export type GAME_STORE_LIST_QUERY_PARAMS = {
+  cursor?: string
+  size?: 10
 }
 
 export type GAME_FILTERED_PARAMS = {

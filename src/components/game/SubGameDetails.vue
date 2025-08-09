@@ -104,7 +104,7 @@
       <div class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
         <span class="text-[#ffffffa6]">{{
           $t('title.subPagesCompo.sidebar.publisher.platform')
-          }}</span>
+        }}</span>
         <template v-for="(platform, index) in rightContentsData.platforms" :key="index">
           <img v-if="platform.startWith('Window')" src="https://ccdn.steak.io.vn/assets-window-ico-white.svg"
             class="w-6" alt="" />

@@ -4,18 +4,30 @@ import {
   getGameComingSoon,
 } from '@/apis/store/game/useGameStore'
 import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
-import { GAME_FILTERED_PARAMS, PageAndSize } from '@/types/game/store/Game'
+import {
+  GAME_FILTERED_PARAMS,
+  GAME_STORE_LIST_QUERY_PARAMS,
+  PageAndSize,
+} from '@/types/game/store/Game'
 import { useInfiniteQuery, useQuery } from '@tanstack/vue-query'
 
-export const useGameStoreInfiniteQueryList = (filters?: GAME_FILTERED_PARAMS) => {
+export const useGameStoreInfiniteQueryList = (filters?: GAME_STORE_LIST_QUERY_PARAMS) => {
   return useInfiniteQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
-    queryFn: async ({ signal }) => await useGetGameListStore({}, signal),
-    initialPageParam: 9074997337759744,
-    getNextPageParam: (lastPage) => {
-      return lastPage.hasNextCursor ? lastPage.maxCursor : undefined
+    queryFn: async ({ pageParam, signal }) => {
+      const pageValue = await Promise.resolve(pageParam).then((value) => value)
+      if (pageValue === 1754672400000) return
+      return await useGetGameListStore(Number(pageValue)?.toString(), filters?.size, signal).then(
+        (rp) => rp.data,
+      )
     },
-    staleTime: 1000 * 60 * 5,
+    initialPageParam: 1754656462222,
+    getNextPageParam: async (lastPage) => {
+      const lastItem = lastPage!.items[lastPage!.items.length - 1]!
+      if (lastItem) return lastItem.releaseDate
+      return
+    },
+    // staleTime: 1000 * 60 * 5,
   })
 }
 

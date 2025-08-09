@@ -374,6 +374,13 @@ export default {
               },
             },
           },
+          accounts_management: {
+            title: 'Quản lý tài khoản',
+            member: 'Quản lý tài khoản thành viên',
+          },
+          permissions: {
+            title: 'Quyền hạn',
+          },
           store: {
             title: 'Cửa hàng Steak',
           },

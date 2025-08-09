@@ -1,4 +1,5 @@
 export type ACCOUNT_LIST_FILTERS = {
+  keyword?: string
   status?: string
   page: number
   size: number

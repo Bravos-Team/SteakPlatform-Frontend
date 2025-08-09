@@ -1,26 +1,34 @@
 <template>
-  <store-searching-bar :cart-items="userCartData?.data?.items"
-    :is-fetching-cart="isUserCartFetching"></store-searching-bar>
+  <div id="containerBoxes">
+    <store-searching-bar :cart-items="userCartData?.data?.items"
+      :is-fetching-cart="isUserCartFetching"></store-searching-bar>
 
-  <store-sliders></store-sliders>
+    <store-sliders></store-sliders>
 
-  <div v-if="useGameListData?.pages"
-    class="flex flex-col @min-xl:w-full gap-y-[64px] my-[64px] items-center justify-center h-full">
-    <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5 mobile:px-3">
-      <span class="text-3xl font-bold">Game Available</span>
-      <div class="grid grid-cols-12 gap-x-0 tablet:gap-y-13 gap-y-8">
-        <div v-if="isFetchingGameList"></div>
+    <!-- GAME COMING SOON -->
+    <div v-if="!isGameComingSoonFetching" class="">
+    </div>
+    <div v-if="gameComingSoonData?.data && !isGameComingSoonFetching" class="px-3">
+      <CollaboratorsBar :game-collaborators-list="gameComingSoonData?.data.content" />
+    </div>
+    <!-- END GAME COMING SOON -->
+    <!-- GAME AVAILABLE -->
+    <div v-if="useGameListData?.pages"
+      class="flex flex-col @min-xl:w-full gap-y-[64px] my-[64px] items-center justify-center h-full">
+      <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5 mobile:px-3">
+        <span class="text-3xl font-bold">Game Available</span>
+        <div class="grid grid-cols-12 gap-x-4 tablet:gap-y-13 gap-y-8">
+          <div v-if="isFetchingGameList"></div>
 
-        <template v-for="(page, index) in useGameListData?.pages" :key="index">
-          <GameCard v-for="(game, i) in page?.data?.items" :key="game.id || i" :game="game" />
-        </template>
+          <template v-for="(page, index) in useGameListData?.pages" :key="index">
+            <GameCard v-for="(game, i) in page?.items" :key="game.id || i" :game="game" />
+          </template>
+        </div>
       </div>
     </div>
+    <!-- END GAME AVAILABLE -->
   </div>
-  <div v-if="gameComingSoonData?.data" class="px-3">
-    <CollaboratorsBar :game-collaborators-list="gameComingSoonData?.data.content" />
-  </div>
-  <!-- sentinel -->
+
   <div ref="loadMoreTrigger" class="h-4"></div>
 </template>
 
@@ -51,6 +59,7 @@ let observer: IntersectionObserver
 
 onMounted(() => {
   observer = new IntersectionObserver(entries => {
+    if (useGameListData.value?.pages.maxCursor === 1754672400000) return
     if (entries[0].isIntersecting && hasNextPageGameList.value && !isFetchingGameList.value) {
       fetchNextPageGameList()
     }
@@ -65,4 +74,13 @@ onUnmounted(() => {
     observer.disconnect()
   }
 })
+
+const containerBoxes = ref<HTMLElement | null>(null)
+window.onscroll = function () {
+  // if (window.innerHeight + window.pageYOffset >= containerBoxes.value!.offsetHeight) {
+  //   alert("At the bottom!")
+
+  // }
+}
+
 </script>

@@ -1,4 +1,5 @@
 import DraftCustomIcon from '@/components/common/icons/DraftCustomIcon.vue'
+import PermissionCustom from '@/components/common/icons/PermissionCustom.vue'
 import PublishedCustomIcon from '@/components/common/icons/PublishedCustomIcon.vue'
 import {
   LayoutDashboard,
@@ -8,6 +9,8 @@ import {
   LogOut,
   Gamepad2,
   Store,
+  UserStar,
+  Users,
 } from 'lucide-vue-next'
 import { ref } from 'vue'
 export const data = ref({
@@ -52,6 +55,7 @@ export const userData = {
 }
 
 export const navItemsData = [
+  // DASHBOARD
   {
     title: 'Dashboard',
     i18n: 'dashboard.title',
@@ -66,6 +70,8 @@ export const navItemsData = [
       },
     ],
   },
+  // END DASHBOARD
+  // GAME MANAGEMENT
   {
     title: 'Game Manage',
     i18n: 'game_management.title',
@@ -92,22 +98,51 @@ export const navItemsData = [
       },
     ],
   },
+  // END GAME MANAGEMENT
+  // ACCOUNT MANAGEMENT
+  {
+    title: 'Account Management',
+    i18n: 'accounts_management.title',
+    name: 'PublisherAccountManagement',
+    icon: UserStar,
+    items: [
+      {
+        title: 'Member Management',
+        i18n: 'accounts_management.member',
+        name: 'PublisherAccountManagement',
+        icon: Users,
+      },
+      {
+        title: 'Permissions',
+        i18n: 'permissions.title',
+        name: 'PublisherPermissionsManagement',
+        icon: PermissionCustom,
+      },
+    ],
+  },
+  // END ACCOUNT MANAGEMENT
+  // STORE
   {
     title: 'Steak Store',
     name: 'store-home',
     i18n: 'store.title',
     icon: Store,
   },
+  // END STORE
+  // SUPPORT
   {
     title: 'Support',
     name: 'SupportCenter',
     i18n: 'support.title',
     icon: BadgeInfo,
   },
+  // END SUPPORT
+  // LOGOUT
   {
     title: 'Logout',
     i18n: 'logout.title',
     name: 'PublisherAuthLogin',
     icon: LogOut,
   },
+  // END LOGOUT
 ]
