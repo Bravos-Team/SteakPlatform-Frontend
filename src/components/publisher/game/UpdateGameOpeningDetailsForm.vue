@@ -383,6 +383,7 @@ const handleResolveMediaFiles = async () => {
 const isUpdating = ref(false)
 const handleUpdateGameDetails = useDebounceFn(async () => {
   // <-- handle upload cover image
+  isUpdating.value = true
   completedApis.value = 0
   progressDisplay.value = 0
 
@@ -409,7 +410,7 @@ const handleUpdateGameDetails = useDebounceFn(async () => {
         ...diff,
         gameId: props.gamePreviewDetails.id,
       })
-      if (diff.price) {
+      if (diff.price != null && diff.price !== undefined) {
         const priceResponse = await mutateUpdateGamePrice({
           gameId: props.gamePreviewDetails.id,
           price: diff.price,

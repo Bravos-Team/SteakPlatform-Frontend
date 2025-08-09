@@ -161,7 +161,7 @@
             <!-- SAVE AS DRAFT -->
             <div v-if="gamePreviewDetails.status === GAME_STATUS.DRAFT">
               <button v-if="isUpdating"
-                class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/30 rounded-sm">
+                class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-white/10 rounded-sm">
                 {{ $t('title.pages.game_details.form.save_as_draft') }}
 
                 <LoaderCircle class="animate-spin size-6" />

@@ -18,7 +18,7 @@
         </div>
 
         <!-- Stats Cards -->
-        <div v-if="accountsData?.data" class="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-full">
+        <div v-if="accountsData?.data" class="grid grid-cols-1 md:grid-cols-2 w-full gap-4 min-h-full">
             <Card>
                 <CardContent class="p-6">
                     <div class="flex items-center">
@@ -74,8 +74,8 @@
                             </TableRow>
                         </TableHeader>
                         <TableBody class="">
-                            <TableRow v-for="user in accountsData?.data.content" :key="user.id"
-                                :class="{ 'bg-muted/50': selectedUsers.includes(user.id) }" class="">
+                            <TableRow v-for="user in accountsData?.data.content" :key="user.id" class="cursor-pointer"
+                                :class="{ 'bg-muted/50': selectedUsers.includes(user.id) }">
                                 <TableCell class="">
                                     <div class="flex items-center space-x-3 ">
                                         <Avatar class="h-8 w-8">

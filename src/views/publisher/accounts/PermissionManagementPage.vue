@@ -1,32 +1,30 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-black/40 rounded-sm to-slate-500/30">
-        <div class="container mx-auto px-4 py-8 space-y-8">
+        <div class="container tablet:px-4 py-8 flex flex-col gap-y-3">
             <!-- Header Section -->
             <div
                 class="relative overflow-hidden rounded-3xl bg-white/80 dark:bg-slate-800/30 backdrop-blur-xl border border-white/20 shadow-2xl">
-                <div class="relative p-8">
+                <div class="relative tablet:p-8 p-2">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-3">
-                                <div class="p-3 rounded-2xl bg-gradient-to-br from-blue-400 to-red-200 shadow-lg">
-                                    <Shield class="size-12 text-white" />
-                                </div>
-                                <div>
-                                    <h1
-                                        class="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-                                        Permission Management
-                                    </h1>
-                                    <p class="text-slate-600 dark:text-slate-400 font-medium">
-                                        Manage roles and permissions for your organization
-                                    </p>
-                                </div>
+                        <div class="flex items-center gap-3 flex-col tablet:flex-row">
+                            <div class="p-3 rounded-2xl bg-gradient-to-br from-blue-400 to-red-200 shadow-lg">
+                                <Shield class="size-5 tablet:size-12 text-white" />
+                            </div>
+                            <div>
+                                <span
+                                    class="text-lg text-pretty w tablet:text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+                                    Permission Management
+                                </span>
+                                <p class="text-slate-600 dark:text-slate-400 font-medium text-pretty">
+                                    Manage roles and permissions for your organization
+                                </p>
                             </div>
                         </div>
 
                         <!-- Stats Cards -->
                         <div class="flex flex-wrap gap-4 w-full justify-end">
                             <Card
-                                class="bg-gradient-to-br w-fit from-emerald-500/30 px-4 to-teal-600/40 border-0 text-white shadow-xl">
+                                class="bg-gradient-to-br w-full tablet:w-fit from-emerald-500/30 px-4 to-teal-600/40 border-0 text-white shadow-xl">
                                 <CardContent class="flex items-center p-4">
                                     <div class="flex items-center gap-2 ">
                                         <Users class="size-8" />
@@ -39,7 +37,7 @@
                             </Card>
 
                             <Card
-                                class="bg-gradient-to-br w-fit from-blue-500/30 to-indigo-600/30 border-0 text-white shadow-xl">
+                                class="bg-gradient-to-br w-full tablet:w-fit from-blue-500/30 to-indigo-600/30 border-0 text-white shadow-xl">
                                 <CardContent class="flex items-center p-4">
                                     <div class="flex items-center gap-2">
                                         <Key class="size-8" />
