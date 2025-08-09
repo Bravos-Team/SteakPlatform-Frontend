@@ -3,61 +3,40 @@
     <div class="font-bold text-lg text-gray-200/80">
       {{ $t('title.pages.game_details.form.media_and_images.title') }}
     </div>
-    <div
-      class="border-1 p-3 rounded-sm bg-linear-120 from-blue-200/5 to-emerald-200/5 flex flex-col gap-y-3"
-    >
+    <div class="border-1 p-3 rounded-sm bg-linear-120 from-blue-200/5 to-emerald-200/5 flex flex-col gap-y-3">
       <div v-if="!media_files.length && !mediaData">
         {{ $t('title.pages.game_details.form.media_and_images.non_file_created') }}
       </div>
       <div v-else class="grid grid-cols-1 gap-y-2">
         <!-- MEDIA DATA DRAFT -->
-        <div
-          v-if="mediaData"
-          class="flex flex-col gap-y-1 relative"
-          v-for="(media, index) in mediaData"
-          :key="index"
-        >
+        <div v-if="mediaData" class="flex flex-col gap-y-1 relative" v-for="(media, index) in mediaData" :key="index">
           <Tooltip>
             <tooltip-trigger>
               <span class="flex gap-x-1 items-center">
                 <span>
-                  {{ $t('title.pages.game_details.form.media_and_images.media_uploaded') }}</span
-                >
+                  {{ $t('title.pages.game_details.form.media_and_images.media_uploaded') }}</span>
                 <cloud-upload :size="20" class="text-green-400" />
               </span>
               <div
-                class="w-full relative flex rounded-md overflow-hidden desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
-              >
+                class="w-full relative flex rounded-md overflow-hidden desktop:flex-row flex-col focus:border-white/50 focus:outline-none">
                 <div
-                  class="h-full items-center relative border-4 border-double rounded-xs overflow-hidden flex desktop:flex-row justify-center bg-white/10"
-                >
+                  class="h-full items-center relative border-4 border-double rounded-xs overflow-hidden flex desktop:flex-row justify-center bg-white/10">
                   <!-- VIDEO AND IMAGE -->
-                  <img
-                    v-if="media.url && media.type === 'image'"
-                    :src="media.url"
-                    class="object-cover w-full h-20 tablet:h-40"
-                    alt=""
-                  />
-                  <video
-                    v-if="media.url && media.type === 'video'"
-                    :src="media.url"
-                    class="object-contain w-full h-full tablet:h-40"
-                  ></video>
+                  <img v-if="media.url && media.type === 'image'" :src="media.url"
+                    class="object-cover w-full h-20 tablet:h-40" alt="" />
+                  <video muted v-if="media.url && media.type === 'video'" :src="media.url"
+                    class="object-contain w-full h-full tablet:h-40"></video>
                   <!-- END VIDEO AND IMAGES -->
                 </div>
                 <div class="w-full h-100%">
-                  <div
-                    class="w-full min-h-full rounded-none bg-white/5 px-2 py-1 font-medium relative"
-                  >
+                  <div class="w-full min-h-full rounded-none bg-white/5 px-2 py-1 font-medium relative">
                     <div class="h-full flex items-center w-full">
                       {{ media.url.split('images/')[1] }}
                     </div>
                   </div>
 
-                  <button
-                    @click="handleDeleteMediaUploaded(index, media.url)"
-                    class="absolute top-1 right-1 z-10 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
-                  >
+                  <button @click="handleDeleteMediaUploaded(index, media.url)"
+                    class="absolute top-1 right-1 z-10 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full">
                     <X class="size-3" />
                   </button>
                   <!-- <div
@@ -81,42 +60,23 @@
           <span class="flex gap-x-1 items-center">
             <span>
               {{ $t('title.pages.game_details.form.media_and_images.title_input') }}
-              {{ index + 1 }}</span
-            >
+              {{ index + 1 }}</span>
             <cloud-upload :size="20" />
           </span>
-          <div
-            class="w-full relative flex desktop:flex-row flex-col focus:border-white/50 focus:outline-none"
-          >
+          <div class="w-full relative flex desktop:flex-row flex-col focus:border-white/50 focus:outline-none">
             <div class="h-full flex desktop:flex-row justify-center bg-white/10 border-2">
               <!-- VIDEO AND IMAGE -->
-              <img
-                v-if="media.imagePreview && media.type === 'image'"
-                :src="media.imagePreview"
-                class="object-contain w-full h-20 tablet:h-40"
-                alt=""
-              />
-              <video
-                v-if="media.imagePreview && media.type === 'video'"
-                :src="media.imagePreview"
-                class="object-contain w-full h-full tablet:h-40"
-                loop
-                autoplay
-              ></video>
+              <img v-if="media.imagePreview && media.type === 'image'" :src="media.imagePreview"
+                class="object-contain w-full h-20 tablet:h-40" alt="" />
+              <video v-if="media.imagePreview && media.type === 'video'" :src="media.imagePreview"
+                class="object-contain w-full h-full tablet:h-40" loop autoplay></video>
               <!-- END VIDEO AND IMAGES -->
             </div>
             <div class="w-full h-full">
-              <input
-                type="file"
-                class="w-full h-full rounded-none bg-white/5 px-2 py-1 font-medium relative"
-                placeholder="image url..."
-                accept="image/*,video/*"
-                @change="handleSelectFile(index, $event)"
-              />
-              <div
-                class="absolute -top-2 -right-2 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
-                @click="handleDeleteMediaInput(index)"
-              >
+              <input type="file" class="w-full h-full rounded-none bg-white/5 px-2 py-1 font-medium relative"
+                placeholder="image url..." accept="image/*,video/*" @change="handleSelectFile(index, $event)" />
+              <div class="absolute -top-2 -right-2 bg-gray-700 border-1 border-white/20 cursor-pointer p-1 rounded-full"
+                @click="handleDeleteMediaInput(index)">
                 <X class="size-3" />
               </div>
             </div>
@@ -128,15 +88,13 @@
       <div class="flex flex-wrap gap-y-3 justify-end gap-x-2">
         <button
           class="border-2 border-gray-300/20 px-2 rounded-sm py-1 bg-white/10 flex gap-x-1 cursor-pointer hover:bg-white/20 transition-colors duration-300"
-          @click="handleClearAll"
-        >
+          @click="handleClearAll">
           {{ $t('title.pages.game_details.form.media_and_images.clear_all') }}
           <shredder :size="20" />
         </button>
         <button
           class="border-2 border-gray-300/20 px-2 rounded-sm py-1 bg-white/10 flex gap-x-1 cursor-pointer hover:bg-white/20 transition-colors duration-300"
-          @click="handleCreateMediaInput"
-        >
+          @click="handleCreateMediaInput">
           {{ $t('title.pages.game_details.form.media_and_images.add_media') }}
           <DiamondPlus :size="20" />
         </button>
@@ -163,11 +121,11 @@ const useImageStore = useImageStored()
 
 const props = defineProps<{
   mediaData:
-    | {
-        type: 'image' | 'video'
-        url: string
-      }[]
-    | null
+  | {
+    type: 'image' | 'video'
+    url: string
+  }[]
+  | null
   isAssignedMediaFiles: boolean
 }>()
 

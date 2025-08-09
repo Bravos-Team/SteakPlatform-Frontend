@@ -18,7 +18,6 @@
       <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5 mobile:px-3">
         <span class="text-3xl font-bold">Game Available</span>
         <div class="grid grid-cols-12 gap-x-4 tablet:gap-y-13 gap-y-8">
-          <div v-if="isFetchingGameList"></div>
 
           <template v-for="(page, index) in useGameListData?.pages" :key="index">
             <GameCard v-for="(game, i) in page?.items" :key="game.id || i" :game="game" />

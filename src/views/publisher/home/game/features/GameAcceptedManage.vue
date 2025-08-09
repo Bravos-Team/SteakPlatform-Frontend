@@ -56,7 +56,7 @@
                         <button :disabled="isUpdateGameStatusPending" :class="{
                           'cursor-not-allowed opacity-50': isUpdateGameStatusPending,
                           'cursor-pointer': !isUpdateGameStatusPending,
-                        }" @click="handleClosedGame(game.gameId)">
+                        }" @click="handleOpenGame(game.gameId)">
                           <div class="flex gap-x-2 items-center">
 
                             <PackageOpen class="size-4" />
@@ -132,18 +132,43 @@ const showI18n = (key: string) => {
 const { data: gamesList, isFetching: isFetchingGameList } = usePublisherGameList(filters)
 
 const queryClient = useQueryClient()
+const handleOpenGame = useDebounceFn(async (gameId: bigint) => {
+  try {
+    await mutateGameStatus({
+      gameId,
+      status: 'OPENING',
+    }).then(rp => {
+      if (rp.status === 200) {
+        {
+          queryClient.invalidateQueries({
+            queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
+          })
+          toastSuccessNotificationPopup('Update game status successfully', '')
+        }
+      }
+    })
+
+  } catch (err: any) {
+    console.error('Error opening game:', err)
+  }
+}, 200)
+
 const handleClosedGame = useDebounceFn(async (gameId: bigint) => {
   try {
-    const response = await mutateGameStatus({
+    await mutateGameStatus({
       gameId,
       status: 'CLOSED',
+    }).then(rp => {
+      if (rp.status === 200) {
+        {
+          queryClient.invalidateQueries({
+            queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
+          })
+          toastSuccessNotificationPopup('Update game status successfully', '')
+        }
+      }
     })
-    if (response.status === 200) {
-      await queryClient.invalidateQueries({
-        queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
-      })
-      toastSuccessNotificationPopup('Update game status successfully', '')
-    }
+
   } catch (err: any) {
     console.error('Error closing game:', err)
   }
