@@ -25,13 +25,11 @@
     <!-- END OPTIONS BAR-->
 
     <!-- MAIN CONTENT -->
-    <div class="grid grid-cols-12 justify-between gap-x-4 w-full">
-      <div class="flex flex-col gap-y-[10px] relative col-span-12 laptop:col-span-9 w-full">
+    <div class="grid grid-cols-12 gap-y-2  justify-between gap-x-4 w-full">
+      <div class="flex order-2 laptop:order-1 flex-col gap-y-[10px] relative col-span-12 laptop:col-span-9 w-full">
         <!-- LEFT CONTENT -->
-        <div
-          :class="{ '!min-h-full !max-h-full overflow-visible': showMore }"
-          class="flex flex-col gap-y-[3rem] max-h-[80rem] overflow-hidden"
-        >
+        <div :class="{ '!min-h-full !max-h-full overflow-visible': showMore }"
+          class="flex flex-col gap-y-[3rem] max-h-[80rem] overflow-hidden">
           <!-- CAROUSEL -->
           <game-slider :game="gameDetailData?.data?.details?.media"></game-slider>
           <!-- END CAROUSEL -->
@@ -48,27 +46,21 @@
 
           <!-- RELATED GAMES BY DEVELOPER -->
           <relate-games-by-developer
-            :develop-teams="gameDetailData.data?.details.developerTeams"
-          ></relate-games-by-developer>
+            :develop-teams="gameDetailData.data?.details.developerTeams"></relate-games-by-developer>
           <!-- END RELATED GAMES BY DEVELOPER -->
 
           <!-- ABOUT THE GAME -->
-          <abouts-game
-            :long-descriptions="gameDetailData?.data?.details?.longDescription"
-          ></abouts-game>
+          <abouts-game :long-descriptions="gameDetailData?.data?.details?.longDescription"></abouts-game>
           <!-- END ABOUT THE GAME -->
         </div>
         <!-- SHOW MORE BUTTON-->
         <div class="flex flex-col w-full relative z-[5]">
           <div class="w-full bg-[#101014] h-[26px] flex justify-start relative">
-            <div
-              v-if="!showMore"
-              class="h-[100px] w-full absolute -bottom-3 bg-gradient-to-t from-[#101014] to-black/0 pointer-events-none z-[4]"
-            ></div>
-            <button
-              @click="showMore = !showMore"
-              class="cursor-pointer text-[#26bbff] hover:underline text-[18px] z-10"
-            >
+            <div v-if="!showMore"
+              class="h-[100px] w-full absolute -bottom-3 bg-gradient-to-t from-[#101014] to-black/0 pointer-events-none z-[4]">
+            </div>
+            <button @click="showMore = !showMore"
+              class="cursor-pointer text-[#26bbff] hover:underline text-[18px] z-10">
               {{ showMore ? 'Show less' : 'Show more' }}
             </button>
           </div>
@@ -90,11 +82,8 @@
           <span class="text-[18px] font-bold">FOLLOW US</span>
           <div class="py-[35px] px-[60px] rounded-[12px] bg-[#202024]">
             <div class="flex justify-center -my-[10px] mx-[0px]">
-              <div
-                class="flex justify-center w-[66px] h-[46px] items-center"
-                v-for="(contact, index) in contacts"
-                :key="index"
-              >
+              <div class="flex justify-center w-[66px] h-[46px] items-center" v-for="(contact, index) in contacts"
+                :key="index">
                 <img :src="contact.img" class="shrink-0 w-[26px]" alt="" />
               </div>
             </div>
@@ -104,9 +93,7 @@
           <span class="text-[20px] tracking-[0.4px] font-bold w-full text-wrap">{{
             gameDetailData.data.details.title + ' System Requirements'
           }}</span>
-          <div
-            class="bg-[#202024] rounded-[12px] py-[35px] px-[60px] text-white justify-between gap-[35px]"
-          >
+          <div class="bg-[#202024] rounded-[12px] py-[35px] px-[60px] text-white justify-between gap-[35px]">
             <div class="flex flex-col gap-[35px]">
               <div class="flex flex-col">
                 <!-- <div class="w-full flex justify-start gap-[32px]">
@@ -116,7 +103,7 @@
                     {{ system.name }}
                   </button>
                 </div> -->
-                <div class="gap-[13px] pt-[35px] pr-[0px] pb-[0px] flex flex-col">
+                <div class="gap-[13px] pt-[35px] pr-[0px] pb-[0px] flex flex-col text-pretty">
                   <!-- CONTENT -->
                   <div class="w-full flex gap-x-[20px]">
                     <span class="text-[20px] w-6/12 font-bold">Minimum</span>
@@ -219,21 +206,15 @@
                   <span class="text-[15px] text-[#ffffffa6]">Languages Supported</span>
 
                   <!-- LANGUAGES SUPPORTED -->
-                  <div class="min-h-[80px]">
+                  <div class="min-h-[80px] text-pretty">
                     <span class="text-[17px] text-white">
                       Text:
-                      <span
-                        class="text-white text-[17px]"
-                        v-for="(language, index) in gameDetailData.data?.details?.languageSupported"
-                        :key="index"
-                      >
+                      <span class="text-white text-[17px]"
+                        v-for="(language, index) in gameDetailData.data?.details?.languageSupported" :key="index">
                         {{ language }}
-                        <span
-                          v-if="
-                            index !== gameDetailData.data?.details?.languageSupported.length - 1
-                          "
-                          >,</span
-                        >
+                        <span v-if="
+                          index !== gameDetailData.data?.details?.languageSupported.length - 1
+                        ">,</span>
                       </span>
                     </span>
                   </div>
@@ -245,15 +226,10 @@
                   <span class="text-[15px] text-[#ffffffa6] text-wrap">
                     Trademarks, tradenames, and copyrights are property of their respective owners,
                     Digital Sun Games (2025) and Hooded Horse Inc.™ (2025). All Rights
-                    Reserved.</span
-                  >
-                  <router-link to="/" class="text-white flex text-[16px] hover:underline"
-                    >Privacy Policy
-                    <img
-                      class="w-[18px]"
-                      src="https://ccdn.steak.io.vn/assets-shared-ico-collaborators-list.svg"
-                      alt=""
-                    />
+                    Reserved.</span>
+                  <router-link to="/" class="text-white flex text-[16px] hover:underline">Privacy Policy
+                    <img class="w-[18px]" src="https://ccdn.steak.io.vn/assets-shared-ico-collaborators-list.svg"
+                      alt="" />
                   </router-link>
                 </div>
                 <!-- END RIGHT POLICY NOTIFICATIONS -->
@@ -265,8 +241,8 @@
     </div>
     <!-- END SUB DETAILS -->
     <div class="h-[15px] mt-[24px] mb-[90px] pt-[28px] w-full border-t-1 border-[#ffffffa6]">
-      <span class="before:content-['*_'] text-wrap"
-        >The lowest price offered on The Epic Games Store in the last 30 days before discount
+      <span class="before:content-['*_'] text-wrap">The lowest price offered on The Epic Games Store in the last 30 days
+        before discount
       </span>
     </div>
   </div>

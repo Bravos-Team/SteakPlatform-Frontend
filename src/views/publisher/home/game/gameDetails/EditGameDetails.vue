@@ -8,10 +8,7 @@
     <!-- PREVIEW -->
     <div class="w-full @container">
       <card class="bg-[var(--bg-card-base)]/50 lg:px-[4rem] @container">
-        <game-details-preview
-          v-if="!isProjectByIdPending && projectById?.data"
-          :game-details="projectById.data"
-        />
+        <game-details-preview v-if="!isProjectByIdPending && projectById?.data" :game-details="projectById.data" />
         <skeleton-preview-form v-else />
       </card>
     </div>

@@ -2,10 +2,8 @@
   <Combobox v-model:model-value="modalValue" v-model:open="open" :ignore-filter="true">
     <combobox-anchor as-child>
       <label for="regions">
-        <tags-input
-          v-model="modalValue"
-          class="px-2 gap-2 w-full flex flex-col items-start bg-black/70 hover:bg-black/20 transition-colors duration-300 cursor-pointer"
-        >
+        <tags-input @click="open = true" v-model="modalValue"
+          class="px-2 gap-2 w-full flex flex-col items-start bg-black/70 hover:bg-black/20 transition-colors duration-300 cursor-pointer">
           <div class="flex gap-2 items-center flex-wrap">
             <tags-input-item v-for="country in modalValue" :key="country" :value="country" class="">
               <tags-input-item-text />
@@ -14,12 +12,9 @@
           </div>
 
           <combobox-input class="!w-fit" v-model="searchItem" as-child>
-            <tags-input-input
-              id="regions"
+            <tags-input-input id="regions"
               :placeholder="$t('title.pages.game_details.form.available_countries.placeholder')"
-              class="min-w-full p-0 border-none focus-visible:ring-0 h-auto"
-              @keydown.enter.prevent
-            />
+              class="min-w-full p-0 border-none focus-visible:ring-0 h-auto" @keydown.enter.prevent />
           </combobox-input>
         </tags-input>
       </label>
@@ -27,16 +22,11 @@
       <combobox-list align="end" side="top" class="w-[--reka-popper-anchor-width]">
         <combobox-empty />
         <combobox-group>
-          <scroll-area
-            :class="{
-              'h-[20rem]': filterCountries.length > 6,
-              'h-[10rem]': filterCountries.length <= 6,
-            }"
-          >
-            <combobox-item
-              v-for="(country, index) in filterCountries"
-              :key="index"
-              :value="country.name.common"
+          <scroll-area :class="{
+            'h-[20rem]': filterCountries.length > 6,
+            'h-[10rem]': filterCountries.length <= 6,
+          }">
+            <combobox-item v-for="(country, index) in filterCountries" :key="index" :value="country.name.common"
               @select.prevent="
                 (event: any) => {
                   if (typeof event.detail.value === 'string') {
@@ -48,8 +38,7 @@
                     open = false
                   }
                 }
-              "
-            >
+              ">
               {{ country.name.common }}
             </combobox-item>
           </scroll-area>

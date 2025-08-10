@@ -97,6 +97,11 @@ export default {
       game_management: 'Quản lý dự án',
       game_management_draft: 'Dự án nháp',
       game_management_accepted: 'Dự án đã xuất bản',
+      game_accepted_details: 'Chi tiết dự án đã xuất bản',
+      account_management: 'Quản lý tài khoản',
+      permissions_management: 'Quản lý quyền',
+      custom_roles_management: 'Quản lý vai trò tùy chỉnh',
+      custom_roles_details: 'Chi tiết vai trò tùy chỉnh',
       game_management_overview: 'Tổng quan quản lý dự án',
       game_not_release_yet: 'Dự án chưa được phát hành',
       support: 'Trung tâm hỗ trợ',
@@ -144,6 +149,7 @@ export default {
           add_to_cart_error: 'Không thể thêm vào giỏ hàng',
           remove_from_cart_success: 'Đã xóa khỏi giỏ hàng',
           remove_all_from_cart: 'Xóa tất cả khỏi giỏ hàng',
+          remove_all_from_wishlist: 'Xóa tất cả khỏi danh sách mong muốn',
           remove_all_from_cart_success: 'Đã xóa tất cả khỏi giỏ hàng',
           remove_all_from_wishlist_success: 'Đã xóa tất cả khỏi danh sách mong muốn',
           remove_all_from_wishlist_error: 'Không thể xóa tất cả khỏi danh sách mong muốn',
@@ -373,6 +379,18 @@ export default {
                 },
               },
             },
+          },
+          accounts_management: {
+            title: 'Quản lý tài khoản',
+            member: 'Quản lý tài khoản thành viên',
+            permission: 'Quản lý quyền hạn',
+            custom_roles: 'Quản lý vai trò tùy chỉnh',
+          },
+          permissions: {
+            title: 'Quyền hạn',
+          },
+          custom_roles: {
+            title: 'Vai trò tùy chỉnh',
           },
           store: {
             title: 'Cửa hàng Steak',

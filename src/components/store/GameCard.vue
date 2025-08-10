@@ -1,25 +1,23 @@
 <template>
   <div v-if="game && isReleased(game)"
-    class="group relative px-1 tablet:w-[16rem] desktop:w-[16rem] desktop-xl:w-[18rem] tablet:col-span-4 col-span-12 laptop:col-span-3 rounded-2xl">
-    <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }">
+    class="group shadow-2xl relative px-1 w-full tablet:col-span-6 col-span-12 laptop:col-span-4 desktop:col-span-3 transition-transform duration-200 hover:scale-105 hover:shadow-3xl rounded-lg">
+    <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }" class="">
       <!-- IMAGE -->
-      <div
-        class="group relative w-full rounded-2xl overflow-hidden h-[10rem] filter filter-[drop-shadow(0_0_10px_rgba(255,255,255,0.3))]">
-        <img :src="game?.thumbnail" :alt="game.name"
-          class="tablet:size-[16rem] desktop-xl:size-[18rem] desktop:size-[16rem]  object-cover" />
+      <div class="group relative min-w-full rounded-xs overflow-hidden tablet:max-h-[8rem]">
+        <img :src="game?.thumbnail" :alt="game.name" class="object-contain   rounded-xs w-full" />
       </div>
       <!-- END IMAGE -->
 
       <!-- TITLE AND PRICE -->
-      <div class="flex flex-col gap-y-3 px-3 py-2 text-white w-fit justify-between h-fit">
-        <div class="w-fit break-words leading-tight text-wrap font-bold tablet:text-xl text-sm">
+      <div class="flex flex-col gap-y-3 px-3 py-2 text-white justify-between bg-gray-400/10 w-full h-[9rem]">
+        <div class="w-fit break-words leading-tight text-wrap font-bold tablet:text-xl text-2xl">
           {{ game?.name }}
         </div>
         <div class="flex flex-row flex-wrap">
           <p v-if="game?.price === 0" class="text-white text-sm tablettext-lg font-mono">
             Free
           </p>
-          <p v-else class="text-white text-sm tablettext-lg">
+          <p v-else class="text-white text-md tablet:text-lg tablettext-lg">
             {{ CurrencyUtils.formatCurrency(game?.price, '₫') }}
           </p>
         </div>
@@ -36,7 +34,6 @@
       @click="handleAddToCart(game.id, game.name)">
       <img src="https://ccdn.steak.io.vn/assets-ico-plus-white.svg" alt="" />
     </button>
-
     <!-- END ADD TO CART -->
   </div>
 </template>

@@ -1,11 +1,8 @@
 <template>
-  <div ref="container" class="keen-slider max-h-[904px] flex">
-    <div
-      v-for="(img, index) in imageList"
-      :key="index"
-      class="keen-slider__slide !w-[200px] cursor-grab active:cursor-grabbing"
-      :class="`number-slide${index}`"
-    >
+  <div ref="container" class="keen-slider max-h-[904px] flex relative">
+    <BackToTheTopButton />
+    <div v-for="(img, index) in imageList" :key="index"
+      class="keen-slider__slide !w-[200px] cursor-grab active:cursor-grabbing" :class="`number-slide${index}`">
       <img :src="img" alt="" class="object-cover h-full w-full" />
     </div>
   </div>
@@ -13,6 +10,7 @@
 
 <script setup lang="ts">
 import { useKeenSlider } from 'keen-slider/vue'
+import BackToTheTopButton from '@/components/common/BackToTheTopButton.vue';
 
 const animation = { duration: 100000, easing: (t: any) => t }
 const [container] = useKeenSlider({

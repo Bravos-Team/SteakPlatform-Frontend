@@ -16,11 +16,11 @@
     <template #default>
       <router-view></router-view>
     </template>
-    <template #fallback>
+<template #fallback>
       <div>Loading...</div>
     </template>
-  </Suspense> -->
-  <vue-query-devtools />
+</Suspense> -->
+  <vue-query-devtools button-position="top-right" position="top" />
   <toaster />
   <Suspense>
     <template #default>

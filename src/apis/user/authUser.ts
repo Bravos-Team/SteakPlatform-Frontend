@@ -1,6 +1,7 @@
 import SteakApi from '@/apis/index'
 import { RegisterRequest } from '@/types/auth/AuthType'
 import LoginRequest from '@/types/auth/AuthType'
+import { setCookie } from '@/utils/cookies/cookie-utils'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
 
 export const register = async (registerRequest: RegisterRequest): Promise<void> => {
@@ -19,5 +20,8 @@ export const renewUserRefreshToken = async () => {
   return await SteakApi.post('/user/auth/refresh', {
     deviceId: await generateDeviceId(),
     deviceInfo: await generateDeviceInfo(),
+  }).then((rp) => {
+    setCookie('userAccessRights', rp.data.displayName)
+    return rp
   })
 }

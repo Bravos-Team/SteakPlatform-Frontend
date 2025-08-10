@@ -1,6 +1,6 @@
 <template>
   <div v-if="rightContentsData"
-    class="laptop:h-[884px] col-span-12 laptop:col-span-3 mt-1 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]">
+    class="laptop:h-[884px] order-1 laptop:order-2 col-span-12 laptop:col-span-3 mt-1 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]">
     <div class="flex justify-center items-center p-[20px]">
       <div class="flex justify-center items-center">
         <img :src="rightContentsData?.details?.thumbnail" alt="" />
@@ -25,49 +25,58 @@
         {{ game.category.name }}
       </button> -->
     </div>
-    <div class="flex justify-start w-full font-bold text-[18px]">
+    <div v-if="rightContentsData?.price !== 0" class="flex justify-start w-full font-bold text-[18px]">
       {{ CurrencyUtils.formatCurrencyVND(rightContentsData?.price) }}
     </div>
+    <div v-else class="flex justify-start w-full font-bold text-[18px]">
+      Free
+    </div>
+
 
     <div class="flex flex-col gap-y-[10px]">
-      <button v-if="rightContentsData!.isOwned"
-        class="py-[12px] px-[20px] align-middle bg-[#26bbff]/30 cursor-not-allowed text-black rounded-[10px] flex justify-center items-center">
-        {{ $t('features.buttons.already_in_library') }}
-      </button>
-      <button v-else :class="{
-        'cursor-not-allowed': isMutateCheckoutPending,
-        'cursor-pointer': !isMutateCheckoutPending,
-      }" :disabled="isMutateCheckoutPending" @click="handleCheckout"
-        class="py-[12px] px-[20px] align-middle bg-[#26bbff] hover:bg-[#61cdff] text-black rounded-[10px] flex justify-center items-center">
-        {{ $t('features.buttons.buy_now') }}
-      </button>
-      <button
-        class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30  cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"
-        v-if="isAlreadyHaveInCart">
-        <span> Already in Cart</span>
-      </button>
-      <button v-else @click="handleAddToCart(rightContentsData.details.id)" :disabled="rightContentsData.isOwned"
-        :class="{
-          'cursor-not-allowed': rightContentsData.isOwned || isMutateCheckoutPending || isMutateAddToCartPending,
-          'cursor-pointer': !rightContentsData.isOwned && !isMutateCheckoutPending,
-        }"
-        class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center">
-        <LoaderCircle v-if="isMutateAddToCartPending" class="animate-spin" />
-        <span v-else>{{ $t('features.buttons.add_to_cart') }}</span>
-      </button>
-      <button v-if="isAlreadyHaveInWishlist"
-        class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center">
-        Already in Wishlist
-      </button>
-      <button v-else @click="handleAddToWishlist(rightContentsData.details.id)" :disabled="rightContentsData.isOwned"
-        :class="{
-          '!cursor-not-allowed': rightContentsData.isOwned || isMutateCheckoutPending || isMutateAddToWishlistPending,
-          'cursor-pointer': !rightContentsData.isOwned,
-        }"
-        class="text-wrap py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center">
-        <LoaderCircle v-if="isMutateAddToWishlistPending" class="animate-spin" />
-        <span v-else> {{ $t('features.buttons.add_to_wishlist') }}</span>
-      </button>
+      <template v-if="rightContentsData?.isOwned">
+        <button
+          class="py-[12px] px-[20px] align-middle bg-[#26bbff]/30 cursor-not-allowed text-black rounded-[10px] flex justify-center items-center"
+          disabled>
+          {{ $t('features.buttons.already_in_library') }}
+        </button>
+      </template>
+      <template v-else>
+        <button :class="{
+          'cursor-not-allowed': isMutateCheckoutPending,
+          'cursor-pointer': !isMutateCheckoutPending,
+        }" :disabled="isMutateCheckoutPending" @click="handleCheckout"
+          class="py-[12px] px-[20px] align-middle bg-[#26bbff] hover:bg-[#61cdff] text-black rounded-[10px] flex justify-center items-center">
+          {{ $t('features.buttons.buy_now') }}
+        </button>
+        <button
+          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30  cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"
+          v-if="isAlreadyHaveInCart">
+          <span> Already in Cart</span>
+        </button>
+        <button v-else @click="handleAddToCart(rightContentsData.details.id)" :disabled="rightContentsData.isOwned"
+          :class="{
+            'cursor-not-allowed': rightContentsData.isOwned || isMutateCheckoutPending || isMutateAddToCartPending,
+            'cursor-pointer': !rightContentsData.isOwned && !isMutateCheckoutPending,
+          }"
+          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center">
+          <LoaderCircle v-if="isMutateAddToCartPending" class="animate-spin" />
+          <span v-else>{{ $t('features.buttons.add_to_cart') }}</span>
+        </button>
+        <button v-if="isAlreadyHaveInWishlist"
+          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center">
+          Already in Wishlist
+        </button>
+        <button v-else @click="handleAddToWishlist(rightContentsData.details.id)" :disabled="rightContentsData.isOwned"
+          :class="{
+            '!cursor-not-allowed': rightContentsData.isOwned || isMutateCheckoutPending || isMutateAddToWishlistPending,
+            'cursor-pointer': !rightContentsData.isOwned,
+          }"
+          class="text-wrap py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center">
+          <LoaderCircle v-if="isMutateAddToWishlistPending" class="animate-spin" />
+          <span v-else> {{ $t('features.buttons.add_to_wishlist') }}</span>
+        </button>
+      </template>
     </div>
 
     <div class="flex flex-col text-[15px]">

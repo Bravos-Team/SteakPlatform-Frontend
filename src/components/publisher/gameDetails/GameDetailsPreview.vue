@@ -56,7 +56,7 @@
                 class="shrink-0 min-w-[100px] h-14 bg-white/10 rounded-sm flex justify-center">
                 <img v-if="media.type === 'image'" :src="media.url" class="w-full h-full object-cover rounded-sm"
                   alt="Game Media" />
-                <video v-else-if="media.type === 'video'" :src="media.url"
+                <video v-else-if="media.type === 'video'" :src="media.url" muted
                   class="w-full h-full object-cover rounded-sm" />
               </div>
 
@@ -166,7 +166,7 @@
           <button
             class="rounded-[4px] py-[1px] justify-center px-[8px] flex items-center bg-[#ffffff26] w-23 h-7"></button>
         </div>
-        <div class="flex justify-start w-full font-bold text-[18px] text-white/50">
+        <div v-if="gameDetails?.price != 0" class="flex justify-start w-full font-bold text-[18px] text-white/50">
           {{
             Number(gameDetails?.price).toLocaleString('vi-VN', {
               style: 'currency',
@@ -174,6 +174,7 @@
             })
           }}
         </div>
+        <div v-else class="text-white/60 font-bold">Free</div>
 
         <div class="flex flex-col gap-y-[10px]">
           <button

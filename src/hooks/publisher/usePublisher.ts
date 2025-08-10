@@ -72,12 +72,6 @@ export const usePublisherLogout = () => {
     queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LOGOUT(),
     queryFn: async () => {
       queryClient.clear()
-      // await queryClient.invalidateQueries({
-      //   queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL,
-      // })
-      // await queryClient.invalidateQueries({
-      //   queryKey: GAME_MANAGE_QUERY_KEYS.ALL,
-      // })
       removeCookie('publisherAccessRights')
       await logout()
     },

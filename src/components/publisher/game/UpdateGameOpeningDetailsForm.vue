@@ -102,7 +102,6 @@
             " :disabled="isUpdating"
               class="px-3 flex items-center gap-x-2 font-black cursor-not-allowed duration-300 transition-colors py-2 border bg-yellow-400/30 rounded-sm">
               {{ $t('title.pages.game_details.form.update_game_opening') }}
-
               <LoaderCircle class="animate-spin size-6" />
             </button>
             <button :disabled="isUpdating" v-else @click="handleUpdateGameDetails"
@@ -384,6 +383,7 @@ const handleResolveMediaFiles = async () => {
 const isUpdating = ref(false)
 const handleUpdateGameDetails = useDebounceFn(async () => {
   // <-- handle upload cover image
+  isUpdating.value = true
   completedApis.value = 0
   progressDisplay.value = 0
 
@@ -410,7 +410,7 @@ const handleUpdateGameDetails = useDebounceFn(async () => {
         ...diff,
         gameId: props.gamePreviewDetails.id,
       })
-      if (diff.price) {
+      if (diff.price != null && diff.price !== undefined) {
         const priceResponse = await mutateUpdateGamePrice({
           gameId: props.gamePreviewDetails.id,
           price: diff.price,

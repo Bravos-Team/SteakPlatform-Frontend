@@ -48,6 +48,46 @@ export const publisherRoutes: RouteRecordRaw[] = [
         path: 'accepted/details/:id',
         name: 'PublisherGameAcceptedDetails',
         component: () => import('@/views/publisher/home/game/gameDetails/GameAcceptedDetails.vue'),
+        meta: {
+          baseName: 'Game Accepted Details',
+          i18n: 'game_accepted_details',
+        },
+      },
+      {
+        path: 'accounts',
+        name: 'PublisherAccountManagement',
+        component: () => import('@/views/publisher/accounts/AccountManagementPage.vue'),
+        meta: {
+          baseName: 'Account Management',
+          i18n: 'account_management',
+        },
+      },
+      {
+        path: 'permissions',
+        name: 'PublisherPermissionsManagement',
+        component: () => import('@/views/publisher/accounts/PermissionManagementPage.vue'),
+        meta: {
+          baseName: 'Permissions Management',
+          i18n: 'permissions_management',
+        },
+      },
+      {
+        path: 'custom-roles',
+        name: 'PublisherCustomRolesManagement',
+        component: () => import('@/views/publisher/accounts/CustomRolesManagement.vue'),
+        meta: {
+          baseName: 'Custom Roles Management',
+          i18n: 'custom_roles_management',
+        },
+      },
+      {
+        path: 'custom-roles/:id',
+        name: 'PublisherCustomRolesDetails',
+        component: () => import('@/views/publisher/accounts/CustomRolesDetailsPage.vue'),
+        meta: {
+          baseName: 'Custom Roles Details',
+          i18n: 'custom_roles_details',
+        },
       },
     ],
     meta: {

@@ -85,6 +85,11 @@ export default {
       game_management_accepted: 'Published Project Management',
       game_not_release_yet: 'Game Not Released Yet',
       support: 'Support Center',
+      game_accepted_details: 'Game Accepted Details',
+      account_management: 'Account Management',
+      permissions_management: 'Permissions Management',
+      custom_roles_management: 'Custom Roles Management',
+      custom_roles_details: 'Custom Roles Details',
       game_details: 'Project Details',
     },
     subPagesCompo: {
@@ -186,6 +191,18 @@ export default {
       order_details: 'Order Details',
       order_status: 'Order Status',
       order_summary: 'Order Summary',
+      accounts_management: {
+        title: 'Account member management',
+        member: 'Member Management',
+        permission: 'Permissions Management',
+        custom_roles: 'Custom Roles Management',
+      },
+      permission: {
+        title: 'Permissions',
+      },
+      custom_roles: {
+        title: 'Custom Roles',
+      },
       game_management: {
         filters: {
           placeholder: 'Filter by status',
