@@ -1,13 +1,13 @@
 <template>
   <div class="sticky z-10 -top-[2px] h-full w-full">
     <div
-      class="flex flex-col laptop:flex-row bg-[#101014] py-3 gap-y-2 items-center justify-between min-w-full h-full px-6"
+      class="flex flex-col laptop:flex-row bg-[#101014] py-3 gap-y-2 items-center justify-between min-w-full h-full"
     >
-      <!-- SEARCH BAR -->
-      <div class="flex justify-center items-center w-full px-4">
+      <!-- SEARCH BAR + DISCOVER/BROWSE -->
+      <div class="flex justify-center items-center w-full px-1 gap-3 laptop:gap-5">
         <input type="text" placeholder="Search..." class="sr-only shrink-0" />
         <div
-          class="bg-[#202024] relative hover:bg-[#404044] rounded-full w-full outline-none h-[40px] text-gray-400 px-10"
+          class="bg-[#202024] relative hover:bg-[#404044] rounded-full w-full outline-none h-[40px] text-gray-400 px-10 max-w-[400px]"
         >
           <img
             src="https://ccdn.steak.io.vn/assets-search-white-w-opacity.svg"
@@ -20,9 +20,21 @@
             class="bg-transparent placeholder:text-[#fff]/70 text-white w-full h-full focus:outline-none"
           />
         </div>
-        <!-- SEARCH BAR -->
+        <!-- Discover & Browse buttons -->
+        <router-link
+          to="/discover"
+          class="rounded-full px-5 py-2 bg-[#202024] hover:bg-[#404044] text-white font-medium transition-colors duration-200"
+        >
+          Discover
+        </router-link>
+        <router-link
+          to="/browse"
+          class="rounded-full px-5 py-2 bg-[#202024] hover:bg-[#404044] text-white font-medium transition-colors duration-200"
+        >
+          Browse
+        </router-link>
       </div>
-      <!-- END SEARCH BAR -->
+      <!-- END SEARCH BAR + DISCOVER/BROWSE -->
 
       <div
         class="flex-wrap gap-y-2 w-full mobile:py-3 text-[#fff]/70 tablet:h-[100px] flex flex-row tablet:w-full tablet:items-center justify-between laptop:justify-end laptop:gap-5 laptop:items-center items-center"
