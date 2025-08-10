@@ -49,6 +49,7 @@ const {
   fetchNextPage: fetchNextPageGameList,
   isFetching: isFetchingGameList,
   hasNextPage: hasNextPageGameList,
+
 } = useGameStoreInfiniteQueryList()
 
 const StoreSliders = defineAsyncComponent(() => import('@/components/store/StoreSliders.vue'))
@@ -58,7 +59,7 @@ let observer: IntersectionObserver
 
 onMounted(() => {
   observer = new IntersectionObserver(entries => {
-    if (useGameListData.value?.pages.maxCursor === 1754672400000) return
+    if (!hasNextPageGameList.value) return
     if (entries[0].isIntersecting && hasNextPageGameList.value && !isFetchingGameList.value) {
       fetchNextPageGameList()
     }

@@ -3,7 +3,7 @@
         <div class="px-1 tablet:px-4 py-8 flex flex-col gap-y-3">
             <!-- Header Section -->
             <div
-                class="relative overflow-hidden rounded-3xl bg-white/80 dark:bg-slate-800/30 backdrop-blur-xl border border-white/20 shadow-2xl">
+                class="relative overflow-hidden rounded-3xl  bg-black/60 backdrop-blur-xl border border-white/20 shadow-2xl">
                 <div class="relative tablet:p-8 p-2">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                         <div class="flex items-center gap-3 flex-col tablet:flex-row">
@@ -56,7 +56,7 @@
 
             <!-- Controls Section -->
             <div class="flex flex-col sm:flex-row gap-4">
-                <Card class="flex-1 bg-white/60 dark:bg-slate-800/30 backdrop-blur-xl border-white/20">
+                <Card class="flex-1 bg-black/60 backdrop-blur-xl border-white/20">
                     <CardContent class="p-6">
                         <div class="flex flex-col sm:flex-row gap-4">
                             <div class="flex-1 relative">
@@ -191,7 +191,7 @@
                         <div class="space-y-4">
                             <div>
                                 <h4 class="text-sm font-medium mb-3">Permissions ({{ selectedRole?.permissions.length
-                                    }})</h4>
+                                }})</h4>
                                 <div class="space-y-2">
                                     <div v-for="permission in selectedRole?.permissions" :key="permission.id"
                                         class="flex items-center justify-between p-3 border rounded-lg">

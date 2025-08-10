@@ -35,3 +35,7 @@ export type UPDATE_CUSTOM_ROLE_PARAMS = {
   roleId: string
   isActive: boolean
 }
+export type DETACH_ROLE_PARAMS = {
+  accountId: number
+  roleId: number
+}

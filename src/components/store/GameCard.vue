@@ -1,7 +1,7 @@
 <template>
   <div v-if="game && isReleased(game)"
-    class="group shadow-2xl  relative px-1 w-full tablet:col-span-6 col-span-12 laptop:col-span-4 desktop:col-span-3 ">
-    <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }" class=" ">
+    class="group shadow-2xl relative px-1 w-full tablet:col-span-6 col-span-12 laptop:col-span-4 desktop:col-span-3 transition-transform duration-200 hover:scale-105 hover:shadow-3xl rounded-lg">
+    <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }" class="">
       <!-- IMAGE -->
       <div class="group relative min-w-full rounded-xs overflow-hidden tablet:max-h-[8rem]">
         <img :src="game?.thumbnail" :alt="game.name" class="object-contain   rounded-xs w-full" />
@@ -34,7 +34,6 @@
       @click="handleAddToCart(game.id, game.name)">
       <img src="https://ccdn.steak.io.vn/assets-ico-plus-white.svg" alt="" />
     </button>
-
     <!-- END ADD TO CART -->
   </div>
 </template>

@@ -6,6 +6,7 @@ const user = async ({ next, checkAccess }: MiddlewareContext) => {
   if (!checkAccess.user) {
     try {
       const response = await renewUserRefreshToken()
+      console.log('User refresh token response:', response)
       if (response.status === 200) {
         return next()
       }
@@ -15,6 +16,7 @@ const user = async ({ next, checkAccess }: MiddlewareContext) => {
       })
     }
   }
+  return next()
 }
 
 export default user

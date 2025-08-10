@@ -252,8 +252,7 @@
                                 </div>
 
                                 <combobox-input v-model="searchRole" as-child>
-                                    <tags-input-input id="roles"
-                                        :placeholder="$t('title.pages.game_details.form.platforms.placeholder')"
+                                    <tags-input-input id="roles" :placeholder="'Search or add roles...'"
                                         class="min-w-full p-0 border-none focus-visible:ring-0 h-auto"
                                         @keydown.enter.prevent />
                                 </combobox-input>

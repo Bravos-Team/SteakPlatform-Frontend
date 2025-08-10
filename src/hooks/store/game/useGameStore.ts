@@ -16,17 +16,16 @@ export const useGameStoreInfiniteQueryList = (filters?: GAME_STORE_LIST_QUERY_PA
     queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
     queryFn: async ({ pageParam, signal }) => {
       const pageValue = await Promise.resolve(pageParam).then((value) => value)
-      console.log('Page Param:', pageValue)
-      if (pageValue === 1754672400000) return
+      if (!pageValue) return
       return await useGetGameListStore(Number(pageValue)?.toString(), filters?.size, signal).then(
         (rp) => rp.data,
       )
     },
+    retry: 1,
     initialPageParam: 1754656462222,
     getNextPageParam: async (lastPage) => {
-      console.log('Last Page:', lastPage)
+      if (!lastPage) return
       const lastItem = lastPage!.items[lastPage!.items.length - 1]!
-      console.log('Last Item:', lastItem)
       if (lastItem) return lastItem.releaseDate
       return
     },

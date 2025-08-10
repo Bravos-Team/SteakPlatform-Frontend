@@ -85,6 +85,11 @@ export default {
       game_management_accepted: 'Published Project Management',
       game_not_release_yet: 'Game Not Released Yet',
       support: 'Support Center',
+      game_accepted_details: 'Game Accepted Details',
+      account_management: 'Account Management',
+      permissions_management: 'Permissions Management',
+      custom_roles_management: 'Custom Roles Management',
+      custom_roles_details: 'Custom Roles Details',
       game_details: 'Project Details',
     },
     subPagesCompo: {
