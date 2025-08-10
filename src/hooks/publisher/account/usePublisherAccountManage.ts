@@ -25,10 +25,10 @@ import {
   CREATE_CUSTOM_ROLE_PAYLOAD,
   UPDATE_CUSTOM_ROLE_PARAMS,
 } from '@/types/publisher/account/AccountManageType'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/vue-query'
 import { Ref } from 'vue'
 
-const staleTime = 1000 * 60 * 30
+const staleTime = 0
 
 export const useQueryPublisherAccountsList = (filters: Ref<ACCOUNT_LIST_FILTERS>) => {
   return useQuery({
@@ -42,7 +42,8 @@ export const useQuerySearchingAccount = (filters?: Ref<ACCOUNT_SEARCHING_FILTERS
   return useQuery({
     queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.SEARCHING(filters),
     queryFn: async ({ signal }) => await getPublisherSearchingAccount(filters?.value, signal),
-    staleTime,
+    staleTime: 1000 * 60 * 5,
+    enabled: false,
   })
 }
 
@@ -70,30 +71,29 @@ export const useQueryPublisherInformations = () => {
   })
 }
 
-export const useQueryPublisherInformationsById = (accountId: string) => {
+export const useQueryPublisherInformationsById = (accountId?: Ref<string>) => {
   return useQuery({
-    queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.ACCOUNT_BY_ID(accountId),
-    queryFn: async ({ signal }) => await getPublisherInfomationsById(accountId, signal),
-    staleTime,
+    queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.ACCOUNT_BY_ID(accountId!),
+    queryFn: async ({ signal }) => await getPublisherInfomationsById(accountId?.value!, signal),
+    staleTime: 1000 * 60 * 5,
+    placeholderData: keepPreviousData,
+    retry: 1,
+    enabled: false,
   })
 }
 
-export const useQueryRoleInformationsById = (roleId: string) => {
+export const useQueryRoleInformationsById = (roleId: Ref<string>) => {
   return useQuery({
     queryKey: PUBLISHER_CUSTOM_ROLES_LIST_KEYS.ROLE(roleId),
-    queryFn: async ({ signal }) => await getCustomRoleInformationsById(roleId, signal),
+    queryFn: async ({ signal }) => await getCustomRoleInformationsById(roleId.value, signal),
+    enabled: false,
   })
 }
 
 export const useMutateCreatePublisherAccount = () => {
-  const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: CREATE_ACCOUNT_PUBLISHER_PAYLOAD) =>
       await createNewPublisherAccount(payload),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.LIST(),
-      }),
   })
   return { mutateAsync, isPending }
 }

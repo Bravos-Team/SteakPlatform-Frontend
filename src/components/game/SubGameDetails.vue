@@ -1,6 +1,6 @@
 <template>
   <div v-if="rightContentsData"
-    class="laptop:h-[884px] col-span-12 laptop:col-span-3 mt-1 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]">
+    class="laptop:h-[884px] order-1 laptop:order-2 col-span-12 laptop:col-span-3 mt-1 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]">
     <div class="flex justify-center items-center p-[20px]">
       <div class="flex justify-center items-center">
         <img :src="rightContentsData?.details?.thumbnail" alt="" />
@@ -25,9 +25,13 @@
         {{ game.category.name }}
       </button> -->
     </div>
-    <div class="flex justify-start w-full font-bold text-[18px]">
+    <div v-if="rightContentsData?.price !== 0" class="flex justify-start w-full font-bold text-[18px]">
       {{ CurrencyUtils.formatCurrencyVND(rightContentsData?.price) }}
     </div>
+    <div v-else class="flex justify-start w-full font-bold text-[18px]">
+      Free
+    </div>
+
 
     <div class="flex flex-col gap-y-[10px]">
       <button v-if="rightContentsData!.isOwned"

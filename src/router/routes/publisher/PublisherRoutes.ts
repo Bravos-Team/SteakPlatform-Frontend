@@ -59,6 +59,11 @@ export const publisherRoutes: RouteRecordRaw[] = [
         name: 'PublisherPermissionsManagement',
         component: () => import('@/views/publisher/accounts/PermissionManagementPage.vue'),
       },
+      {
+        path: 'custom-roles',
+        name: 'PublisherCustomRolesManagement',
+        component: () => import('@/views/publisher/accounts/CustomRolesManagement.vue'),
+      },
     ],
     meta: {
       baseName: 'Publisher',

@@ -7,7 +7,7 @@ import QUERY_KEY_TYPE from '@/hooks/constants/query-key-type'
 
 export const PUBLISHER_ACCOUNTS_MANAGE_KEYS = {
   ACCOUNT: () => ['publisher', 'accounts', 'me'] as const,
-  ACCOUNT_BY_ID: (accountId: string) => ['publisher', 'accounts', accountId] as const,
+  ACCOUNT_BY_ID: (accountId: Ref<string>) => ['publisher', 'accounts', accountId.value] as const,
   SEARCHING: ((filters?: Ref<ACCOUNT_SEARCHING_FILTERS>) => [
     'publisher',
     'accounts',
@@ -28,5 +28,5 @@ export const PUBLISHER_PERMISSIONS_LIST_KEYS = {
 
 export const PUBLISHER_CUSTOM_ROLES_LIST_KEYS = {
   ALL: () => ['publisher', 'custom-roles', 'list'] as const,
-  ROLE: (roleId: string) => ['publisher', 'custom-roles', roleId] as const,
+  ROLE: (roleId: Ref<string>) => ['publisher', 'custom-roles', roleId.value] as const,
 }

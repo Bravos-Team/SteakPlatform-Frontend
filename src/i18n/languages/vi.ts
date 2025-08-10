@@ -144,6 +144,7 @@ export default {
           add_to_cart_error: 'Không thể thêm vào giỏ hàng',
           remove_from_cart_success: 'Đã xóa khỏi giỏ hàng',
           remove_all_from_cart: 'Xóa tất cả khỏi giỏ hàng',
+          remove_all_from_wishlist: 'Xóa tất cả khỏi danh sách mong muốn',
           remove_all_from_cart_success: 'Đã xóa tất cả khỏi giỏ hàng',
           remove_all_from_wishlist_success: 'Đã xóa tất cả khỏi danh sách mong muốn',
           remove_all_from_wishlist_error: 'Không thể xóa tất cả khỏi danh sách mong muốn',
@@ -377,9 +378,14 @@ export default {
           accounts_management: {
             title: 'Quản lý tài khoản',
             member: 'Quản lý tài khoản thành viên',
+            permission: 'Quản lý quyền hạn',
+            custom_roles: 'Quản lý vai trò tùy chỉnh',
           },
           permissions: {
             title: 'Quyền hạn',
+          },
+          custom_roles: {
+            title: 'Vai trò tùy chỉnh',
           },
           store: {
             title: 'Cửa hàng Steak',

@@ -16,6 +16,7 @@ export const useGameStoreInfiniteQueryList = (filters?: GAME_STORE_LIST_QUERY_PA
     queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
     queryFn: async ({ pageParam, signal }) => {
       const pageValue = await Promise.resolve(pageParam).then((value) => value)
+      console.log('Page Param:', pageValue)
       if (pageValue === 1754672400000) return
       return await useGetGameListStore(Number(pageValue)?.toString(), filters?.size, signal).then(
         (rp) => rp.data,
@@ -23,11 +24,12 @@ export const useGameStoreInfiniteQueryList = (filters?: GAME_STORE_LIST_QUERY_PA
     },
     initialPageParam: 1754656462222,
     getNextPageParam: async (lastPage) => {
+      console.log('Last Page:', lastPage)
       const lastItem = lastPage!.items[lastPage!.items.length - 1]!
+      console.log('Last Item:', lastItem)
       if (lastItem) return lastItem.releaseDate
       return
     },
-    // staleTime: 1000 * 60 * 5,
   })
 }
 
@@ -35,11 +37,10 @@ export const useGameStoreDetailsQuery = (gameId: bigint) => {
   return useQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.DETAILS(gameId.toString()),
     queryFn: async ({ signal }) => await useGetGameDetails(gameId.toString(), signal),
-    retry: 3,
+    retry: 1,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,
-    staleTime: 1000 * 60 * 5,
   })
 }
 

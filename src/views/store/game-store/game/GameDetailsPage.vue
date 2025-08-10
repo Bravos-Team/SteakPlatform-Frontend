@@ -7,7 +7,7 @@
     <div class="flex flex-row h-full mb-[8px]">
       <span class="text-[42px] leading-10 font-extrabold text-wrap">{{
         gameDetailData.data?.details?.title
-        }}</span>
+      }}</span>
     </div>
     <!-- END GAME NAME BAR -->
 
@@ -16,7 +16,7 @@
       <div class="flex w-full flex-row items-center mx-[0px] me-[20px] ms-[0px] gap-x-[30px]">
         <router-link to="#" class="pt-0 pr-0 pb-2 pl-0 border-b-3 border-[#00a6ff]" :class="''">{{
           $t('title.subPagesCompo.sidebar.publisher.dashboard.items.overview')
-          }}</router-link>
+        }}</router-link>
         <!-- <router-link to="#" class="pt-0 pr-0 pb-2 pl-0 text-[#fff]/50 hover:text-white" :class="''"
           >Achievements</router-link
         > -->
@@ -25,8 +25,8 @@
     <!-- END OPTIONS BAR-->
 
     <!-- MAIN CONTENT -->
-    <div class="grid grid-cols-12 justify-between gap-x-4 w-full">
-      <div class="flex flex-col gap-y-[10px] relative col-span-12 laptop:col-span-9 w-full">
+    <div class="grid grid-cols-12 gap-y-2  justify-between gap-x-4 w-full">
+      <div class="flex order-2 laptop:order-1 flex-col gap-y-[10px] relative col-span-12 laptop:col-span-9 w-full">
         <!-- LEFT CONTENT -->
         <div :class="{ '!min-h-full !max-h-full overflow-visible': showMore }"
           class="flex flex-col gap-y-[3rem] max-h-[80rem] overflow-hidden">
@@ -92,7 +92,7 @@
         <div class="mt-[50px] mr-[0px] gap-y-[20px] mb-[0px] flex flex-col">
           <span class="text-[20px] tracking-[0.4px] font-bold w-full text-wrap">{{
             gameDetailData.data.details.title + ' System Requirements'
-            }}</span>
+          }}</span>
           <div class="bg-[#202024] rounded-[12px] py-[35px] px-[60px] text-white justify-between gap-[35px]">
             <div class="flex flex-col gap-[35px]">
               <div class="flex flex-col">
@@ -103,7 +103,7 @@
                     {{ system.name }}
                   </button>
                 </div> -->
-                <div class="gap-[13px] pt-[35px] pr-[0px] pb-[0px] flex flex-col">
+                <div class="gap-[13px] pt-[35px] pr-[0px] pb-[0px] flex flex-col text-pretty">
                   <!-- CONTENT -->
                   <div class="w-full flex gap-x-[20px]">
                     <span class="text-[20px] w-6/12 font-bold">Minimum</span>
@@ -114,13 +114,13 @@
                       <span class="w-auto text-[#ffffffa6] text-[15px]">OS version</span>
                       <span class="w-[11/12]">{{
                         gameDetailData.data?.details?.systemRequirements?.minimum?.osVersion
-                        }}</span>
+                      }}</span>
                     </div>
                     <div class="flex flex-col w-6/12">
                       <span class="w-auto text-[#ffffffa6] text-[15px]">OS version</span>
                       <span class="w-auto">{{
                         gameDetailData.data?.details?.systemRequirements?.recommend?.osVersion
-                        }}</span>
+                      }}</span>
                     </div>
                   </div>
                   <div class="flex gap-x-[20px]">
@@ -128,13 +128,13 @@
                       <span class="w-auto text-[#ffffffa6] text-[15px]">CPU</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.minimum?.cpu
-                        }}</span>
+                      }}</span>
                     </div>
                     <div class="flex w-6/12 flex-col">
                       <span class="w-auto text-[#ffffffa6] text-[15px]">CPU</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.recommend?.cpu
-                        }}</span>
+                      }}</span>
                     </div>
                   </div>
                   <div class="flex gap-x-[20px]">
@@ -142,13 +142,13 @@
                       <span class="w-auto text-[#ffffffa6] text-[15px]">Memory</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.minimum?.memory
-                        }}</span>
+                      }}</span>
                     </div>
                     <div class="flex w-6/12 flex-col">
                       <span class="w-auto text-[#ffffffa6] text-[15px]">Memory</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.recommend?.memory
-                        }}</span>
+                      }}</span>
                     </div>
                   </div>
 
@@ -157,13 +157,13 @@
                       <span class="w-auto text-[#ffffffa6] text-[15px]">GPU</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.minimum?.gpu
-                        }}</span>
+                      }}</span>
                     </div>
                     <div class="flex w-6/12 flex-col">
                       <span class="w-auto text-[#ffffffa6] text-[15px]">GPU</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.recommend?.gpu
-                        }}</span>
+                      }}</span>
                     </div>
                   </div>
                   <div class="flex gap-x-[20px]">
@@ -171,13 +171,13 @@
                       <span class="w-auto text-[#ffffffa6] text-[15px]">DirectX</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.minimum?.directX
-                        }}</span>
+                      }}</span>
                     </div>
                     <div class="flex w-6/12 flex-col">
                       <span class="w-auto text-[#ffffffa6] text-[15px]">DirectX</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.recommend?.directX
-                        }}</span>
+                      }}</span>
                     </div>
                   </div>
                   <div class="flex gap-x-[20px]">
@@ -185,13 +185,13 @@
                       <span class="w-auto text-[#ffffffa6] text-[15px]">Storage</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.minimum?.storage
-                        }}</span>
+                      }}</span>
                     </div>
                     <div class="flex w-6/12 flex-col">
                       <span class="w-auto text-[#ffffffa6] text-[15px]">Storage</span>
                       <span class="text-[17px] text-pretty">{{
                         gameDetailData.data?.details?.systemRequirements?.recommend?.storage
-                        }}</span>
+                      }}</span>
                     </div>
                   </div>
                   <!-- END CONTENT -->
@@ -206,7 +206,7 @@
                   <span class="text-[15px] text-[#ffffffa6]">Languages Supported</span>
 
                   <!-- LANGUAGES SUPPORTED -->
-                  <div class="min-h-[80px]">
+                  <div class="min-h-[80px] text-pretty">
                     <span class="text-[17px] text-white">
                       Text:
                       <span class="text-white text-[17px]"

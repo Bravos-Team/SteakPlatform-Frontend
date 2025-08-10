@@ -188,9 +188,15 @@ export default {
       order_summary: 'Order Summary',
       accounts_management: {
         title: 'Account member management',
+        member: 'Member Management',
+        permission: 'Permissions Management',
+        custom_roles: 'Custom Roles Management',
       },
       permission: {
         title: 'Permissions',
+      },
+      custom_roles: {
+        title: 'Custom Roles',
       },
       game_management: {
         filters: {

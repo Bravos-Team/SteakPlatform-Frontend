@@ -23,9 +23,9 @@
         <div class="flex w-full gap-y-3 flex-col">
           <div v-if="userCartData?.data?.items">
             <div v-if="userCartData?.data.items.length > 0" v-for="game in userCartData.data.items" :key="game.id"
-              class="w-full cursor-pointer p-6 rounded-lg bg-white/6 grid grid-cols-12 gap-x-3 gap-[20px] flex-col ">
+              class="w-full  cursor-pointer p-6 rounded-lg bg-white/6 grid grid-cols-12 gap-x-3 gap-[20px]  ">
               <!-- LEFT CONTENT -->
-              <div class="flex flex-col col-span-3 gap-y-2 ">
+              <div class="flex flex-col col-span-12 tablet:col-span-3 gap-y-2 ">
                 <img :src="game.thumbnail" class="w-full" alt="" />
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="svg text-white/60 size-7 css-uwwqev"
@@ -41,7 +41,7 @@
               <!-- END LEFT CONTENT -->
 
               <!-- RIGHT CONTENT -->
-              <div class="flex w-full flex-col gap-y-2 col-span-9">
+              <div class="flex w-full flex-col gap-y-2 col-span-12 tablet:col-span-9">
                 <!-- NAME AND HEADER BADGE -->
                 <div class="flex justify-between w-full">
                   <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">{{
