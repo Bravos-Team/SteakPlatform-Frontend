@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="relative">
+    <BackToTheTopButton />
     <drawer className="sm:max-w-[425px]">
       <store-top-bar :isHiddenWhenMobile="true" />
     </drawer>
     <mobile-top-bar />
     <div class="desktop-xl:px-[20rem] desktop:px-[6rem] laptop:px-[3rem]">
-      <div class="@container flex w-full h-full flex-col py-10">
+      <div class="@container flex w-full h-full flex-col py-2 tablet:py-10">
         <router-view></router-view>
       </div>
     </div>
@@ -14,6 +15,7 @@
   <footer-store></footer-store>
 </template>
 <script setup>
+import BackToTheTopButton from '@/components/common/BackToTheTopButton.vue'
 import FooterStore from '@/components/store/FooterStore.vue'
 import MobileTopBar from '@/components/store/nav/MobileTopBar.vue'
 import StoreTopBar from '@/components/store/StoreTopBar.vue'

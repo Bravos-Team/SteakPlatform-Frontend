@@ -1,6 +1,6 @@
 <template>
   <div v-if="rightContentsData"
-    class="laptop:h-[884px] col-span-12 laptop:col-span-3 mt-1 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]">
+    class="laptop:h-[884px] order-1 laptop:order-2 col-span-12 laptop:col-span-3 mt-1 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]">
     <div class="flex justify-center items-center p-[20px]">
       <div class="flex justify-center items-center">
         <img :src="rightContentsData?.details?.thumbnail" alt="" />
@@ -25,17 +25,20 @@
         {{ game.category.name }}
       </button> -->
     </div>
-    <div class="flex justify-start w-full font-bold text-[18px]">
+    <div v-if="rightContentsData?.price !== 0" class="flex justify-start w-full font-bold text-[18px]">
       {{ CurrencyUtils.formatCurrencyVND(rightContentsData?.price) }}
     </div>
+    <div v-else class="flex justify-start w-full font-bold text-[18px]">
+      Free
+    </div>
+
 
     <div class="flex flex-col gap-y-[10px]">
       <template v-if="rightContentsData?.isOwned">
         <button
           class="py-[12px] px-[20px] align-middle bg-[#26bbff]/30 cursor-not-allowed text-black rounded-[10px] flex justify-center items-center"
-          disabled
-        >
-          In Library
+          disabled>
+          {{ $t('features.buttons.already_in_library') }}
         </button>
       </template>
       <template v-else>
@@ -110,7 +113,7 @@
       <div class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
         <span class="text-[#ffffffa6]">{{
           $t('title.subPagesCompo.sidebar.publisher.platform')
-        }}</span>
+          }}</span>
         <template v-for="(platform, index) in rightContentsData.platforms" :key="index">
           <img v-if="platform.startWith('Window')" src="https://ccdn.steak.io.vn/assets-window-ico-white.svg"
             class="w-6" alt="" />

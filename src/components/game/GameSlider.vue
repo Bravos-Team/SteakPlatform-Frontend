@@ -26,30 +26,32 @@
       <!-- END BUTTONS PREV & NEXT  -->
     </div>
     <!-- END MAIN IMAGES SLIDERS -->
-    <div class="flex flex-row justify-center items-center gap-x-[5px] w-full  h-[57px]">
+    <div class="flex flex-row justify-center items-center tablet:gap-x-[5px] w-full px-3  h-[57px]">
       <div class="h-full flex justify-center items-center">
         <button @click="handlePrev"
-          class="rounded-full cursor-pointer size-[40px] bg-[#fff]/20 flex justify-center items-center">
+          class="rounded-full cursor-pointer size-[2rem] tablet:size-[3rem] bg-[#fff]/20 flex justify-center items-center">
           <img class="w-[5px] rotate-180" src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
         </button>
       </div>
 
       <!-- THUMBNAIL NAVIGATION -->
       <div ref="thumbnail"
-        class="h-[57px] snap-x snap-mandatory keen-slider thumbnail px-[10rem] flex max-w--[7rem]  gap-x-3 w-full overflow-x-hidden   no-scrollbar">
+        class="tablet:gap-x-3 gap-x-1 tablet:h-[57px] snap-x snap-mandatory keen-slider thumbnail px-[10rem] flex max-w--[7rem]   w-full overflow-x-hidden   no-scrollbar">
         <div
-          class="!snap-start  keen-slider__slide border-[2px] cursor-pointer p-0   shrink-0  !min-h-full border-[#fff]/0  checked:border-[#fff] brightness-[.40] hover:brightness-100  rounded-sm"
+          class="!snap-start  keen-slider__slide border-[2px] group cursor-pointer p-0   shrink-0   items-center flex border-[#fff]/0  checked:border-[#fff] brightness-[.40] hover:brightness-100  rounded-sm"
           v-for="(media, index) in game" :class="`number-slide${index + 1}`" :key="index">
-          <img v-if="media.type === 'image'" :src="media.url" alt="" class="object-cover snap-center" />
+          <img v-if="media.type === 'image'" :src="media.url" alt=""
+            class="object-cover w-full  snap-center group-checked:scale-110 transition-all duration-300" />
           <video v-else-if="media.type === 'video'" :src="media.url" :autoplay="false" :controls="false"
-            class="object-cover snap-center" />
+            controlslist="nodownload noremoteplayback" disablepictureinpicture
+            class="object-cover w-full h-full snap-center group-checked:scale-110 transition-all duration-300" />
         </div>
       </div>
       <!-- END THUMBNAIL NAVIGATION -->
 
       <div class="h-full items-center justify-center flex">
         <button @click="handleNext"
-          class="rounded-full cursor-pointer size-[40px] bg-[#fff]/20 flex justify-center items-center">
+          class="rounded-full cursor-pointer size-[2rem] tablet:size-[3rem] bg-[#fff]/20 flex justify-center items-center">
           <img class="w-[5px]" src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
         </button>
       </div>
@@ -118,20 +120,11 @@ const ThumbnailPlugin = (main: any) => {
         removeActive()
         const next = main.value.animator.targetIdx || 0
         addActive(main.value.track.absToRel(next))
-        // if(slider)
-        // slider.moveToIdx(Math.min(slider.track.details.maxIdx, next))
-        // slider.moveToIdx(next ** itemsPerview.value)
-        console.log('next', next)
-        console.log('maxIndex', maxIndex.value)
-        console.log('currentIndex', currentIndex.value)
-        console.log('tracking', slider.track.details.maxIdx)
 
-        if (currentIndex.value == 5) {
-          // console.log('cu:', currentIndex.value)
+        if (currentIndex.value == 3) {
           slider.moveToIdx(Math.min(slider.track.details.maxIdx, next))
           currentIndex.value = 0
         }
-        // currentIndex.value = Math.min(next, maxIndex.value)
       })
     })
   }
@@ -163,7 +156,7 @@ const handlePrev = () => {
   }
 }
 const handleNext = () => {
-  if (currentIndex.value <= 5) {
+  if (currentIndex.value <= 3) {
     currentIndex.value++
   } else {
     currentIndex.value = 0

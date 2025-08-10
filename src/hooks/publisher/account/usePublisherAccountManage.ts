@@ -1,4 +1,5 @@
 import {
+  assignCustomRoleToAccount,
   changeCustomRoleStatus,
   createCustomRole,
   createNewPublisherAccount,
@@ -23,18 +24,20 @@ import {
   ACCOUNT_SEARCHING_FILTERS,
   CREATE_ACCOUNT_PUBLISHER_PAYLOAD,
   CREATE_CUSTOM_ROLE_PAYLOAD,
+  DETACH_ROLE_PARAMS,
   UPDATE_CUSTOM_ROLE_PARAMS,
 } from '@/types/publisher/account/AccountManageType'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/vue-query'
 import { Ref } from 'vue'
 
-const staleTime = 1000 * 60 * 30
+const staleTime = 0
 
 export const useQueryPublisherAccountsList = (filters: Ref<ACCOUNT_LIST_FILTERS>) => {
   return useQuery({
     queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.LIST(filters),
     queryFn: async ({ signal }) => await getPublisherAccountsList(filters.value, signal),
     staleTime,
+    retry: 1,
   })
 }
 
@@ -42,7 +45,9 @@ export const useQuerySearchingAccount = (filters?: Ref<ACCOUNT_SEARCHING_FILTERS
   return useQuery({
     queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.SEARCHING(filters),
     queryFn: async ({ signal }) => await getPublisherSearchingAccount(filters?.value, signal),
-    staleTime,
+    staleTime: 1000 * 60 * 5,
+    enabled: false,
+    retry: 1,
   })
 }
 
@@ -70,11 +75,14 @@ export const useQueryPublisherInformations = () => {
   })
 }
 
-export const useQueryPublisherInformationsById = (accountId: string) => {
+export const useQueryPublisherInformationsById = (accountId?: Ref<string>) => {
   return useQuery({
-    queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.ACCOUNT_BY_ID(accountId),
-    queryFn: async ({ signal }) => await getPublisherInfomationsById(accountId, signal),
-    staleTime,
+    queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.ACCOUNT_BY_ID(accountId!),
+    queryFn: async ({ signal }) => await getPublisherInfomationsById(accountId?.value!, signal),
+    staleTime: 1000 * 60 * 5,
+    placeholderData: keepPreviousData,
+    retry: 1,
+    enabled: false,
   })
 }
 
@@ -82,18 +90,14 @@ export const useQueryRoleInformationsById = (roleId: string) => {
   return useQuery({
     queryKey: PUBLISHER_CUSTOM_ROLES_LIST_KEYS.ROLE(roleId),
     queryFn: async ({ signal }) => await getCustomRoleInformationsById(roleId, signal),
+    retry: 1,
   })
 }
 
 export const useMutateCreatePublisherAccount = () => {
-  const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: CREATE_ACCOUNT_PUBLISHER_PAYLOAD) =>
       await createNewPublisherAccount(payload),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.LIST(),
-      }),
   })
   return { mutateAsync, isPending }
 }
@@ -153,15 +157,26 @@ export const useMutateChangeCustomRoleStatus = () => {
 export const useMutateDetachRoleFromAccount = () => {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (params: UPDATE_CUSTOM_ROLE_PARAMS) => await detachRoleFromAccount(params),
+    mutationFn: async (params: DETACH_ROLE_PARAMS) => await detachRoleFromAccount(params),
     onSuccess: async (_data, variables) => {
       await queryClient.invalidateQueries({
-        queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.ACCOUNT_BY_ID(variables.roleId),
+        queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.ACCOUNT_BY_ID(variables.accountId.toString()),
       })
       await queryClient.invalidateQueries({
-        queryKey: PUBLISHER_CUSTOM_ROLES_LIST_KEYS.ROLE(variables.roleId),
+        queryKey: PUBLISHER_CUSTOM_ROLES_LIST_KEYS.ROLE(variables.roleId.toString()),
       })
     },
   })
   return { mutateAsync, isPending }
+}
+
+export const useMutateAssignCustomRoleToAccount = () => {
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (params: { roleId: number; accountId: number }) =>
+      await assignCustomRoleToAccount(params),
+  })
+  return {
+    mutateAsync,
+    isPending,
+  }
 }

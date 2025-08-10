@@ -2,29 +2,19 @@
   <Combobox v-model:model-value="modalValue" v-model:open="open" :ignore-filter="true">
     <combobox-anchor as-child>
       <label for="languages">
-        <tags-input
-          v-model="modalValue"
-          class="px-2 gap-2 w-full flex flex-col items-start bg-black/70 hover:bg-black/20 transition-colors duration-300 cursor-pointer"
-        >
+        <tags-input @click="open = true" v-model="modalValue"
+          class="px-2 gap-2 w-full flex flex-col items-start bg-black/70 hover:bg-black/20 transition-colors duration-300 cursor-pointer">
           <div class="flex gap-2 items-center flex-wrap">
-            <tags-input-item
-              v-for="language in modalValue"
-              :key="language"
-              :value="language"
-              class=""
-            >
+            <tags-input-item v-for="language in modalValue" :key="language" :value="language" class="">
               <tags-input-item-text />
               <tags-input-item-delete />
             </tags-input-item>
           </div>
 
           <combobox-input v-model="searchItem" as-child class="!w-full">
-            <tags-input-input
-              id="languages"
+            <tags-input-input id="languages"
               :placeholder="$t('title.pages.game_details.form.languages_supported.placeholder')"
-              class="min-w-full p-0 border-none focus-visible:ring-0 h-auto"
-              @keydown.enter.prevent
-            />
+              class="min-w-full p-0 border-none focus-visible:ring-0 h-auto" @keydown.enter.prevent />
           </combobox-input>
         </tags-input>
       </label>
@@ -32,16 +22,11 @@
       <combobox-list class="w-[--reka-popper-anchor-width]">
         <combobox-empty />
         <combobox-group>
-          <scroll-area
-            :class="{
-              'h-[20rem]': filteredLanguages.length > 6,
-              'h-[10rem]': filteredLanguages.length <= 6,
-            }"
-          >
-            <combobox-item
-              v-for="(language, index) in filteredLanguages"
-              :key="index"
-              :value="language"
+          <scroll-area :class="{
+            'h-[20rem]': filteredLanguages.length > 6,
+            'h-[10rem]': filteredLanguages.length <= 6,
+          }">
+            <combobox-item v-for="(language, index) in filteredLanguages" :key="index" :value="language"
               @select.prevent="
                 (event: any) => {
                   if (typeof event.detail.value === 'string') {
@@ -53,8 +38,7 @@
                     open = false
                   }
                 }
-              "
-            >
+              ">
               {{ language }}
             </combobox-item>
           </scroll-area>

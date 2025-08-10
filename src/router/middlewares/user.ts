@@ -1,12 +1,20 @@
 import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import { MiddlewareContext } from '@/types/router/middleware'
+import { renewUserRefreshToken } from '@/apis/user/authUser'
 
-const user = ({ next, checkAccess }: MiddlewareContext) => {
+const user = async ({ next, checkAccess }: MiddlewareContext) => {
   if (!checkAccess.user) {
-    toastErrorNotificationPopup('You need to be logged in to access this page.', 'Access Denied')
-    return next({
-      name: 'Login',
-    })
+    try {
+      const response = await renewUserRefreshToken()
+      console.log('User refresh token response:', response)
+      if (response.status === 200) {
+        return next()
+      }
+    } catch (err: any) {
+      return next({
+        name: 'Login',
+      })
+    }
   }
   return next()
 }

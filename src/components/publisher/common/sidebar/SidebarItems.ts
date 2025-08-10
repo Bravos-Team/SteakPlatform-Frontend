@@ -1,6 +1,7 @@
 import DraftCustomIcon from '@/components/common/icons/DraftCustomIcon.vue'
 import PermissionCustom from '@/components/common/icons/PermissionCustom.vue'
 import PublishedCustomIcon from '@/components/common/icons/PublishedCustomIcon.vue'
+import PublisherCustomRoleCustom from '@/components/common/icons/PublisherCustomRoleCustom.vue'
 import {
   LayoutDashboard,
   BadgeInfo,
@@ -117,6 +118,12 @@ export const navItemsData = [
         i18n: 'permissions.title',
         name: 'PublisherPermissionsManagement',
         icon: PermissionCustom,
+      },
+      {
+        title: 'Custom Roles',
+        i18n: 'custom_roles.title',
+        name: 'PublisherCustomRolesManagement',
+        icon: PublisherCustomRoleCustom,
       },
     ],
   },

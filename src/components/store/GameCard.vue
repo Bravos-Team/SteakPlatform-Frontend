@@ -3,17 +3,13 @@
     class="group shadow-2xl relative px-1 w-full tablet:col-span-6 col-span-12 laptop:col-span-4 desktop:col-span-3 transition-transform duration-200 hover:scale-105 hover:shadow-3xl rounded-lg">
     <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }" class="">
       <!-- IMAGE -->
-      <div class="group relative w-full aspect-[4/3] rounded-lg overflow-hidden flex items-center justify-center">
-        <img
-          :src="game?.thumbnail"
-          :alt="game.name"
-          class="object-cover w-full h-full rounded-lg transition-all duration-200 group-hover:scale-110 group-hover:brightness-75"
-        />
+      <div class="group relative min-w-full rounded-xs overflow-hidden tablet:max-h-[8rem]">
+        <img :src="game?.thumbnail" :alt="game.name" class="object-contain   rounded-xs w-full" />
       </div>
       <!-- END IMAGE -->
 
       <!-- TITLE AND PRICE -->
-      <div class="flex flex-col gap-y-3 px-3 py-2 text-white justify-between bg-gray-400/10 w-full h-[8rem] rounded-lg">
+      <div class="flex flex-col gap-y-3 px-3 py-2 text-white justify-between bg-gray-400/10 w-full h-[9rem]">
         <div class="w-fit break-words leading-tight text-wrap font-bold tablet:text-xl text-2xl">
           {{ game?.name }}
         </div>

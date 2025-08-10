@@ -15,7 +15,7 @@ export const useUserCartList = () => {
     queryFn: async ({ signal }) => {
       return await getMyCart(signal)
     },
-    retry: 3,
+    retry: 1,
     staleTime: 1000 * 60 * 5,
   })
 }

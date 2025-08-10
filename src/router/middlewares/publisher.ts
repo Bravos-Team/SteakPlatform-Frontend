@@ -1,17 +1,22 @@
-import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import { MiddlewareContext } from '@/types/router/middleware'
+import { renewPublisherRefreshToken } from '@/apis/publisher/auth/authPublisher'
 
-const publisher = ({ next, checkAccess }: MiddlewareContext) => {
+const publisher = async ({ next, checkAccess }: MiddlewareContext) => {
   if (!checkAccess.publisher) {
-    toastErrorNotificationPopup(
-      'You need to be a publisher to access this page.',
-      'Publisher Access Required',
-    )
-    return next({
-      name: 'PublisherAuthLogin',
-    })
+    try {
+      const response = await renewPublisherRefreshToken()
+      if (response.status === 200) {
+        // return next({
+        //   name: 'PublisherAuthLogin',
+        // })
+        next()
+      }
+    } catch (err: any) {
+      return next({
+        name: 'PublisherAuthLogin',
+      })
+    }
   }
-
   return next()
 }
 

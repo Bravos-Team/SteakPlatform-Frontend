@@ -1,3 +1,5 @@
+import { renewUserRefreshToken } from '@/apis/user/authUser'
+
 const guest = ({
   next,
   checkAccess,

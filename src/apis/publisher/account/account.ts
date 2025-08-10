@@ -4,6 +4,7 @@ import {
   ACCOUNT_SEARCHING_FILTERS,
   CREATE_ACCOUNT_PUBLISHER_PAYLOAD,
   CREATE_CUSTOM_ROLE_PAYLOAD,
+  DETACH_ROLE_PARAMS,
   UPDATE_CUSTOM_ROLE_PARAMS,
 } from '@/types/publisher/account/AccountManageType'
 
@@ -45,7 +46,16 @@ export const updateCustomRole = async (payload: CREATE_CUSTOM_ROLE_PAYLOAD) =>
   await SteakApi.post('/dev/manager/role/update-role', payload)
 
 export const changeCustomRoleStatus = async (params: UPDATE_CUSTOM_ROLE_PARAMS) =>
-  await SteakApi.post('/dev/manager/role/change-status', params)
+  await SteakApi.post(
+    `/dev/manager/role/change-status?roleId=${params.roleId}&isActive=${params.isActive}`,
+  )
 
-export const detachRoleFromAccount = async (params: UPDATE_CUSTOM_ROLE_PARAMS) =>
-  await SteakApi.post('/dev/manager/role/detach-role', params)
+export const detachRoleFromAccount = async (params: DETACH_ROLE_PARAMS) =>
+  await SteakApi.post(
+    `/dev/manager/role/detach-role?accountId=${params.accountId}&roleId=${params.roleId}`,
+  )
+
+export const assignCustomRoleToAccount = async (params: { roleId: number; accountId: number }) =>
+  await SteakApi.post(
+    `/dev/manager/role/assign-role?roleId=${params.roleId}&accountId=${params.accountId}`,
+  )

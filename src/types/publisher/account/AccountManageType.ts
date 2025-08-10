@@ -12,11 +12,17 @@ export type ACCOUNT_SEARCHING_FILTERS = {
   size: number
 }
 
+export type CREATE_ACCOUNT_PUBLISHER_TEMP = {
+  username: string
+  email: string
+  password: string
+  assignedRoles: string[]
+}
 export type CREATE_ACCOUNT_PUBLISHER_PAYLOAD = {
   username: string
   email: string
   password: string
-  assignedRoles: number[]
+  assignedRoles: number[] | string[] | null
 }
 
 export type CREATE_CUSTOM_ROLE_PAYLOAD = {
@@ -28,4 +34,8 @@ export type CREATE_CUSTOM_ROLE_PAYLOAD = {
 export type UPDATE_CUSTOM_ROLE_PARAMS = {
   roleId: string
   isActive: boolean
+}
+export type DETACH_ROLE_PARAMS = {
+  accountId: number
+  roleId: number
 }

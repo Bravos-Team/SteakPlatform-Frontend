@@ -104,15 +104,6 @@ const isActiveCard = (index) => {
 
 const autoSlideInterval = ref(null)
 
-const startAutoSlide = () => {
-  autoSlideInterval.value = setInterval(() => {
-    if (currentIndex.value >= maxIndex.value) {
-      currentIndex.value = 0
-    } else {
-      nextSlide()
-    }
-  }, 4000)
-}
 
 const stopAutoSlide = () => {
   if (autoSlideInterval.value) {
