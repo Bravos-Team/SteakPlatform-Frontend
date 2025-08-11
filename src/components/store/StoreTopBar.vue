@@ -160,16 +160,24 @@
                 </div>
 
                 <dropdown-menu v-else>
-                  <dropdown-menu-trigger as-child>
-                    <div class="flex items-center gap-x-2 cursor-pointer h-full">
-                      <div
+                  <dropdown-menu-trigger>
+                    <div v-if="isFetchingUserProfile" class="flex items-center gap-x-2 h-full animate-pulse">
+                      <div class="bg-gray-500/80 size-7 rounded-full"></div>
+                      <div class="bg-gray-500/80 h-4 w-24 rounded"></div>
+                    </div>
+                    <div v-else class="flex items-center gap-x-2 cursor-pointer h-full">
+                      <div v-if="userProfileData.avatarUrl"
+                        class="bg-white/30 size-7 rounded-full flex items-center justify-center font-black uppercase">
+                        <img :src="userProfileData.avatarUrl" alt="" class="object-cover">
+                      </div>
+                      <div v-else
                         class="bg-white/30 size-7 rounded-full flex items-center justify-center font-black uppercase">
                         {{ getCookie('userAccessRights').toString().charAt(0) }}
                       </div>
                       <span> {{ getCookie('userAccessRights') }}</span>
                     </div>
                   </dropdown-menu-trigger>
-                  <dropdown-menu-content align="end">
+                  <dropdown-menu-content align="start">
                     <dropdown-menu-label>
                       <span class="flex w-full text-center font-extrabold">{{
                         $t('auth.informations.user.profile.title')
@@ -207,7 +215,7 @@
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -231,18 +239,35 @@ import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 import { LogOut, UserStar } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
-import { computed, onMounted, ref } from 'vue'
-import { generateDeviceInfo } from '@/utils/fingerprint'
+import { computed, ref, PropType } from 'vue';
 const router = useRouter()
 const handleLogout = async () => {
   removeCookie('userAccessRights')
-  toastSuccessNotificationPopup('Logout successfully')
+  toastSuccessNotificationPopup('Logout successfully', '')
   await router.push({ name: 'Login' })
 }
+type UserProfile = {
+  id: bigint;
+  displayName: string;
+  birthDate: string;
+  sex: boolean;
+  avatarUrl: string;
+  bio: string;
+}
+
 const props = defineProps({
   isHiddenWhenMobile: {
     type: Boolean,
     default: false,
+  },
+  isFetchingUserProfile: {
+    type: Boolean,
+    default: false,
+  },
+  userProfileData: {
+    type: Object as PropType<UserProfile>,
+    required: false,
+    default: () => ({}),
   },
 })
 

@@ -1,17 +1,17 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 import middlewarePipeLine from '@/router/middlewares/middlewarePipeLine'
 import authRoutes from '@/router/routes/store/AuthRoutes'
 // import userRoutes from '@/router/routes/user/UserRoute'
+import supportCenterRoutes from '@/router/routes/help/SupportCenterRoutes'
+import paymentRoute from '@/router/routes/payment/PaymentRoute'
+import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
 import homeRoutes from '@/router/routes/store/HomeRoutes'
 import storeRoutes from '@/router/routes/store/StoreRoutes'
-import publisherRoutes from '@/router/routes/publisher/PublisherRoutes'
-import supportCenterRoutes from '@/router/routes/help/SupportCenterRoutes'
 import testRoute from '@/router/routes/test/TestRoute'
-import { getCookie } from '@/utils/cookies/cookie-utils'
 import { MiddlewareContext } from '@/types/router/middleware'
-import paymentRoute from '@/router/routes/payment/PaymentRoute'
+import { getCookie } from '@/utils/cookies/cookie-utils'
 
 const routes: RouteRecordRaw[] = [
   testRoute,
@@ -52,7 +52,7 @@ router.beforeEach(
       user: getCookie('userAccessRights') ?? null,
     }
 
-    const middleware: any[] = to.meta.middleware
+    const middleware: any[] = to.meta.middleware as any[]
     const context: MiddlewareContext = { to, from, next, checkAccess }
     return middleware[0]({
       ...context,

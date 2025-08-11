@@ -2,7 +2,8 @@
   <div class="relative">
     <BackToTheTopButton />
     <drawer className="sm:max-w-[425px]">
-      <store-top-bar :isHiddenWhenMobile="true" />
+      <store-top-bar :userProfileData="userProfile?.data" :isFetchingUserProfile="isFetchingUserProfile"
+        :isHiddenWhenMobile="true" />
     </drawer>
     <mobile-top-bar />
     <div class="desktop-xl:px-[20rem] desktop:px-[6rem] laptop:px-[3rem]">
@@ -21,6 +22,7 @@ import MobileTopBar from '@/components/store/nav/MobileTopBar.vue'
 import StoreTopBar from '@/components/store/StoreTopBar.vue'
 import { Drawer } from '@/components/ui/drawer'
 import { nextTick, onMounted } from 'vue'
-
+import { useQueryUserProfile } from '@/hooks/user/useUserProfile'
+const { data: userProfile, isFetching: isFetchingUserProfile } = useQueryUserProfile()
 onMounted(async () => await nextTick())
 </script>

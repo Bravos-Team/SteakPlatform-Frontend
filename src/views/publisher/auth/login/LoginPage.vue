@@ -2,11 +2,7 @@
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
     <div class="relative">
       <div class="fixed inset-0 z-[-1]">
-        <img
-          src="https://ccdn.steak.io.vn/assets-desert.png"
-          alt=""
-          class="w-full h-full object-cover blur-[4px]"
-        />
+        <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" class="w-full h-full object-cover blur-[4px]" />
       </div>
 
       <particles-base class="absolute opacity-80" />
@@ -19,8 +15,7 @@
   </div>
   <div class="flex justify-center items-center h-screen px-5">
     <div
-      class="backdrop-blur-[6px] will-change-transform hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-5 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50"
-    >
+      class="backdrop-blur-[6px] will-change-transform hover:shadow-gray-400 shadow-[0px_2px_13px_0px_#ffffff40] transition-all duration-400 w-[75vh] p-5 mx-auto rounded-md flex flex-col gap-[20px] border-1 border-gray-500/50">
       <div class="flex flex-col justify-center items-center gap-y-3 text-white">
         <img src="https://ccdn.steak.io.vn/logo_steak.svg" alt="" class="w-15" />
         <span class="font-bold text-3xl">
@@ -28,29 +23,18 @@
         </span>
       </div>
       <div class="flex w-full">
-        <form
-          @submit.prevent="handlePublisherLogin"
-          action=""
-          class="flex flex-col gap-y-[10px] border-0 p-5 w-full items-center"
-        >
+        <form @submit.prevent="handlePublisherLogin" action=""
+          class="flex flex-col gap-y-[10px] border-0 p-5 w-full items-center">
           <div class="flex flex-col gap-y-[20px] w-full lg:w-8/12">
             <div class="flex text-white gap-2 flex-col w-full">
               <span class="font-black">
                 {{ $t('auth.email') }}
               </span>
-              <input
-                type="text"
-                v-model="form.usernameOrEmail"
-                name="emailOrUsername"
-                autocomplete="off"
+              <input type="text" v-model="form.usernameOrEmail" name="emailOrUsername" autocomplete="off"
                 class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                :placeholder="$t('auth.informations.username_and_password_placeholder')"
-              />
-              <label
-                v-if="publisherErrors.email || publisherErrors.username"
-                for="emailOrUsername"
-                class="text-red-500"
-              >
+                :placeholder="$t('auth.informations.username_and_password_placeholder')" />
+              <label v-if="publisherErrors.email || publisherErrors.username" for="emailOrUsername"
+                class="text-red-500 text-wrap">
                 {{ publisherErrors.username || publisherErrors.email }}
               </label>
             </div>
@@ -58,46 +42,31 @@
             <div class="flex text-white gap-2 flex-col w-full">
               <span class="font-black"> {{ $t('auth.password') }}</span>
               <div class="relative flex-col flex">
-                <input
-                  :type="isPassword ? 'password' : 'text'"
-                  v-model="form.password"
-                  name="password"
+                <input :type="isPassword ? 'password' : 'text'" v-model="form.password" name="password"
                   autocomplete="off"
                   class="form-input border-gray-500/50 focus:ring-1 bg-white/10 placeholder-white/80 focus:ring-white outline-0 backdrop-blur-xl border-1 w-full rounded-md p-2"
-                  :placeholder="$t('auth.informations.password_placeholder')"
-                />
-                <label v-if="publisherErrors.password" for="password" class="text-red-500">
+                  :placeholder="$t('auth.informations.password_placeholder')" />
+                <label v-if="publisherErrors.password" for="password" class="text-red-500 text-wrap">
                   {{ publisherErrors.password }}
                 </label>
-                <eye
-                  @click="togglePasswordVisibility"
-                  v-if="!isPassword"
-                  class="absolute right-2 top-2 cursor-pointer"
-                />
-                <eye-closed
-                  @click="togglePasswordVisibility"
-                  v-if="isPassword"
-                  class="absolute right-2 top-2.5 cursor-pointer"
-                />
+                <eye @click="togglePasswordVisibility" v-if="!isPassword"
+                  class="absolute right-2 top-2 cursor-pointer" />
+                <eye-closed @click="togglePasswordVisibility" v-if="isPassword"
+                  class="absolute right-2 top-2.5 cursor-pointer" />
               </div>
             </div>
             <div class="flex justify-center">
               <a href="" class="underline italic text-blue-400 hover:text-blue-500 text-[12px]">
                 {{ $t('auth.informations.forgot_password') }}
-                ?</a
-              >
+                ?</a>
             </div>
           </div>
 
           <div class="flex flex-col justify-center w-8/12 lg:w-4/12">
-            <button
-              type="submit"
-              class="w-full rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] m-2 flex items-center bg-[#ffffff26] transition-all"
-            >
-              <loader-circle
-                v-if="isPendingPublisherLoginEmail || isPendingPublisherLoginUserName"
-                class="animate-spin ml-2"
-              />
+            <button type="submit"
+              class="w-full rounded-sm text-white py-2 font-bold cursor-pointer hover:-translate-y-[3px] hover:ring-2 duration-300 hover:ring-gray-500 justify-center px-[8px] m-2 flex items-center bg-[#ffffff26] transition-all">
+              <loader-circle v-if="isPendingPublisherLoginEmail || isPendingPublisherLoginUserName"
+                class="animate-spin ml-2" />
               <span v-else> {{ $t('auth.login') }} </span>
             </button>
             <span class="text-red-500 text-center">{{ loginMessage }}</span>
@@ -107,17 +76,13 @@
       <div class="flex justify-center">
         <div class="flex flex-col gap-y-2 w-full">
           <div class="flex gap-x-3 text-white justify-center">
-            <router-link
-              :to="{ name: 'PublisherAuthRegister' }"
-              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
-            >
+            <router-link :to="{ name: 'PublisherAuthRegister' }"
+              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline">
               {{ $t('auth.create_account') }}
             </router-link>
             {{ $t('auth.or') }}
-            <router-link
-              :to="{ name: 'Login' }"
-              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
-            >
+            <router-link :to="{ name: 'Login' }"
+              class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline">
               {{ $t('auth.login_as_user') }}
             </router-link>
             <!-- <span>or</span>
@@ -127,10 +92,8 @@
               >Countinue exploring Steak?
             </router-link> -->
           </div>
-          <router-link
-            to="#"
-            class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline"
-          >
+          <router-link to="#"
+            class="text-blue-400 hover:text-blue-500 transition-all duration-400 text-center text-[14px] underline">
             {{ $t('auth.privacy_policy') }}
           </router-link>
         </div>

@@ -31,7 +31,7 @@
                   <select-group>
                     <select-label class="text-white/30">{{
                       $t('features.filters.sortType')
-                    }}</select-label>
+                      }}</select-label>
                     <select-item value="asc">{{ $t('features.filters.sorts.asc') }}</select-item>
 
                     <select-item value="desc">{{ $t('features.filters.sorts.desc') }}</select-item>
@@ -76,10 +76,10 @@
               <div class="flex justify-between w-full">
                 <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">{{
                   $t('type.game.base')
-                }}</span>
+                  }}</span>
                 <span class="font-bold">{{
                   Number(game.price).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                }}</span>
+                  }}</span>
               </div>
               <!-- END NAME AND HEADER BADGE -->
 

@@ -86,11 +86,12 @@ export const useQueryPublisherInformationsById = (accountId?: Ref<string>) => {
   })
 }
 
-export const useQueryRoleInformationsById = (roleId: string) => {
+export const useQueryRoleInformationsById = (roleId?: Ref<string>) => {
   return useQuery({
-    queryKey: PUBLISHER_CUSTOM_ROLES_LIST_KEYS.ROLE(roleId),
-    queryFn: async ({ signal }) => await getCustomRoleInformationsById(roleId, signal),
+    queryKey: PUBLISHER_CUSTOM_ROLES_LIST_KEYS.ROLE(roleId!.value),
+    queryFn: async ({ signal }) => await getCustomRoleInformationsById(roleId!.value, signal),
     retry: 1,
+    enabled: !!roleId?.value,
   })
 }
 

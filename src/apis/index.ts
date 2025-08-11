@@ -79,6 +79,7 @@ SteakApi.interceptors.response.use(
       error.response.config.url.includes('user/auth/username-login') ||
       error.response.config.url.includes('user/auth/email-login')
     ) {
+      console.log('AXIOS FIRST ERROR:', error)
       console.log(group)
       if (group === 'publisher') {
         removeCookie('publisherAccessRights')
@@ -91,6 +92,7 @@ SteakApi.interceptors.response.use(
     }
 
     if (status === 401 && error.response.config.url.includes('/store/private/order/create')) {
+      console.log('AXIOS SECOND ERROR:', error)
       removeCookie('userAccessRights')
       // toastErrorNotificationPopup(msg, title)
       await router.push({ name: 'Login' })
@@ -98,6 +100,7 @@ SteakApi.interceptors.response.use(
     }
 
     if (error.response.config.url.includes('/refresh')) {
+      console.log('AXIOS THIRD ERROR:', error)
       removeCookies(['userAccessRights', 'publisherAccessRights'])
       toastErrorNotificationPopup(msg, title)
       await router.push(redirect)
@@ -105,6 +108,7 @@ SteakApi.interceptors.response.use(
     }
 
     if (status === 401 && route?.meta?.middleware && !originalRequest._retry) {
+      console.log('AXIOS FOURTH ERROR:', error)
       originalRequest._retry = true
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -142,6 +146,7 @@ SteakApi.interceptors.response.use(
       }
     }
 
+    removeCookies(['userAccessRights', 'publisherAccessRights'])
     return Promise.reject(error)
   },
 )

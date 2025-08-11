@@ -24,7 +24,7 @@
   <toaster />
   <Suspense>
     <template #default>
-      <router-view class="ios-safe-area"></router-view>
+      <router-view></router-view>
     </template>
     <template #fallback>
       <div class="min-h-screen flex items-center justify-center ios-loading">

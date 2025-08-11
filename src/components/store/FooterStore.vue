@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[80px] bg-[#18181c] px-[64px] gap-[40px] flex flex-col">
+  <div class="py-[80px] bg-[#18181c] px-[64px] gap-[40px] flex flex-col text-pretty">
     <section class="flex justify-between">
       <span class="font-bold text-[20px] text-white">STORE</span>
       <div class="flex gap-[20px] shrink-0">

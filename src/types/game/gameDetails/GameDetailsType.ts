@@ -237,3 +237,9 @@ export type GAME_OPENING_DATA_TYPE = {
   game: GAME_OPENING_TYPE
   details: GAME_OPENING_DETAILS_TYPE
 }
+export type GAME_GENRES_AND_TAG_TYPE = {
+  id: number
+  name: string
+  description: string
+  slug: string
+}

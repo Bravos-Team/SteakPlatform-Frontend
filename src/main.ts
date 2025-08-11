@@ -51,7 +51,7 @@ const vueQueryPluginOptions: VueQueryPluginOptions = {
         refetchOnMount: false,
         refetchOnReconnect: true,
         retryOnMount: false,
-        retry: true,
+        retry: 1,
       },
     },
   },

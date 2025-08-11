@@ -1,5 +1,6 @@
 import SteakApi from '@/apis/index'
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
+import { setCookie } from '@/utils/cookies/cookie-utils'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
 
 export const register = (data: PublisherRegisterRequest) => {
@@ -22,6 +23,9 @@ export const renewPublisherRefreshToken = async () => {
   return await SteakApi.post('/dev/auth/refresh', {
     deviceId: await generateDeviceId(),
     deviceInfo: await generateDeviceInfo(),
+  }).then((rp) => {
+    setCookie('publisherAccessRights', rp.data.displayName)
+    return rp
   })
 }
 
