@@ -270,7 +270,7 @@ import {
     ShieldPlus
 } from 'lucide-vue-next'
 
-import { useQueryCustomRolesList, useMutateCreateCustomRole, useQueryPublisherPermissionsList, useMutateChangeCustomRoleStatus } from "@/hooks/publisher/account/usePublisherAccountManage"
+import { useQueryCustomRolesList, useQueryRoleInformationsById, useMutateCreateCustomRole, useQueryPublisherPermissionsList, useMutateChangeCustomRoleStatus } from "@/hooks/publisher/account/usePublisherAccountManage"
 import { computed, ref } from 'vue'
 import TableManageSkeleton from '@/components/publisher/TableManageSkeleton.vue';
 import { CREATE_CUSTOM_ROLE_PAYLOAD } from '@/types/publisher/account/AccountManageType'
@@ -283,6 +283,9 @@ const { data: customRolesList, isFetching: isCustomRolesListFetching } = useQuer
 const { data: permissionsList, isFetching: isCustomRolesFetching } = useQueryPublisherPermissionsList();
 const { mutateAsync: createCustomRole } = useMutateCreateCustomRole();
 const { mutateAsync: changeCustomRoleStatus } = useMutateChangeCustomRoleStatus();
+
+const roleId = ref<any>();
+const { data: roleDetailsData, refetch: refetchRoleDetailsData } = useQueryRoleInformationsById(roleId);
 
 const isCreateRoleDialogOpen = ref(false);
 const setDialogOpen = (open: boolean) => {
@@ -335,10 +338,15 @@ const isDuplicating = ref(false);
 const handleDuplicateRole = useDebounceFn(async (role: any) => {
     isDuplicating.value = true
     try {
+        roleId.value = role.id;
         delete role.id
+
+        const refetchResponse = await refetchRoleDetailsData();
+        const listPermissionsIds = refetchResponse.data?.data.permissions.map((permission: any) => permission.id) || [];
         const duplicateRole = {
             ...role,
             name: `${role.name} (Copy)`,
+            permissionIds: listPermissionsIds
         }
         const response = await createCustomRole(duplicateRole);
         if (response.status === 200) {

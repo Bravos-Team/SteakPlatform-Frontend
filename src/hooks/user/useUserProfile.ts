@@ -8,6 +8,7 @@ export const useQueryUserProfile = () => {
     queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
     queryFn: async () => await getUserProfile(),
     staleTime: 1000 * 60 * 60,
+    retry: 0,
   })
 }
 

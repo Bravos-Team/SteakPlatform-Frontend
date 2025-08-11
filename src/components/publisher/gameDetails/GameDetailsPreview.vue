@@ -3,7 +3,7 @@
   <card-header class="text-2xl font-bold">
     <card-title class="!text-[40px] !text-wrap max-w-[50rem] text-white/80 font-black">{{
       gameDetails?.name
-    }}</card-title>
+      }}</card-title>
     <div class="flex flex-col gap-y-2">
       <div v-if="gameDetails?.developerTeams" class="flex gap-x-3 w-full flex-wrap desktop:w-[40rem]">
         <span class="text-nowrap text-lg">Develop Team:</span>
@@ -75,9 +75,9 @@
           <!-- END SUB DES -->
 
           <!-- START SUB TYPE BAR -->
-          <div class="w-full grid tablet:grid-cols-2 gap-y-2 gap-x-2 justify-between">
+          <div class="w-full grid grid-cols-1 laptop:grid-cols-2 gap-y-2 gap-x-2 justify-between">
             <div
-              class="w-6/12 px-2 flex-wrap laptop:border-r-1 border-b-1 pb-1 laptop:pb-0 border-white/30 laptop:border-b-0 flex flex-col gap-y-2">
+              class="laptop:w-6/12 w-full px-2 flex-wrap laptop:border-r-1 border-b-1 pb-1 laptop:pb-0 border-white/30 laptop:border-b-0 flex flex-col gap-y-2">
               <template v-if="gameDetails?.regions">
                 <div class="w-16 font-black h-5 rounded-xs">Regions:</div>
                 <div class="flex flex-wrap gap-y-2 gap-x-2">

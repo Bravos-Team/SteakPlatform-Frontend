@@ -13,6 +13,7 @@ export const useGetUserWishlist = () => {
   return useQuery({
     queryKey: WISH_LIST_QUERY_KEYS.USER,
     queryFn: async ({ signal }) => await getMyWishlist(signal),
+    retry: 1,
     staleTime: 1000 * 60 * 60,
   })
 }
@@ -25,7 +26,7 @@ export const useMutateAddToWishlist = () => {
       queryClient.invalidateQueries({
         queryKey: WISH_LIST_QUERY_KEYS.USER,
       }),
-    retry: 1,
+    retry: 0,
   })
   return { mutateAsync, isPending }
 }

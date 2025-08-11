@@ -1,12 +1,8 @@
 import SteakApi from '@/apis'
-import {
-  GAME_FILTERED_PARAMS,
-  GAME_LIST_RESPONSE,
-  GAME_STORE_LIST_QUERY_PARAMS,
-} from '@/types/game/store/Game'
+import { GAME_LIST_RESPONSE } from '@/types/game/store/Game'
 
 export const useGetGameListStore = async (
-  cursor?: string,
+  cursor?: string | null,
   size?: number,
   signal?: AbortSignal,
 ): Promise<GAME_LIST_RESPONSE> =>
@@ -24,3 +20,19 @@ export const getGameComingSoon = async (
     signal: signal,
   })
 }
+
+export const getGameNewestReleases = async (
+  params?: { page: number; size: number },
+  signal?: AbortSignal,
+) => await SteakApi.get('/store/public/games/newest', { params, signal: signal })
+
+export const getTopPlayedGames = async (
+  params?: { page: number; size: number },
+  signal?: AbortSignal,
+) => await SteakApi.get('/store/public/games/top-played', { params, signal: signal })
+
+export const getGameGenres = async (signal?: AbortSignal) =>
+  await SteakApi.get('/store/public/games/genres', { signal: signal })
+
+export const getGameTags = async (signal?: AbortSignal) =>
+  await SteakApi.get('/store/public/games/tags', { signal: signal })
