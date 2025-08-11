@@ -1,9 +1,16 @@
 <template>
-  <div v-if="gameCollaboratorsList.length > 0" class="flex gap-x-3 w-full bg-white/3 h-full p-3 flex-col gap-y-3">
-    <div class="flex justify-between items-center">
-      <span class="font-black text-xl tablet:text-3xl">Game Coming Soon</span>
+  <div v-if="isLoadingGames"></div>
+  <div v-if="gameCollaboratorsList.length > 0 && !isLoadingGames"
+    class="flex gap-x-3 w-full bg-white/3 h-full p-3 flex-col gap-y-3">
+    <div class="flex justify-between items-center gap-x-3 flex-wrap">
+      <div class="flex gap-x-2 items-end justify-between w-full flex-wrap text-pretty">
+        <span class="font-black text-xl tablet:text-3xl">{{ titleCompo }}</span>
+        <router-link class="underline hover:text-gray-400 text-gray-300/50 font-medium  transition-colors duration-200"
+          :to="'#'">view
+          all</router-link>
+      </div>
 
-      <div class="flex gap-x-2">
+      <div class="flex gap-x-2 justify-between w-full">
         <button @click="prevSlide" :disabled="currentIndex === 0"
           class="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,6 +66,22 @@ const props = defineProps({
   gameCollaboratorsList: {
     type: Array,
     required: true
+  },
+  titleCompo: {
+    type: String,
+    required: true
+  }
+  , isLoadingGames: {
+    type: Boolean,
+    default: false
+  },
+  relatedWith: {
+    type: String,
+    default: ''
+  },
+  routeName: {
+    type: String,
+    default: ''
   }
 })
 

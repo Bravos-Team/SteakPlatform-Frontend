@@ -18,22 +18,21 @@
           v-else-if="gamesList?.data && !isFetchingGameList">
           <div v-for="(game, index) in gamesList?.data.content" :key="index">
             <card
-              class="cursor-pointer bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] min-h-[18rem] relative">
-              <div class="flex flex-col gap-y-2 w-full h-full pt-5">
-                <div :class="{
-                  'text-green-500': game.status === 'OPENING',
-                  'text-red-500': game.status === 'CLOSED',
-                }"
-                  class="absolute bg-white/10 w-full text-center px-1 rounded-xs top-0 backdrop-blur-[3px] right-0 font-light lower text-sm tracking-[3px]">
-                  <span> {{ game.status }}</span>
-
-                </div>
+              class="!rounded-sm cursor-pointer bg-[var(--bg-card-game-base)]/60 @container overflow-hidden transition-colors duration-200 pt-0 hover:bg-[#28282C] min-h-[15rem] relative">
+              <div class="flex flex-col gap-y-2 w-full h-full ">
                 <router-link :to="{
                   name: 'PublisherGameAcceptedDetails',
                   params: { id: game.gameId as any },
                 }">
-                  <div class="flex max-h-[15rem] overflow-hidden">
+                  <div class="flex max-h-[10.5rem] overflow-hidden relative">
                     <img :src="game.thumbnail" class="object-contain w-full h-full" alt="" />
+                    <div :class="{
+                      'text-green-500': game.status === 'OPENING',
+                      'text-red-500': game.status === 'CLOSED',
+                    }"
+                      class="absolute bg-white/10 w-full text-center px-1 rounded-xs bottom-0 backdrop-blur-[0.5rem] right-0 font-light lower text-sm tracking-[3px]">
+                      <span> {{ game.status }}</span>
+                    </div>
                   </div>
                 </router-link>
                 <div class="min-h-5/12 justify-between flex px-3 w-full">
@@ -68,6 +67,7 @@
                   </DropdownMenu>
                 </div>
               </div>
+
             </card>
           </div>
         </div>
@@ -116,6 +116,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import { useQueryClient } from '@tanstack/vue-query'
 import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
+import CardFooter from '@/components/ui/card/CardFooter.vue'
 const useGameListStore = useGameStoreList()
 const { mutateAsync: mutateGameStatus, isPending: isUpdateGameStatusPending } = mutatePublisherUpdateGameStatus()
 

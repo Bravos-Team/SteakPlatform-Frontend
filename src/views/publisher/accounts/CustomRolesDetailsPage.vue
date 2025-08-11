@@ -467,7 +467,6 @@ const toggleSelectAll = (checked: boolean) => {
         const newIds = filteredUsers.value
             .filter((user: UserAssigned) => !selectedUserIds.value.includes(user.id))
             .map((user: UserAssigned) => user.id)
-        console.log('Selecting all users:', newIds)
     } else {
         const filteredIds = filteredUsers.value.map((user: UserAssigned) => user.id)
         selectedUserIds.value = selectedUserIds.value.filter(id => !filteredIds.includes(id))

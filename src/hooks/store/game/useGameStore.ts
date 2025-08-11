@@ -2,6 +2,10 @@ import {
   useGetGameListStore,
   useGetGameDetails,
   getGameComingSoon,
+  getGameGenres,
+  getGameNewestReleases,
+  getGameTags,
+  getTopPlayedGames,
 } from '@/apis/store/game/useGameStore'
 import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
 import {
@@ -10,24 +14,30 @@ import {
   PageAndSize,
 } from '@/types/game/store/Game'
 import { useInfiniteQuery, useQuery } from '@tanstack/vue-query'
+import { Ref } from 'vue'
 
 export const useGameStoreInfiniteQueryList = (filters?: GAME_STORE_LIST_QUERY_PARAMS) => {
   return useInfiniteQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
     queryFn: async ({ pageParam, signal }) => {
       const pageValue = await Promise.resolve(pageParam).then((value) => value)
-      if (!pageValue) return
-      return await useGetGameListStore(Number(pageValue)?.toString(), filters?.size, signal).then(
-        (rp) => rp.data,
-      )
+      if (pageValue === -1)
+        return await useGetGameListStore(null, filters?.size, signal).then((rp) => rp.data)
+      else if (!pageValue) return undefined
+      else
+        return await useGetGameListStore(Number(pageValue)?.toString(), filters?.size, signal).then(
+          (rp) => rp.data,
+        )
     },
     retry: 1,
-    initialPageParam: 1754656462222,
-    getNextPageParam: async (lastPage) => {
-      if (!lastPage) return
-      const lastItem = lastPage!.items[lastPage!.items.length - 1]!
-      if (lastItem) return lastItem.releaseDate
-      return
+    initialPageParam: -1,
+    getNextPageParam: (lastPage) => {
+      if (!lastPage) return undefined
+      else if (lastPage.hasNextCursor) {
+        const lastItem = lastPage!.items[lastPage!.items.length - 1]!
+        return lastItem.releaseDate
+      }
+      return undefined
     },
   })
 }
@@ -43,9 +53,40 @@ export const useGameStoreDetailsQuery = (gameId: bigint) => {
   })
 }
 
-export const useGameCommingSoonQuery = (filters?: PageAndSize) => {
+export const useGameCommingSoonQuery = (filters?: Ref<PageAndSize>) => {
   return useQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.COMING_SOON(filters),
-    queryFn: async ({ signal }) => await getGameComingSoon(signal, filters),
+    queryFn: async ({ signal }) => await getGameComingSoon(signal, filters?.value),
+  })
+}
+
+export const useGameNewestReleasesQuery = (filters?: Ref<PageAndSize>) => {
+  return useQuery({
+    queryKey: GAME_STORE_LIST_QUERY_KEYS.NEWEST_RELEASES(filters),
+    queryFn: async ({ signal }) => await getGameNewestReleases(filters?.value, signal),
+  })
+}
+
+export const useGameGenresQuery = () => {
+  return useQuery({
+    queryKey: GAME_STORE_LIST_QUERY_KEYS.GENRES(),
+    queryFn: async ({ signal }) => await getGameGenres(signal),
+    retry: 1,
+  })
+}
+
+export const useGameTagsQuery = () => {
+  return useQuery({
+    queryKey: GAME_STORE_LIST_QUERY_KEYS.TAGS(),
+    queryFn: async ({ signal }) => await getGameTags(signal),
+    retry: 1,
+  })
+}
+
+export const useTopPlayedGamesQuery = (filters?: Ref<PageAndSize>) => {
+  return useQuery({
+    queryKey: GAME_STORE_LIST_QUERY_KEYS.TOP_PLAYED_GAMES(filters),
+    queryFn: async ({ signal }) => await getTopPlayedGames(filters?.value, signal),
+    retry: 1,
   })
 }

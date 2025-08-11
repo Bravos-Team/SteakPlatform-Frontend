@@ -55,6 +55,7 @@ export const useMoveToWishList = () => {
         queryKey: CART_STORE_QUERY_KEYS.USER,
       })
     },
+    retry: 1,
   })
   return { mutateAsync, isPending }
 }

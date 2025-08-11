@@ -191,7 +191,7 @@
                         <div class="space-y-4">
                             <div>
                                 <h4 class="text-sm font-medium mb-3">Permissions ({{ selectedRole?.permissions.length
-                                }})</h4>
+                                    }})</h4>
                                 <div class="space-y-2">
                                     <div v-for="permission in selectedRole?.permissions" :key="permission.id"
                                         class="flex items-center justify-between p-3 border rounded-lg">
@@ -431,7 +431,6 @@ const togglePermission = (permissionId: number) => {
 const submitRole = async () => {
     isSubmitting.value = true
     try {
-        console.log('Submitting role:', roleForm.value)
         await new Promise(resolve => setTimeout(resolve, 1000))
         setDialogOpen(false)
     } finally {

@@ -6,10 +6,7 @@ const publisher = async ({ next, checkAccess }: MiddlewareContext) => {
     try {
       const response = await renewPublisherRefreshToken()
       if (response.status === 200) {
-        // return next({
-        //   name: 'PublisherAuthLogin',
-        // })
-        next()
+        return next()
       }
     } catch (err: any) {
       return next({

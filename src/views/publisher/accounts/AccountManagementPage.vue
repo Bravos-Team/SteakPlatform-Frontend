@@ -47,18 +47,18 @@
                 <div class="flex justify-end gap-x-5 flex-wrap gap-y-2">
                     <div class="flex flex-col gap-y-1">
                         <Label for="searchIDValue">Search by ID</Label>
-                        <Input id="searchIDValue" v-model:modelValue.lazy="searchIDValue" @blur="handleSearchByID"
+                        <Input id="searchIDValue" v-model:modelValue.lazy="searchIDValue"
                             @keyup.enter="handleSearchByID" class="tablet:w-[20rem] w-full" placeholder="Key word..." />
                     </div>
                     <div class="flex flex-col gap-y-1">
                         <Label for="searchNameValue">Search by Name</Label>
-                        <Input id="searchNameValue" v-model:modelValue.lazy="searchNameValue" @blur="handleSearchByName"
+                        <Input id="searchNameValue" v-model:modelValue.lazy="searchNameValue"
                             @keyup.enter="handleSearchByName" class="tablet:w-[20rem] w-full"
                             placeholder="Key word..." />
                     </div>
                     <div class="flex flex-col justify-end gap-y-1">
                         <Label for="status">Status</Label>
-                        <Select v-model:modelValue="filters.status" id="status">
+                        <Select v-model:modelValue="filtersSearching.status" id="status">
                             <SelectTrigger class="w-[180px]">
                                 <SelectValue placeholder="Select a status" />
                             </SelectTrigger>
@@ -119,9 +119,20 @@
                                     <code class="bg-muted px-2 py-1 rounded text-xs">{{ user.id }}</code>
                                 </TableCell>
                                 <TableCell>
-                                    <Badge variant="outline" class="bg-green-50 text-green-700 border-green-200">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
-                                        Active
+                                    <Badge variant="outline" :class="{
+                                        'bg-green-200 text-green-700 border-green-200': user.status === 'ACTIVE',
+                                        'bg-yellow-200 text-yellow-700 border-yellow-200': user.status === 'SUSPENDED',
+                                        'bg-red-200 text-red-700 border-red-200': user.status === 'BANNED',
+                                        'bg-gray-200 text-gray-700 border-gray-200': user.status === 'DELETED'
+                                    }">
+                                        <div :class="{
+                                            'bg-green-500': user.status === 'ACTIVE',
+                                            'bg-red-500': user.status === 'BANNED',
+                                            'bg-gray-500': user.status === 'DELETED',
+                                            'bg-yellow-500': user.status === 'SUSPENDED'
+                                        }" class="w-2 h-2 rounded-full mr-1">
+                                        </div>
+                                        {{ user.status }}
                                     </Badge>
                                 </TableCell>
 
@@ -272,7 +283,6 @@
                                                 if (typeof event.detail.value.name === 'string') {
                                                     searchRole = ''
                                                     newPublisher.assignedRoles = [...(newPublisher.assignedRoles || []), event.detail.value.id]
-                                                    console.log(event)
                                                     rolesToAssigned = [...(rolesToAssigned || []), event.detail.value.name]
                                                 }
 
@@ -303,151 +313,157 @@
         </DialogContent>
     </Dialog>
     <Dialog :open="isViewPublisherOpen" @update:open="setViewPublisherOpen">
-        <template v-if="!publisherInfo?.data || isFetchingPublisherInfo">
-            <DialogSkeleton />
-        </template>
-        <DialogContent v-else class="tablet:min-w-[40rem] laptop:min-w-[50rem] w-full">
-            <DialogHeader>
-                <DialogTitle class="flex items-center gap-3">
-                    <Avatar class="h-12 w-12">
-                        <AvatarImage
-                            :src="`https://api.dicebear.com/7.x/initials/svg?seed=${publisherInfo.data?.username}`" />
-                        <AvatarFallback class="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold">
-                            {{ publisherInfo.data?.username?.substring(0, 2).toUpperCase() }}
-                        </AvatarFallback>
-                    </Avatar>
-                    <div>
-                        <h2 class="text-2xl font-bold">{{ publisherInfo.data?.username }}</h2>
-                        <p class="text-muted-foreground font-normal">User Details</p>
-                    </div>
-                </DialogTitle>
-            </DialogHeader>
 
-            <div class="flex flex-col w-full gap-y-2">
-                <!-- User Status -->
-                <div class="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
-                    <div class="flex items-center gap-2">
-                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                        <span class="font-medium">Status</span>
-                    </div>
-                    <Badge :variant="publisherInfo.data?.status === 'ACTIVE' ? 'default' : 'secondary'"
-                        class="bg-green-100 text-green-800 hover:bg-green-100">
-                        {{ publisherInfo.data?.status }}
-                    </Badge>
-                </div>
+        <DialogContent class="tablet:min-w-[40rem] laptop:min-w-[50rem] w-full">
+            <template v-if="isReFetchingAccount || isFetchingPublisherInfo">
+                <DialogSkeleton />
+            </template>
+            <template v-if="publisherInfo && !isReFetchingAccount">
+                <DialogHeader>
+                    <DialogTitle class="flex items-center gap-3">
+                        <Avatar class="h-12 w-12">
+                            <AvatarImage
+                                :src="`https://api.dicebear.com/7.x/initials/svg?seed=${publisherInfo.data?.username}`" />
+                            <AvatarFallback class="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold">
+                                {{ publisherInfo.data?.username?.substring(0, 2).toUpperCase() }}
+                            </AvatarFallback>
+                        </Avatar>
+                        <div>
+                            <h2 class="text-2xl font-bold">{{ publisherInfo.data?.username }}</h2>
+                            <p class="text-muted-foreground font-normal">User Details</p>
+                        </div>
+                    </DialogTitle>
+                </DialogHeader>
 
-                <Card class="w-full">
-                    <CardContent class="tablet:p-4 p-2 grid grid-cols-1 gap-y-3 tablet:grid-cols-2 gap-x-2 w-full">
-                        <div class="flex items-center gap-3">
-                            <div class="p-2 bg-blue-100 rounded-lg">
-                                <User class="h-5 w-5 text-blue-600" />
-                            </div>
-                            <div>
-                                <p class="text-sm text-muted-foreground">User ID</p>
-                                <p class="font-mono text-sm font-medium">{{ publisherInfo.data?.id }}</p>
-                            </div>
+                <div class="flex flex-col w-full gap-y-2">
+                    <!-- User Status -->
+                    <div class="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="font-medium">Status</span>
                         </div>
-                        <div class="flex items-center gap-3 w-full">
-                            <div class="p-2 bg-purple-100 rounded-lg">
-                                <Mail class="h-5 w-5 text-purple-600" />
-                            </div>
-                            <div class="w-full overflow-hidden">
-                                <p class="text-sm text-muted-foreground">Email</p>
-                                <p class="font-medium truncate ">{{ publisherInfo.data?.email }}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 ">
-                            <div>
-                                <p class="text-sm text-muted-foreground">Created At</p>
-                                <p class="font-medium">{{ new
-                                    Date(publisherInfo.data?.createdAt).toLocaleDateString('vi') }}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="p-2 bg-orange-100 rounded-lg">
-                                <Shield class="h-5 w-5 text-orange-600" />
-                            </div>
-                            <div>
-                                <p class="text-sm text-muted-foreground">Total Roles</p>
-                                <p class="font-medium">{{ publisherInfo.data?.roles?.length || 0 }} role(s)</p>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-
-
-                <div class="flex flex-col gap-y-2">
-                    <div class="flex items-center gap-2">
-                        <Shield class="h-5 w-5 text-muted-foreground" />
-                        <h3 class="text-lg font-semibold">Assigned Roles</h3>
+                        <Badge :variant="publisherInfo.data?.status === 'ACTIVE' ? 'default' : 'secondary'"
+                            class="bg-green-100 text-green-800 hover:bg-green-100">
+                            {{ publisherInfo.data?.status }}
+                        </Badge>
                     </div>
 
-                    <div class="flex flex-wrap text-pretty">
-                        <div v-for="roleItem in publisherInfo.data?.roles" :key="roleItem.id"
-                            class="flex flex-wrap gap-y-1 items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                    <Card class="w-full">
+                        <CardContent class="tablet:p-4 p-2 grid grid-cols-1 gap-y-3 tablet:grid-cols-2 gap-x-2 w-full">
                             <div class="flex items-center gap-3">
-                                <div class="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
-                                    <Crown class="h-4 w-4 text-white" />
+                                <div class="p-2 bg-blue-100 rounded-lg">
+                                    <User class="h-5 w-5 text-blue-600" />
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold">{{ roleItem.role }}</h4>
-                                    <p class="text-sm text-muted-foreground">Role ID: {{ roleItem.id }}</p>
+                                    <p class="text-sm text-muted-foreground">User ID</p>
+                                    <p class="font-mono text-sm font-medium">{{ publisherInfo.data?.id }}</p>
                                 </div>
                             </div>
-                            <Badge variant="outline" class="font-mono text-xs">
-                                ID: {{ roleItem.id }}
-                            </Badge>
-                        </div>
-                    </div>
-                </div>
+                            <div class="flex items-center gap-3 w-full">
+                                <div class="p-2 bg-purple-100 rounded-lg">
+                                    <Mail class="h-5 w-5 text-purple-600" />
+                                </div>
+                                <div class="w-full overflow-hidden">
+                                    <p class="text-sm text-muted-foreground">Email</p>
+                                    <p class="font-medium truncate ">{{ publisherInfo.data?.email }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 ">
+                                <div>
+                                    <p class="text-sm text-muted-foreground">Created At</p>
+                                    <p class="font-medium">{{ new
+                                        Date(publisherInfo.data?.createdAt).toLocaleDateString('vi') }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="p-2 bg-orange-100 rounded-lg">
+                                    <Shield class="h-5 w-5 text-orange-600" />
+                                </div>
+                                <div>
+                                    <p class="text-sm text-muted-foreground">Total Roles</p>
+                                    <p class="font-medium">{{ publisherInfo.data?.roles?.length || 0 }} role(s)</p>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
 
-                <!-- Activity Timeline -->
-                <div class="flex flex-col gap-y-4">
-                    <div class="flex items-center gap-2">
-                        <Clock class="h-5 w-5 text-muted-foreground" />
-                        <h3 class="text-lg font-semibold">Recent Activity</h3>
-                    </div>
 
                     <div class="flex flex-col gap-y-2">
-                        <div class="flex items-start gap-3 p-3 border-l-2 border-blue-500 bg-blue-50/10 rounded-r-lg">
-                            <div class="p-1.5 bg-blue-500 rounded-full">
-                                <UserPlus class="h-3 w-3 text-white" />
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium">Account Created</p>
-                                <p class="text-xs text-muted-foreground">{{ new
-                                    Date(publisherInfo.data?.createdAt).toLocaleDateString('vi') }}</p>
-                            </div>
+                        <div class="flex items-center gap-2">
+                            <Shield class="h-5 w-5 text-muted-foreground" />
+                            <h3 class="text-lg font-semibold">Assigned Roles</h3>
                         </div>
 
-                        <div class="flex items-start gap-3 p-3 border-l-2 border-green-500 bg-green-50/10 rounded-r-lg">
-                            <div class="p-1.5 bg-green-500 rounded-full">
-                                <CheckCircle class="h-3 w-3 text-white" />
+                        <div class="flex flex-wrap text-pretty gap-y-2">
+                            <div v-for="roleItem in publisherInfo.data?.roles" :key="roleItem.id"
+                                class="flex flex-wrap gap-y-1 items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
+                                        <Crown class="h-4 w-4 text-white" />
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">{{ roleItem.role }}</h4>
+                                        <p class="text-sm text-muted-foreground">Role ID: {{ roleItem.id }}</p>
+                                    </div>
+                                </div>
+                                <Badge variant="outline" class="font-mono text-xs">
+                                    ID: {{ roleItem.id }}
+                                </Badge>
                             </div>
-                            <div>
-                                <p class="text-sm font-medium">Status: {{ publisherInfo.data?.status }}</p>
-                                <p class="text-xs text-muted-foreground">Current status</p>
+                        </div>
+                    </div>
+
+                    <!-- Activity Timeline -->
+                    <div class="flex flex-col gap-y-4">
+                        <div class="flex items-center gap-2">
+                            <Clock class="h-5 w-5 text-muted-foreground" />
+                            <h3 class="text-lg font-semibold">Recent Activity</h3>
+                        </div>
+
+                        <div class="flex flex-col gap-y-2">
+                            <div
+                                class="flex items-start gap-3 p-3 border-l-2 border-blue-500 bg-blue-50/10 rounded-r-lg">
+                                <div class="p-1.5 bg-blue-500 rounded-full">
+                                    <UserPlus class="h-3 w-3 text-white" />
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Account Created</p>
+                                    <p class="text-xs text-muted-foreground">{{ new
+                                        Date(publisherInfo.data?.createdAt).toLocaleDateString('vi') }}</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex items-start gap-3 p-3 border-l-2 border-green-500 bg-green-50/10 rounded-r-lg">
+                                <div class="p-1.5 bg-green-500 rounded-full">
+                                    <CheckCircle class="h-3 w-3 text-white" />
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Status: {{ publisherInfo.data?.status }}</p>
+                                    <p class="text-xs text-muted-foreground">Current status</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <DialogFooter class="gap-2">
-                <Button variant="outline" @click="isViewPublisherOpen = false">
-                    Close
-                </Button>
-                <Button variant="destructive" :class="{
-                    'opacity-50 cursor-not-allowed': isDeleting,
-                    'cursor-pointer': !isDeleting
-                }" @click="deletePublisherAccount(publisherInfo.data?.id)" :disabled="isDeleting">
-                    <LoaderCircle v-if="isDeleting" class="w-4 h-4 mr-2 animate-spin" />
-                    <div v-else class="flex items-center gap-x-1">
-                        <Trash2 class="h-4 w-4 mr-2" />
-                        Delete
-                    </div>
-                </Button>
-            </DialogFooter>
+                <DialogFooter class="gap-2">
+                    <Button variant="outline" @click="isViewPublisherOpen = false">
+                        Close
+                    </Button>
+                    <Button variant="destructive" :class="{
+                        'opacity-50 cursor-not-allowed': isDeleting,
+                        'cursor-pointer': !isDeleting
+                    }" @click="deletePublisherAccount(publisherInfo.data?.id)" :disabled="isDeleting">
+                        <LoaderCircle v-if="isDeleting" class="w-4 h-4 mr-2 animate-spin" />
+                        <div v-else class="flex items-center gap-x-1">
+                            <Trash2 class="h-4 w-4 mr-2" />
+                            Delete
+                        </div>
+                    </Button>
+                </DialogFooter>
+            </template>
+
         </DialogContent>
     </Dialog>
 </template>
@@ -555,11 +571,6 @@ const newPublisher = ref<CREATE_ACCOUNT_PUBLISHER_PAYLOAD>({
 })
 
 
-const filters = ref<ACCOUNT_LIST_FILTERS>({
-    status: 'ACTIVE',
-    page: 1,
-    size: 10
-})
 const filtersSearching = ref<ACCOUNT_LIST_FILTERS>({
     status: 'ACTIVE',
     page: 1,
@@ -604,7 +615,7 @@ const statusOptions = [
     { value: 'BANNED', label: 'Banned' },
     { value: 'DELETED', label: 'Deleted' },
 ]
-const { data: accountsData, isFetching: isAccountsFetching, isRefetching: isAccountsRefetching } = useQueryPublisherAccountsList(filters)
+const { data: accountsData, isFetching: isAccountsFetching, isRefetching: isAccountsRefetching } = useQueryPublisherAccountsList(filtersSearching)
 const selectedUsers = ref<number[]>([])
 
 const isDialogOpen = ref(false)
@@ -652,7 +663,7 @@ const submitUser = useDebounceFn(async () => {
         const response = await createPublisherAccount(newPublisher.value, {
             onSuccess: () => {
                 queryClient.invalidateQueries({
-                    queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.LIST(filters)
+                    queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.LIST(filtersSearching)
                 })
             }
         })
@@ -666,14 +677,19 @@ const submitUser = useDebounceFn(async () => {
         isSubmitting.value = false
     }
 }, 100)
-
+const isReFetchingAccount = ref(false)
 const viewPublisherDetails = useDebounceFn(async (userId: bigint) => {
     isViewPublisherOpen.value = true
+    isReFetchingAccount.value = true
     try {
         publisherId.value = userId.toString()
         const response = await refetchPublisherInfo()
+
+        await new Promise((resolve) => setTimeout(resolve, 500))
     } catch (err: any) {
         console.log('Error fetching publisher details:', err)
+    } finally {
+        isReFetchingAccount.value = false
     }
 }, 50)
 
@@ -684,7 +700,7 @@ const deletePublisherAccount = useDebounceFn(async (id: bigint) => {
         const response = await deletePublisherAccountMutate(id.toString(), {
             onSuccess: () => {
                 queryClient.invalidateQueries({
-                    queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.LIST(filters)
+                    queryKey: PUBLISHER_ACCOUNTS_MANAGE_KEYS.LIST(filtersSearching)
                 })
                 toastSuccessNotificationPopup('Publisher account deleted successfully!', 'Success')
                 isViewPublisherOpen.value = false
