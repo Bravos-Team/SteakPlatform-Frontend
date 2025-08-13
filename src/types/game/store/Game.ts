@@ -19,7 +19,7 @@ export type GAME_LIST_RESPONSE = {
 
 export type GAME_STORE_LIST_QUERY_PARAMS = {
   cursor?: string
-  size?: 10
+  size?: number
 }
 
 export type GAME_FILTERED_PARAMS = {
