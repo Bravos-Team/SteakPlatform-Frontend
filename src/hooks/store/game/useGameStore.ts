@@ -35,7 +35,7 @@ export const useGameStoreInfiniteQueryList = (filters?: GAME_STORE_LIST_QUERY_PA
       if (!lastPage) return undefined
       else if (lastPage.hasNextCursor) {
         const lastItem = lastPage!.items[lastPage!.items.length - 1]!
-        return lastItem.releaseDate
+        return lastItem.id
       }
       return undefined
     },
