@@ -8,6 +8,7 @@ import {
   removeFromCart,
   mergingCartFormAnotherDevice,
 } from '@/apis/store/cart/cart'
+import { WISH_LIST_QUERY_KEYS } from '@/hooks/constants/store/wishlist-key'
 
 export const useUserCartList = () => {
   return useQuery({
@@ -53,6 +54,9 @@ export const useMoveToWishList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: CART_STORE_QUERY_KEYS.USER,
+      })
+      queryClient.invalidateQueries({
+        queryKey: WISH_LIST_QUERY_KEYS.USER,
       })
     },
     retry: 1,

@@ -16,18 +16,20 @@ import {
 import { useInfiniteQuery, useQuery } from '@tanstack/vue-query'
 import { Ref } from 'vue'
 
-export const useGameStoreInfiniteQueryList = (filters?: GAME_STORE_LIST_QUERY_PARAMS) => {
+export const useGameStoreInfiniteQueryList = (filters?: Ref<GAME_STORE_LIST_QUERY_PARAMS>) => {
   return useInfiniteQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
     queryFn: async ({ pageParam, signal }) => {
       const pageValue = await Promise.resolve(pageParam).then((value) => value)
       if (pageValue === -1)
-        return await useGetGameListStore(null, filters?.size, signal).then((rp) => rp.data)
+        return await useGetGameListStore(null, filters?.value.size, signal).then((rp) => rp.data)
       else if (!pageValue) return undefined
       else
-        return await useGetGameListStore(Number(pageValue)?.toString(), filters?.size, signal).then(
-          (rp) => rp.data,
-        )
+        return await useGetGameListStore(
+          Number(pageValue)?.toString(),
+          filters?.value.size,
+          signal,
+        ).then((rp) => rp.data)
     },
     retry: 1,
     initialPageParam: -1,

@@ -56,11 +56,16 @@ import StoreSearchingBar from '@/components/store/StoreSearchingBar.vue'
 import { useUserCartList } from '@/hooks/store/cart/useUserCart'
 import { useGameCommingSoonQuery, useGameStoreInfiniteQueryList, useGameNewestReleasesQuery, useTopPlayedGamesQuery } from '@/hooks/store/game/useGameStore'
 import CollaboratorsBar from '@/components/common/CollaboratorsBar.vue'
+import { GAME_STORE_LIST_QUERY_PARAMS } from '@/types/game/store/Game'
 
 const { data: gameComingSoonData, isFetching: isGameComingSoonFetching } = useGameCommingSoonQuery()
 const { data: userCartData, isFetching: isUserCartFetching } = useUserCartList()
 const { data: gameNewestReleasesData, isFetching: isGameNewestReleasesFetching } = useGameNewestReleasesQuery()
 const { data: topPlayedGamesData, isFetching: isTopPlayedGamesFetching } = useTopPlayedGamesQuery()
+
+const filters = ref<GAME_STORE_LIST_QUERY_PARAMS>({
+  size: 10
+})
 
 const {
   data: useGameListData,
