@@ -41,3 +41,14 @@ export type PageAndSize = {
   page: number
   size: number
 }
+
+export type DISCOVER_GAME_FILTERS = {
+  keyword: string
+  genreIds: number[]
+  tagIds: number[]
+  minPrice: number
+  maxPrice: number
+  sortBy: string
+  page: number
+  pageSize: number
+}

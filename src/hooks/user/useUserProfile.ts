@@ -2,15 +2,21 @@ import { getUserProfile, updateUserProfile } from '@/apis/user/userProfile'
 import { useQuery, useMutation, QueryClient, useQueryClient } from '@tanstack/vue-query'
 import type { USER_PROFILE_REQUEST_TYPE } from '@/types/user/UserProfileType'
 import { USER_PROFILE_QUERY_KEY } from '@/hooks/constants/user/userProfile-key'
+import { setCookie } from '@/utils/cookies/cookie-utils'
 
 export const useQueryUserProfile = () => {
   return useQuery({
     queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
-    queryFn: async () => await getUserProfile(),
+    queryFn: async () =>
+      await getUserProfile().then((rp) => {
+        console.log(rp)
+        setCookie('userAccessRights', rp.data.displayName)
+        return rp
+      }),
     staleTime: 1000 * 60 * 60,
     retry: 0,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   })
 }
 

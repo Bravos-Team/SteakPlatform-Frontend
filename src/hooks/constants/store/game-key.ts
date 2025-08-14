@@ -2,6 +2,7 @@ import { Ref } from 'vue'
 import QUERY_KEY_TYPE from '@/hooks/constants/query-key-type'
 
 import {
+  DISCOVER_GAME_FILTERS,
   GAME_FILTERED_PARAMS,
   GAME_STORE_LIST_QUERY_PARAMS,
   PageAndSize,
@@ -41,6 +42,14 @@ export const GAME_STORE_LIST_QUERY_KEYS = {
     filters?.value.page,
     filters?.value.size,
   ]) as QUERY_KEY_TYPE<PageAndSize>,
+  DISCOVER_GAMES: ((filters: Ref<DISCOVER_GAME_FILTERS>) => [
+    'store',
+    'games',
+    'list',
+    'discover',
+    'filter',
+    filters,
+  ]) as QUERY_KEY_TYPE<DISCOVER_GAME_FILTERS>,
   GENRES: () => ['store', 'games', 'genres'] as const,
   TAGS: () => ['store', 'games', 'tags'] as const,
   DETAILS: (gameId: string) => ['store', 'games', 'details', gameId] as const,

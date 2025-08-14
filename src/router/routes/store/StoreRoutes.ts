@@ -19,6 +19,11 @@ const storeRoutes: RouteRecordRaw = {
       },
     },
     {
+      path: 'discover',
+      name: 'DiscoverGamesStore',
+      component: () => import('@/views/store/game-store/DiscoverPage.vue'),
+    },
+    {
       path: 'game/details/:id',
       name: 'game-details',
       component: () => import('@/views/store/game-store/game/GameDetailsPage.vue'),

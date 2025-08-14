@@ -1,5 +1,5 @@
 import SteakApi from '@/apis'
-import { GAME_LIST_RESPONSE } from '@/types/game/store/Game'
+import { DISCOVER_GAME_FILTERS, GAME_LIST_RESPONSE } from '@/types/game/store/Game'
 
 export const useGetGameListStore = async (
   cursor?: string | null,
@@ -36,3 +36,9 @@ export const getGameGenres = async (signal?: AbortSignal) =>
 
 export const getGameTags = async (signal?: AbortSignal) =>
   await SteakApi.get('/store/public/games/tags', { signal: signal })
+
+export const getGameFiltered = async (filters?: DISCOVER_GAME_FILTERS, signal?: AbortSignal) =>
+  await SteakApi.get('/store/public/games/filter', {
+    data: filters,
+    signal,
+  })
