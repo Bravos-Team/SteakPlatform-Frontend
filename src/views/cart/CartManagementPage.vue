@@ -19,103 +19,100 @@
           </button>
         </div>
       </div>
-      <div class="flex flex-col desktop:flex-row px-2 gap-y-10 gap-x-2 justify-between">
-        <div class="flex w-full gap-y-3 flex-col">
-          <div v-if="userCartData?.data?.items">
-            <div v-if="userCartData?.data.items.length > 0" v-for="game in userCartData.data.items" :key="game.id"
-              class="w-full  cursor-pointer p-6 rounded-lg bg-white/6 grid grid-cols-12 gap-x-3 gap-[20px]  ">
-              <!-- LEFT CONTENT -->
-              <div class="flex flex-col col-span-12 tablet:col-span-3 gap-y-2 ">
-                <img :src="game.thumbnail" class="w-full" alt="" />
+      <div class="flex flex-col desktop:flex-row px-2 gap-y-10 gap-x-2  justify-between">
+        <div v-if="userCartData?.data?.items" class="flex w-full gap-y-4 flex-col">
+          <div v-if="userCartData?.data.items.length > 0" v-for="game in userCartData.data.items" :key="game.id"
+            class="w-full  cursor-pointer p-6 rounded-lg bg-white/6 grid grid-cols-12 gap-x-3 gap-y-3 ">
+            <!-- LEFT CONTENT -->
+            <div class="flex flex-col col-span-12 tablet:col-span-3 gap-y-2 ">
+              <img :src="game.thumbnail" class="w-full" alt="" />
 
-                <svg xmlns="http://www.w3.org/2000/svg" class="svg text-white/60 size-7 css-uwwqev"
-                  viewBox="0 0 512 512">
-                  <title>Windows</title>
-                  <g>
-                    <path fill="currentColor"
-                      d="M0.175 256l-0.175-156.037 192-26.072v182.109zM224 69.241l255.936-37.241v224h-255.936zM479.999 288l-0.063 224-255.936-36.008v-187.992zM192 471.918l-191.844-26.297-0.010-157.621h191.854z">
-                    </path>
-                  </g>
-                </svg>
-              </div>
-              <!-- END LEFT CONTENT -->
-
-              <!-- RIGHT CONTENT -->
-              <div class="flex w-full flex-col gap-y-2 col-span-12 tablet:col-span-9">
-                <!-- NAME AND HEADER BADGE -->
-                <div class="flex justify-between w-full">
-                  <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">{{
-                    $t('type.game.base')
-                    }}</span>
-                  <span class="font-bold">{{
-                    Number(game.price).toLocaleString('vi-VN', {
-                      style: 'currency',
-                      currency: 'VND',
-                    })
-                  }}</span>
-                </div>
-                <!-- END NAME AND HEADER BADGE -->
-
-                <!-- AGES -->
-                <div class="flex items-start gap-y-3 flex-col">
-                  <span class="font-extrabold text-2xl text-wrap">{{ game.title }}</span>
-                  <div class="w-full rounded-lg border-1 p-4 border-white/20 flex gap-x-3">
-                    <img alt="12+"
-                      src="https://cdn1.epicgames.com/gameRating/gameRating/Generic_12_192_192x192-01e962f26c693e725097658fa7e4e29d"
-                      class="size-12"
-                      data-image="https://cdn1.epicgames.com/gameRating/gameRating/Generic_12_192_192x192-01e962f26c693e725097658fa7e4e29d"
-                      data-testid="picture-image" />
-                    <div class="flex flex-col gap-y-3 w-full">
-                      <span class="text-sm font-bold">12+</span>
-                      <span class="text-xs font-light border-t-1 border-white/20 py-2 text-white/50">
-                        {{ $t('warnings.game.type.horror_moderate_violence') }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <!-- END AGES -->
-
-                <!-- SELF-REFUNDABLE -->
-                <div class="flex gap-x-2">
-                  <span class="text-wrap">{{ $t('noti_note.cart.self_refundable') }}</span>
-                  <div class="rounded-full flex">
-                    <tooltip>
-                      <tooltip-trigger>
-                        <router-link :to="{ name: 'SupportCenter' }">
-                          <Info class="size-5 text-white/70" />
-                        </router-link>
-                      </tooltip-trigger>
-                      <tooltip-content :color="1">
-                        <span>{{ $t('noti_note.cart.learn_about_refunds') }}</span>
-                      </tooltip-content>
-                    </tooltip>
-                  </div>
-                </div>
-                <!-- END SELF-REFUNDABLE -->
-
-                <!-- ACTION BUTTONS -->
-                <div class="flex text-white/50 w-full items-center gap-x-6 justify-end flex-wrap">
-                  <button :disabled="isRemoveFromCartPending" :class="{
-                    'cursor-progress': isRemoveFromCartPending,
-                    'cursor-pointer': !isRemoveFromCartPending,
-                  }" @click="handleRemoveFromCart(game.id, game.title)"
-                    class="hover:text-white/80 transition-colors duration-300">
-                    {{ $t('features.buttons.remove_from_cart') }}
-                  </button>
-                  <button :disabled="isMoveToWishlistPending" :class="{
-                    'cursor-progress': isMoveToWishlistPending,
-                    'cursor-pointer': !isMoveToWishlistPending,
-                  }" @click="handleMovedToWishlist(game.id, game.title)"
-                    class="hover:text-white/80 transition-colors duration-300 text-wrap">
-                    {{ $t('features.buttons.move_to_wishlist') }}
-                  </button>
-                </div>
-                <!-- END ACTION BUTTONS -->
-              </div>
-              <!-- END RIGHT CONTENT -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="svg text-white/60 size-7 css-uwwqev" viewBox="0 0 512 512">
+                <title>Windows</title>
+                <g>
+                  <path fill="currentColor"
+                    d="M0.175 256l-0.175-156.037 192-26.072v182.109zM224 69.241l255.936-37.241v224h-255.936zM479.999 288l-0.063 224-255.936-36.008v-187.992zM192 471.918l-191.844-26.297-0.010-157.621h191.854z">
+                  </path>
+                </g>
+              </svg>
             </div>
-            <div v-else>{{ $t('title.pages.cart.empty') }}</div>
+            <!-- END LEFT CONTENT -->
+
+            <!-- RIGHT CONTENT -->
+            <div class="flex w-full flex-col gap-y-2 col-span-12 tablet:col-span-9">
+              <!-- NAME AND HEADER BADGE -->
+              <div class="flex justify-between w-full">
+                <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">{{
+                  $t('type.game.base')
+                  }}</span>
+                <span class="font-bold">{{
+                  Number(game.price).toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                  })
+                }}</span>
+              </div>
+              <!-- END NAME AND HEADER BADGE -->
+
+              <!-- AGES -->
+              <div class="flex items-start gap-y-3 flex-col">
+                <span class="font-extrabold text-2xl text-wrap">{{ game.title }}</span>
+                <div class="w-full rounded-lg border-1 p-4 border-white/20 flex gap-x-3">
+                  <img alt="12+"
+                    src="https://cdn1.epicgames.com/gameRating/gameRating/Generic_12_192_192x192-01e962f26c693e725097658fa7e4e29d"
+                    class="size-12"
+                    data-image="https://cdn1.epicgames.com/gameRating/gameRating/Generic_12_192_192x192-01e962f26c693e725097658fa7e4e29d"
+                    data-testid="picture-image" />
+                  <div class="flex flex-col gap-y-3 w-full">
+                    <span class="text-sm font-bold">12+</span>
+                    <span class="text-xs font-light border-t-1 border-white/20 py-2 text-white/50">
+                      {{ $t('warnings.game.type.horror_moderate_violence') }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <!-- END AGES -->
+
+              <!-- SELF-REFUNDABLE -->
+              <div class="flex gap-x-2">
+                <span class="text-wrap">{{ $t('noti_note.cart.self_refundable') }}</span>
+                <div class="rounded-full flex">
+                  <tooltip>
+                    <tooltip-trigger>
+                      <router-link :to="{ name: 'SupportCenter' }">
+                        <Info class="size-5 text-white/70" />
+                      </router-link>
+                    </tooltip-trigger>
+                    <tooltip-content :color="1">
+                      <span>{{ $t('noti_note.cart.learn_about_refunds') }}</span>
+                    </tooltip-content>
+                  </tooltip>
+                </div>
+              </div>
+              <!-- END SELF-REFUNDABLE -->
+
+              <!-- ACTION BUTTONS -->
+              <div class="flex text-white/50 w-full items-center gap-x-6 justify-end flex-wrap">
+                <button :disabled="isRemoveFromCartPending" :class="{
+                  'cursor-progress': isRemoveFromCartPending,
+                  'cursor-pointer': !isRemoveFromCartPending,
+                }" @click="handleRemoveFromCart(game.id, game.title)"
+                  class="hover:text-white/80 transition-colors duration-300">
+                  {{ $t('features.buttons.remove_from_cart') }}
+                </button>
+                <button :disabled="isMoveToWishlistPending" :class="{
+                  'cursor-progress': isMoveToWishlistPending,
+                  'cursor-pointer': !isMoveToWishlistPending,
+                }" @click="handleMovedToWishlist(game.id, game.title)"
+                  class="hover:text-white/80 transition-colors duration-300 text-wrap">
+                  {{ $t('features.buttons.move_to_wishlist') }}
+                </button>
+              </div>
+              <!-- END ACTION BUTTONS -->
+            </div>
+            <!-- END RIGHT CONTENT -->
           </div>
+          <div v-else>{{ $t('title.pages.cart.empty') }}</div>
         </div>
         <div v-if="userCartData?.data.items.length > 0" class="min-w-[296px] min-h-[326px] px-3 gap-y-5 flex flex-col">
           <span class="text-3xl text-wrap font-extrabold">{{
@@ -202,8 +199,8 @@ const handleMovedToWishlist = async (gameId: bigint, gameTitle: string) => {
         `${gameTitle} ${t('title.pages.cart.actions.has_been_moved_to_wishlist')}`,
       )
     }
-  } catch (error) {
-    toastErrorNotificationPopup(`${t('title.pages.cart.actions.move_to_wishlist_error')}`, ``)
+  } catch (error: any) {
+    toastErrorNotificationPopup(`${t('title.pages.cart.actions.move_to_wishlist_error')}`, error.response.data.detail)
   }
 }
 

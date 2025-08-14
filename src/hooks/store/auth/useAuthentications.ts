@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { removeCookie, setCookie } from '@/utils/cookies/cookie-utils'
 import { LoginRequest, RegisterRequest } from '@/types/auth/AuthType'
-import { renewUserRefreshToken } from '@/apis/user/authUser'
+import { renewUserRefreshToken, userLogout } from '@/apis/user/authUser'
 import { CART_STORE_QUERY_KEYS } from '@/hooks/constants/store/cart-key'
 import { mergingCartFormAnotherDevice } from '@/apis/store/cart/cart'
+import { USER_AUTH_QUERY_KEY, USER_PROFILE_QUERY_KEY } from '@/hooks/constants/user/userProfile-key'
 
 export const useRegisterMutation = () => {
   const { isPending, mutateAsync, isSuccess } = useMutation<any, unknown, RegisterRequest>({
@@ -28,7 +29,7 @@ export const useLoginByEmailMutation = () => {
       setCookie('userAccessRights', response.data?.displayName, {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       })
-      await mergingCartFormAnotherDevice();
+      await mergingCartFormAnotherDevice()
     },
   })
 
@@ -42,8 +43,7 @@ export const useLoginByEmailMutation = () => {
 
 export const useLoginByUsernameMutation = () => {
   const queryClient = useQueryClient()
-  const { isPending, data,
-    mutateAsync, isSuccess } = useMutation<any, unknown, LoginRequest>({
+  const { isPending, data, mutateAsync, isSuccess } = useMutation<any, unknown, LoginRequest>({
     mutationKey: ['user', 'auth', 'login', 'username'],
     onMutate: async () => {
       removeCookie('userAccessRights')
@@ -52,8 +52,8 @@ export const useLoginByUsernameMutation = () => {
     onSuccess: async (response) => {
       setCookie('userAccessRights', response.data?.displayName, {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      });
-      await mergingCartFormAnotherDevice();
+      })
+      await mergingCartFormAnotherDevice()
     },
   })
 
@@ -74,6 +74,34 @@ export const useMutateRenewRefreshToken = () => {
     },
   })
 
+  return {
+    isPending,
+    mutateAsync,
+  }
+}
+
+export const useMutateUserLogout = () => {
+  const queryClient = useQueryClient()
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async () => await userLogout(),
+    onSuccess: () => {
+      queryClient.removeQueries({
+        queryKey: USER_AUTH_QUERY_KEY.EMAIL,
+      })
+      queryClient.removeQueries({
+        queryKey: USER_AUTH_QUERY_KEY.USERNAME,
+      })
+      queryClient.removeQueries({
+        queryKey: USER_AUTH_QUERY_KEY.RENEW_REFRESH_TOKEN,
+      })
+      queryClient.removeQueries({
+        queryKey: CART_STORE_QUERY_KEYS.USER,
+      })
+      queryClient.removeQueries({
+        queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
+      })
+    },
+  })
   return {
     isPending,
     mutateAsync,

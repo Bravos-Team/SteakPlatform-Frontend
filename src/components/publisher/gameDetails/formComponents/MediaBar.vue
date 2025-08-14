@@ -28,6 +28,7 @@
                     class="object-contain w-full h-full tablet:h-40"></video>
                   <!-- END VIDEO AND IMAGES -->
                 </div>
+                <!-- <VideoCompressor /> -->
                 <div class="w-full h-100%">
                   <div class="w-full min-h-full rounded-none bg-white/5 px-2 py-1 font-medium relative">
                     <div class="h-full flex items-center w-full">
@@ -69,7 +70,7 @@
               <img v-if="media.imagePreview && media.type === 'image'" :src="media.imagePreview"
                 class="object-contain w-full h-20 tablet:h-40" alt="" />
               <video v-if="media.imagePreview && media.type === 'video'" :src="media.imagePreview"
-                class="object-contain w-full h-full tablet:h-40" loop autoplay></video>
+                class="object-contain w-full h-full tablet:h-40"></video>
               <!-- END VIDEO AND IMAGES -->
             </div>
             <div class="w-full h-full">
@@ -110,13 +111,7 @@ import { useImageStored } from '@/stores/image/useImageStored'
 import { type MediaType } from '@/types/image/MediaAndImage'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { toastErrorNotificationPopup } from '@/composables/toast/toastNotificationPopup'
-import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu.vue'
-import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue'
-import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuContent.vue'
-import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue'
-import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue'
-import { useDeleteImage } from '@/hooks/common/cdn/useCDNAssetsManager'
-
+import VideoCompressor from '@/components/common/video/VideoCompressor.vue'
 const useImageStore = useImageStored()
 
 const props = defineProps<{
@@ -167,7 +162,6 @@ const handleSelectFile = (index: number, event: Event) => {
       } else if (files[0].type.startsWith('video')) {
         media_files.value[index].type = 'video'
       }
-
       const previewUrl = URL.createObjectURL(files[0])
       media_files.value[index].imagePreview = previewUrl
       media_files.value[index].file_instance = files[0]

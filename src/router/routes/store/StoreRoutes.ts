@@ -7,6 +7,7 @@ const storeRoutes: RouteRecordRaw = {
   redirect: { name: 'store-home' },
   meta: {
     title: 'Store',
+    group: 'user',
   },
   children: [
     {

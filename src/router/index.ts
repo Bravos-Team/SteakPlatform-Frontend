@@ -12,12 +12,16 @@ import storeRoutes from '@/router/routes/store/StoreRoutes'
 import testRoute from '@/router/routes/test/TestRoute'
 import { MiddlewareContext } from '@/types/router/middleware'
 import { getCookie } from '@/utils/cookies/cookie-utils'
+import { TermsOfServiceRoute } from '@/router/routes/policy/termsOfService'
+import { PrivacyPolicyRoute } from '@/router/routes/policy/privacyPolicy'
 
 const routes: RouteRecordRaw[] = [
   testRoute,
   homeRoutes,
   authRoutes,
   storeRoutes,
+  TermsOfServiceRoute,
+  PrivacyPolicyRoute,
   // userRoutes,
   ...paymentRoute,
   ...publisherRoutes,

@@ -1,9 +1,14 @@
+import guest from '@/router/middlewares/guest'
 import { RouteRecordRaw } from 'vue-router'
 
 const authRoutes: RouteRecordRaw = {
   path: '/auth',
   name: 'Auth',
   component: () => import('@/layouts/store/auth/AuthLayout.vue'),
+  meta: {
+    middleware: [guest],
+    group: 'user',
+  },
   children: [
     {
       path: '/register',

@@ -30,7 +30,7 @@
     <div class="relative overflow-hidden">
       <div ref="carouselContainer" class="flex gap-x-3 tablet:gap-x-6 transition-transform duration-500 ease-in-out"
         :style="{ transform: `translateX(-${translateX}px)` }">
-        <div
+        <router-link :to="{ name: 'game-details', params: { id: game.id } }"
           class="snap-start min-w-[15rem] max-w-[20rem] flex flex-col bg-white/5 overflow-hidden rounded-xs h-full transition-all duration-300"
           :class="{ 'scale-100': isActiveCard(index) }" v-for="(game, index) in gameCollaboratorsList" :key="game.id">
           <div class="w-full overflow-hidden">
@@ -46,7 +46,7 @@
               {{ CurrencyUtils.formatCurrency(game.price, '₫') }}
             </p>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
 

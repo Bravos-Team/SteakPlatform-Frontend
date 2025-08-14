@@ -7,6 +7,7 @@ const homeRoutes: RouteRecordRaw = {
   redirect: { name: 'HomePage' },
   meta: {
     title: 'Home',
+    group: 'user',
   },
   children: [
     {

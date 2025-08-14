@@ -5,7 +5,7 @@
 
     <store-sliders></store-sliders>
 
-    <div class="pt-6">
+    <div class="pt-6 flex flex-col gap-y-6">
       <!-- GAME COMING SOON -->
       <div v-if="gameComingSoonData?.data && !isGameComingSoonFetching" class="px-3">
         <CollaboratorsBar :is-loading-games="isGameComingSoonFetching" :title-compo="'Games Coming Soon'"
@@ -34,11 +34,18 @@
       class="flex flex-col @min-xl:w-full gap-y-[64px] my-[64px] items-center justify-center h-full">
       <div v-if="useGameListData?.pages.length > 0" class="w-full flex flex-col gap-y-5 mobile:px-3">
         <span class="text-3xl font-bold">Games Available</span>
-        <div class="grid grid-cols-12 gap-x-4 tablet:gap-y-13 gap-y-8">
+        <div class="grid grid-cols-12 gap-x-4 tablet:gap-y-13 gap-y-8 relative">
 
           <template v-for="(page, index) in useGameListData?.pages" :key="index">
-            <GameCard v-for="(game, i) in page?.items" :key="game.id || i" :game="game" />
+            <GameCard v-for="(game, i) in page?.items" :key="game.id || i" :game="game as any" />
           </template>
+          <div v-if="isFetchingGameList" v-for="n in 4"
+            class="laptop:col-span-4 tablet:col-span-6 col-span-12 desktop:col-span-3 min-h-[18rem] w-full desktop:min-w-[18.5rem] bg-white/10 animate-pulse rounded-xs relative">
+          </div>
+
+        </div>
+        <div v-if="isFetchingGameList" class="relative flex w-full justify-center">
+          <LoaderCircle class="animate-spin absolute  blur-[1px]" />
         </div>
       </div>
     </div>
@@ -56,11 +63,17 @@ import StoreSearchingBar from '@/components/store/StoreSearchingBar.vue'
 import { useUserCartList } from '@/hooks/store/cart/useUserCart'
 import { useGameCommingSoonQuery, useGameStoreInfiniteQueryList, useGameNewestReleasesQuery, useTopPlayedGamesQuery } from '@/hooks/store/game/useGameStore'
 import CollaboratorsBar from '@/components/common/CollaboratorsBar.vue'
+import { GAME_STORE_LIST_QUERY_PARAMS } from '@/types/game/store/Game'
+import { LoaderCircle } from 'lucide-vue-next'
 
 const { data: gameComingSoonData, isFetching: isGameComingSoonFetching } = useGameCommingSoonQuery()
 const { data: userCartData, isFetching: isUserCartFetching } = useUserCartList()
 const { data: gameNewestReleasesData, isFetching: isGameNewestReleasesFetching } = useGameNewestReleasesQuery()
 const { data: topPlayedGamesData, isFetching: isTopPlayedGamesFetching } = useTopPlayedGamesQuery()
+
+const filters = ref<GAME_STORE_LIST_QUERY_PARAMS>({
+  size: 10
+})
 
 const {
   data: useGameListData,

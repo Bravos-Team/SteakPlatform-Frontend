@@ -14,6 +14,8 @@ export const useGetUserWishlist = () => {
     queryKey: WISH_LIST_QUERY_KEYS.USER,
     queryFn: async ({ signal }) => await getMyWishlist(signal),
     retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
     staleTime: 1000 * 60 * 60,
   })
 }
