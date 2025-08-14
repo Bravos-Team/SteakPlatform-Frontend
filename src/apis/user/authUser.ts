@@ -25,3 +25,5 @@ export const renewUserRefreshToken = async () => {
     return rp
   })
 }
+
+export const userLogout = async () => await SteakApi.post('/user/auth/logout')

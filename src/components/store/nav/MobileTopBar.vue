@@ -76,7 +76,8 @@
                   </button>
                   <button v-if="getCookie('userAccessRights')" @click="handleLogout"
                     class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20">
-                    <LogOut class="text-white" />
+                    <LoaderCircle v-if="isLogoutPending" class="animate-spin" />
+                    <LogOut v-else class="text-white" />
                     {{ $t('auth.logout') }}
                   </button>
                 </drawer-footer>
@@ -90,7 +91,7 @@
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
   DrawerContent,
   DrawerDescription,
@@ -102,17 +103,29 @@ import {
 } from '@/components/ui/drawer'
 import LanguagesOption from '@/components/common/LanguagesOption.vue'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
-import { LogOut, UserStar } from 'lucide-vue-next'
+import { LoaderCircle, LogOut, UserStar } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
-import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import { toastErrorNotificationPopup, toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import { computed, ref } from 'vue'
+import { useMutateUserLogout } from '@/hooks/store/auth/useAuthentications'
+const { isPending: isLogoutPending, mutateAsync: mutateLogout } = useMutateUserLogout()
+
 const router = useRouter()
 const openDrawer = ref(false)
 const handleLogout = async () => {
-  openDrawer.value = false
   removeCookie('userAccessRights')
-  toastSuccessNotificationPopup('Logout successfully')
-  await router.push({ name: 'Login' })
+  try {
+    const response = await mutateLogout()
+    if (response.status === 200) {
+      await router.push({ name: 'Login' })
+      toastSuccessNotificationPopup('Logout successfully', '')
+    }
+    else
+      toastErrorNotificationPopup('Logout failed', 'An error occurred while logging out.')
+  } catch (err: any) {
+    toastErrorNotificationPopup('Logout failed', err.response.data.detail)
+    console.log(err)
+  }
 }
 const invalidDevice = computed(
   () => navigator.platform.includes('Windows') || navigator.platform.includes('Win32') || navigator.platform.includes('Linux'),

@@ -165,23 +165,24 @@
                       <div class="bg-gray-500/80 size-7 rounded-full"></div>
                       <div class="bg-gray-500/80 h-4 w-24 rounded"></div>
                     </div>
-                    <div v-else class="flex items-center gap-x-2 cursor-pointer h-full">
+                    <div v-else-if="!isFetchingUserProfile && getCookie('userAccessRights')"
+                      class="flex items-center gap-x-2 cursor-pointer h-full">
                       <div v-if="userProfileData.avatarUrl"
-                        class="bg-white/30 size-7 rounded-full flex items-center justify-center font-black uppercase">
+                        class="bg-white/30 size-7 rounded-full overflow-hidden flex items-center justify-center font-black uppercase">
                         <img :src="userProfileData.avatarUrl" alt="" class="object-cover">
                       </div>
                       <div v-else
                         class="bg-white/30 size-7 rounded-full flex items-center justify-center font-black uppercase">
                         {{ getCookie('userAccessRights').toString().charAt(0) }}
                       </div>
-                      <span> {{ getCookie('userAccessRights') }}</span>
+                      <span> {{ userProfileData.displayName }}</span>
                     </div>
                   </dropdown-menu-trigger>
                   <dropdown-menu-content align="start">
                     <dropdown-menu-label>
                       <span class="flex w-full text-center font-extrabold">{{
                         $t('auth.informations.user.profile.title')
-                      }}</span>
+                        }}</span>
                     </dropdown-menu-label>
                     <dropdown-menu-separator />
                     <dropdown-menu-group>
@@ -192,7 +193,8 @@
                         </router-link>
                       </dropdown-menu-item>
                       <dropdown-menu-item class="cursor-pointer" @click="handleLogout">
-                        <LogOut class="text-white" />
+                        <LoaderCircle v-if="isLogoutPending" class="animate-spin" />
+                        <LogOut v-else class="text-white" />
                         {{ $t('auth.logout') }}
                       </dropdown-menu-item>
                     </dropdown-menu-group>
@@ -236,16 +238,29 @@ import {
 } from '@/components/ui/drawer'
 import LanguagesOption from '@/components/common/LanguagesOption.vue'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
-import { LogOut, UserStar } from 'lucide-vue-next'
+import { LoaderCircle, LogOut, UserStar } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
-import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import { toastErrorNotificationPopup, toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import { computed, ref, PropType } from 'vue';
+import { useMutateUserLogout } from '@/hooks/store/auth/useAuthentications'
+const { isPending: isLogoutPending, mutateAsync: mutateLogout } = useMutateUserLogout()
 const router = useRouter()
 const handleLogout = async () => {
   removeCookie('userAccessRights')
-  toastSuccessNotificationPopup('Logout successfully', '')
-  await router.push({ name: 'Login' })
+  try {
+    const response = await mutateLogout()
+    if (response.status === 200) {
+      await router.push({ name: 'Login' })
+      toastSuccessNotificationPopup('Logout successfully', '')
+    }
+    else
+      toastErrorNotificationPopup('Logout failed', 'An error occurred while logging out.')
+  } catch (err: any) {
+    toastErrorNotificationPopup('Logout failed', err.response.data.detail)
+    console.log(err)
+  }
 }
+
 type UserProfile = {
   id: bigint;
   displayName: string;

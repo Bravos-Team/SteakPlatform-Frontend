@@ -140,10 +140,12 @@ import { useMutateAddToCart, useUserCartList } from '@/hooks/store/cart/useUserC
 import { useMutateAddToWishlist, useGetUserWishlist } from '@/hooks/store/wishlist/useWishlist'
 import { LoaderCircle } from 'lucide-vue-next'
 import { computed } from 'vue'
+import { useMutateRenewRefreshToken } from '@/hooks/store/auth/useAuthentications'
 const { isPending: isMutateAddToCartPending, mutateAsync: mutateAsyncAddToCart } = useMutateAddToCart()
 const { isPending: isMutateAddToWishlistPending, mutateAsync: mutateAsyncAddToWishlist } = useMutateAddToWishlist()
-const { isPending: isGetUserWishlistPending, data: userWishlistData } = useGetUserWishlist()
-const { isPending: isGetUserCartListPending, data: userCartListData } = useUserCartList()
+const { data: userWishlistData } = useGetUserWishlist()
+const { data: userCartListData } = useUserCartList()
+const { isPending: isRenewUserRefetchToken, mutateAsync: mutateAsyncRenewUserRefetchToken } = useMutateRenewRefreshToken()
 
 const handleAddToCart = useDebounceFn(async (id: bigint) => {
   try {
@@ -184,10 +186,14 @@ const handleCheckout = useDebounceFn(async () => {
   const accessRights = getCookie('userAccessRights')
   let response
   try {
-    if (accessRights) response = await mutateAsyncCheckout([props.rightContentsData?.details?.id])
-    else {
-      toastErrorNotificationPopup('You need to login to checkout', '')
-      removeCookie('userAccessRights')
+    if (!accessRights) {
+      response = await mutateAsyncRenewUserRefetchToken()
+      response = await mutateAsyncCheckout([props.rightContentsData?.details?.id])
+      if (!(response.status == 200)) {
+        toastErrorNotificationPopup('You need to login to checkout', '')
+        removeCookie('userAccessRights')
+        await router.push({ name: 'Login' })
+      }
     }
     if (!response) return
     if (response.status === 200) {

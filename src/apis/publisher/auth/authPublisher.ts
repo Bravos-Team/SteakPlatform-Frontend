@@ -15,8 +15,11 @@ export const loginEmail = (data: PublisherLoginRequest) => {
   return SteakApi.post('/dev/auth/email-login', data)
 }
 
-export const logout = () => {
+export const stupidLogout = () => {
   return SteakApi.get('/dev/auth/logout')
+}
+export const logout = () => {
+  return SteakApi.post('/dev/auth/logout')
 }
 
 export const renewPublisherRefreshToken = async () => {
@@ -24,7 +27,7 @@ export const renewPublisherRefreshToken = async () => {
     deviceId: await generateDeviceId(),
     deviceInfo: await generateDeviceInfo(),
   }).then((rp) => {
-    setCookie('publisherAccessRights', rp.data.displayName)
+    setCookie('publisherAccessRights', rp.data.username)
     return rp
   })
 }
