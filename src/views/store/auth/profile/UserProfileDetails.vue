@@ -202,6 +202,8 @@ import {
   mutatePostIntoPresignedUrl
 } from "@/hooks/user/useUserUploadFile"
 import Input from '@/components/ui/input/Input.vue'
+import { QueryClient } from '@tanstack/vue-query'
+import { USER_PROFILE_QUERY_KEY } from '@/hooks/constants/user/userProfile-key'
 const { compressImage } = useImageCompressor()
 const { mutateAsync: mutateUpdateUserProfile, isPending: isUpdateUserProfilePending } =
   useMutateUpdateUserProfile()
@@ -270,10 +272,10 @@ const selectedAvatar = async (event: Event) => {
 
 const isUpdating = ref(false)
 const urlAssigned = ref<string>('')
+const queryClient = new QueryClient()
 const handleUpdateProfile = useDebounceFn(async () => {
   isUpdating.value = true
   try {
-    console.log('File Instance:', previewAvatar.value)
     const presignUrlRes = await mutateAsyncGetPresignUrl({
       fileName: previewAvatar.value.file_instance.name,
       fileSize: previewAvatar.value.file_instance.size,
@@ -301,6 +303,7 @@ const handleUpdateProfile = useDebounceFn(async () => {
       ...profile.value,
       bio: profile.value.bio,
     })
+
     if (response.status === 200) {
       toastSuccessNotificationPopup('Update profile successfully', 'Your profile has been updated.')
     }

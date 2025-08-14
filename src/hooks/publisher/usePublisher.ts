@@ -34,7 +34,7 @@ export const usePublisherLoginUserName = () => {
     mutationFn: async (data: PublisherLoginRequest) => {
       return await loginUserName(data)
     },
-    onSuccess: (response) => {
+    onSuccess: (response, variables) => {
       queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL })
       setCookie('publisherAccessRights', response.data?.username, {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
@@ -66,21 +66,19 @@ export const usePublisherLoginEmail = () => {
   }
 }
 
-export const usePublisherLogout = () => {
+export const useMutatePublisherLogout = () => {
   const queryClient = useQueryClient()
-  return useQuery({
-    queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.LOGOUT(),
-    queryFn: async () => {
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async () => await logout(),
+    onSuccess: () => {
       queryClient.clear()
       removeCookie('publisherAccessRights')
-      await logout()
     },
-    enabled: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    retry: 0,
   })
+  return {
+    mutateAsync,
+    isPending,
+  }
 }
 
 export const usePublisherRenewRefreshToken = () => {

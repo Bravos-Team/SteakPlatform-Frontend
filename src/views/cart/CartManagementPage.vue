@@ -199,8 +199,8 @@ const handleMovedToWishlist = async (gameId: bigint, gameTitle: string) => {
         `${gameTitle} ${t('title.pages.cart.actions.has_been_moved_to_wishlist')}`,
       )
     }
-  } catch (error) {
-    toastErrorNotificationPopup(`${t('title.pages.cart.actions.move_to_wishlist_error')}`, ``)
+  } catch (error: any) {
+    toastErrorNotificationPopup(`${t('title.pages.cart.actions.move_to_wishlist_error')}`, error.response.data.detail)
   }
 }
 

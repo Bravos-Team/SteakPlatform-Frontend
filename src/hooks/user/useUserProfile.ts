@@ -1,5 +1,5 @@
 import { getUserProfile, updateUserProfile } from '@/apis/user/userProfile'
-import { useQuery, useMutation, QueryClient } from '@tanstack/vue-query'
+import { useQuery, useMutation, QueryClient, useQueryClient } from '@tanstack/vue-query'
 import type { USER_PROFILE_REQUEST_TYPE } from '@/types/user/UserProfileType'
 import { USER_PROFILE_QUERY_KEY } from '@/hooks/constants/user/userProfile-key'
 
@@ -9,17 +9,23 @@ export const useQueryUserProfile = () => {
     queryFn: async () => await getUserProfile(),
     staleTime: 1000 * 60 * 60,
     retry: 0,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   })
 }
 
 export const useMutateUpdateUserProfile = () => {
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: USER_PROFILE_REQUEST_TYPE) => await updateUserProfile(payload),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
       }),
+        await queryClient.refetchQueries({
+          queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
+        })
+    },
   })
   return { mutateAsync, isPending }
 }

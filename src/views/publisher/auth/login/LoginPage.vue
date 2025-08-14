@@ -184,7 +184,7 @@ const handlePublisherLogin = async () => {
         : mutateAsyncPublisherLoginUserName(payload))
       if (res.status === 200) {
         toastSuccessNotificationPopup('Login successfully', `Welcome ${res.data.username}`)
-        router.push({ name: 'PublisherHome' })
+        await router.push({ name: 'PublisherHome' })
       }
     } catch (err: any) {
       toastErrorNotificationPopup(

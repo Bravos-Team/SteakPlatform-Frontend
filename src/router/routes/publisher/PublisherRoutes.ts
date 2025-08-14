@@ -1,5 +1,6 @@
 import { type RouteRecordRaw } from 'vue-router'
 import publisher from '@/router/middlewares/publisher'
+import guest from '@/router/middlewares/guest'
 
 export const publisherRoutes: RouteRecordRaw[] = [
   {
@@ -103,27 +104,44 @@ export const publisherRoutes: RouteRecordRaw[] = [
     component: () => import('@/views/publisher/auth/login/LoginPage.vue'),
     meta: {
       group: 'publisher',
+      middleware: [guest],
     },
   },
   {
     path: '/publisher/register',
     name: 'PublisherAuthRegister',
     component: () => import('@/views/publisher/auth/registry/RegistrationPage.vue'),
+    meta: {
+      group: 'publisher',
+      middleware: [guest],
+    },
   },
   {
     path: '/publisher/verify-email',
     name: 'PublisherAuthVerifyEmail',
     component: () => import('@/views/publisher/auth/registry/EmailAuthenticationRequirement.vue'),
+    meta: {
+      group: 'publisher',
+      middleware: [guest],
+    },
   },
   {
     path: '/publisher/register-success',
     name: 'PublisherAuthRegisterSuccess',
     component: () => import('@/views/publisher/auth/registry/SuccessResponsePage.vue'),
+    meta: {
+      group: 'publisher',
+      middleware: [guest],
+    },
   },
   {
     path: '/publisher/register-failed',
     name: 'PublisherAuthRegisterFailed',
     component: () => import('@/views/publisher/auth/registry/ErrorResponsePage.vue'),
+    meta: {
+      group: 'publisher',
+      middleware: [guest],
+    },
   },
 ]
 

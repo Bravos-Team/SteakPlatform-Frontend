@@ -32,6 +32,21 @@ export const useGameStoreInfiniteQueryList = (filters?: Ref<GAME_STORE_LIST_QUER
         ).then((rp) => rp.data)
     },
     retry: 1,
+    placeholderData: () => ({
+      pages: [
+        {
+          items: Array.from({ length: filters?.value?.size || 10 }, (_, index) => ({
+            id: `skeleton-${index}`,
+            title: '',
+            price: 0,
+            image: '',
+            isLoading: true,
+          })),
+          hasNextCursor: false,
+        },
+      ],
+      pageParams: [-1],
+    }),
     initialPageParam: -1,
     getNextPageParam: (lastPage) => {
       if (!lastPage) return undefined

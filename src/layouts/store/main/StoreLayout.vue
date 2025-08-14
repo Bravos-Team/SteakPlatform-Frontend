@@ -2,8 +2,8 @@
   <div class="relative">
     <BackToTheTopButton />
     <drawer className="sm:max-w-[425px]">
-      <store-top-bar :userProfileData="userProfile?.data" :isFetchingUserProfile="isFetchingUserProfile"
-        :isHiddenWhenMobile="true" />
+      <store-top-bar v-if="!isFetchingUserProfile" :userProfileData="userProfile?.data"
+        :isFetchingUserProfile="isFetchingUserProfile" :isHiddenWhenMobile="true" />
     </drawer>
     <mobile-top-bar />
     <div class="desktop-xl:px-[20rem] desktop:px-[6rem] laptop:px-[3rem]">

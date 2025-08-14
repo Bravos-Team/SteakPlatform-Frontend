@@ -3,20 +3,15 @@
   <sidebar-group>
     <sidebar-group-label>{{
       $t('title.subPagesCompo.sidebar.publisher.platform')
-    }}</sidebar-group-label>
+      }}</sidebar-group-label>
     <sidebar-menu>
       <sidebar-menu-skeleton v-if="!items" />
       <sidebar-menu-skeleton v-if="!items" />
       <sidebar-menu-skeleton v-if="!items" />
       <sidebar-menu-item class="flex flex-col gap-y-3" v-for="(value, index) in items" :key="index">
         <!-- SOLLAPSIBLE PARENT NAV ITEM -->
-        <collapsible
-          v-if="value?.items && value?.items.length > 0"
-          :key="index"
-          as-child
-          :default-open="value?.isActive"
-          class="group/collapsible transition-all duration-200 ease-in-out"
-        >
+        <collapsible v-if="value?.items && value?.items.length > 0" :key="index" as-child
+          :default-open="value?.isActive" class="group/collapsible transition-all duration-200 ease-in-out">
           <sidebar-menu-item>
             <!-- PARENT TRIGGER -->
             <collapsible-trigger as-child>
@@ -24,10 +19,9 @@
                 <component :is="value?.icon" />
                 <span>{{
                   getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value.i18n)
-                }}</span>
+                  }}</span>
                 <chevron-right
-                  class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
-                />
+                  class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
               </sidebar-menu-button>
               <!-- <sidebar-menu-badge class="mr-5">{{ items?.length }}</sidebar-menu-badge> -->
             </collapsible-trigger>
@@ -44,24 +38,17 @@
                         <component :is="subItem?.icon" />
                         <span>{{
                           getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', subItem.i18n)
-                        }}</span>
+                          }}</span>
 
-                        <collapsible-trigger
-                          class="bg-[#101014]/50 cursor-pointer rounded-sm"
-                          as-child
-                        >
+                        <collapsible-trigger class="bg-[#101014]/50 cursor-pointer rounded-sm" as-child>
                           <chevrons-down
-                            class="ml-auto transition-transform duration-200 !shrink-0 -rotate-90 group-data-[state=open]:rotate-0"
-                          />
+                            class="ml-auto transition-transform duration-200 !shrink-0 -rotate-90 group-data-[state=open]:rotate-0" />
                         </collapsible-trigger>
                         <!-- group-data-[state=open]/collapsible:rotate-0 -->
                       </sidebar-menu-button>
                       <collapsible-content>
                         <sidebar-menu-sub>
-                          <sidebar-menu-sub-item
-                            v-for="(valueSub, index) in subItem?.subItems"
-                            :key="index"
-                          >
+                          <sidebar-menu-sub-item v-for="(valueSub, index) in subItem?.subItems" :key="index">
                             <sidebar-menu-sub-button as-child>
                               <router-link @click="handleRedirect" :to="{ name: valueSub?.name }">
                                 <component :is="valueSub?.icon" />
@@ -110,20 +97,18 @@
         <collapsible v-else>
           <sidebar-menu-item>
             <collapsible-trigger as-child>
-              <router-link @click="handleRedirect" :to="{ name: value?.name }">
-                <sidebar-menu-button
-                  v-if="value?.i18n === 'logout'"
-                  @click="handleLogout"
-                  class="cursor-pointer"
-                  :tooltip="value?.title"
-                >
-                  <component :is="value?.icon" />
-                  <span>
-                    {{ getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value?.i18n) }}
-                  </span>
-                </sidebar-menu-button>
 
-                <sidebar-menu-button v-else class="cursor-pointer" :tooltip="value?.title">
+              <sidebar-menu-button v-if="value?.i18n === 'logout.title'" @click="handleLogout" class="cursor-pointer"
+                :tooltip="value?.title">
+                <component :is="value?.icon" />
+                <span>
+                  {{ getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value?.i18n) }}
+                </span>
+              </sidebar-menu-button>
+
+              <router-link v-else-if="value?.i18n !== 'logout.title'" @click="handleRedirect"
+                :to="{ name: value?.name }">
+                <sidebar-menu-button class="cursor-pointer" :tooltip="value?.title">
                   <component :is="value?.icon" />
                   <span>
                     {{ getTranslatedTitle('title.subPagesCompo.sidebar.publisher.', value?.i18n) }}
@@ -157,10 +142,10 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import getTranslatedTitle from '@/utils/i18n/useI18nUtils'
-import { usePublisherLogout } from '@/hooks/publisher/usePublisher'
+import { useMutatePublisherLogout } from '@/hooks/publisher/usePublisher'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 const router = useRouter()
-const { refetch } = usePublisherLogout()
+const { mutateAsync, isPending } = useMutatePublisherLogout()
 const useSideBarTool = useSidebar()
 const props = defineProps<{
   items: [
@@ -187,12 +172,15 @@ const props = defineProps<{
 }>()
 
 const handleLogout = async () => {
-  if (getCookie('userAccessRights')) removeCookie('userAccessRights')
+  console.log('TRIGGER LOGOUT: ', getCookie('publisherAccessRights'))
+  removeCookie('publisherAccessRights')
   if (getCookie('publisherAccessRights')) removeCookie('publisherAccessRights')
-  await refetch()
-  await router.push({ name: 'PublisherAuthLogin' })
+  const response = await mutateAsync()
+  if (response.status === 200)
+    await router.push({ name: 'PublisherAuthLogin' })
 }
 const handleRedirect = async () => {
+  console.log('HANDLE REDIRECT')
   if (useSideBarTool.isMobile.value) {
     useSideBarTool.setOpenMobile(false)
   }
