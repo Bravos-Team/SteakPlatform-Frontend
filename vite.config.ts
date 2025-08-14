@@ -14,6 +14,7 @@ export default defineConfig({
   //   ).map(([key, val]) => [`import.meta.env.${key}`, JSON.stringify(val)])
   // )
 
+  base: '/',
   plugins: [vue(), vueDevTools(), tailwindcss()],
   // define: viteEnvVars,
   resolve: {
