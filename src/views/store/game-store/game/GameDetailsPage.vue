@@ -26,8 +26,8 @@
 
     <!-- MAIN CONTENT -->
     <div class="grid grid-cols-12 gap-y-2  justify-between gap-x-4 w-full">
+      <!-- LEFT CONTENT -->
       <div class="flex order-2 laptop:order-1 flex-col gap-y-[10px] relative col-span-12 laptop:col-span-9 w-full">
-        <!-- LEFT CONTENT -->
         <div :class="{ '!min-h-full !max-h-full overflow-visible': showMore }"
           class="flex flex-col gap-y-[3rem] max-h-[80rem] overflow-hidden">
           <!-- CAROUSEL -->
@@ -41,7 +41,25 @@
           <!-- END DESCRIPTIONS -->
 
           <!-- RELATED FIELDS & FEATURES -->
-          <!-- <relate-field-and-features-bar :game="game"></relate-field-and-features-bar> -->
+          <div v-if="gameDetailData.data.details.genres && gameDetailData.data.details.tags"
+            class="grid grid-cols-12 gap-x-6 ">
+            <div class="flex flex-col gap-y-2 col-span-12 desktop:col-span-6">
+              <span>Genres</span>
+              <div class="flex gap-x-2 flex-wrap gap-y-2" v-if="gameDetailData.data?.details?.genres?.length">
+                <span
+                  class="whitespace-nowrap cursor-pointer font-medium border border-white/20 text-white/80 text-sm px-3 py-1 rounded-[4px] bg-white/10 hover:bg-white/15 transition-colors duration-150"
+                  v-for="(genre, index) in gameDetailData.data?.details?.genres" :key="index">{{ genre }}</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-y-2 col-span-12 desktop:col-span-6">
+              <span>Tags</span>
+              <div class="flex flex-wrap gap-y-2 gap-x-2" v-if="gameDetailData.data?.details?.tags?.length">
+                <span
+                  class="whitespace-nowrap cursor-pointer font-medium border border-white/20 text-white/80 text-sm px-3 py-1 rounded-[4px] bg-white/10 hover:bg-white/15 transition-colors duration-150"
+                  v-for="(tag, index) in gameDetailData.data?.details?.tags" :key="index">{{ tag }}</span>
+              </div>
+            </div>
+          </div>
           <!-- END RELATED FIELDS & FEATURES -->
 
           <!-- RELATED GAMES BY DEVELOPER -->
@@ -65,8 +83,8 @@
             </button>
           </div>
         </div>
+        <!-- END SHOW MORE BUTTON -->
       </div>
-      <!-- END SHOW MORE BUTTON -->
       <!-- END LEFT CONTENT -->
 
       <!-- RIGHT CONTENT -->

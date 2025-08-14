@@ -9,6 +9,7 @@ import {
 } from '@/apis/store/game/useGameStore'
 import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
 import {
+  DISCOVER_GAME_FILTERS,
   GAME_FILTERED_PARAMS,
   GAME_STORE_LIST_QUERY_PARAMS,
   PageAndSize,
@@ -107,3 +108,8 @@ export const useTopPlayedGamesQuery = (filters?: Ref<PageAndSize>) => {
     retry: 1,
   })
 }
+
+export const useQueryDiscoverGameFiltered = (filters?: Ref<DISCOVER_GAME_FILTERS>) =>
+  useQuery({
+    queryKey: GAME_STORE_LIST_QUERY_KEYS.DISCOVER_GAMES(filters),
+  })

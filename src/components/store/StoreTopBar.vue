@@ -6,7 +6,7 @@
           class="flex justify-between items-center peer/header lg:mx-auto lg:w-full text-white px-4 gap-x-[20px] h-[72px]">
           <!-- LOGO -->
           <div class="flex items-center justify-between peer/hover h-full">
-            <div class="group/logo flex flex-row w-full items-center lg:me-5 bg-[#101014]">
+            <div class="group/logo  flex flex-row w-full items-center lg:me-0 hover:cursor-pointer bg-[#101014]">
               <div class="flex flex-row shrink-0 items-center lg:flex-none gap-x-[8px]">
                 <router-link to="/" class="shrink-0">
                   <img src="https://ccdn.steak.io.vn/logo_steak.svg" class="w-8 object-contain h-auto lg:w-10" alt="" />
@@ -19,9 +19,8 @@
 
               <!-- DROP DOWN -->
               <div
-                class="rounded-2xl delay-100 lg:group-focus:/logo:invisible shadow-2xl transition-all duration-300 ease-int-out lg:group-hover/logo:visible hidden lg:invisible lg:group-hover/logo:h-[506px] lg:group-hover/logo:w-[620px] lg:flex lg:flex-row h-[0px] absolute top-17 border-gray-500/50 backdrop-blur-lg z-[1000] border-1 w-[0px] bg-black/30 group/after">
-                <div
-                  class="flex flex-col delay-200 opacity-0 group-hover/logo:opacity-100 h-full w-[620px] transition-all duration-300 ease-in-out">
+                class="rounded-2xl  lg:group-focus:/logo:invisible shadow-2xl  lg:group-hover/logo:visible hidden lg:invisible h-[506px] w-[620px] lg:flex lg:flex-row  absolute top-14 border-gray-500/50 backdrop-blur-lg z-[1000] border-1  bg-black/30 group/after">
+                <div class="flex flex-col  h-full w-[620px] ">
                   <div class="p-[32px] m-[0px 0px 10px] border-r-1 border-gray-600/50 w-[284px] h-[225px]">
                     <p class="font-bold text-2xl pb-3">Play</p>
                     <!-- PLAY OPTION -->
@@ -45,8 +44,7 @@
                   </div>
                 </div>
 
-                <div
-                  class="delay-200 m-[0px 0px 10px] opacity-0 group-hover/logo:opacity-100 duration-300 ease-in-out transition-all px-[60px] py-[32px] w-[345px] h-[505px]">
+                <div class=" m-[0px 0px 10px]   px-[60px] py-[32px] w-[345px] h-[505px]">
                   <p class="font-bold text-2xl pb-3">Create</p>
                   <!-- PLAY OPTION -->
                   <div class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start px-1 w-[248px] h-[40px]">
@@ -57,7 +55,7 @@
                   <router-link :to="{ name: 'PublisherHome' }"
                     class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start px-1 w-[248px] h-[40px]">
                     <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
-                    <button class="">Publish on Steak Game Store</button>
+                    <button class="cursor-pointer ">Publish on Steak Game Store</button>
                   </router-link>
                   <!-- END PLAY -->
                 </div>
@@ -167,6 +165,8 @@
                     </div>
                     <div v-else-if="!isFetchingUserProfile && getCookie('userAccessRights')"
                       class="flex items-center gap-x-2 cursor-pointer h-full">
+                      <!-- HELLO -->
+                      <!-- <img :src="userProfileData.avatarUrl" alt="" class="object-cover"> -->
                       <div v-if="userProfileData.avatarUrl"
                         class="bg-white/30 size-7 rounded-full overflow-hidden flex items-center justify-center font-black uppercase">
                         <img :src="userProfileData.avatarUrl" alt="" class="object-cover">

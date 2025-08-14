@@ -20,7 +20,7 @@
       <div>Loading...</div>
     </template>
 </Suspense> -->
-  <vue-query-devtools button-position="top-left" position="left" />
+  <vue-query-devtools button-position="bottom-left" position="left" />
   <toaster />
   <Suspense>
     <template #default>
