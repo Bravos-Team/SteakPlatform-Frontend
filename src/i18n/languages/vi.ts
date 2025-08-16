@@ -257,6 +257,10 @@ export default {
             add_youtube_video: 'Thêm video YouTube',
             width: 'Chiều rộng',
             height: 'Chiều cao',
+            align_left: 'Căn trái',
+            align_center: 'Căn giữa',
+            align_right: 'Căn phải',
+            align_justify: 'Căn đều',
           },
 
           price_preview: 'Xem trước giá',
