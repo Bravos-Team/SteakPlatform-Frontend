@@ -195,6 +195,7 @@ export default {
       },
 
       game_details: {
+        lastest_version: 'Phiên bản mới nhất',
         uploading: 'Đang tải lên...',
         update_image: 'Cập nhật hình ảnh',
         upload_image: 'Tải lên hình ảnh',

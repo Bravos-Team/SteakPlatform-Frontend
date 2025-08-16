@@ -182,7 +182,7 @@
                     <dropdown-menu-label>
                       <span class="flex w-full text-center font-extrabold">{{
                         $t('auth.informations.user.profile.title')
-                        }}</span>
+                      }}</span>
                     </dropdown-menu-label>
                     <dropdown-menu-separator />
                     <dropdown-menu-group>

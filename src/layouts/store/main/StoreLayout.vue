@@ -6,7 +6,7 @@
         :isFetchingUserProfile="isFetchingUserProfile" :isHiddenWhenMobile="true" />
     </drawer>
     <mobile-top-bar />
-    <div class="desktop-xl:px-[20rem] desktop:px-[6rem] laptop:px-[3rem]">
+    <div class="desktop-xl:px-[13rem] desktop:px-[6rem] tablet:px-[3rem]">
       <div class="@container flex w-full h-full flex-col py-2 tablet:py-10">
         <router-view></router-view>
       </div>
