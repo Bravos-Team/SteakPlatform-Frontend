@@ -64,7 +64,7 @@
             </div>
 
             <!-- Navigation -->
-            <div class="ms-5 hidden lg:flex lg:items-center lg:h-full">
+            <div class="ms-5 laptop:text-sm desktop:text-base hidden lg:flex lg:items-center lg:h-full">
               <router-link :to="{ name: 'store-home' }"
                 class="flex items-center text-nowrap hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3">
                 {{ $t('navigation.store') }}
