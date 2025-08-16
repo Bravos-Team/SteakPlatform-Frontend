@@ -53,6 +53,8 @@ onBeforeMount(async () => {
         await router.push({ name: 'Login' })
     } catch (err: any) {
         console.log('Oauth Error: ', err)
+        toastErrorNotificationPopup('Login failed', 'An error occurred during the login process. Please try again later.')
+        await router.push({ name: 'Login' })
     }
 })
 
