@@ -79,7 +79,7 @@
         <div class="flex items-center justify-center">
           <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-sky-400">{{
             $t('auth.login_as_publisher')
-          }}</router-link>
+            }}</router-link>
         </div>
       </div>
     </form>
@@ -126,7 +126,7 @@ const handleLoginWithGoogle = async () => {
   try {
     await refetchUserState()
     if (userStateData.value?.data)
-      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=883621312062-am30qorbrhj1kuicpulr8bjq02uh385c.apps.googleusercontent.com&response_type=code&scope=profile%20email&redirect_uri=https://steak.io.vn/oauth2/google&state=${userStateData.value.data}`
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=883621312062-am30qorbrhj1kuicpulr8bjq02uh385c.apps.googleusercontent.com&response_type=code&scope=profile%20email&state=${userStateData.value.data}&redirect_uri=https://steak.io.vn/oauth2/google`
   } catch (err: any) {
     console.log(err)
   }
