@@ -233,6 +233,7 @@ export default {
         },
       },
       game_details: {
+        lastest_version: 'Latest Version',
         description_update_bar:
           'As part of our support for the indie developer community we regularly give extra help and assistance to promising upcoming or recently released indie titles. Let us know about your game!',
         uploading: 'Uploading...',

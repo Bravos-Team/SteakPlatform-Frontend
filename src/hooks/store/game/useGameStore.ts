@@ -6,6 +6,7 @@ import {
   getGameNewestReleases,
   getGameTags,
   getTopPlayedGames,
+  getGameFiltered,
 } from '@/apis/store/game/useGameStore'
 import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
 import {
@@ -112,4 +113,5 @@ export const useTopPlayedGamesQuery = (filters?: Ref<PageAndSize>) => {
 export const useQueryDiscoverGameFiltered = (filters?: Ref<DISCOVER_GAME_FILTERS>) =>
   useQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.DISCOVER_GAMES(filters),
+    queryFn: async ({ signal }) => await getGameFiltered(filters?.value, signal),
   })
