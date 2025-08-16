@@ -64,11 +64,11 @@
           <span v-else>{{ $t('features.buttons.add_to_cart') }}</span>
         </button>
 
-        <button v-if="isAlreadyHaveInWishlist && getCookie('userAccessRights')"
+        <button v-if="isAlreadyHaveInWishlist && useUserProfilesStores().getAccessRight()"
           class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center">
           Already in Wishlist
         </button>
-        <button v-else-if="!getCookie('userAccessRights')"
+        <button v-else-if="!useUserProfilesStores().getAccessRight()"
           class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center">
           Login to add to Wishlist
         </button>
@@ -141,6 +141,7 @@ import { useMutateAddToWishlist, useGetUserWishlist } from '@/hooks/store/wishli
 import { LoaderCircle } from 'lucide-vue-next'
 import { computed } from 'vue'
 import { useMutateRenewRefreshToken } from '@/hooks/store/auth/useAuthentications'
+import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
 const { isPending: isMutateAddToCartPending, mutateAsync: mutateAsyncAddToCart } = useMutateAddToCart()
 const { isPending: isMutateAddToWishlistPending, mutateAsync: mutateAsyncAddToWishlist } = useMutateAddToWishlist()
 const { data: userWishlistData } = useGetUserWishlist()
@@ -183,7 +184,7 @@ const router = useRouter()
 const { isPending: isMutateCheckoutPending, mutateAsync: mutateAsyncCheckout } = useMutateCheckout()
 
 const handleCheckout = useDebounceFn(async () => {
-  const accessRights = getCookie('userAccessRights')
+  const accessRights = useUserProfilesStores().getAccessRight()
 
   let response
   try {
