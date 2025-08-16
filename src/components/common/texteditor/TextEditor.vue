@@ -2,31 +2,18 @@
   <tooltip-provider>
     <div
       class="flex flex-col @container border-2 rounded-sm overflow-hidden w-full col-span-2 p-2 bg-linear-120 from-violet-200/10 to-violet-400/10"
-      v-if="editor"
-    >
+      v-if="editor">
       <div class="flex gap-x-3 w-full justify-between">
-        <div
-          class="flex tablet:flex-row flex-col gap-x-3 w-full justify-center mobile:items-end tablet:justify-end"
-        >
+        <div class="flex tablet:flex-row flex-col gap-x-3 w-full justify-center mobile:items-end tablet:justify-end">
           <!-- START CHARS COUNTS -->
-          <div
-            :class="{
-              'character-count': true,
-              'character-count--warning': editor.storage.characterCount.characters() === charsLimit,
-            }"
-          >
+          <div :class="{
+            'character-count': true,
+            'character-count--warning': editor.storage.characterCount.characters() === charsLimit,
+          }">
             <svg height="20" width="20" viewBox="0 0 20 20">
               <circle r="10" cx="10" cy="10" fill="gray" />
-              <circle
-                r="5"
-                cx="10"
-                cy="10"
-                fill="white"
-                stroke="greenyellow"
-                stroke-width="10"
-                :stroke-dasharray="`${(percentage / 100) * 31.4} 31.4`"
-                transform="rotate(-90) translate(-20)"
-              />
+              <circle r="5" cx="10" cy="10" fill="white" stroke="greenyellow" stroke-width="10"
+                :stroke-dasharray="`${(percentage / 100) * 31.4} 31.4`" transform="rotate(-90) translate(-20)" />
               <circle r="6" cx="10" cy="10" fill="#2B2A34" />
             </svg>
 
@@ -55,25 +42,89 @@
         </div>
       </div>
       <div class="w-full items-center flex flex-col">
-        <section
-          id="buttons"
-          class="flex flex-wrap gap-x-3 gap-y-1 w-full bg-transparent rounded-t-sm py-1"
-        >
+        <section id="buttons" class="flex flex-wrap gap-x-3 gap-y-1 w-full bg-transparent rounded-t-sm py-1">
+          <!-- TEXT ALIGN -->
+          <div class="border-y-1 border-gray-100/20 flex justify-center items-center py-1">
+            <div class="flex gap-x-2 justify-between items-center w-full">
+              <!-- ALIGN LEFT -->
+              <tooltip>
+                <tooltip-trigger as-child>
+                  <button @click="editor.chain().focus().toggleTextAlign('left').run()"
+                    :class="{ 'bg-white/10 italic ': editor.isActive({ textAlign: 'left' }) }"
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <AlignLeft :class="editor.isActive({ textAlign: 'left' }) ? '-skew-x-6' : ''"
+                      class="text-white cursor-pointer" />
+                  </button>
+                </tooltip-trigger>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.align_left') }}
+                </tooltip-content>
+              </tooltip>
+              <!-- END ALIGN LEFT -->
+
+              <!-- ALIGN CENTER -->
+              <tooltip>
+                <tooltip-trigger as-child>
+                  <button @click="editor.chain().focus().toggleTextAlign('center').run()"
+                    :class="{ 'bg-white/10 italic ': editor.isActive({ textAlign: 'center' }) }"
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <AlignCenter :class="editor.isActive({ textAlign: 'center' }) ? '-skew-x-6' : ''"
+                      class="text-white cursor-pointer" />
+                  </button>
+                </tooltip-trigger>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.align_center') }}
+                </tooltip-content>
+              </tooltip>
+              <!-- END ALIGN CENTER -->
+
+              <!-- ALIGN RIGHT -->
+              <tooltip>
+                <tooltip-trigger as-child>
+                  <button @click="editor.chain().focus().toggleTextAlign('right').run()"
+                    :class="{ 'bg-white/10 italic ': editor.isActive({ textAlign: 'right' }) }"
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <AlignRight :class="editor.isActive({ textAlign: 'right' }) ? '-skew-x-6' : ''"
+                      class="text-white cursor-pointer" />
+                  </button>
+                </tooltip-trigger>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.align_right') }}
+                </tooltip-content>
+              </tooltip>
+              <!-- END ALIGN RIGHT -->
+
+              <!-- ALIGN JUSTIFY -->
+              <tooltip>
+                <tooltip-trigger as-child>
+                  <button @click="editor.chain().focus().toggleTextAlign('justify').run()"
+                    :class="{ 'bg-white/10 italic ': editor.isActive({ textAlign: 'justify' }) }"
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <AlignJustify :class="editor.isActive({ textAlign: 'justify' }) ? '-skew-x-6' : ''"
+                      class="text-white cursor-pointer" />
+                  </button>
+                </tooltip-trigger>
+                <tooltip-content>
+                  {{ $t('title.pages.game_details.form.text_editor.align_justify') }}
+                </tooltip-content>
+              </tooltip>
+              <!-- END ALIGN JUSTIFY -->
+            </div>
+          </div>
+
+          <!-- END TEXT ALIGN -->
+
           <!-- START MARKS DOWN -->
           <div class="border-y-1 border-gray-100/20 flex justify-center items-center py-1">
             <div class="flex gap-x-2 justify-between items-center w-full">
+
               <!-- START TOGGLE BOLD -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleBold().run()"
+                  <button @click="editor.chain().focus().toggleBold().run()"
                     :class="{ 'bg-white/10 italic ': editor.isActive('bold') }"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
-                    <bold
-                      :class="editor.isActive('bold') ? '-skew-x-6' : ''"
-                      class="text-white cursor-pointer"
-                    />
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <bold :class="editor.isActive('bold') ? '-skew-x-6' : ''" class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
                 <tooltip-content>
@@ -92,41 +143,27 @@
                           <highlighter class="text-white cursor-pointer" />
                         </button>
                       </popover-trigger>
-                      <popover-content
-                        side="top"
-                        class="flex flex-col w-full justify-center gap-y-1"
-                      >
+                      <popover-content side="top" class="flex flex-col w-full justify-center gap-y-1">
                         <!-- START COLOR PICKER -->
-                        <label
-                          class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
-                        >
+                        <label class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1">
                           <span>
-                            {{ $t('title.pages.game_details.form.text_editor.color_picker') }}</span
-                          >
-                          <input
-                            type="color"
-                            class="cursor-crosshair"
-                            v-model="highlighterColorHex"
-                          />
+                            {{ $t('title.pages.game_details.form.text_editor.color_picker') }}</span>
+                          <input type="color" class="cursor-crosshair" v-model="highlighterColorHex" />
                         </label>
                         <!-- END COLOR PIKCER -->
 
                         <!-- START ADD HIGHLIGHT -->
-                        <button
-                          @click="
-                            editor
-                              .chain()
-                              .focus()
-                              .toggleHighlight({ color: highlighterColorHex })
-                              .run()
-                          "
-                          :class="
-                            editor.isActive('highlight', { color: highlighterColorHex })
-                              ? 'bg-white/20'
-                              : ''
-                          "
-                          class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer"
-                        >
+                        <button @click="
+                          editor
+                            .chain()
+                            .focus()
+                            .toggleHighlight({ color: highlighterColorHex })
+                            .run()
+                          " :class="editor.isActive('highlight', { color: highlighterColorHex })
+                            ? 'bg-white/20'
+                            : ''
+                            "
+                          class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer">
                           {{ $t('title.pages.game_details.form.text_editor.highlight') }}
                         </button>
                         <!-- END ADD HIGHLIGHT -->
@@ -143,11 +180,9 @@
               <!-- START TOGGLE ITALIC -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleItalic().run()"
+                  <button @click="editor.chain().focus().toggleItalic().run()"
                     :class="{ 'bg-white/10 italic ': editor.isActive('italic') }"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
+                    class="p-1 rounded-full hover:bg-white/20">
                     <italic class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
@@ -165,28 +200,11 @@
                     <tooltip-trigger as-child>
                       <popover-trigger>
                         <button class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-dasharray="28"
-                              stroke-dashoffset="28"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M13 6l2 -2c1 -1 3 -1 4 0l1 1c1 1 1 3 0 4l-5 5c-1 1 -3 1 -4 0M11 18l-2 2c-1 1 -3 1 -4 0l-1 -1c-1 -1 -1 -3 0 -4l5 -5c1 -1 3 -1 4 0"
-                            >
-                              <animate
-                                fill="freeze"
-                                attributeName="stroke-dashoffset"
-                                dur="0.6s"
-                                values="28;0"
-                              />
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="none" stroke="currentColor" stroke-dasharray="28" stroke-dashoffset="28"
+                              stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M13 6l2 -2c1 -1 3 -1 4 0l1 1c1 1 1 3 0 4l-5 5c-1 1 -3 1 -4 0M11 18l-2 2c-1 1 -3 1 -4 0l-1 -1c-1 -1 -1 -3 0 -4l5 -5c1 -1 3 -1 4 0">
+                              <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="28;0" />
                             </path>
                           </svg>
                         </button>
@@ -196,36 +214,26 @@
                           <!-- START SET LINK TO TEXT -->
                           <div class="flex gap-x-2 w-full items-center">
                             <div class="flex flex-col gap-y-1">
-                              <input
-                                type="text"
-                                v-model="setLinkToText"
+                              <input type="text" v-model="setLinkToText"
                                 class="w-full border rounded-sm px-3 h-[2rem] !outline-none ring-2 ring-gray-300/20 focus:ring-gray-300/50"
-                                :placeholder="
-                                  $t('title.pages.game_details.form.text_editor.embed_link_des')
-                                "
-                              />
+                                :placeholder="$t('title.pages.game_details.form.text_editor.embed_link_des')
+                                  " />
                               <span v-if="errorLinkToTextMessage" class="text-red-500">{{
                                 errorLinkToTextMessage
-                              }}</span>
+                                }}</span>
                             </div>
 
-                            <button
-                              class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer"
-                              @click="hanldeSetLinkToText"
-                            >
+                            <button class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer"
+                              @click="hanldeSetLinkToText">
                               {{ $t('title.pages.game_details.form.text_editor.embed') }}
                             </button>
                           </div>
                           <!-- END SET LINK TO TEXT -->
 
                           <!-- START UNSET LINK TO TEXT -->
-                          <button
-                            @click="editor.chain().focus().unsetLink().run()"
-                            :class="
-                              !editor.isActive('link') ? 'cursor-not-allowed' : 'cursor-pointer'
+                          <button @click="editor.chain().focus().unsetLink().run()" :class="!editor.isActive('link') ? 'cursor-not-allowed' : 'cursor-pointer'
                             "
-                            class="w-full text-center flex items-center justify-center px-2 py-1 gap-x-1 hover:bg-white/10 bg-white/3 rounded-sm"
-                          >
+                            class="w-full text-center flex items-center justify-center px-2 py-1 gap-x-1 hover:bg-white/10 bg-white/3 rounded-sm">
                             <Unlink class="size-5" />Unset link to text
                           </button>
                           <!-- END UNSET LINK TO TEXT -->
@@ -244,21 +252,11 @@
               <!-- START TOGGLE STRIKE -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleStrike().run()"
+                  <button @click="editor.chain().focus().toggleStrike().run()"
                     :class="{ 'bg-white/10 italic ': editor.isActive('strike') }"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M10 19h4v-3h-4zM5 4v3h5v3h4V7h5V4zM3 14h18v-2H3z"
-                      />
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M10 19h4v-3h-4zM5 4v3h5v3h4V7h5V4zM3 14h18v-2H3z" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -271,23 +269,13 @@
               <!-- START TOGGLE SUBSCRIPT -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleSubscript().run()"
+                  <button @click="editor.chain().focus().toggleSubscript().run()"
                     :class="{ 'bg-white/10 italic ': editor.isActive('subscript') }"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
+                      <path fill="currentColor" fill-rule="evenodd"
                         d="M2.22 4.22a.75.75 0 0 1 1.06 0L6 6.94l2.72-2.72a.75.75 0 0 1 1.06 1.06L7.06 8l2.72 2.72a.75.75 0 1 1-1.06 1.06L6 9.06l-2.72 2.72a.75.75 0 0 1-1.06-1.06L4.94 8L2.22 5.28a.75.75 0 0 1 0-1.06m10.407 6.782H11V10h1.627c.362 0 .71.144.967.402a1.392 1.392 0 0 1-.17 2.11l-.675.486h1.232V14H11v-.974l1.847-1.33a.385.385 0 0 0 .047-.583a.38.38 0 0 0-.267-.111"
-                        clip-rule="evenodd"
-                      />
+                        clip-rule="evenodd" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -300,25 +288,13 @@
               <!-- START TOGGLE SUPERSCRIPT -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleSuperscript().run()"
+                  <button @click="editor.chain().focus().toggleSuperscript().run()"
                     :class="{ 'bg-white/10 italic ': editor.isActive('superscript') }"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2"
-                        d="m4 19l8-8m0 8l-8-8m16 1h-4c0-1.5.442-2 1.5-2.5S20 8.334 20 7.002c0-.472-.17-.93-.484-1.29a2.105 2.105 0 0 0-2.617-.436c-.42.239-.738.614-.899 1.06"
-                      />
+                        d="m4 19l8-8m0 8l-8-8m16 1h-4c0-1.5.442-2 1.5-2.5S20 8.334 20 7.002c0-.472-.17-.93-.484-1.29a2.105 2.105 0 0 0-2.617-.436c-.42.239-.738.614-.899 1.06" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -331,25 +307,12 @@
               <!-- START TOGGLE UNDERLINE -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleUnderline().run()"
+                  <button @click="editor.chain().focus().toggleUnderline().run()"
                     :class="{ 'bg-white/10 italic ': editor.isActive('underline') }"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M7 5v5a5 5 0 0 0 10 0V5M5 19h14"
-                      />
+                    class="p-1 rounded-full hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" d="M7 5v5a5 5 0 0 0 10 0V5M5 19h14" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -368,11 +331,9 @@
               <!-- START TOGGLE BLOCKQUOTE -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleBlockquote().run()"
+                  <button @click="editor.chain().focus().toggleBlockquote().run()"
                     :class="{ 'bg-white/10': editor.isActive('blockquote') }"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
+                    class="p-1 rounded-full hover:bg-white/20">
                     <text-quote class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
@@ -385,10 +346,8 @@
               <!-- START ADD BLOCKQUOTE -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().setBlockquote().run()"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
+                  <button @click="editor.chain().focus().setBlockquote().run()"
+                    class="p-1 rounded-full hover:bg-white/20">
                     <div class="relative">
                       <text-quote class="text-white cursor-pointer" />
                       <plus size="17" class="absolute -top-1 -right-2 stroke-3" />
@@ -410,11 +369,9 @@
               <!-- START TOGGLE LIST -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleBulletList().run()"
+                  <button @click="editor.chain().focus().toggleBulletList().run()"
                     :class="{ 'bg-white/10': editor.isActive('bulletList') }"
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
+                    class="p-1 rounded-full hover:bg-white/20">
                     <List class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
@@ -427,15 +384,10 @@
               <!-- START ADD BLOCK LIST (SPLIT) -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().splitListItem('listItem').run()"
-                    :class="
-                      editor.can().splitListItem('listItem') == false
-                        ? 'cursor-not-allowed'
-                        : 'cursor-pointer'
-                    "
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
+                  <button @click="editor.chain().focus().splitListItem('listItem').run()" :class="editor.can().splitListItem('listItem') == false
+                    ? 'cursor-not-allowed'
+                    : 'cursor-pointer'
+                    " class="p-1 rounded-full hover:bg-white/20">
                     <list-plus class="text-white" />
                   </button>
                 </tooltip-trigger>
@@ -448,15 +400,10 @@
               <!-- START UP LEVEL BLOCK LIST (SHINK) -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().sinkListItem('listItem').run()"
-                    :class="
-                      !editor.can().sinkListItem('listItem')
-                        ? 'cursor-not-allowed'
-                        : 'cursor-pointer'
-                    "
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
+                  <button @click="editor.chain().focus().sinkListItem('listItem').run()" :class="!editor.can().sinkListItem('listItem')
+                    ? 'cursor-not-allowed'
+                    : 'cursor-pointer'
+                    " class="p-1 rounded-full hover:bg-white/20">
                     <list-start class="text-white rotate-180" />
                   </button>
                 </tooltip-trigger>
@@ -469,15 +416,11 @@
               <!-- START DOWN LEVEL BLOCK LIST (LIFT) -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().liftListItem('listItem').run()"
-                    class="p-1 rounded-full hover:bg-white/20"
-                    :class="
-                      !editor.can().liftListItem('listItem')
-                        ? 'cursor-not-allowed'
-                        : 'cursor-pointer'
-                    "
-                  >
+                  <button @click="editor.chain().focus().liftListItem('listItem').run()"
+                    class="p-1 rounded-full hover:bg-white/20" :class="!editor.can().liftListItem('listItem')
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer'
+                      ">
                     <list-start class="text-white scale-x-[-1] rotate-180" />
                   </button>
                 </tooltip-trigger>
@@ -495,10 +438,8 @@
             <div class="flex gap-x-2 justify-between items-center w-full">
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().setHardBreak().run()"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
+                  <button @click="editor.chain().focus().setHardBreak().run()"
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
                     <wrap-text class="text-white" />
                   </button>
                 </tooltip-trigger>
@@ -518,18 +459,9 @@
                   <tooltip-trigger as-child>
                     <popover-trigger :is-hide-icon="true" class="border-0 !bg-none" as-child>
                       <button class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="white"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="lucide lucide-heading-icon lucide-heading"
-                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="lucide lucide-heading-icon lucide-heading">
                           <path d="M6 12h12" />
                           <path d="M6 20V4" />
                           <path d="M18 20V4" />
@@ -538,81 +470,63 @@
                     </popover-trigger>
                     <popover-content side="top" class="flex flex-col w-full justify-center gap-y-1">
                       <!-- START HEADING 1 -->
-                      <button
-                        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+                      <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
                         :class="editor.isActive('heading', { level: 1 }) ? 'bg-white/20' : ''"
-                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
-                      >
+                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1">
                         <heading1 class="text-white size-5" />
                         <span class="text-sm font-medium">
-                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 1</span
-                        >
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 1</span>
                       </button>
                       <!-- END HEADING 1 -->
 
                       <!-- START HEADING 2 -->
-                      <button
-                        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+                      <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
                         :class="editor.isActive('heading', { level: 2 }) ? 'bg-white/20' : ''"
-                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
-                      >
+                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1">
                         <heading2 class="text-white size-5" />
                         <span class="text-sm font-medium">
                           {{ $t('title.pages.game_details.form.text_editor.heading') }}
-                          2</span
-                        >
+                          2</span>
                       </button>
                       <!-- END HEADING 2 -->
 
                       <!-- START HEADING 3 -->
-                      <button
-                        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+                      <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
                         :class="editor.isActive('heading', { level: 3 }) ? 'bg-white/20' : ''"
-                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
-                      >
+                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1">
                         <heading3 class="text-white size-5" />
                         <span class="text-sm font-medium">
-                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 3</span
-                        >
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 3</span>
                       </button>
                       <!-- END HEADING 3 -->
 
                       <!-- START HEADING 4 -->
-                      <button
-                        @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
+                      <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
                         :class="editor.isActive('heading', { level: 4 }) ? 'bg-white/20' : ''"
-                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
-                      >
+                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1">
                         <heading4 class="text-white size-5" />
                         <span class="text-sm font-medium">
-                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 4</span
-                        >
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 4</span>
                       </button>
                       <!-- END HEADING 4 -->
 
                       <!-- START HEADING 5 -->
-                      <button
-                        @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
+                      <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
                         :class="editor.isActive('heading', { level: 5 }) ? 'bg-white/20' : ''"
-                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
-                      >
+                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1">
                         <heading5 class="text-white size-5" />
                         <span class="text-sm font-medium">
-                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 5</span
-                        >
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 5</span>
                       </button>
                       <!-- END HEADING 5 -->
 
                       <!-- START HEADING 6 -->
-                      <button
-                        @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
+                      <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
                         :class="editor.isActive('heading', { level: 6 }) ? 'bg-white/20' : ''"
-                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1"
-                      >
+                        class="cursor-pointer p-1 rounded-sm hover:bg-white/20 flex items-center gap-x-1">
                         <heading6 class="text-white size-5" />
                         <span class="text-sm font-medium">
-                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 6</span
-                        >
+                          {{ $t('title.pages.game_details.form.text_editor.heading') }} 6</span>
                       </button>
                       <!-- END HEADING 6 -->
                     </popover-content>
@@ -631,10 +545,8 @@
             <div class="flex gap-x-2 justify-between items-center w-full">
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().setHorizontalRule().run()"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
+                  <button @click="editor.chain().focus().setHorizontalRule().run()"
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
                     <Minus class="text-white" />
                   </button>
                 </tooltip-trigger>
@@ -660,20 +572,13 @@
                     <popover-content side="top" class="w-full">
                       <div class="flex gap-x-2 w-full items-center">
                         <div class="flex flex-col gap-y-1">
-                          <input
-                            type="text"
-                            v-model="imageUrl"
+                          <input type="text" v-model="imageUrl"
                             class="w-full border rounded-sm px-3 h-[2rem] !outline-none ring-2 ring-gray-300/20 focus:ring-gray-300/50"
-                            :placeholder="
-                              $t('title.pages.game_details.form.text_editor.embed_image_url')
-                            "
-                          />
+                            :placeholder="$t('title.pages.game_details.form.text_editor.embed_image_url')
+                              " />
                         </div>
 
-                        <button
-                          class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer"
-                          @click="addImage"
-                        >
+                        <button class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer" @click="addImage">
                           {{ $t('title.pages.game_details.form.text_editor.embed') }}
                         </button>
                       </div>
@@ -694,16 +599,13 @@
               <!-- START ADD TABLE -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="
-                      editor
-                        .chain()
-                        .focus()
-                        .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
-                        .run()
-                    "
-                    class="p-1 rounded-full hover:bg-white/20"
-                  >
+                  <button @click="
+                    editor
+                      .chain()
+                      .focus()
+                      .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+                      .run()
+                    " class="p-1 rounded-full hover:bg-white/20">
                     <sheet class="text-white cursor-pointer" />
                   </button>
                 </tooltip-trigger>
@@ -723,16 +625,12 @@
                       </button>
                     </popover-trigger>
                     <popover-content class="flex flex-col gap-y-1 w-full" side="top">
-                      <button
-                        @click="editor.chain().focus().addColumnBefore().run()"
-                        class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer"
-                      >
+                      <button @click="editor.chain().focus().addColumnBefore().run()"
+                        class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer">
                         {{ $t('title.pages.game_details.form.text_editor.add_before') }}
                       </button>
-                      <button
-                        @click="editor.chain().focus().addColumnAfter().run()"
-                        class="w-full px-3 py-1 font-medium rounded-sm bg-white/5 hover:bg-white/10 cursor-pointer"
-                      >
+                      <button @click="editor.chain().focus().addColumnAfter().run()"
+                        class="w-full px-3 py-1 font-medium rounded-sm bg-white/5 hover:bg-white/10 cursor-pointer">
                         {{ $t('title.pages.game_details.form.text_editor.add_after') }}
                       </button>
                     </popover-content>
@@ -747,24 +645,12 @@
               <!-- START DELETE COLUMN -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().deleteColumn().run()"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                  <button @click="editor.chain().focus().deleteColumn().run()"
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2"
-                        d="M6 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1m10 6l4 4m-4 0l4-4"
-                      />
+                        d="M6 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1m10 6l4 4m-4 0l4-4" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -784,16 +670,12 @@
                       </button>
                     </popover-trigger>
                     <popover-content class="flex flex-col gap-y-1 w-full" side="top">
-                      <button
-                        @click="editor.chain().focus().addRowBefore().run()"
-                        class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer"
-                      >
+                      <button @click="editor.chain().focus().addRowBefore().run()"
+                        class="w-full px-3 py-1 rounded-sm font-medium bg-white/5 hover:bg-white/10 cursor-pointer">
                         {{ $t('title.pages.game_details.form.text_editor.add_before') }}
                       </button>
-                      <button
-                        @click="editor.chain().focus().addRowAfter().run()"
-                        class="w-full px-3 py-1 font-medium rounded-sm bg-white/5 hover:bg-white/10 cursor-pointer"
-                      >
+                      <button @click="editor.chain().focus().addRowAfter().run()"
+                        class="w-full px-3 py-1 font-medium rounded-sm bg-white/5 hover:bg-white/10 cursor-pointer">
                         {{ $t('title.pages.game_details.form.text_editor.add_after') }}
                       </button>
                     </popover-content>
@@ -808,52 +690,30 @@
               <!-- START DELETE ROW -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().deleteRow().run()"
+                  <button @click="editor.chain().focus().deleteRow().run()"
                     :class="!editor.can().deleteRow() ? 'cursor-pointer' : ' cursor-not-allowed'"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2"
-                        d="M20 6v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1M10 16l4 4m-4 0l4-4"
-                      />
+                        d="M20 6v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1M10 16l4 4m-4 0l4-4" />
                     </svg>
                   </button>
                 </tooltip-trigger>
                 <tooltip-content>
-                  {{ $t('title.pages.game_details.form.text_editor.delete_row') }}</tooltip-content
-                >
+                  {{ $t('title.pages.game_details.form.text_editor.delete_row') }}</tooltip-content>
               </tooltip>
               <!-- END DELETE ROW -->
 
               <!-- START DELETE TABLE -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().deleteTable().run()"
+                  <button @click="editor.chain().focus().deleteTable().run()"
                     :class="!editor.can().deleteRow() ? 'cursor-pointer' : ' cursor-not-allowed'"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="m15.46 15.88l1.42-1.42L19 16.59l2.12-2.13l1.42 1.42L20.41 18l2.13 2.12l-1.42 1.42L19 19.41l-2.12 2.13l-1.42-1.42L17.59 18zM4 3h14a2 2 0 0 1 2 2v7.08a6 6 0 0 0-4.32.92H12v4h1.08c-.11.68-.11 1.35 0 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 4v4h6V7zm8 0v4h6V7zm-8 6v4h6v-4z"
-                      />
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="currentColor"
+                        d="m15.46 15.88l1.42-1.42L19 16.59l2.12-2.13l1.42 1.42L20.41 18l2.13 2.12l-1.42 1.42L19 19.41l-2.12 2.13l-1.42-1.42L17.59 18zM4 3h14a2 2 0 0 1 2 2v7.08a6 6 0 0 0-4.32.92H12v4h1.08c-.11.68-.11 1.35 0 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 4v4h6V7zm8 0v4h6V7zm-8 6v4h6v-4z" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -866,22 +726,12 @@
               <!-- START MERGE CELLS -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().mergeOrSplit().run()"
+                  <button @click="editor.chain().focus().mergeOrSplit().run()"
                     :class="!editor.can().deleteRow() ? 'cursor-pointer' : ' cursor-not-allowed'"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        id="oouiTableMergeCells0"
-                        fill="currentColor"
-                        d="M9 10L4 6v3H0v2h4v3zm-7 3H0v5h8v-2H2zM0 2v5h2V4h6V2z"
-                      />
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                      <path id="oouiTableMergeCells0" fill="currentColor"
+                        d="M9 10L4 6v3H0v2h4v3zm-7 3H0v5h8v-2H2zM0 2v5h2V4h6V2z" />
                       <use href="#oouiTableMergeCells0" transform="matrix(-1 0 0 1 20 0)" />
                     </svg>
                   </button>
@@ -925,21 +775,12 @@
               <!-- START TOGGLE HEADER COLUMN -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleHeaderColumn().run()"
+                  <button @click="editor.chain().focus().toggleHeaderColumn().run()"
                     :class="!editor.can().deleteRow() ? 'cursor-pointer' : ' cursor-not-allowed'"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 2048 2048"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M0 128h2048v1664H0zm768 1024h512V768H768zm512 128H768v384h512zM640 768H128v384h512zm768 0v384h512V768zM128 1280v384h512v-384zm1280 384h512v-384h-512z"
-                      />
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 2048 2048">
+                      <path fill="currentColor"
+                        d="M0 128h2048v1664H0zm768 1024h512V768H768zm512 128H768v384h512zM640 768H128v384h512zm768 0v384h512V768zM128 1280v384h512v-384zm1280 384h512v-384h-512z" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -952,21 +793,12 @@
               <!-- START TOGGLE HEADER ROW -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleHeaderRow().run()"
+                  <button @click="editor.chain().focus().toggleHeaderRow().run()"
                     :class="!editor.can().deleteRow() ? 'cursor-pointer' : ' cursor-not-allowed'"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M18 2H6a2 2 0 0 0-2 2v16c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2V4a2 2 0 0 0-2-2m0 18H6v-4h12zm0-12H6V4h12z"
-                      />
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="currentColor"
+                        d="M18 2H6a2 2 0 0 0-2 2v16c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2V4a2 2 0 0 0-2-2m0 18H6v-4h12zm0-12H6V4h12z" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -979,21 +811,12 @@
               <!-- START TOGGLE HEADER CELL -->
               <tooltip>
                 <tooltip-trigger as-child>
-                  <button
-                    @click="editor.chain().focus().toggleHeaderCell().run()"
+                  <button @click="editor.chain().focus().toggleHeaderCell().run()"
                     :class="!editor.can().deleteRow() ? 'cursor-pointer' : ' cursor-not-allowed'"
-                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M2 4.5A2.5 2.5 0 0 1 4.5 2h7A2.5 2.5 0 0 1 14 4.5v7a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 11.5zM6 13h4v-2H6zm-1-2H3v.5A1.5 1.5 0 0 0 4.5 13H5zm0-5H3v4h2zm1-1h4V3H6zM5 3h-.5A1.5 1.5 0 0 0 3 4.5V5h2zm8 3h-2v4h2zm0 5h-2v2h.5a1.5 1.5 0 0 0 1.5-1.5zm0-6v-.5A1.5 1.5 0 0 0 11.5 3H11v2z"
-                      />
+                    class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
+                      <path fill="currentColor"
+                        d="M2 4.5A2.5 2.5 0 0 1 4.5 2h7A2.5 2.5 0 0 1 14 4.5v7a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 11.5zM6 13h4v-2H6zm-1-2H3v.5A1.5 1.5 0 0 0 4.5 13H5zm0-5H3v4h2zm1-1h4V3H6zM5 3h-.5A1.5 1.5 0 0 0 3 4.5V5h2zm8 3h-2v4h2zm0 5h-2v2h.5a1.5 1.5 0 0 0 1.5-1.5zm0-6v-.5A1.5 1.5 0 0 0 11.5 3H11v2z" />
                     </svg>
                   </button>
                 </tooltip-trigger>
@@ -1015,36 +838,22 @@
                   <tooltip-trigger as-child>
                     <popover-trigger>
                       <button class="p-1 rounded-full hover:bg-white/20 cursor-pointer">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73"
-                          />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                          <path fill="currentColor"
+                            d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73" />
                         </svg>
                       </button>
                     </popover-trigger>
                     <popover-content side="top" class="w-full">
                       <div class="flex gap-x-2 w-full items-center">
                         <div class="flex flex-col gap-y-1">
-                          <input
-                            type="text"
-                            v-model="youtubeVideo.url"
+                          <input type="text" v-model="youtubeVideo.url"
                             class="w-full border rounded-sm px-3 h-[2rem] !outline-none ring-2 ring-gray-300/20 focus:ring-gray-300/50"
-                            :placeholder="
-                              $t('title.pages.game_details.form.text_editor.embed_youtube_url')
-                            "
-                          />
+                            :placeholder="$t('title.pages.game_details.form.text_editor.embed_youtube_url')
+                              " />
                         </div>
 
-                        <button
-                          class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer"
-                          @click="addYoutubeVideo"
-                        >
+                        <button class="bg-white/10 px-2 py-2 h-full rounded-sm cursor-pointer" @click="addYoutubeVideo">
                           {{ $t('title.pages.game_details.form.text_editor.embed') }}
                         </button>
                       </div>
@@ -1062,16 +871,11 @@
                 <tooltip>
                   <tooltip-trigger as-child>
                     <div class="relative w-[60px] cursor-pointer">
-                      <input
-                        type="text"
-                        v-model="youtubeVideo.width"
+                      <input type="text" v-model="youtubeVideo.width"
                         class="w-full h-[28px] px-2 pr-6 rounded-sm border border-gray-400/30 bg-transparent text-white placeholder:text-gray-400 text-sm focus:ring-2 focus:ring-gray-300/50 outline-none"
-                        placeholder="640"
-                      />
+                        placeholder="640" />
                       <span
-                        class="absolute right-2 top-1/2 -translate-y-1/2 text-white text-sm pointer-events-none"
-                        >x</span
-                      >
+                        class="absolute right-2 top-1/2 -translate-y-1/2 text-white text-sm pointer-events-none">x</span>
                     </div>
                   </tooltip-trigger>
                   <tooltip-content>
@@ -1082,16 +886,11 @@
                 <Tooltip>
                   <tooltip-trigger as-child>
                     <div class="relative w-[60px] cursor-pointer">
-                      <input
-                        type="text"
-                        v-model="youtubeVideo.height"
+                      <input type="text" v-model="youtubeVideo.height"
                         class="w-full h-[28px] px-2 pr-6 rounded-sm border border-gray-400/30 bg-transparent text-white placeholder:text-gray-400 text-sm focus:ring-2 focus:ring-gray-300/50 outline-none"
-                        placeholder="480"
-                      />
+                        placeholder="480" />
                       <span
-                        class="absolute right-2 top-1/2 -translate-y-1/2 text-white text-sm pointer-events-none"
-                        >y</span
-                      >
+                        class="absolute right-2 top-1/2 -translate-y-1/2 text-white text-sm pointer-events-none">y</span>
                     </div>
                   </tooltip-trigger>
                   <tooltip-content>
@@ -1106,14 +905,10 @@
         </section>
       </div>
 
-      <section
-        id="text-editor"
-        :class="{
-          'invert-100': invertDarkMode,
-          invert: invertDarkMode,
-        }"
-        class="w-full flex col-span-2 min-h-[10rem] overflow-hidden rounded-sm border"
-      >
+      <section id="text-editor" :class="{
+        'invert-100': invertDarkMode,
+        invert: invertDarkMode,
+      }" class="w-full flex col-span-2 min-h-[10rem] overflow-hidden rounded-sm border">
         <EditorContent v-model="texts" class="!min-w-full p-3 bg-black" :editor="editor" />
       </section>
     </div>
@@ -1122,6 +917,7 @@
 
 <script setup lang="ts">
 import { Editor, EditorContent } from '@tiptap/vue-3'
+import TextAlign from '@tiptap/extension-text-align'
 import { onBeforeUnmount, watch, type HTMLAttributes } from 'vue'
 import Helps from '@/components/common/texteditor/Helps.vue'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -1151,6 +947,10 @@ import {
   Minus,
   BetweenVerticalStart,
   FileImage,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignJustify,
 } from 'lucide-vue-next'
 import Youtube from '@tiptap/extension-youtube'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -1273,6 +1073,9 @@ const editor = new Editor({
     }),
     TextStyleKit,
     Underline,
+    TextAlign.configure({
+      types: ['heading', 'paragraph', 'blockquote', 'listItem', 'item', 'image', 'youtube'],
+    })
   ],
   editorProps: {
     attributes: {
