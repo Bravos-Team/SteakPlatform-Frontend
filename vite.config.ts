@@ -13,7 +13,6 @@ export default defineConfig({
   //     key.startsWith('VITE_')
   //   ).map(([key, val]) => [`import.meta.env.${key}`, JSON.stringify(val)])
   // )
-
   base: '/',
   plugins: [vue(), vueDevTools(), tailwindcss()],
   // define: viteEnvVars,
