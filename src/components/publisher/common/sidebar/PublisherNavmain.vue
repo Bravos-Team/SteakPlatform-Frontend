@@ -144,6 +144,7 @@ import {
 import getTranslatedTitle from '@/utils/i18n/useI18nUtils'
 import { useMutatePublisherLogout } from '@/hooks/publisher/usePublisher'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
+import { usePublisherProfilesStores } from '@/stores/publisher/usePublisherProfileStores'
 const router = useRouter()
 const { mutateAsync, isPending } = useMutatePublisherLogout()
 const useSideBarTool = useSidebar()
@@ -172,12 +173,12 @@ const props = defineProps<{
 }>()
 
 const handleLogout = async () => {
-  console.log('TRIGGER LOGOUT: ', getCookie('publisherAccessRights'))
-  removeCookie('publisherAccessRights')
-  if (getCookie('publisherAccessRights')) removeCookie('publisherAccessRights')
+  usePublisherProfilesStores().removeAccessRight()
+  if (usePublisherProfilesStores().getAccessRight()) removeCookie('publisherAccessRights')
   const response = await mutateAsync()
-  if (response.status === 200)
+  if (response.status === 200) {
     await router.push({ name: 'PublisherAuthLogin' })
+  }
 }
 const handleRedirect = async () => {
   console.log('HANDLE REDIRECT')

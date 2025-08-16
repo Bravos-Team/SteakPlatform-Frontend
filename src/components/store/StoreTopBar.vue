@@ -106,20 +106,20 @@
                     <drawer-header class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row">
                       <span>{{ $t('menu.base') }}</span>
                       <div>
-                        <router-link @click="openDrawer = false" v-if="!getCookie('userAccessRights')"
+                        <router-link @click="openDrawer = false" v-if="!useUserProfilesStores().getAccessRight()"
                           :to="{ name: 'Login' }"
                           class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm">
                           {{ $t('auth.login') }}
                         </router-link>
                         <div v-else
                           class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm">
-                          {{ getCookie('userAccessRights') }}
+                          {{ useUserProfilesStores().getAccessRight() }}
                         </div>
                       </div>
                     </drawer-header>
                     <drawer-description class="hidden"> </drawer-description>
                     <drawer-footer class="flex flex-col gap-y-2">
-                      <router-link v-if="getCookie('userAccessRights')" :to="{ name: 'UserProfiles' }"
+                      <router-link v-if="useUserProfilesStores().getAccessRight()" :to="{ name: 'UserProfiles' }"
                         class="flex justify-between gap-x-2 items-center w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20">
                         <span class="text-center align-middle">
                           {{ $t('auth.informations.user.profile.title') }}</span>
@@ -141,7 +141,7 @@
                         class="w-full text-lg text-start font-mono bg-blue-300/20 px-3 py-1 rounded-xs hover:bg-blue-400/30 transition-all duration-300 font-black cursor-pointer">
                         {{ $t('Download') }}
                       </button>
-                      <button v-if="getCookie('userAccessRights')" @click="handleLogout"
+                      <button v-if="useUserProfilesStores().getAccessRight()" @click="handleLogout"
                         class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20">
                         <LogOut class="text-white" />
                         {{ $t('auth.logout') }}
@@ -151,7 +151,7 @@
                 </drawer-content>
               </Drawer>
               <div class="hidden laptop:block">
-                <div v-if="!getCookie('userAccessRights')"
+                <div v-if="!useUserProfilesStores().getAccessRight()"
                   class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full rounded-sm">
                   <router-link to="/login" class="flex justify-center items-center mx-auto px-2 py-2">{{
                     $t('auth.login') }}</router-link>
@@ -163,19 +163,20 @@
                       <div class="bg-gray-500/80 size-7 rounded-full"></div>
                       <div class="bg-gray-500/80 h-4 w-24 rounded"></div>
                     </div>
-                    <div v-else-if="!isFetchingUserProfile && getCookie('userAccessRights')"
+                    <div v-else-if="!isFetchingUserProfile && useUserProfilesStores().getAccessRight()"
                       class="flex items-center gap-x-2 cursor-pointer h-full">
                       <!-- HELLO -->
                       <!-- <img :src="userProfileData.avatarUrl" alt="" class="object-cover"> -->
-                      <div v-if="userProfileData.avatarUrl"
+                      <div v-if="useUserProfilesStores().getProfile()?.avatarUrl"
                         class="bg-white/30 size-7 rounded-full overflow-hidden flex items-center justify-center font-black uppercase">
-                        <img :src="userProfileData.avatarUrl" alt="" class="object-cover">
+                        <img :src="useUserProfilesStores().getProfile()?.avatarUrl" alt=""
+                          class="object-cover size-full">
                       </div>
                       <div v-else
                         class="bg-white/30 size-7 rounded-full flex items-center justify-center font-black uppercase">
-                        {{ getCookie('userAccessRights').toString().charAt(0) }}
+                        {{ useUserProfilesStores().getAccessRight()?.charAt(0) }}
                       </div>
-                      <span> {{ userProfileData.displayName }}</span>
+                      <span> {{ useUserProfilesStores().getProfile()?.displayName }}</span>
                     </div>
                   </dropdown-menu-trigger>
                   <dropdown-menu-content align="start">
@@ -241,12 +242,13 @@ import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 import { LoaderCircle, LogOut, UserStar } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { toastErrorNotificationPopup, toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
-import { computed, ref, PropType } from 'vue';
+import { computed, ref, PropType, onMounted, nextTick } from 'vue';
 import { useMutateUserLogout } from '@/hooks/store/auth/useAuthentications'
+import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
 const { isPending: isLogoutPending, mutateAsync: mutateLogout } = useMutateUserLogout()
 const router = useRouter()
 const handleLogout = async () => {
-  removeCookie('userAccessRights')
+  useUserProfilesStores().removeAccessRight()
   try {
     const response = await mutateLogout()
     if (response.status === 200) {
@@ -295,4 +297,8 @@ const handleRedirectDownload = async () => {
   await router.push({ name: 'DownloadApplicationPage' })
   openDrawer.value = false
 }
+
+onMounted(async () => {
+  await nextTick()
+})
 </script>

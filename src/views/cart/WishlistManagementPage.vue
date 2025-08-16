@@ -31,7 +31,7 @@
                   <select-group>
                     <select-label class="text-white/30">{{
                       $t('features.filters.sortType')
-                      }}</select-label>
+                    }}</select-label>
                     <select-item value="asc">{{ $t('features.filters.sorts.asc') }}</select-item>
 
                     <select-item value="desc">{{ $t('features.filters.sorts.desc') }}</select-item>
@@ -53,7 +53,25 @@
             </button>
             <!-- END CLEAR ALL -->
           </div>
-          <div v-if="userWishlistData?.data.length > 0" v-for="game in userWishlistData?.data" :key="game.id"
+          <div v-if="isUserWishlistFetching">
+            <div class="w-full min-h-[12rem] animate-pulse p-6 grid grid-cols-12 bg-white/6 rounded-sm">
+              <div class="col-span-2 bg-white/8 rounded-sm size-30"></div>
+              <div class="col-span-10 bg-white/8 rounded-sm w-full ">
+                <div class="flex flex-col gap-y-2 p-3">
+                  <div v-for="(n, index) in 3" class="bg-white/10  h-4 rounded-xs" :class="{
+                    'max-w-20': index === 0,
+                    'max-w-40': index === 1, 'max-w-30': index === 2
+                  }">
+                  </div>
+                  <div class="flex justify-end w-full">
+                    <div class="bg-white/8 rounded-sm min-w-120 h-10"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-if="userWishlistData?.data.length > 0 && !isUserWishlistFetching"
+            v-for="game in userWishlistData?.data" :key="game.id"
             class="w-full cursor-pointer p-6 rounded-lg bg-white/6 grid grid-cols-12 gap-x-3 gap-[20px]">
             <!-- LEFT CONTENT -->
             <div class="flex flex-col gap-y-2 col-span-12 tablet:col-span-3">
@@ -76,10 +94,10 @@
               <div class="flex justify-between w-full">
                 <span class="bg-white/10 hover:bg-white/20 px-2 rounded-sm py-1">{{
                   $t('type.game.base')
-                  }}</span>
+                }}</span>
                 <span class="font-bold">{{
                   Number(game.price).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                  }}</span>
+                }}</span>
               </div>
               <!-- END NAME AND HEADER BADGE -->
 
@@ -211,7 +229,6 @@ import {
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
 import { useUserCartList } from '@/hooks/store/cart/useUserCart'
-import user from '@/router/middlewares/user'
 
 const { data: userCartData, refetch: userCartRefetch } = useUserCartList()
 const { mutateAsync: mutateMoveItemToCart, isPending: isMoveItemToCartPending } =
@@ -253,7 +270,6 @@ const handleMoveToCart = async (gameId: bigint, gameTitle: string) => {
     }
   } catch (error: any) {
     console.error('Error moving item to cart:', error)
-    // toastErrorNotificationPopup('Error moving item to cart', error?.message || 'An error occurred')
   }
 }
 

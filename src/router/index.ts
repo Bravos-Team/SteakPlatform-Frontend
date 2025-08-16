@@ -14,6 +14,8 @@ import { MiddlewareContext } from '@/types/router/middleware'
 import { getCookie } from '@/utils/cookies/cookie-utils'
 import { TermsOfServiceRoute } from '@/router/routes/policy/termsOfService'
 import { PrivacyPolicyRoute } from '@/router/routes/policy/privacyPolicy'
+import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
+import { usePublisherProfilesStores } from '@/stores/publisher/usePublisherProfileStores'
 
 const routes: RouteRecordRaw[] = [
   testRoute,
@@ -51,9 +53,9 @@ router.beforeEach(
       return next()
     }
 
-    const checkAccess = {
-      publisher: getCookie('publisherAccessRights') ?? null,
-      user: getCookie('userAccessRights') ?? null,
+    const checkAccess: MiddlewareContext['checkAccess'] = {
+      publisher: usePublisherProfilesStores().getAccessRight() ?? null,
+      user: useUserProfilesStores().getAccessRight() ?? null,
     }
 
     const middleware: any[] = to.meta.middleware as any[]

@@ -44,6 +44,11 @@ const authRoutes: RouteRecordRaw = {
       name: 'RegisterError',
       component: () => import('@/views/store/auth/registration/ErrorResponsePage.vue'),
     },
+    {
+      path: '/oauth2/google',
+      name: 'GoogleOauth',
+      component: () => import('@/views/store/auth/login/GoogleOauthPage.vue'),
+    },
   ],
 }
 

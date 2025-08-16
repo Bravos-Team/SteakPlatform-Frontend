@@ -9,8 +9,7 @@ import {
 } from '@/apis/publisher/auth/authPublisher'
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
 import { PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS } from '@/hooks/constants/publisher/project/publisherPersonalProjectConstant'
-import { useQuery } from '@tanstack/vue-query'
-import { GAME_MANAGE_QUERY_KEYS } from '../constants/publisher/game/gameManage-key'
+import { usePublisherProfilesStores } from '@/stores/publisher/usePublisherProfileStores'
 
 export const usePublisherRegister = () => {
   const { isPending, mutateAsync, reset } = useMutation({
@@ -36,9 +35,8 @@ export const usePublisherLoginUserName = () => {
     },
     onSuccess: (response, variables) => {
       queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL })
-      setCookie('publisherAccessRights', response.data?.username, {
-        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      })
+      usePublisherProfilesStores().setProfile({ ...response.data })
+      usePublisherProfilesStores().setAccessRight(response.data.username)
     },
   })
   return {
@@ -55,9 +53,8 @@ export const usePublisherLoginEmail = () => {
     },
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: PUBLISHER_PERSONAL_PROJECT_QUERY_KEYS.ALL })
-      setCookie('publisherAccessRights', response.data?.username, {
-        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      })
+      usePublisherProfilesStores().setProfile({ ...response.data })
+      usePublisherProfilesStores().setAccessRight(response.data.username)
     },
   })
   return {

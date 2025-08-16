@@ -5,7 +5,7 @@ export type MiddlewareContext = {
   from: RouteLocationNormalized
   next: NavigationGuardNext
   checkAccess: {
-    user: string
-    publisher: string
+    user: string | null
+    publisher: string | null
   }
 }
