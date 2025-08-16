@@ -18,13 +18,12 @@
 import Card from "@/components/ui/card/Card.vue";
 import { User } from "lucide-vue-next";
 import { useRoute, useRouter } from "vue-router";
-import { useQueryUserStateOauthToken, useMutateVerifyOauthUser } from '@/hooks/user/useUserAuth'
+import { useMutateVerifyOauthUser } from '@/hooks/user/useUserAuth'
 import { onBeforeMount, onMounted } from "vue";
 import { generateDeviceId, generateDeviceInfo } from "@/utils/fingerprint";
 import { toastErrorNotificationPopup, toastSuccessNotificationPopup } from "@/composables/toast/toastNotificationPopup";
 
 const { mutateAsync: verifyOauthUser } = useMutateVerifyOauthUser()
-const { data: userStateData, refetch: refetchUserState } = useQueryUserStateOauthToken()
 
 const route = useRoute();
 const router = useRouter();
@@ -33,13 +32,14 @@ onBeforeMount(async () => {
     const code = route.query.code as string
     const deviceId = await generateDeviceId()
     const deviceInfo = await generateDeviceInfo()
-    await refetchUserState()
+    const state = route.query.state as string
+    if (!state) router.push({ name: 'Login' })
     try {
         const response = await verifyOauthUser({
-            state: userStateData.value?.data,
-            code: code,
-            deviceId: deviceId,
-            deviceInfo: deviceInfo,
+            state,
+            code,
+            deviceId,
+            deviceInfo,
             provider: 'google'
         })
         if (response.status === 200) {
