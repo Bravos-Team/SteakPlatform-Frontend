@@ -13,13 +13,17 @@
 
     <!-- OPTIONS BAR -->
     <div class="flex flex-row lg:w-full mb-[20px]">
-      <div class="flex w-full flex-row items-center mx-[0px] me-[20px] ms-[0px] gap-x-[30px]">
+      <div class="flex w-full justify-between flex-row items-center mx-[0px] me-[20px] ms-[0px] gap-x-[30px]">
         <router-link to="#" class="pt-0 pr-0 pb-2 pl-0 border-b-3 border-[#00a6ff]" :class="''">{{
           $t('title.subPagesCompo.sidebar.publisher.dashboard.items.overview')
         }}</router-link>
         <!-- <router-link to="#" class="pt-0 pr-0 pb-2 pl-0 text-[#fff]/50 hover:text-white" :class="''"
           >Achievements</router-link
         > -->
+        <div class="flex gap-x-2 text-white/60">
+          <span class="">{{ $t('title.pages.game_details.lastest_version') }}: </span>
+          {{ gameDetailData.data.latestVersionName }}
+        </div>
       </div>
     </div>
     <!-- END OPTIONS BAR-->
@@ -40,27 +44,29 @@
           </div>
           <!-- END DESCRIPTIONS -->
 
-          <!-- RELATED FIELDS & FEATURES -->
-          <div v-if="gameDetailData.data.details.genres && gameDetailData.data.details.tags"
-            class="grid grid-cols-12 gap-x-6 ">
-            <div class="flex flex-col gap-y-2 col-span-12 desktop:col-span-6">
+          <!-- RELATED GENRES & TAGS -->
+          <div v-if="gameDetailData.data.genres.length && gameDetailData.data.tags"
+            class="grid grid-cols-12 gap-x-6 gap-y-2 ">
+            <div v-if="gameDetailData.data.genres.length > 0"
+              class="flex flex-col gap-y-2 col-span-12 desktop:col-span-6">
               <span>Genres</span>
-              <div class="flex gap-x-2 flex-wrap gap-y-2" v-if="gameDetailData.data?.details?.genres?.length">
+              <div class="flex gap-x-2 flex-wrap gap-y-2" v-if="gameDetailData.data?.genres?.length">
                 <span
                   class="whitespace-nowrap cursor-pointer font-medium border border-white/20 text-white/80 text-sm px-3 py-1 rounded-[4px] bg-white/10 hover:bg-white/15 transition-colors duration-150"
-                  v-for="(genre, index) in gameDetailData.data?.details?.genres" :key="index">{{ genre }}</span>
+                  v-for="(genre, index) in gameDetailData.data?.genres" :key="index">{{ genre.name }}</span>
               </div>
             </div>
-            <div class="flex flex-col gap-y-2 col-span-12 desktop:col-span-6">
+            <div v-if="gameDetailData.data.tags.length > 0"
+              class="flex flex-col gap-y-2 col-span-12 desktop:col-span-6">
               <span>Tags</span>
-              <div class="flex flex-wrap gap-y-2 gap-x-2" v-if="gameDetailData.data?.details?.tags?.length">
+              <div class="flex flex-wrap gap-y-2 gap-x-2" v-if="gameDetailData.data?.tags?.length">
                 <span
                   class="whitespace-nowrap cursor-pointer font-medium border border-white/20 text-white/80 text-sm px-3 py-1 rounded-[4px] bg-white/10 hover:bg-white/15 transition-colors duration-150"
-                  v-for="(tag, index) in gameDetailData.data?.details?.tags" :key="index">{{ tag }}</span>
+                  v-for="(tag, index) in gameDetailData.data?.tags" :key="index">{{ tag.name }}</span>
               </div>
             </div>
           </div>
-          <!-- END RELATED FIELDS & FEATURES -->
+          <!-- END RELATED GENRES & TAGS -->
 
           <!-- RELATED GAMES BY DEVELOPER -->
           <relate-games-by-developer
@@ -275,6 +281,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useGameStoreDetailsQuery } from '@/hooks/store/game/useGameStore'
 import SkeletonPreviewForm from '@/components/publisher/gameDetails/SkeletonPreviewForm.vue'
+import { data } from '../../../../components/publisher/common/sidebar/SidebarItems';
 
 const showMore = ref(false)
 const route = useRoute()

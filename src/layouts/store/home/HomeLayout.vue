@@ -1,5 +1,5 @@
 <template>
-  <store-header :userProfileData="userProfile.data" :isHiddenSearchingBar="isHiddenSearchingBar"
+  <store-header :userProfileData="userProfile?.data" :isHiddenSearchingBar="isHiddenSearchingBar"
     :isHiddenWhenMobile="false"></store-header>
   <router-view></router-view>
   <store-footer></store-footer>
