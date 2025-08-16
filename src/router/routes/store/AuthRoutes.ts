@@ -38,15 +38,24 @@ const authRoutes: RouteRecordRaw = {
       path: '/register-success',
       name: 'RegisterSuccess',
       component: () => import('@/views/store/auth/registration/SuccessResponsePage.vue'),
+      meta: {
+        title: 'Đăng nhập thành công',
+      },
     },
     {
       path: '/register-failed',
       name: 'RegisterError',
       component: () => import('@/views/store/auth/registration/ErrorResponsePage.vue'),
+      meta: {
+        title: 'Đăng nhập thất bại',
+      },
     },
     {
       path: '/oauth2/google',
       name: 'GoogleOauth',
+      meta: {
+        title: 'Đăng nhập Google',
+      },
       component: () => import('@/views/store/auth/login/GoogleOauthPage.vue'),
     },
   ],
