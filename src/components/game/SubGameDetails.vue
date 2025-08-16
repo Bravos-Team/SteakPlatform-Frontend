@@ -184,21 +184,18 @@ const { isPending: isMutateCheckoutPending, mutateAsync: mutateAsyncCheckout } =
 
 const handleCheckout = useDebounceFn(async () => {
   const accessRights = getCookie('userAccessRights')
+
   let response
   try {
-    if (!accessRights) {
-      // response = await mutateAsyncRenewUserRefetchToken()
+    if (accessRights)
       response = await mutateAsyncCheckout([props.rightContentsData?.details?.id])
-      // if (!(response.status == 200)) {
-      //   toastErrorNotificationPopup('You need to login to checkout', '')
-      //   removeCookie('userAccessRights')
-      //   await router.push({ name: 'Login' })
-      // }
+    if (!response || response.status !== 200) {
+      removeCookie('userAccessRights')
+      await router.push({ name: 'Login' })
+      return
     }
-    if (!response) return
-    if (response.status === 200) {
-      window.location.href = response.data?.paymentUrl
-    }
+    else if (response.status === 200)
+      window.location.href = response.data?.paymentUr
   } catch (error: any) {
     if (error.response.status === 401) {
       removeCookie('userAccessRights')

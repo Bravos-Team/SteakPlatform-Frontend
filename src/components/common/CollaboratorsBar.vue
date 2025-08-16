@@ -11,14 +11,20 @@
       </div>
 
       <div class="flex gap-x-2 justify-between w-full">
-        <button @click="prevSlide" :disabled="currentIndex === 0"
+        <button @click="prevSlide" :disabled="currentIndex === 0" :class="{
+          'cursor-pointer': !(currentIndex === 0),
+          'cursor-not-allowed': currentIndex === 0
+        }"
           class="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
           </svg>
         </button>
 
-        <button @click="nextSlide" :disabled="currentIndex >= maxIndex"
+        <button :class="{
+          'cursor-pointer': !(currentIndex >= maxIndex),
+          'cursor-not-allowed': currentIndex >= maxIndex
+        }" @click="nextSlide" :disabled="currentIndex >= maxIndex"
           class="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

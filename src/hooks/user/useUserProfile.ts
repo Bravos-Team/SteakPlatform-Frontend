@@ -9,7 +9,6 @@ export const useQueryUserProfile = () => {
     queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
     queryFn: async () =>
       await getUserProfile().then((rp) => {
-        console.log(rp)
         setCookie('userAccessRights', rp.data.displayName)
         return rp
       }),
@@ -27,10 +26,10 @@ export const useMutateUpdateUserProfile = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
-      }),
-        await queryClient.refetchQueries({
-          queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
-        })
+      })
+      // await queryClient.refetchQueries({
+      //   queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
+      // })
     },
   })
   return { mutateAsync, isPending }
