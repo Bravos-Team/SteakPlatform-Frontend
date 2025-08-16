@@ -79,7 +79,7 @@
         <div class="flex items-center justify-center">
           <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-sky-400">{{
             $t('auth.login_as_publisher')
-            }}</router-link>
+          }}</router-link>
         </div>
       </div>
     </form>
@@ -117,10 +117,19 @@ import {
   useLoginByUsernameMutation,
 } from '@/hooks/store/auth/useAuthentications'
 import { useRouter } from 'vue-router'
+import { useQueryUserStateOauthToken } from '@/hooks/user/useUserAuth'
+
+const { data: userStateData, refetch: refetchUserState } = useQueryUserStateOauthToken()
 const router = useRouter()
 
 const handleLoginWithGoogle = async () => {
-  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=883621312062-am30qorbrhj1kuicpulr8bjq02uh385c.apps.googleusercontent.com&response_type=code&scope=profile%20email&redirect_uri=http://steak.io.vn/oauth2/google'
+  try {
+    await refetchUserState()
+    if (userStateData.value?.data)
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=883621312062-am30qorbrhj1kuicpulr8bjq02uh385c.apps.googleusercontent.com&response_type=code&scope=profile%20email&redirect_uri=https://steak.io.vn/oauth2/google&state=${userStateData.value.data}`
+  } catch (err: any) {
+    console.log(err)
+  }
 }
 
 const {
@@ -221,4 +230,5 @@ const privateUrl = 'aHR0cHM6Ly95b3V0dS5iZS94dkZaam81UGdHMD9zaT1JV3lFNTZlX3hYN3k0
 const decodePrivateUrl = (url: string): string => {
   return decodeURIComponent(atob(url))
 }
+
 </script>
