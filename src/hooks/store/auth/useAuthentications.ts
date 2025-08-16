@@ -5,6 +5,7 @@ import { renewUserRefreshToken, userLogout } from '@/apis/user/authUser'
 import { CART_STORE_QUERY_KEYS } from '@/hooks/constants/store/cart-key'
 import { mergingCartFormAnotherDevice } from '@/apis/store/cart/cart'
 import { USER_AUTH_QUERY_KEY, USER_PROFILE_QUERY_KEY } from '@/hooks/constants/user/userProfile-key'
+import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
 
 export const useRegisterMutation = () => {
   const { isPending, mutateAsync, isSuccess } = useMutation<any, unknown, RegisterRequest>({
@@ -26,9 +27,8 @@ export const useLoginByEmailMutation = () => {
       queryClient.clear()
     },
     onSuccess: async (response) => {
-      setCookie('userAccessRights', response.data?.displayName, {
-        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      })
+      useUserProfilesStores().setAccessRight(response.data?.displayName)
+      useUserProfilesStores().setProfile(response.data)
       await mergingCartFormAnotherDevice()
     },
   })
@@ -50,9 +50,7 @@ export const useLoginByUsernameMutation = () => {
       await queryClient.invalidateQueries({})
     },
     onSuccess: async (response) => {
-      setCookie('userAccessRights', response.data?.displayName, {
-        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      })
+      useUserProfilesStores().setAccessRight(response.data?.displayName)
       await mergingCartFormAnotherDevice()
     },
   })

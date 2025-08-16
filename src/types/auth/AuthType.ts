@@ -104,3 +104,10 @@ export type COMMON_DATA = {
 export default LoginRequest
 
 export type RegisterResponse = z.infer<typeof RegisterResponseSchema>
+export type VERIFY_USER_OAUTH = {
+  provider: string
+  code: string
+  state: string
+  deviceId: string
+  deviceInfo: string
+}

@@ -3,13 +3,15 @@ import { useQuery, useMutation, QueryClient, useQueryClient } from '@tanstack/vu
 import type { USER_PROFILE_REQUEST_TYPE } from '@/types/user/UserProfileType'
 import { USER_PROFILE_QUERY_KEY } from '@/hooks/constants/user/userProfile-key'
 import { setCookie } from '@/utils/cookies/cookie-utils'
+import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
 
 export const useQueryUserProfile = () => {
   return useQuery({
     queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
     queryFn: async () =>
       await getUserProfile().then((rp) => {
-        setCookie('userAccessRights', rp.data.displayName)
+        useUserProfilesStores().setAccessRight(rp.data.displayName)
+        useUserProfilesStores().setProfile(rp.data)
         return rp
       }),
     staleTime: 1000 * 60 * 60,

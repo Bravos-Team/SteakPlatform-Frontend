@@ -1,4 +1,5 @@
 import SteakApi from '@/apis/index'
+import { usePublisherProfilesStores } from '@/stores/publisher/usePublisherProfileStores'
 import { PublisherLoginRequest, type PublisherRegisterRequest } from '@/types/publisher/AuthType'
 import { setCookie } from '@/utils/cookies/cookie-utils'
 import { generateDeviceId, generateDeviceInfo } from '@/utils/fingerprint'
@@ -27,7 +28,8 @@ export const renewPublisherRefreshToken = async () => {
     deviceId: await generateDeviceId(),
     deviceInfo: await generateDeviceInfo(),
   }).then((rp) => {
-    setCookie('publisherAccessRights', rp.data.username)
+    usePublisherProfilesStores().setProfile({ ...rp.data })
+    usePublisherProfilesStores().setAccessRight(rp.data.username)
     return rp
   })
 }

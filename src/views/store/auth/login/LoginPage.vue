@@ -68,8 +68,8 @@
       </div>
 
       <div class="flex flex-col space-y-4">
-        <button
-          class="flex items-center justify-center h-12 w-full border border-black dark:border-none bg-white rounded-lg">
+        <button type="button" @click="handleLoginWithGoogle"
+          class="cursor-pointer flex items-center justify-center h-12 w-full border border-black dark:border-none bg-white rounded-lg">
           <img :src="'https://ccdn.steak.io.vn/google-ico.svg'" class="h-6" />
         </button>
         <button
@@ -118,6 +118,11 @@ import {
 } from '@/hooks/store/auth/useAuthentications'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+
+const handleLoginWithGoogle = async () => {
+  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=883621312062-am30qorbrhj1kuicpulr8bjq02uh385c.apps.googleusercontent.com&response_type=code&scope=profile%20email&redirect_uri=http://steak.io.vn/oauth2/google'
+}
+
 const {
   isPending: isLoginByEmailPending,
   isSuccess: isLoginByEmailSuccess,

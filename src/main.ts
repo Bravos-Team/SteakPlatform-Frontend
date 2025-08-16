@@ -57,9 +57,9 @@ const vueQueryPluginOptions: VueQueryPluginOptions = {
   },
 }
 
-const app = createApp(App).use(Particles)
+const app = createApp(App)
 
-app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions).use(i18n)
+app.use(router).use(pinia).use(VueQueryPlugin, vueQueryPluginOptions).use(i18n).use(Particles)
 
 router.afterEach((to: RouteLocationNormalized) => {
   if (to.meta?.title) {

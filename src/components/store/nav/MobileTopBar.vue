@@ -38,20 +38,20 @@
                 <drawer-header class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row">
                   <span>{{ $t('menu.base') }}</span>
                   <div>
-                    <router-link @click="openDrawer = false" v-if="!getCookie('userAccessRights')"
+                    <router-link @click="openDrawer = false" v-if="!useUserProfilesStores().getAccessRight()"
                       :to="{ name: 'Login' }"
                       class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm">
                       {{ $t('auth.login') }}
                     </router-link>
                     <div v-else
                       class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm">
-                      {{ getCookie('userAccessRights') }}
+                      {{ useUserProfilesStores().getAccessRight() }}
                     </div>
                   </div>
                 </drawer-header>
                 <drawer-description class="hidden"> </drawer-description>
                 <drawer-footer class="flex flex-col gap-y-2">
-                  <router-link v-if="getCookie('userAccessRights')" :to="{ name: 'UserProfiles' }"
+                  <router-link v-if="useUserProfilesStores().getAccessRight()" :to="{ name: 'UserProfiles' }"
                     @click="openDrawer = false"
                     class="flex justify-between gap-x-2 items-center w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20">
                     <span class="text-center align-middle">
@@ -74,7 +74,7 @@
                     class="w-full text-lg text-start font-mono bg-blue-300/20 px-3 py-1 rounded-xs hover:bg-blue-400/30 transition-all duration-300 font-black cursor-pointer">
                     {{ $t('Download') }}
                   </button>
-                  <button v-if="getCookie('userAccessRights')" @click="handleLogout"
+                  <button v-if="useUserProfilesStores().getAccessRight()" @click="handleLogout"
                     class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20">
                     <LoaderCircle v-if="isLogoutPending" class="animate-spin" />
                     <LogOut v-else class="text-white" />
@@ -108,6 +108,7 @@ import { useRouter } from 'vue-router'
 import { toastErrorNotificationPopup, toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
 import { computed, ref } from 'vue'
 import { useMutateUserLogout } from '@/hooks/store/auth/useAuthentications'
+import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
 const { isPending: isLogoutPending, mutateAsync: mutateLogout } = useMutateUserLogout()
 
 const router = useRouter()

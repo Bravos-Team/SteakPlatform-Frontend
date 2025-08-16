@@ -22,7 +22,8 @@
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage :src="user.avatar" :alt="getCookie('publisherAccessRights')" />
+                <AvatarImage :src="usePublisherProfilesStores().getProfile().avatarUrl as string"
+                  :alt="usePublisherProfilesStores().getAccessRight()" />
                 <AvatarFallback className="rounded-lg">...</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -44,17 +45,9 @@
               <BadgeCheck />
               Account
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard />
-              Billing
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Bell />
-              Notifications
-            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem @click="handleLogout">
             <LogOut />
             Log out
           </DropdownMenuItem>
@@ -83,8 +76,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { getCookie } from '@/utils/cookies/cookie-utils';
+import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils';
 import { useQueryPublisherInformations } from '@/hooks/publisher/account/usePublisherAccountManage';
+import { usePublisherProfilesStores } from '@/stores/publisher/usePublisherProfileStores';
+import { useMutatePublisherLogout } from '@/hooks/publisher/usePublisher';
+import { useRouter } from 'vue-router';
 const { data: publisherInfo, isPending: isPublisherInfoPending } = useQueryPublisherInformations();
 const props = defineProps<{
   user: {
@@ -94,5 +90,14 @@ const props = defineProps<{
   }
 }>()
 
+const router = useRouter()
+const { mutateAsync, isPending } = useMutatePublisherLogout()
+const handleLogout = async () => {
+  usePublisherProfilesStores().removeAccessRight()
+  if (usePublisherProfilesStores().getAccessRight()) removeCookie('publisherAccessRights')
+  const response = await mutateAsync()
+  if (response.status === 200)
+    await router.push({ name: 'PublisherAuthLogin' })
+}
 const { isMobile } = useSidebar()
 </script>
