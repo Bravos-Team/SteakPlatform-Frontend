@@ -5,20 +5,10 @@ import { defineConfig } from 'vite'
 import path from 'path'
 
 export default defineConfig({
-  // const env = loadEnv(mode, process.cwd(), '')
-
-  // // Auto map tất cả biến bắt đầu bằng "VITE_" vào import.meta.env
-  // const viteEnvVars = Object.fromEntries(
-  //   Object.entries({ ...process.env, ...env }).filter(([key]) =>
-  //     key.startsWith('VITE_')
-  //   ).map(([key, val]) => [`import.meta.env.${key}`, JSON.stringify(val)])
-  // )
   base: '/',
   plugins: [vue(), vueDevTools(), tailwindcss()],
-  // define: viteEnvVars,
   resolve: {
     alias: {
-      // '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@': path.resolve(__dirname, './src'),
     },
   },

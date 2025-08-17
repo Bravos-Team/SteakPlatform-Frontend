@@ -48,6 +48,7 @@ onBeforeMount(async () => {
                 `Welcome back! ${response.data.displayName}`,
             )
             await router.push({ name: 'store-home' })
+            return
         }
         toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
         await router.push({ name: 'Login' })
