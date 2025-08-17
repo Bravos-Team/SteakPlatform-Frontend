@@ -506,7 +506,7 @@ const handleResolveMediaFiles = async () => {
       })
       await new Promise((resolve) => {
         setTimeout(() => {
-          data_to_assigned.value.forEach((media) => {
+          data_to_assigned.value.forEach(async (media) => {
             if (!gameToMutate.value.media) {
               gameToMutate.value.media = []
             }

@@ -5,9 +5,6 @@ const middlewarePipeLine = (
   middleware: ((context: MiddlewareContext) => void)[],
   index: number,
 ): any => {
-  console.log('context: ', context)
-  console.log('middleware: ', middleware)
-  console.log('index: ', index)
   const nextMiddleWare = middleware[index]
   if (!nextMiddleWare) return context.next
   return () => {

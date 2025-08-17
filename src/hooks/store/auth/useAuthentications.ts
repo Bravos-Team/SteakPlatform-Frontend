@@ -29,6 +29,18 @@ export const useLoginByEmailMutation = () => {
     onSuccess: async (response) => {
       useUserProfilesStores().setAccessRight(response.data?.displayName)
       useUserProfilesStores().setProfile(response.data)
+      await queryClient.invalidateQueries({
+        queryKey: USER_AUTH_QUERY_KEY.EMAIL,
+      })
+      await queryClient.invalidateQueries({
+        queryKey: USER_AUTH_QUERY_KEY.USERNAME,
+      })
+      await queryClient.invalidateQueries({
+        queryKey: CART_STORE_QUERY_KEYS.USER,
+      })
+      await queryClient.invalidateQueries({
+        queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
+      })
       await mergingCartFormAnotherDevice()
     },
   })
@@ -47,10 +59,23 @@ export const useLoginByUsernameMutation = () => {
     mutationKey: ['user', 'auth', 'login', 'username'],
     onMutate: async () => {
       removeCookie('userAccessRights')
+      useUserProfilesStores().removeAccessRight()
       await queryClient.invalidateQueries({})
     },
     onSuccess: async (response) => {
       useUserProfilesStores().setAccessRight(response.data?.displayName)
+      await queryClient.invalidateQueries({
+        queryKey: USER_AUTH_QUERY_KEY.EMAIL,
+      })
+      await queryClient.invalidateQueries({
+        queryKey: USER_AUTH_QUERY_KEY.USERNAME,
+      })
+      await queryClient.invalidateQueries({
+        queryKey: CART_STORE_QUERY_KEYS.USER,
+      })
+      await queryClient.invalidateQueries({
+        queryKey: USER_PROFILE_QUERY_KEY.PROFILE,
+      })
       await mergingCartFormAnotherDevice()
     },
   })

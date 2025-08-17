@@ -68,9 +68,11 @@
       </div>
 
       <div class="flex flex-col space-y-4">
-        <button type="button" @click="handleLoginWithGoogle"
+        <button :class="{ 'opacity-50': isRedirectGoogleAuth }" :disabled="isRedirectGoogleAuth" type="button"
+          @click.prevent="handleLoginWithGoogle"
           class="cursor-pointer flex items-center justify-center h-12 w-full border border-black dark:border-none bg-white rounded-lg">
-          <img :src="'https://ccdn.steak.io.vn/google-ico.svg'" class="h-6" />
+          <LoaderCircle v-if="isRedirectGoogleAuth" class="animate-spin h-6 w-6 text-gray-500" />
+          <img v-else :src="'https://ccdn.steak.io.vn/google-ico.svg'" class="h-6" />
         </button>
         <button
           class="flex items-center justify-center h-12 border border-black w-full bg-[#65a8ff] dark:bg-[#1877f2] rounded-lg">
@@ -118,10 +120,12 @@ import {
 } from '@/hooks/store/auth/useAuthentications'
 import { useRouter } from 'vue-router'
 import { useQueryUserStateOauthToken } from '@/hooks/user/useUserAuth'
+import { LoaderCircle } from 'lucide-vue-next'
 
 const { data: userStateData, refetch: refetchUserState } = useQueryUserStateOauthToken()
 const router = useRouter()
 
+const isRedirectGoogleAuth = ref<boolean>(false)
 const handleLoginWithGoogle = async () => {
   try {
     await refetchUserState()

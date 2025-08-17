@@ -170,7 +170,6 @@ import {
   mutatePublisherUpdateGameDetails,
   mutatePublisherUpdateGamePrice,
 } from '@/hooks/publisher/game/usePublisherGameManage'
-
 const useSystem = useSystemRequirementsStore()
 const useComporessionImage = useImageCompressor()
 const useImageStore = useImageStored()
@@ -371,7 +370,7 @@ const handleResolveMediaFiles = async () => {
             gameToMutate.value.media?.push(media)
           }),
             resolve(true)
-        }, 2000)
+        }, 3000)
       })
       isAssignedMediaFiles.value = true
     }

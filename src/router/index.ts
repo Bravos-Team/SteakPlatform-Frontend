@@ -54,8 +54,10 @@ router.beforeEach(
     }
 
     const checkAccess: MiddlewareContext['checkAccess'] = {
-      publisher: usePublisherProfilesStores().getAccessRight() ?? null,
-      user: useUserProfilesStores().getAccessRight() ?? null,
+      // publisher: usePublisherProfilesStores().getAccessRight() ?? null,
+      // user: useUserProfilesStores().getAccessRight() ?? null,
+      publisher: getCookie('publisherAccessRights'),
+      user: getCookie('userAccessRights'),
     }
 
     const middleware: any[] = to.meta.middleware as any[]
