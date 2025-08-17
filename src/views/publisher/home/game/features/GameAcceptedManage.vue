@@ -95,10 +95,8 @@
 
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { usePublisherGameList } from '@/hooks/publisher/game/usePublisherGameManage'
-import { useI18n } from 'vue-i18n'
-import { GAME_MANAGE_FILTERS_TYPE } from '@/types/publisher/game/GameManage'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, } from '@/components/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
+import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue'
 import {
   Pagination,
   PaginationContent,
@@ -106,17 +104,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { useGameStoreList } from '@/views/store/publisher/game/useGameList'
-import { storeToRefs } from 'pinia'
-import { nextTick, onMounted, ref, watch } from 'vue'
-import { PackageOpen, Settings } from 'lucide-vue-next'
-import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue'
-import { mutatePublisherUpdateGameStatus } from '@/hooks/publisher/game/usePublisherGameManage'
-import { useDebounceFn } from '@vueuse/core'
 import { toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
-import { useQueryClient } from '@tanstack/vue-query'
 import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
-import CardFooter from '@/components/ui/card/CardFooter.vue'
+import { mutatePublisherUpdateGameStatus, usePublisherGameList } from '@/hooks/publisher/game/usePublisherGameManage'
+import { GAME_MANAGE_FILTERS_TYPE } from '@/types/publisher/game/GameManage'
+import { useGameStoreList } from '@/views/store/publisher/game/useGameList'
+import { useQueryClient } from '@tanstack/vue-query'
+import { useDebounceFn } from '@vueuse/core'
+import { PackageOpen, Settings } from 'lucide-vue-next'
+import { nextTick, ref, watch } from 'vue'
 const useGameListStore = useGameStoreList()
 const { mutateAsync: mutateGameStatus, isPending: isUpdateGameStatusPending } = mutatePublisherUpdateGameStatus()
 
@@ -125,10 +121,6 @@ const filters = ref<GAME_MANAGE_FILTERS_TYPE>({
   page: 1,
 })
 
-const { t } = useI18n()
-const showI18n = (key: string) => {
-  return t(key)
-}
 
 const { data: gamesList, isFetching: isFetchingGameList } = usePublisherGameList(filters)
 
@@ -138,10 +130,10 @@ const handleOpenGame = useDebounceFn(async (gameId: bigint) => {
     await mutateGameStatus({
       gameId,
       status: 'OPENING',
-    }).then(rp => {
+    }).then(async (rp) => {
       if (rp.status === 200) {
         {
-          queryClient.invalidateQueries({
+          await queryClient.invalidateQueries({
             queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
           })
           toastSuccessNotificationPopup('Update game status successfully', '')
@@ -159,10 +151,10 @@ const handleClosedGame = useDebounceFn(async (gameId: bigint) => {
     await mutateGameStatus({
       gameId,
       status: 'CLOSED',
-    }).then(rp => {
+    }).then(async (rp) => {
       if (rp.status === 200) {
         {
-          queryClient.invalidateQueries({
+          await queryClient.invalidateQueries({
             queryKey: GAME_STORE_LIST_QUERY_KEYS.LIST(filters),
           })
           toastSuccessNotificationPopup('Update game status successfully', '')
@@ -174,12 +166,14 @@ const handleClosedGame = useDebounceFn(async (gameId: bigint) => {
     console.error('Error closing game:', err)
   }
 }, 200)
+
 watch(
   () => useGameListStore.pagination,
   async () => {
     await nextTick()
     filters.value.page = useGameListStore.pagination.page
     filters.value.size = useGameListStore.pagination.size
+    console.log(filters.value)
   },
   { deep: true },
 )

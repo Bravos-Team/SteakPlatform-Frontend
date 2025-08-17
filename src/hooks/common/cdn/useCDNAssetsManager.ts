@@ -1,10 +1,11 @@
-import { useMutation } from '@tanstack/vue-query'
+import { useMutation, useQuery } from '@tanstack/vue-query'
 import {
   deleteImage,
   deleteImages,
   getPresignedImageUrl,
   getPresignedImageUrls,
   postIntoPresignedUrl,
+  retryGetCdnUrl,
 } from '@/apis/common/cdn/cdnAssetsManager'
 import {
   type PresignedUrlType,
@@ -89,8 +90,8 @@ export const usePostIntoPresignedUrls = () => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (data: PostIntoPresignedURLsType[]) =>
       Promise.all(
-        data.map((file: PostIntoPresignedURLsType) => {
-          postIntoPresignedUrl(file.signedUrl, file.file_instance)
+        data.map(async (file: PostIntoPresignedURLsType) => {
+          await postIntoPresignedUrl(file.signedUrl, file.file_instance)
         }),
       ),
   })
@@ -99,3 +100,12 @@ export const usePostIntoPresignedUrls = () => {
     isPending,
   }
 }
+
+export const useRetryQueryCdnURL = (url: string) =>
+  useQuery({
+    queryKey: ['cdn', 'retry', url],
+    queryFn: async () => await retryGetCdnUrl(url),
+    retry: 5,
+    retryDelay: (attempt: number) => attempt * 1000,
+    enabled: false,
+  })
