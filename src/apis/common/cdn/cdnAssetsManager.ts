@@ -35,3 +35,5 @@ export const postIntoPresignedUrl = async (url: string, file: File) => {
     },
   })
 }
+
+export const retryGetCdnUrl = async (url: string) => await SteakApi.get(url)
