@@ -226,11 +226,11 @@ body{
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
+  --background: oklch(0.141 0.005 285.823) !important;
 
   --foreground: oklch(0.985 0 0);
 
-  --card: oklch(0.141 0.005 285.823);
+  --card: oklch(0.141 0.005 285.823) !important;
   --bg-base: rgba(16, 16, 20, 0.6);
   --bg-card-base: #101014;
   --bg-card-game-base: #28282c;

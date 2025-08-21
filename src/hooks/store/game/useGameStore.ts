@@ -6,7 +6,7 @@ import {
   getGameNewestReleases,
   getGameTags,
   getTopPlayedGames,
-  getGameFiltered,
+  postToGetGameFiltered,
 } from '@/apis/store/game/useGameStore'
 import { GAME_STORE_LIST_QUERY_KEYS } from '@/hooks/constants/store/game-key'
 import {
@@ -15,7 +15,7 @@ import {
   GAME_STORE_LIST_QUERY_PARAMS,
   PageAndSize,
 } from '@/types/game/store/Game'
-import { useInfiniteQuery, useQuery } from '@tanstack/vue-query'
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { Ref } from 'vue'
 
 export const useGameStoreInfiniteQueryList = (filters?: Ref<GAME_STORE_LIST_QUERY_PARAMS>) => {
@@ -34,21 +34,6 @@ export const useGameStoreInfiniteQueryList = (filters?: Ref<GAME_STORE_LIST_QUER
         ).then((rp) => rp.data)
     },
     retry: 1,
-    placeholderData: () => ({
-      pages: [
-        {
-          items: Array.from({ length: filters?.value?.size || 10 }, (_, index) => ({
-            id: `skeleton-${index}`,
-            title: '',
-            price: 0,
-            image: '',
-            isLoading: true,
-          })),
-          hasNextCursor: false,
-        },
-      ],
-      pageParams: [-1],
-    }),
     initialPageParam: -1,
     getNextPageParam: (lastPage) => {
       if (!lastPage) return undefined
@@ -72,17 +57,19 @@ export const useGameStoreDetailsQuery = (gameId: bigint) => {
   })
 }
 
-export const useGameCommingSoonQuery = (filters?: Ref<PageAndSize>) => {
+export const useGameCommingSoonQuery = (filters?: Ref<PageAndSize>, isEnable?: boolean) => {
   return useQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.COMING_SOON(filters),
     queryFn: async ({ signal }) => await getGameComingSoon(signal, filters?.value),
+    enabled: isEnable ?? true,
   })
 }
 
-export const useGameNewestReleasesQuery = (filters?: Ref<PageAndSize>) => {
+export const useGameNewestReleasesQuery = (filters?: Ref<PageAndSize>, isEnable?: boolean) => {
   return useQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.NEWEST_RELEASES(filters),
     queryFn: async ({ signal }) => await getGameNewestReleases(filters?.value, signal),
+    enabled: isEnable ?? true,
   })
 }
 
@@ -110,8 +97,21 @@ export const useTopPlayedGamesQuery = (filters?: Ref<PageAndSize>) => {
   })
 }
 
-export const useQueryDiscoverGameFiltered = (filters?: Ref<DISCOVER_GAME_FILTERS>) =>
-  useQuery({
-    queryKey: GAME_STORE_LIST_QUERY_KEYS.DISCOVER_GAMES(filters),
-    queryFn: async ({ signal }) => await getGameFiltered(filters?.value, signal),
+export const useMutateToGetDiscoverGameFiltered = () => {
+  const queryClient = useQueryClient()
+  const { mutateAsync, isPending, data } = useMutation({
+    mutationFn: async (filters: Ref<DISCOVER_GAME_FILTERS>) =>
+      (await postToGetGameFiltered(filters.value)).data,
+    onSuccess: async (data, variables) => {
+      await queryClient.invalidateQueries({
+        queryKey: GAME_STORE_LIST_QUERY_KEYS.DISCOVER_GAMES(variables),
+      })
+      await queryClient.setQueryData(GAME_STORE_LIST_QUERY_KEYS.DISCOVER_GAMES(variables), data)
+    },
   })
+  return {
+    mutateAsync,
+    isPending,
+    data,
+  }
+}
