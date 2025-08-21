@@ -1,14 +1,14 @@
 import { MiddlewareContext } from '@/types/router/middleware'
 
 const guest = async ({ to, from, next, checkAccess }: MiddlewareContext) => {
-  if (from.meta?.group === 'user' || (checkAccess.user && to.name === 'Login')) {
+  if (to.meta?.group === 'user' || (checkAccess.user && to.name === 'Login')) {
     if (checkAccess.user) {
       return next({
         name: 'store-home',
       })
     }
   } else if (
-    from.meta.group === 'publisher' ||
+    to.meta.group === 'publisher' ||
     (checkAccess.publisher && to.name === 'PublisherAuthLogin')
   ) {
     if (checkAccess.publisher) {

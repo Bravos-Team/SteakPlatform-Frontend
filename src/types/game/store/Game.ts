@@ -3,8 +3,8 @@ export type GAME_LIST_ITEM = {
   name: string
   thumbnail: string
   price: number
-  createAt: number
-  updatedAt: number
+  createAt?: number
+  updatedAt?: number
   releaseDate: number
 }
 
@@ -43,12 +43,22 @@ export type PageAndSize = {
 }
 
 export type DISCOVER_GAME_FILTERS = {
-  keyword: string
-  genreIds: number[]
-  tagIds: number[]
-  minPrice: number
-  maxPrice: number
-  sortBy: string
+  keyword?: string | null
+  genreIds?: number[] | null
+  tagIds?: number[] | null
+  minPrice?: number | null
+  maxPrice?: number | null
+  sortBy?: string | null
   page: number
   pageSize: number
+}
+
+export type DISCOVER_FILTERED_GAMES_DATA_TYPES = {
+  content: GAME_LIST_ITEM[]
+  page: {
+    size: number
+    number: number
+    totalElements: number
+    totalPages: number
+  }
 }

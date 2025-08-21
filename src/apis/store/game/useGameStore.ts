@@ -37,8 +37,5 @@ export const getGameGenres = async (signal?: AbortSignal) =>
 export const getGameTags = async (signal?: AbortSignal) =>
   await SteakApi.get('/store/public/games/tags', { signal: signal })
 
-export const getGameFiltered = async (filters?: DISCOVER_GAME_FILTERS, signal?: AbortSignal) =>
-  await SteakApi.get('/store/public/games/filter', {
-    data: filters,
-    signal,
-  })
+export const postToGetGameFiltered = async (filters?: DISCOVER_GAME_FILTERS) =>
+  await SteakApi.post('/store/public/games/filter', filters)
