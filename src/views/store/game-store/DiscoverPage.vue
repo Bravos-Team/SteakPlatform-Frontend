@@ -1,9 +1,11 @@
 <template>
   <div class="flex flex-col gap-y-2">
     <div class="min-w-full min-h-screen grid grid-cols-12">
+
       <div
         class="tablet:col-span-9 order-2 tablet:order-1 col-span-12 laptop:col-span-10 flex flex-col gap-y-2"
       >
+
         <CommonFilterSelectBox
           :is-pending-reset-filter="isResetFilter"
           @reset-filter="handleResetFilter"
@@ -32,9 +34,11 @@
           <span class="font-bold text-xl"></span>
         </div>
       </div>
+
       <div
         class="laptop:col-span-2 order-1 tablet:order-2 col-span-12 px-3 tablet:col-span-3 tablet:block"
       >
+
         <FilterOptionsBar
           :is-filtering="isFilteringGames"
           @update:price="

@@ -209,13 +209,17 @@
 
 <script setup lang="ts">
 import Input from '@/components/ui/input/Input.vue'
+
 import { ArrowDownAZ, ArrowDownZA, Check, ChevronUp, Search } from 'lucide-vue-next'
+
 import { useGameGenresQuery, useGameTagsQuery } from '@/hooks/store/game/useGameStore'
 import { ref, watch } from 'vue'
 import { GAME_GENRES_AND_TAG_TYPE } from '@/types/game/gameDetails/GameDetailsType'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Label } from '@/components/ui/label'
+
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+
 import {
   NumberField,
   NumberFieldContent,
