@@ -9,7 +9,8 @@
           class="bg-[#202024] relative hover:bg-[#404044] rounded-full w-full outline-none h-[40px] text-gray-400 px-10 ">
           <img src="https://ccdn.steak.io.vn/assets-search-white-w-opacity.svg" class="absolute w-5 top-2.5 left-3"
             alt="Search Ico" />
-          <input type="text" :placeholder="$t('component.search')"
+          <input @keyup.enter="handleSearchingGames" v-model="searchValue" type="text"
+            :placeholder="$t('component.search')"
             class="bg-transparent placeholder:text-[#fff]/70 text-white w-full h-full focus:outline-none" />
         </div>
 
@@ -46,11 +47,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ShoppingBag, LoaderCircle } from 'lucide-vue-next'
-import { computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
 const route = useRoute()
+const router = useRouter()
 
 const isActiveWishlistRouter = computed(() => {
   return route.name === 'WishlistManagementPage'
@@ -58,6 +61,13 @@ const isActiveWishlistRouter = computed(() => {
 const isActiveCartRouter = computed(() => {
   return route.name === 'CartManagementPage'
 })
+
+const searchValue = ref<string>('')
+
+const handleSearchingGames = async () => {
+  await router.push({ name: "DiscoverGamesStore", query: { keyword: searchValue.value } })
+}
+
 const props = defineProps({
   cartItems: {
     type: Array,
