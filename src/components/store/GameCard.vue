@@ -6,7 +6,7 @@
     <router-link :to="{ name: 'game-details', params: { id: game?.id.toString() } }" class="">
       <!-- IMAGE -->
       <div class="group relative min-w-full overflow-hidden tablet:max-h-[7rem]">
-        <img :src="game?.thumbnail" :alt="game.name" class="object-contain" />
+        <img :src="game?.thumbnail" :alt="game.name" class="object-contain size-full" />
       </div>
       <!-- END IMAGE -->
 

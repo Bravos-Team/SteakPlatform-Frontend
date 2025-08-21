@@ -81,7 +81,7 @@
           </Button>
         </div>
         <CollapsibleContent
-          class="text-sm text-white/80 hover:bg-white/3"
+          class="text-sm text-white/80"
           v-for="(option, index) in filter.options"
           :key="index"
         >
@@ -92,7 +92,7 @@
               'cursor-pointer': !isFiltering,
             }"
             :disabled="isFiltering"
-            class="w-full h-full flex justify-start py-3"
+            class="w-full h-full flex justify-start py-3 hover:bg-white/3"
             v-if="filter.key === 'price'"
             @click="filterMinMax(option.value)"
           >
@@ -107,7 +107,7 @@
               'cursor-pointer': !isFiltering,
             }"
             :disabled="isFiltering"
-            class="w-full h-full flex justify-start p-3"
+            class="w-full h-full hover:bg-white/3 flex justify-start p-3"
             v-if="filter.key === 'genres' && !genresSelected.includes(option.value)"
             @click="handleFilteredByGenres(option.value)"
           >
@@ -119,14 +119,15 @@
               'cursor-pointer': !isFiltering,
             }"
             :disabled="isFiltering"
-            class="w-full h-full flex justify-between p-3 bg-white text-black"
-            v-else-if="genresSelected.includes(option.value)"
+            class="w-full h-full border-y-[1px] hover:bg-white/3 flex justify-between p-3 bg-white text-black"
+            v-else-if="genresSelected.includes(option.value) && filter.key === 'genres'"
             @click="handleRemoveGenre(option.value)"
           >
             <span> {{ option.label }}</span>
             <Check class="text-blue-400/50" />
           </button>
           <!-- END GENRES -->
+
           <!-- TAGS -->
           <button
             :class="{
@@ -134,7 +135,7 @@
               'cursor-pointer': !isFiltering,
             }"
             :disabled="isFiltering"
-            class="w-full h-full flex justify-start p-3"
+            class="w-full h-full flex justify-start p-3 hover:bg-white/3"
             v-if="filter.key === 'tags' && !tagsSelected.includes(option.value)"
             @click="handleFilteredByTags(option.value)"
           >
@@ -146,8 +147,8 @@
               'cursor-pointer': !isFiltering,
             }"
             :disabled="isFiltering"
-            class="w-full h-full flex justify-between p-3 bg-white text-black"
-            v-else-if="tagsSelected.includes(option.value)"
+            class="w-full h-full border-y-[1px] flex justify-between p-3 bg-white text-black hover:bg-white/3"
+            v-else-if="tagsSelected.includes(option.value) && filter.key === 'tags'"
             @click="handleRemoveTag(option.value)"
           >
             <span> {{ option.label }}</span>
@@ -155,17 +156,51 @@
           </button>
           <!-- END TAGS -->
 
-          <button
-            :class="{
-              'cursor-not-allowed': isFiltering,
-              'cursor-pointer': !isFiltering,
-            }"
-            :disabled="isFiltering"
-            v-else
-            class="w-full h-full flex justify-start py-3"
-          >
-            {{ option.label }}
-          </button>
+          <!-- SORT BY -->
+          <div v-if="filter.key === 'sortBy'" class="my-2">
+            <Collapsible>
+              <CollapsibleTrigger class="font-medium">
+                {{ option.label }}
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <button
+                  :class="{
+                    'cursor-not-allowed': isFiltering,
+                    'cursor-pointer': !isFiltering,
+                    'bg-white text-black': sortSelected.includes(option.value + ',desc'),
+                  }"
+                  :disabled="isFiltering"
+                  class="w-full h-full flex justify-between p-3"
+                  @click="handleSortByType(option.value, 'desc')"
+                >
+                  <span> {{ 'Descending' }}</span>
+                  <Check
+                    v-if="sortSelected.includes(option.value + ',desc')"
+                    class="text-blue-400/50"
+                  />
+                  <ArrowDownAZ v-else class="size-5 shrink-0" />
+                </button>
+                <button
+                  :class="{
+                    'cursor-not-allowed': isFiltering,
+                    'cursor-pointer': !isFiltering,
+                    'bg-white text-black': sortSelected.includes(option.value + ',asc'),
+                  }"
+                  :disabled="isFiltering"
+                  class="w-full h-full border-y-[1px] flex justify-between p-3"
+                  @click="handleSortByType(option.value, 'asc')"
+                >
+                  <span> {{ 'Ascending' }}</span>
+                  <Check
+                    v-if="sortSelected.includes(option.value + ',asc')"
+                    class="text-blue-400/50"
+                  />
+                  <ArrowDownZA v-else class="size-5 shrink-0" />
+                </button>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+          <!-- END SORT BY -->
         </CollapsibleContent>
       </Collapsible>
     </div>
@@ -174,12 +209,17 @@
 
 <script setup lang="ts">
 import Input from '@/components/ui/input/Input.vue'
-import { Check, ChevronUp, Search } from 'lucide-vue-next'
+
+import { ArrowDownAZ, ArrowDownZA, Check, ChevronUp, Search } from 'lucide-vue-next'
+
 import { useGameGenresQuery, useGameTagsQuery } from '@/hooks/store/game/useGameStore'
 import { ref, watch } from 'vue'
 import { GAME_GENRES_AND_TAG_TYPE } from '@/types/game/gameDetails/GameDetailsType'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Label } from '@/components/ui/label'
+
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+
 import {
   NumberField,
   NumberFieldContent,
@@ -208,6 +248,8 @@ const tagsData = ref<any>([])
 
 const genresSelected = ref<number[]>([])
 const tagsSelected = ref<number[]>([])
+
+const sortSelected = ref<string>('')
 
 const collapsOpen = ref<Record<string, boolean>>({
   price: false,
@@ -246,9 +288,9 @@ const selectFilterOptions = ref<any>([
     title: 'Sort By',
     key: 'sortBy',
     options: [
-      { value: 'popularity', label: 'Most Popular' },
-      { value: 'rating', label: 'Highest Rated' },
-      { value: 'release_date', label: 'Newest Releases' },
+      { value: 'releaseDate', label: 'Release Date' },
+      { value: 'name', label: 'Name' },
+      { value: 'buyerCount', label: 'Most Buyer' },
     ],
   },
 ])
@@ -256,8 +298,13 @@ const emit = defineEmits<{
   (e: 'update:price', value: { min: number; max: number }): void
   (e: 'update:genres', value: number[]): void
   (e: 'update:tags', value: number[]): void
+  (e: 'update:sortBy', value: string): void
 }>()
 
+const handleSortByType = (key: string, sortBy: string) => {
+  sortSelected.value = key + ',' + sortBy
+  if (key && sortBy) emit('update:sortBy', sortSelected.value)
+}
 const handleFilteredByGenres = (value: number) => {
   console.log(value)
   genresSelected.value.push(value)
