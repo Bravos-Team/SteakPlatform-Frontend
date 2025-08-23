@@ -1,17 +1,22 @@
 <template>
-  <div v-if="rightContentsData"
-    class="laptop:h-[884px] order-1 laptop:order-2 col-span-12 laptop:col-span-3 mt-1 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]">
+  <div
+    v-if="rightContentsData"
+    class="laptop:h-[884px] order-1 laptop:order-2 col-span-12 laptop:col-span-3 mt-1 h-full w-full desktop:sticky top-0 bottom-0 right-0 flex flex-col gap-y-[15px]"
+  >
     <div class="flex justify-center items-center p-[20px]">
       <div class="flex justify-center items-center">
         <img :src="rightContentsData?.details?.thumbnail" alt="" />
       </div>
     </div>
     <div
-      class="flex p-[15px] gap-x-[15px] justify-between rounded-[10px] items-center border-[#fff]/20 border hover:border-[#fff]">
+      class="flex p-[15px] gap-x-[15px] justify-between rounded-[10px] items-center border-[#fff]/20 border hover:border-[#fff]"
+    >
       <div class="flex justify-center items-center">
         <img
           :src="'https://cdn1.epicgames.com/gameRating/gameRating/Generic_12_192_192x192-01e962f26c693e725097658fa7e4e29d'"
-          alt="" class="w-16" />
+          alt=""
+          class="w-16"
+        />
       </div>
       <div class="flex flex-col w-full items-start" v>
         <span class="font-bold">{{ '12' }}+</span>
@@ -25,59 +30,79 @@
         {{ game.category.name }}
       </button> -->
     </div>
-    <div v-if="rightContentsData?.price !== 0" class="flex justify-start w-full font-bold text-[18px]">
+    <div
+      v-if="rightContentsData?.price !== 0"
+      class="flex justify-start w-full font-bold text-[18px]"
+    >
       {{ CurrencyUtils.formatCurrencyVND(rightContentsData?.price) }}
     </div>
-    <div v-else class="flex justify-start w-full font-bold text-[18px]">
-      Free
-    </div>
-
+    <div v-else class="flex justify-start w-full font-bold text-[18px]">Free</div>
 
     <div class="flex flex-col gap-y-[10px]">
       <template v-if="rightContentsData?.isOwned">
         <button
           class="py-[12px] px-[20px] align-middle bg-[#26bbff]/30 cursor-not-allowed text-black rounded-[10px] flex justify-center items-center"
-          disabled>
+          disabled
+        >
           {{ $t('features.buttons.already_in_library') }}
         </button>
       </template>
       <template v-else>
-        <button :class="{
-          'cursor-not-allowed': isMutateCheckoutPending,
-          'cursor-pointer': !isMutateCheckoutPending,
-        }" :disabled="isMutateCheckoutPending" @click="handleCheckout"
-          class="py-[12px] px-[20px] align-middle bg-[#26bbff] hover:bg-[#61cdff] text-black rounded-[10px] flex justify-center items-center">
+        <button
+          :class="{
+            'cursor-not-allowed': isMutateCheckoutPending,
+            'cursor-pointer': !isMutateCheckoutPending,
+          }"
+          :disabled="isMutateCheckoutPending"
+          @click="handleCheckout"
+          class="py-[12px] px-[20px] align-middle bg-[#26bbff] hover:bg-[#61cdff] text-black rounded-[10px] flex justify-center items-center"
+        >
           {{ $t('features.buttons.buy_now') }}
         </button>
         <button
-          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30  cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"
-          v-if="isAlreadyHaveInCart">
+          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"
+          v-if="isAlreadyHaveInCart"
+        >
           <span> Already in Cart</span>
         </button>
-        <button v-else @click="handleAddToCart(rightContentsData.details.id)" :disabled="rightContentsData.isOwned"
+        <button
+          v-else
+          @click="handleAddToCart(rightContentsData.details.id)"
+          :disabled="rightContentsData.isOwned"
           :class="{
-            'cursor-not-allowed': rightContentsData.isOwned || isMutateCheckoutPending || isMutateAddToCartPending,
+            'cursor-not-allowed':
+              rightContentsData.isOwned || isMutateCheckoutPending || isMutateAddToCartPending,
             'cursor-pointer': !rightContentsData.isOwned && !isMutateCheckoutPending,
           }"
-          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center">
+          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center"
+        >
           <LoaderCircle v-if="isMutateAddToCartPending" class="animate-spin" />
           <span v-else>{{ $t('features.buttons.add_to_cart') }}</span>
         </button>
 
-        <button v-if="isAlreadyHaveInWishlist && useUserProfilesStores().getAccessRight()"
-          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center">
+        <button
+          v-if="isAlreadyHaveInWishlist && useUserProfilesStores().getAccessRight()"
+          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"
+        >
           Already in Wishlist
         </button>
-        <button v-else-if="!useUserProfilesStores().getAccessRight()"
-          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center">
+        <button
+          v-else-if="!useUserProfilesStores().getAccessRight()"
+          class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"
+        >
           Login to add to Wishlist
         </button>
-        <button v-else @click="handleAddToWishlist(rightContentsData.details.id)" :disabled="rightContentsData.isOwned"
+        <button
+          v-else
+          @click="handleAddToWishlist(rightContentsData.details.id)"
+          :disabled="rightContentsData.isOwned"
           :class="{
-            '!cursor-not-allowed': rightContentsData.isOwned || isMutateCheckoutPending || isMutateAddToWishlistPending,
+            '!cursor-not-allowed':
+              rightContentsData.isOwned || isMutateCheckoutPending || isMutateAddToWishlistPending,
             'cursor-pointer': !rightContentsData.isOwned,
           }"
-          class="text-wrap py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center">
+          class="text-wrap py-[12px] px-[20px] align-middle bg-[#ffffff59]/50 hover:bg-[#ffffff59] text-white rounded-[10px] flex justify-center items-center"
+        >
           <LoaderCircle v-if="isMutateAddToWishlistPending" class="animate-spin" />
           <span v-else> {{ $t('features.buttons.add_to_wishlist') }}</span>
         </button>
@@ -96,22 +121,30 @@
           />
         </span>
       </div> -->
-      <div class="flex flex-wrap border-b-[0.5px] border-b-[#ffffff37] justify-between py-[10px] px-[0px]">
+      <div
+        class="flex flex-wrap border-b-[0.5px] border-b-[#ffffff37] justify-between py-[10px] px-[0px]"
+      >
         <span class="text-[#ffffffa6]">Refund Type</span>
         <span class="text-white">{{ 'ChargeBack 80%' }}</span>
       </div>
-      <div v-if="rightContentsData?.developer"
-        class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
+      <div
+        v-if="rightContentsData?.developer"
+        class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]"
+      >
         <span class="text-[#ffffffa6]">Developer or Publisher</span>
         <span class="text-white">{{ rightContentsData?.developer }}</span>
       </div>
-      <div v-if="rightContentsData?.publisherName"
-        class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
+      <div
+        v-if="rightContentsData?.publisherName"
+        class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]"
+      >
         <span class="text-[#ffffffa6]">{{ $t('title.routers.publisher') }}</span>
         <span class="text-white">{{ rightContentsData?.publisherName }}</span>
       </div>
-      <div v-if="rightContentsData?.releaseDate"
-        class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]">
+      <div
+        v-if="rightContentsData?.releaseDate"
+        class="flex justify-between py-[10px] px-[0px] border-b-[0.5px] border-b-[#ffffff37]"
+      >
         <span class="text-[#ffffffa6]">Release Date</span>
         <span class="text-white">{{ rightContentsData?.realeaseDate }}</span>
       </div>
@@ -120,8 +153,12 @@
           $t('title.subPagesCompo.sidebar.publisher.platform')
         }}</span>
         <template v-for="(platform, index) in rightContentsData.platforms" :key="index">
-          <img v-if="platform.startWith('Window')" src="https://ccdn.steak.io.vn/assets-window-ico-white.svg"
-            class="w-6" alt="" />
+          <img
+            v-if="platform.startWith('Window')"
+            src="https://ccdn.steak.io.vn/assets-window-ico-white.svg"
+            class="w-6"
+            alt=""
+          />
           <span v-else>{{ platform }}</span>
         </template>
       </div>
@@ -132,7 +169,10 @@
 <script setup lang="ts">
 import CurrencyUtils from '@/services/common/CurrencyUtils'
 import { useMutateCheckout } from '@/hooks/payment/usePayment'
-import { toastErrorNotificationPopup, toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 import { useRouter } from 'vue-router'
 import { useDebounceFn } from '@vueuse/core'
@@ -142,11 +182,14 @@ import { LoaderCircle } from 'lucide-vue-next'
 import { computed } from 'vue'
 import { useMutateRenewRefreshToken } from '@/hooks/store/auth/useAuthentications'
 import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
-const { isPending: isMutateAddToCartPending, mutateAsync: mutateAsyncAddToCart } = useMutateAddToCart()
-const { isPending: isMutateAddToWishlistPending, mutateAsync: mutateAsyncAddToWishlist } = useMutateAddToWishlist()
+const { isPending: isMutateAddToCartPending, mutateAsync: mutateAsyncAddToCart } =
+  useMutateAddToCart()
+const { isPending: isMutateAddToWishlistPending, mutateAsync: mutateAsyncAddToWishlist } =
+  useMutateAddToWishlist()
 const { data: userWishlistData } = useGetUserWishlist()
 const { data: userCartListData } = useUserCartList()
-const { isPending: isRenewUserRefetchToken, mutateAsync: mutateAsyncRenewUserRefetchToken } = useMutateRenewRefreshToken()
+const { isPending: isRenewUserRefetchToken, mutateAsync: mutateAsyncRenewUserRefetchToken } =
+  useMutateRenewRefreshToken()
 
 const handleAddToCart = useDebounceFn(async (id: bigint) => {
   try {
@@ -173,11 +216,15 @@ const handleAddToWishlist = useDebounceFn(async (id: bigint) => {
 
 const isAlreadyHaveInCart = computed(() => {
   if (!userCartListData.value) return false
-  return userCartListData.value.data.items.some((item: any) => item.id === props.rightContentsData?.details?.id)
+  return userCartListData.value.data.items.some(
+    (item: any) => item.id === props.rightContentsData?.details?.id,
+  )
 })
 const isAlreadyHaveInWishlist = computed(() => {
   if (!userWishlistData.value) return false
-  return userWishlistData.value.data.some((item: any) => item.id === props.rightContentsData?.details?.id)
+  return userWishlistData.value.data.some(
+    (item: any) => item.id === props.rightContentsData?.details?.id,
+  )
 })
 
 const router = useRouter()
@@ -188,18 +235,18 @@ const handleCheckout = useDebounceFn(async () => {
 
   let response
   try {
-    if (accessRights)
+    if (accessRights) {
       response = await mutateAsyncCheckout([props.rightContentsData?.details?.id])
-    if (!response || response.status !== 200) {
-      removeCookie('userAccessRights')
-      await router.push({ name: 'Login' })
-      return
+      console.log('RESPONSE: ', response)
+      if (!response || response.status !== 200) {
+        useUserProfilesStores().removeAccessRight()
+        await router.push({ name: 'Login' })
+        return
+      } else if (response.status === 200) window.location.href = response.data.paymentUrl
     }
-    else if (response.status === 200)
-      window.location.href = response.data?.paymentUr
   } catch (error: any) {
     if (error.response.status === 401) {
-      removeCookie('userAccessRights')
+      useUserProfilesStores().removeAccessRight()
       await router.push({ name: 'Login' })
     }
   }
