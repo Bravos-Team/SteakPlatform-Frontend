@@ -67,4 +67,25 @@ router.afterEach((to: RouteLocationNormalized) => {
   }
 })
 
+app.directive('lazy-img-global', {
+  mounted() {
+    document.querySelectorAll('img:not([loading])').forEach((img) => {
+      if (img instanceof HTMLImageElement) {
+        img.setAttribute('loading', 'lazy')
+      }
+    })
+  }
+})
+
+// Global mixin to apply lazy loading on app mount
+app.mixin({
+  mounted() {
+    document.querySelectorAll('img:not([loading])').forEach((img) => {
+      if (img instanceof HTMLImageElement) {
+        img.setAttribute('loading', 'lazy')
+      }
+    })
+  }
+})
+
 app.mount('#app')

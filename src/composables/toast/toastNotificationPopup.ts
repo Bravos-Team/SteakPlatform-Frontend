@@ -11,8 +11,8 @@ export const toastSuccessNotificationPopup = (
     {
       description: h('div', { class: 'text-white text-wrap' }, `${description}`),
       position: positionComputed(position || 2),
-      action: {
-        label: 'Undo',
+      cancel: {
+        label: '✕',
       },
     },
   )
@@ -26,8 +26,8 @@ export const toastErrorNotificationPopup = (
   return toast.error(h('span', { class: 'text-red-500 text-lg z-999 text-wrap' }, `${message}`), {
     description: h('div', { class: 'text-white text-wrap' }, `${description}`),
     position: positionComputed(position || 2),
-    action: {
-      label: 'Undo',
+    cancel: {
+      label: '✕',
     },
   })
 }
@@ -40,8 +40,8 @@ export const toastNotificationPopup = (
   return toast.info(h('span', { class: 'text-blue-500 text-lg z-999 text-wrap' }, `${message}`), {
     description: h('div', { class: 'text-white text-wrap' }, `${descriptions}`),
     position: positionComputed(position || 2),
-    action: {
-      label: 'Undo',
+    cancel: {
+      label: '✕',
     },
   })
 }
