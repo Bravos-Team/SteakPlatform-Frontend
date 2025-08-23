@@ -6,7 +6,7 @@
     </div>
 
     <form @submit.prevent="handleSubmitRegistry" class="w-full max-w-md max-auto space-y-4 mb-10">
-      <div>
+      <div class="flex flex-col">
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Email</p>
         <input
           v-model="account.email"
@@ -21,7 +21,7 @@
         </label>
       </div>
 
-      <div>
+      <div class="flex flex-col">
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0 5">Username</p>
         <input
           type="text"
@@ -34,7 +34,7 @@
         </label>
       </div>
 
-      <div class="relative">
+      <div class="relative flex flex-col">
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Password</p>
 
         <input
@@ -56,7 +56,7 @@
         </label>
       </div>
 
-      <div>
+      <div class="flex flex-col">
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">Password again</p>
 
         <input
@@ -72,7 +72,7 @@
         </label>
       </div>
 
-      <div>
+      <div class="flex flex-col">
         <label class="inline-flex items-start cursor-pointer relative">
           <input
             v-model="account.agreeTermsOfServices"

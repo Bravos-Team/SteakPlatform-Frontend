@@ -93,10 +93,22 @@
             }"
             :disabled="isFiltering"
             class="w-full h-full flex justify-start py-3 hover:bg-white/3"
-            v-if="filter.key === 'price'"
+            v-if="filter.key === 'price' && !(priceSelected === option.value)"
             @click="filterMinMax(option.value)"
           >
             {{ option.label }}
+          </button>
+          <button
+            :class="{
+              'cursor-not-allowed': isFiltering,
+              'cursor-pointer': !isFiltering,
+            }"
+            :disabled="isFiltering"
+            class="w-full h-full border-y-[1px] flex justify-between p-3 bg-white text-black"
+            v-else-if="priceSelected === option.value && filter.key === 'price'"
+          >
+            <span> {{ option.label }}</span>
+            <Check class="text-blue-400/50" />
           </button>
           <!-- END PRICE -->
 
@@ -119,7 +131,7 @@
               'cursor-pointer': !isFiltering,
             }"
             :disabled="isFiltering"
-            class="w-full h-full border-y-[1px] hover:bg-white/3 flex justify-between p-3 bg-white text-black"
+            class="w-full h-full border-y-[1px] flex justify-between p-3 bg-white text-black"
             v-else-if="genresSelected.includes(option.value) && filter.key === 'genres'"
             @click="handleRemoveGenre(option.value)"
           >
@@ -147,7 +159,7 @@
               'cursor-pointer': !isFiltering,
             }"
             :disabled="isFiltering"
-            class="w-full h-full border-y-[1px] flex justify-between p-3 bg-white text-black hover:bg-white/3"
+            class="w-full h-full border-y-[1px] flex justify-between p-3 bg-white text-black"
             v-else-if="tagsSelected.includes(option.value) && filter.key === 'tags'"
             @click="handleRemoveTag(option.value)"
           >
@@ -159,7 +171,7 @@
           <!-- SORT BY -->
           <div v-if="filter.key === 'sortBy'" class="my-2">
             <Collapsible>
-              <CollapsibleTrigger class="font-medium">
+              <CollapsibleTrigger class="font-medium cursor-pointer">
                 {{ option.label }}
               </CollapsibleTrigger>
               <CollapsibleContent>
@@ -337,7 +349,9 @@ const handleCollapsibleOpenStates = (value: boolean, title: string) => {
   }
 }
 
+const priceSelected = ref<string>()
 const filterMinMax = (value: string) => {
+  priceSelected.value = value
   switch (value) {
     case '0':
       return emit('update:price', { min: 0, max: 0 })

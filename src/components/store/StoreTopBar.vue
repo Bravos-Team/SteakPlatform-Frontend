@@ -3,40 +3,65 @@
     <teleport to="header">
       <div :class="{ 'hidden laptop:block': isHiddenWhenMobile }" class="lg:relative z-[999]">
         <div
-          class="flex justify-between items-center peer/header lg:mx-auto lg:w-full text-white px-4 gap-x-[20px] h-[72px]">
+          class="flex justify-between items-center peer/header lg:mx-auto lg:w-full text-white px-4 gap-x-[20px] h-[72px]"
+        >
           <!-- LOGO -->
           <div class="flex items-center justify-between peer/hover h-full">
-            <div class="group/logo  flex flex-row w-full items-center lg:me-0 hover:cursor-pointer bg-[#101014]">
+            <div
+              class="group/logo flex flex-row w-full items-center lg:me-0 hover:cursor-pointer bg-[#101014]"
+            >
               <div class="flex flex-row shrink-0 items-center lg:flex-none gap-x-[8px]">
                 <router-link to="/" class="shrink-0">
-                  <img src="https://ccdn.steak.io.vn/logo_steak.svg" class="w-8 object-contain h-auto lg:w-10" alt="" />
+                  <img
+                    src="https://ccdn.steak.io.vn/logo_steak.svg"
+                    class="w-8 object-contain h-auto lg:w-10"
+                    alt=""
+                  />
                 </router-link>
 
-                <img src="https://ccdn.steak.io.vn/down-line-white.svg"
+                <img
+                  src="https://ccdn.steak.io.vn/down-line-white.svg"
                   class="lg:group-hover/logo:rotate-180 w-[8px] mt-2 hidden lg:block object-cover lg:w-3 lg:ms-2 lg:mt-3 lg:relative transition-all"
-                  alt="" />
+                  alt=""
+                />
               </div>
 
               <!-- DROP DOWN -->
               <div
-                class="rounded-2xl  lg:group-focus:/logo:invisible shadow-2xl  lg:group-hover/logo:visible hidden lg:invisible h-[506px] w-[620px] lg:flex lg:flex-row  absolute top-14 border-gray-500/50 backdrop-blur-lg z-[1000] border-1  bg-black/30 group/after">
-                <div class="flex flex-col  h-full w-[620px] ">
-                  <div class="p-[32px] m-[0px 0px 10px] border-r-1 border-gray-600/50 w-[284px] h-[225px]">
+                class="rounded-2xl lg:group-focus:/logo:invisible shadow-2xl lg:group-hover/logo:visible hidden lg:invisible h-[506px] w-[620px] lg:flex lg:flex-row absolute top-14 border-gray-500/50 backdrop-blur-lg z-[1000] border-1 bg-black/30 group/after"
+              >
+                <div class="flex flex-col h-full w-[620px]">
+                  <div
+                    class="p-[32px] m-[0px 0px 10px] border-r-1 border-gray-600/50 w-[284px] h-[225px]"
+                  >
                     <p class="font-bold text-2xl pb-3">Play</p>
                     <!-- PLAY OPTION -->
-                    <div class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start pl-5 w-[228px] h-[40px]">
-                      <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
+                    <div
+                      class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start pl-5 w-[228px] h-[40px]"
+                    >
+                      <img
+                        src="https://ccdn.steak.io.vn/fortnite-ico-white.svg"
+                        class="w-6"
+                        alt=""
+                      />
                       <button class="">Fortnite</button>
                     </div>
                     <!-- END PLAY -->
                   </div>
 
                   <div
-                    class="p-[32px] m-[0px 0px 10px] border-b-1 border-r-1 border-t-1 border-gray-600/50 w-[284px] h-[284px]">
+                    class="p-[32px] m-[0px 0px 10px] border-b-1 border-r-1 border-t-1 border-gray-600/50 w-[284px] h-[284px]"
+                  >
                     <p class="font-bold text-2xl pb-3">Discover</p>
                     <!-- PLAY OPTION -->
-                    <div class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start pl-5 w-[228px] h-[40px]">
-                      <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
+                    <div
+                      class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start pl-5 w-[228px] h-[40px]"
+                    >
+                      <img
+                        src="https://ccdn.steak.io.vn/fortnite-ico-white.svg"
+                        class="w-6"
+                        alt=""
+                      />
                       <button class="">Fortnite</button>
                     </div>
 
@@ -44,18 +69,22 @@
                   </div>
                 </div>
 
-                <div class=" m-[0px 0px 10px]   px-[60px] py-[32px] w-[345px] h-[505px]">
+                <div class="m-[0px 0px 10px] px-[60px] py-[32px] w-[345px] h-[505px]">
                   <p class="font-bold text-2xl pb-3">Create</p>
                   <!-- PLAY OPTION -->
-                  <div class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start px-1 w-[248px] h-[40px]">
+                  <div
+                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start px-1 w-[248px] h-[40px]"
+                  >
                     <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
                     <button class="">Fortnite</button>
                   </div>
 
-                  <router-link :to="{ name: 'PublisherHome' }"
-                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start px-1 w-[248px] h-[40px]">
+                  <router-link
+                    :to="{ name: 'PublisherHome' }"
+                    class="flex gap-2 hover:bg-[#ffffff26] rounded-xl text-start px-1 w-[248px] h-[40px]"
+                  >
                     <img src="https://ccdn.steak.io.vn/fortnite-ico-white.svg" class="w-6" alt="" />
-                    <button class="cursor-pointer ">Publish on Steak Game Store</button>
+                    <button class="cursor-pointer">Publish on Steak Game Store</button>
                   </router-link>
                   <!-- END PLAY -->
                 </div>
@@ -64,24 +93,36 @@
             </div>
 
             <!-- Navigation -->
-            <div class="ms-5 laptop:text-sm desktop:text-base hidden lg:flex lg:items-center lg:h-full">
-              <router-link :to="{ name: 'store-home' }"
-                class="flex items-center text-nowrap hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3">
+            <div
+              class="ms-5 laptop:text-sm desktop:text-base hidden lg:flex lg:items-center lg:h-full"
+            >
+              <router-link
+                :to="{ name: 'store-home' }"
+                class="flex items-center text-nowrap hover:text-gray-300 h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
+              >
                 {{ $t('navigation.store') }}
               </router-link>
 
-              <a href=""
-                class="h-full flex items-center text-nowrap hover:text-gray-300 duration-300 transition-all hover:bg-gray-800/80 px-3">{{
-                  $t('navigation.hub') }}</a>
-              <a href=""
-                class="hover:text-gray-300 flex text-nowrap items-center h-full duration-300 transition-all hover:bg-gray-800/80 px-3">{{
-                  $t('navigation.community') }}</a>
-              <router-link :to="{ name: 'SupportCenter' }"
-                class="px-3 hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80">{{
-                  $t('navigation.help') }}</router-link>
-              <a href=""
-                class="hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80 px-3">{{
-                  $t('navigation.about') }}</a>
+              <a
+                href=""
+                class="h-full flex items-center text-nowrap hover:text-gray-300 duration-300 transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.hub') }}</a
+              >
+              <a
+                href=""
+                class="hover:text-gray-300 flex text-nowrap items-center h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.community') }}</a
+              >
+              <router-link
+                :to="{ name: 'SupportCenter' }"
+                class="px-3 hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80"
+                >{{ $t('navigation.help') }}</router-link
+              >
+              <a
+                href=""
+                class="hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80 px-3"
+                >{{ $t('navigation.about') }}</a
+              >
             </div>
             <!-- END NAVIGATION -->
           </div>
@@ -96,53 +137,86 @@
               <Drawer class="!block laptop:!hidden" direction="top" :open="openDrawer">
                 <drawer-trigger as-child>
                   <button @click="openDrawer = true" class="block lg:hidden cursor-pointer">
-                    <img src="https://ccdn.steak.io.vn/assets-menu-mobile-repo-white.svg" class="w-6.5" alt="" />
+                    <img
+                      src="https://ccdn.steak.io.vn/assets-menu-mobile-repo-white.svg"
+                      class="w-6.5"
+                      alt=""
+                    />
                   </button>
                 </drawer-trigger>
-                <drawer-content @interact-outside="openDrawer = false"
-                  class="h-full outline-0 bg-white/10 backdrop-blur-xl py-10">
+                <drawer-content
+                  @interact-outside="openDrawer = false"
+                  class="h-full outline-0 bg-white/10 backdrop-blur-xl py-10"
+                >
                   <div class="mx-auto w-full">
                     <drawer-title class="hidden">Menu</drawer-title>
-                    <drawer-header class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row">
+                    <drawer-header
+                      class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row"
+                    >
                       <span>{{ $t('menu.base') }}</span>
                       <div>
-                        <router-link @click="openDrawer = false" v-if="!useUserProfilesStores().getAccessRight()"
+                        <router-link
+                          @click="openDrawer = false"
+                          v-if="!useUserProfilesStores().getAccessRight()"
                           :to="{ name: 'Login' }"
-                          class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm">
+                          class="text-lg bg-blue-400/70 transition-colors duration-300 hover:bg-blue-400/90 px-4 py-1 rounded-sm"
+                        >
                           {{ $t('auth.login') }}
                         </router-link>
-                        <div v-else
-                          class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm">
+                        <div
+                          v-else
+                          class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm"
+                        >
                           {{ useUserProfilesStores().getAccessRight() }}
                         </div>
                       </div>
                     </drawer-header>
                     <drawer-description class="hidden"> </drawer-description>
                     <drawer-footer class="flex flex-col gap-y-2">
-                      <router-link v-if="useUserProfilesStores().getAccessRight()" :to="{ name: 'UserProfiles' }"
-                        class="flex justify-between gap-x-2 items-center w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20">
+                      <router-link
+                        v-if="useUserProfilesStores().getAccessRight()"
+                        :to="{ name: 'UserProfiles' }"
+                        class="flex justify-between gap-x-2 items-center w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                      >
                         <span class="text-center align-middle">
-                          {{ $t('auth.informations.user.profile.title') }}</span>
+                          {{ $t('auth.informations.user.profile.title') }}</span
+                        >
                         <UserStar class="text-white" />
                       </router-link>
-                      <router-link @click="openDrawer = false"
+                      <router-link
+                        @click="openDrawer = false"
                         class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                        :to="{ name: 'store-home' }">{{ $t('navigation.store') }}</router-link>
-                      <router-link @click="openDrawer = false"
+                        :to="{ name: 'store-home' }"
+                        >{{ $t('navigation.store') }}</router-link
+                      >
+                      <router-link
+                        @click="openDrawer = false"
                         class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                        :to="{ name: 'PublisherDashboard' }">{{ $t('navigation.development_workspace') }}</router-link>
-                      <router-link @click="openDrawer = false"
+                        :to="{ name: 'PublisherDashboard' }"
+                        >{{ $t('navigation.development_workspace') }}</router-link
+                      >
+                      <router-link
+                        @click="openDrawer = false"
                         class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                        :to="{ name: 'SupportCenter' }">{{ $t('navigation.help') }}</router-link>
-                      <button :class="{
-                        '!cursor-not-allowed opacity-50': !invalidDevice,
-                        'cursor-pointer': invalidDevice,
-                      }" :disabled="!invalidDevice" @click="handleRedirectDownload"
-                        class="w-full text-lg text-start font-mono bg-blue-300/20 px-3 py-1 rounded-xs hover:bg-blue-400/30 transition-all duration-300 font-black cursor-pointer">
+                        :to="{ name: 'SupportCenter' }"
+                        >{{ $t('navigation.help') }}</router-link
+                      >
+                      <button
+                        :class="{
+                          '!cursor-not-allowed opacity-50': !invalidDevice,
+                          'cursor-pointer': invalidDevice,
+                        }"
+                        :disabled="!invalidDevice"
+                        @click="handleRedirectDownload"
+                        class="w-full text-lg text-start font-mono bg-blue-300/20 px-3 py-1 rounded-xs hover:bg-blue-400/30 transition-all duration-300 font-black cursor-pointer"
+                      >
                         {{ $t('Download') }}
                       </button>
-                      <button v-if="useUserProfilesStores().getAccessRight()" @click="handleLogout"
-                        class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20">
+                      <button
+                        v-if="useUserProfilesStores().getAccessRight()"
+                        @click="handleLogout"
+                        class="w-full flex flex-row-reverse justify-between cursor-pointer gap-x-2 text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                      >
                         <LogOut class="text-white" />
                         {{ $t('auth.logout') }}
                       </button>
@@ -151,29 +225,46 @@
                 </drawer-content>
               </Drawer>
               <div class="hidden laptop:block">
-                <div v-if="!useUserProfilesStores().getAccessRight()"
-                  class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full rounded-sm">
-                  <router-link to="/login" class="flex justify-center items-center mx-auto px-2 py-2">{{
-                    $t('auth.login') }}</router-link>
+                <div
+                  v-if="!useUserProfilesStores().getAccessRight()"
+                  class="loginOption hidden w-full lg:flex group duration-300 transition-all hover:bg-gray-800/80 h-full rounded-sm"
+                >
+                  <router-link
+                    to="/login"
+                    class="flex justify-center items-center mx-auto px-2 py-2"
+                    >{{ $t('auth.login') }}</router-link
+                  >
                 </div>
 
                 <dropdown-menu v-else>
                   <dropdown-menu-trigger>
-                    <div v-if="isFetchingUserProfile" class="flex items-center gap-x-2 h-full animate-pulse">
+                    <div
+                      v-if="isFetchingUserProfile"
+                      class="flex items-center gap-x-2 h-full animate-pulse"
+                    >
                       <div class="bg-gray-500/80 size-7 rounded-full"></div>
                       <div class="bg-gray-500/80 h-4 w-24 rounded"></div>
                     </div>
-                    <div v-else-if="!isFetchingUserProfile && useUserProfilesStores().getAccessRight()"
-                      class="flex items-center gap-x-2 cursor-pointer h-full">
+                    <div
+                      v-else-if="!isFetchingUserProfile && useUserProfilesStores().getAccessRight()"
+                      class="flex items-center gap-x-2 cursor-pointer h-full"
+                    >
                       <!-- HELLO -->
                       <!-- <img :src="userProfileData.avatarUrl" alt="" class="object-cover"> -->
-                      <div v-if="useUserProfilesStores().getProfile()?.avatarUrl"
-                        class="bg-white/30 size-7 rounded-full overflow-hidden flex items-center justify-center font-black uppercase">
-                        <img :src="useUserProfilesStores().getProfile()?.avatarUrl" alt=""
-                          class="object-cover size-full">
+                      <div
+                        v-if="useUserProfilesStores().getProfile()?.avatarUrl"
+                        class="bg-white/30 size-7 rounded-full overflow-hidden flex items-center justify-center font-black uppercase"
+                      >
+                        <img
+                          :src="useUserProfilesStores().getProfile()?.avatarUrl"
+                          alt=""
+                          class="object-cover size-full"
+                        />
                       </div>
-                      <div v-else
-                        class="bg-white/30 size-7 rounded-full flex items-center justify-center font-black uppercase">
+                      <div
+                        v-else
+                        class="bg-white/30 size-7 rounded-full flex items-center justify-center font-black uppercase"
+                      >
                         {{ useUserProfilesStores().getAccessRight()?.charAt(0) }}
                       </div>
                       <span> {{ useUserProfilesStores().getProfile()?.displayName }}</span>
@@ -188,25 +279,34 @@
                     <dropdown-menu-separator />
                     <dropdown-menu-group>
                       <dropdown-menu-item class="cursor-pointer">
-                        <router-link :to="{ name: 'UserProfiles' }" class="flex items-center gap-x-2">
+                        <router-link
+                          :to="{ name: 'UserProfiles' }"
+                          class="flex items-center gap-x-2"
+                        >
                           <UserStar class="text-white" />
                           {{ $t('auth.informations.user.profile.title') }}
                         </router-link>
                       </dropdown-menu-item>
-                      <dropdown-menu-item class="cursor-pointer" @click="handleLogout">
-                        <LoaderCircle v-if="isLogoutPending" class="animate-spin" />
-                        <LogOut v-else class="text-white" />
-                        {{ $t('auth.logout') }}
+                      <dropdown-menu-item class="cursor-pointer">
+                        <button @click="handleLogout" class="w-full h-full">
+                          <LoaderCircle v-if="isLogoutPending" class="animate-spin" />
+                          <LogOut v-else class="text-white" />
+                          {{ $t('auth.logout') }}
+                        </button>
                       </dropdown-menu-item>
                     </dropdown-menu-group>
                   </dropdown-menu-content>
                 </dropdown-menu>
               </div>
-              <button :class="{
-                '!cursor-not-allowed opacity-50': !invalidDevice,
-                'cursor-pointer': invalidDevice,
-              }" :disabled="!invalidDevice" @click="handleRedirectDownload"
-                class="px-10 hidden laptop:block rounded-sm font-black hover:bg-blue-500/80 py-2 bg-blue-500">
+              <button
+                :class="{
+                  '!cursor-not-allowed opacity-50': !invalidDevice,
+                  'cursor-pointer': invalidDevice,
+                }"
+                :disabled="!invalidDevice"
+                @click="handleRedirectDownload"
+                class="px-10 hidden laptop:block rounded-sm font-black hover:bg-blue-500/80 py-2 bg-blue-500"
+              >
                 Download
               </button>
             </div>
@@ -241,8 +341,11 @@ import LanguagesOption from '@/components/common/LanguagesOption.vue'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 import { LoaderCircle, LogOut, UserStar } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
-import { toastErrorNotificationPopup, toastSuccessNotificationPopup } from '@/composables/toast/toastNotificationPopup'
-import { computed, ref, PropType, onMounted, nextTick } from 'vue';
+import {
+  toastErrorNotificationPopup,
+  toastSuccessNotificationPopup,
+} from '@/composables/toast/toastNotificationPopup'
+import { computed, ref, PropType, onMounted, nextTick } from 'vue'
 import { useMutateUserLogout } from '@/hooks/store/auth/useAuthentications'
 import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
 const { isPending: isLogoutPending, mutateAsync: mutateLogout } = useMutateUserLogout()
@@ -254,9 +357,7 @@ const handleLogout = async () => {
     if (response.status === 200) {
       await router.push({ name: 'Login' })
       toastSuccessNotificationPopup('Logout successfully', '')
-    }
-    else
-      toastErrorNotificationPopup('Logout failed', 'An error occurred while logging out.')
+    } else toastErrorNotificationPopup('Logout failed', 'An error occurred while logging out.')
   } catch (err: any) {
     toastErrorNotificationPopup('Logout failed', err.response.data.detail)
     console.log(err)
@@ -264,12 +365,12 @@ const handleLogout = async () => {
 }
 
 type UserProfile = {
-  id: bigint;
-  displayName: string;
-  birthDate: string;
-  sex: boolean;
-  avatarUrl: string;
-  bio: string;
+  id: bigint
+  displayName: string
+  birthDate: string
+  sex: boolean
+  avatarUrl: string
+  bio: string
 }
 
 const props = defineProps({
@@ -291,7 +392,10 @@ const props = defineProps({
 const openDrawer = ref(false)
 
 const invalidDevice = computed(
-  () => navigator.platform.includes('Windows') || navigator.platform.includes('Win32') || navigator.platform.includes('Linux'),
+  () =>
+    navigator.platform.includes('Windows') ||
+    navigator.platform.includes('Win32') ||
+    navigator.platform.includes('Linux'),
 )
 const handleRedirectDownload = async () => {
   await router.push({ name: 'DownloadApplicationPage' })
