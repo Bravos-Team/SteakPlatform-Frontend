@@ -42,7 +42,7 @@
       <div class="flex absolute right-10 ms-2 items-center gap-x-2">
         <LanguagesOption />
       </div>
-      <span class="text-dark dark:text-white xl:text-[18px] text-[14px]">{{ headerTitle }}</span>
+      <!-- <span class="text-dark dark:text-white xl:text-[18px] text-[14px]">{{ headerTitle }}</span> -->
     </header>
   </div>
 </template>

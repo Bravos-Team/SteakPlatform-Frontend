@@ -52,15 +52,13 @@ onBeforeMount(async () => {
       ;(window as any).api?.login(response.data)
       await router.push({ name: 'store-home' })
       return
+    } else {
+      toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
+      await router.push({ name: 'Login' })
     }
-    toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
-    await router.push({ name: 'Login' })
   } catch (err: any) {
     console.log('Oauth Error: ', err)
-    toastErrorNotificationPopup(
-      'Login failed',
-      'An error occurred during the login process. Please try again later.',
-    )
+    toastErrorNotificationPopup('Login failed', err.response?.data?.detail)
     await router.push({ name: 'Login' })
   }
 })
