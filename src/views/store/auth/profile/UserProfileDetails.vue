@@ -1,27 +1,41 @@
 <template>
   <SkeletonProfileSettings v-if="isUserProfileFetching" />
-  <div v-else-if="userProfileData?.data && !isUserProfileFetching" class="min-h-[50rem] flex flex-col gap-y-6">
+  <div
+    v-else-if="userProfileData?.data && !isUserProfileFetching"
+    class="min-h-[50rem] flex flex-col gap-y-6"
+  >
     <!-- TITLE -->
     <div class="flex flex-col gap-y-1 mb-[2rem]">
       <span class="tablet:text-4xl text-3xl font-bold gap-y-2 text-wrap">{{
         t('auth.informations.user.account.router.settings.title')
-        }}</span>
+      }}</span>
       <span class="text-gray-400 text-sm tablet:text-md">{{
         t('auth.informations.user.account.router.settings.descriptions')
-        }}</span>
+      }}</span>
     </div>
     <!-- END TITLE -->
 
     <div class="flex gap-x-6 justify-center">
-      <label for="avatarUrl"
-        class="cursor-pointer overflow-hidden rounded-full transition-all relative duration-200 group size-50 border-3 border-white/90">
-        <img v-if="!previewAvatar.preview" class="object-cover hover:brightness-50 transition-all duration-300 inset-0"
-          :src="'https://ccdn.steak.io.vn/PngItem_1050694.png'" alt="" />
-        <img v-else :src="previewAvatar.preview" alt=""
-          class="object-cover absolute inset-0 min-h-full min-w-full hover:brightness-50 transition-all duration-300" />
+      <label
+        for="avatarUrl"
+        class="cursor-pointer overflow-hidden rounded-full transition-all relative duration-200 group size-50 border-3 border-white/90"
+      >
+        <img
+          v-if="!previewAvatar.preview"
+          class="object-cover hover:brightness-50 transition-all duration-300 inset-0"
+          :src="'https://ccdn.steak.io.vn/PngItem_1050694.png'"
+          alt=""
+        />
+        <img
+          v-else
+          :src="previewAvatar.preview"
+          alt=""
+          class="object-cover absolute inset-0 min-h-full min-w-full hover:brightness-50 transition-all duration-300"
+        />
         <transition name="fade">
           <FileInput
-            class="absolute inset-5/12 opacity-0 group-hover:opacity-100 z-10 transition-all delay-75 duration-300 ease-in-out" />
+            class="absolute inset-5/12 opacity-0 group-hover:opacity-100 z-10 transition-all delay-75 duration-300 ease-in-out"
+          />
         </transition>
         <input @change="selectedAvatar" type="file" class="sr-only" id="avatarUrl" />
       </label>
@@ -31,7 +45,7 @@
       <div class="flex flex-col gap-y-2">
         <span class="font-bold text-lg tablet:text-xl">{{
           t('auth.informations.user.account.router.settings.profile_informations')
-          }}</span>
+        }}</span>
         <div class="flex gap-x-1 text-center items-center">
           <span class="font-bold text-md">ID:</span>
           <span class="text-sm"> {{ userProfileData?.data.id }}</span>
@@ -43,15 +57,21 @@
           <div class="grid grid-cols-12 gap-x-2">
             <div class="flex flex-col gap-y-1 col-span-11">
               <label for="displayName">Display Name:</label>
-              <input type="text" id="displayName" autocomplete="off" :placeholder="'Your display name'"
+              <input
+                type="text"
+                id="displayName"
+                autocomplete="off"
+                :placeholder="'Your display name'"
                 class="w-full border-double border-2 transition-all duration-75 focus:border-3 border-white/50 rounded-sm h-10 text-white px-3"
-                v-model="profile.displayName" />
+                v-model="profile.displayName"
+              />
             </div>
             <div class="flex flex-col justify-end col-span-1">
               <Dialog>
                 <DialogTrigger as-child>
                   <button
-                    class="tablet:col-span-1 col-span-3 h-10 w-10 flex items-center justify-center rounded-sm border-3 hover:border-white/30 transition-colors duration-200 cursor-pointer">
+                    class="tablet:col-span-1 col-span-3 h-10 w-10 flex items-center justify-center rounded-sm border-3 hover:border-white/30 transition-colors duration-200 cursor-pointer"
+                  >
                     <Pencil :size="20" />
                   </button>
                 </DialogTrigger>
@@ -62,17 +82,26 @@
                     </dialog-title>
                   </dialog-header>
                   <DialogDescription>
-                    <input type="text" id="displayName" :placeholder="'Your display name'"
+                    <input
+                      type="text"
+                      id="displayName"
+                      :placeholder="'Your display name'"
                       class="w-full border-double col-span-11 border-2 transition-all duration-75 focus:border-3 border-white/50 rounded-sm h-10 text-white px-3"
-                      autocomplete="off" v-model="profile.displayName" />
+                      autocomplete="off"
+                      v-model="profile.displayName"
+                    />
                   </DialogDescription>
                   <DialogFooter>
                     <div class="flex justify-end w-full">
-                      <button :class="{
-                        'cursor-pointer': !isUpdateUserProfilePending,
-                        'cursor-progress': isUpdateUserProfilePending,
-                      }" :disabled="isUpdateUserProfilePending" @click="handleUpdateName"
-                        class="text-black text-sm bg-white/80 hover:bg-white transition-colors duration-250 px-4 py-1 rounded-md">
+                      <button
+                        :class="{
+                          'cursor-pointer': !isUpdateUserProfilePending,
+                          'cursor-progress': isUpdateUserProfilePending,
+                        }"
+                        :disabled="isUpdateUserProfilePending"
+                        @click="handleUpdateName"
+                        class="text-black text-sm bg-white/80 hover:bg-white transition-colors duration-250 px-4 py-1 rounded-md"
+                      >
                         <LoaderCircle v-if="isUpdateUserProfilePending" class="animate-spin" />
                         <span v-else>Update</span>
                       </button>
@@ -90,15 +119,21 @@
           <div class="grid grid-cols-12 gap-x-2">
             <div class="flex flex-col gap-y-1 col-span-11">
               <label for="bio">Bio:</label>
-              <input type="text" id="bio" autocomplete="off" :placeholder="'Your bio'"
+              <input
+                type="text"
+                id="bio"
+                autocomplete="off"
+                :placeholder="'Your bio'"
                 class="w-full border-double border-2 transition-all duration-75 focus:border-3 border-white/50 rounded-sm h-10 text-white px-3"
-                v-model="profile.bio" />
+                v-model="profile.bio"
+              />
             </div>
             <div class="flex flex-col justify-end col-span-1">
               <Dialog>
                 <DialogTrigger as-child>
                   <button
-                    class="tablet:col-span-1 col-span-3 h-10 w-10 flex items-center justify-center rounded-sm border-3 hover:border-white/30 transition-colors duration-200 cursor-pointer">
+                    class="tablet:col-span-1 col-span-3 h-10 w-10 flex items-center justify-center rounded-sm border-3 hover:border-white/30 transition-colors duration-200 cursor-pointer"
+                  >
                     <Pencil :size="20" />
                   </button>
                 </DialogTrigger>
@@ -109,17 +144,26 @@
                     </dialog-title>
                   </dialog-header>
                   <DialogDescription>
-                    <input type="text" id="bio" :placeholder="'Your bio'"
+                    <input
+                      type="text"
+                      id="bio"
+                      :placeholder="'Your bio'"
                       class="w-full border-double col-span-11 border-2 transition-all duration-75 focus:border-3 border-white/50 rounded-sm h-10 text-white px-3"
-                      autocomplete="off" v-model="profile.bio" />
+                      autocomplete="off"
+                      v-model="profile.bio"
+                    />
                   </DialogDescription>
                   <DialogFooter>
                     <div class="flex justify-end w-full">
-                      <button :class="{
-                        'cursor-pointer': !isUpdateUserProfilePending,
-                        'cursor-progress': isUpdateUserProfilePending,
-                      }" :disabled="isUpdateUserProfilePending" @click="handleUpdateProfile"
-                        class="text-black text-sm bg-white/80 hover:bg-white transition-colors duration-250 px-4 py-1 rounded-md">
+                      <button
+                        :class="{
+                          'cursor-pointer': !isUpdateUserProfilePending,
+                          'cursor-progress': isUpdateUserProfilePending,
+                        }"
+                        :disabled="isUpdateUserProfilePending"
+                        @click="handleUpdateProfile"
+                        class="text-black text-sm bg-white/80 hover:bg-white transition-colors duration-250 px-4 py-1 rounded-md"
+                      >
                         <LoaderCircle v-if="isUpdateUserProfilePending" class="animate-spin" />
                         <span v-else>Update</span>
                       </button>
@@ -147,7 +191,7 @@
           </div>
         </RadioGroup>
 
-        <div class="flex flex-col gap-x-3  w-full tablet:w-fit">
+        <div class="flex flex-col gap-x-3 w-full tablet:w-fit">
           <span>Date of Birth:</span>
           <Input v-model:model-value="profile.birthDate" type="date" />
           <!-- <DatePicker :message="'Change your birth date successfully'" :placeholder="'Select your birth date'"
@@ -156,11 +200,15 @@
       </div>
 
       <div class="flex flex-row gap-y-2 justify-end">
-        <button :disabled="isUpdating" :class="{
-          'cursor-pointer': !isUpdating,
-          'cursor-progress': isUpdating,
-        }" @click="handleUpdateProfile"
-          class="bg-white/90 hover:bg-white transition-colors duration-250 text-black w-fit px-6 py-2 rounded-md">
+        <button
+          :disabled="isUpdating"
+          :class="{
+            'cursor-pointer': !isUpdating,
+            'cursor-progress': isUpdating,
+          }"
+          @click="handleUpdateProfile"
+          class="bg-white/90 hover:bg-white transition-colors duration-250 text-black w-fit px-6 py-2 rounded-md"
+        >
           <LoaderCircle v-if="isUpdating" class="animate-spin" />
           <span v-else> Save</span>
         </button>
@@ -199,8 +247,8 @@ import { useImageCompressor } from '@/composables/image/useImageCompression'
 import {
   mutateDeleteFileUploaded,
   mutateGetPresignedImageUrl,
-  mutatePostIntoPresignedUrl
-} from "@/hooks/user/useUserUploadFile"
+  mutatePostIntoPresignedUrl,
+} from '@/hooks/user/useUserUploadFile'
 import Input from '@/components/ui/input/Input.vue'
 import { QueryClient } from '@tanstack/vue-query'
 import { USER_PROFILE_QUERY_KEY } from '@/hooks/constants/user/userProfile-key'
@@ -276,23 +324,24 @@ const queryClient = new QueryClient()
 const handleUpdateProfile = useDebounceFn(async () => {
   isUpdating.value = true
   try {
-    const presignUrlRes = await mutateAsyncGetPresignUrl({
-      fileName: previewAvatar.value.file_instance.name,
-      fileSize: previewAvatar.value.file_instance.size,
-    })
+    if (previewAvatar.value.file_instance) {
+      const presignUrlRes = await mutateAsyncGetPresignUrl({
+        fileName: previewAvatar.value.file_instance.name,
+        fileSize: previewAvatar.value.file_instance.size,
+      })
 
-    const responsePostPresignedUrl = await mutateAsyncPostIntoPresignedUrl({
-      url: presignUrlRes.signedUrl,
-      file: previewAvatar.value.file_instance,
-    })
-
-    if (responsePostPresignedUrl.status === 200) {
-      urlAssigned.value = 'https://ccdn.steak.io.vn/' + presignUrlRes.cdnFileName
-      profile.value.avatarUrl = urlAssigned.value
-    } else {
-      toastErrorNotificationPopup('Upload avatar failed', 'Failed to upload your avatar image.')
-      await mutateAsyncDeleteFileUploaded(urlAssigned.value)
-      return
+      const responsePostPresignedUrl = await mutateAsyncPostIntoPresignedUrl({
+        url: presignUrlRes.signedUrl,
+        file: previewAvatar.value.file_instance,
+      })
+      if (responsePostPresignedUrl.status === 200) {
+        urlAssigned.value = 'https://ccdn.steak.io.vn/' + presignUrlRes.cdnFileName
+        profile.value.avatarUrl = urlAssigned.value
+      } else {
+        toastErrorNotificationPopup('Upload avatar failed', 'Failed to upload your avatar image.')
+        await mutateAsyncDeleteFileUploaded(urlAssigned.value)
+        return
+      }
     }
 
     const response = await mutateUpdateUserProfile({
@@ -316,15 +365,19 @@ const handleUpdateProfile = useDebounceFn(async () => {
   }
 }, 200)
 
-watch(() => userProfileData.value?.data, async () => {
-  await nextTick()
-  profile.value = {
-    ...userProfileData.value?.data,
-  }
-  previewAvatar.value.preview = userProfileData.value?.data.avatarUrl || ''
+watch(
+  () => userProfileData.value?.data,
+  async () => {
+    await nextTick()
+    profile.value = {
+      ...userProfileData.value?.data,
+    }
+    previewAvatar.value.preview = userProfileData.value?.data.avatarUrl || ''
 
-  sexSelected.value = userProfileData.value?.data.sex ? 'true' : 'false'
-}, { immediate: true, deep: true })
+    sexSelected.value = userProfileData.value?.data.sex ? 'true' : 'false'
+  },
+  { immediate: true, deep: true },
+)
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="absolute overflow-hidden top-0 h-screen shrink-0">
     <div class="relative">
-      <img src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
+      <img class="fixed inset-0" src="https://ccdn.steak.io.vn/assets-desert.png" alt="" />
       <particles-base class="absolute opacity-80" />
       <div class="bg-black absolute inset-0 opacity-35"></div>
 
@@ -25,7 +25,7 @@
       <!-- END LOGO END FORM TITLE -->
 
       <!-- FORM -->
-      <div class="flex flex-col lg:flex-row lg:justify-between">
+      <div class="flex text-wrap flex-col lg:flex-row lg:justify-between">
         <!-- FORM INPUTS -->
         <form
           @submit.prevent="handlePublisherRegister"

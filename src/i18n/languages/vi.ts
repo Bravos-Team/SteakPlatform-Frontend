@@ -3,6 +3,7 @@ export default {
     informations: {
       username_and_password: 'Tên đăng nhập và mật khẩu',
       username_and_password_placeholder: 'Nhập tên hoặc email...',
+      username: 'Tên đăng nhập',
       password: 'Mật khẩu',
       password_placeholder: 'Nhập mật khẩu...',
       forgot_password: 'Quên mật khẩu',
@@ -497,4 +498,5 @@ export default {
         'This biz is about to get redonk! Go on an adventure with Finn the Human, Jake the Dog, Princess Bubblegum, and Marceline.',
     },
   },
+  newLatest: 'Mới',
 }

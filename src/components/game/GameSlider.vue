@@ -1,58 +1,114 @@
 <template>
   <!-- CAROUSELS BAR -->
-  <div class="flex shrink-0 flex-col will-change-scroll transform-gpu !overflow-visible  w-full gap-y-[20px]">
+  <div
+    class="flex shrink-0 flex-col will-change-scroll transform-gpu !overflow-visible w-full gap-y-[20px]"
+  >
     <!-- MAIN IMAGES SLIDERS -->
-    <div v-if="game" ref="container"
-      class="bg-gray-400/10 keen-slider snap-center group/img-slider relative flex flex-row rounded-xl overflow-hidden">
+    <div
+      v-if="game"
+      ref="container"
+      class="bg-gray-400/10 keen-slider snap-center group/img-slider relative flex flex-row rounded-xl overflow-hidden"
+    >
       <div v-for="(media, index) in game" :key="index" class="cursor-grab active:cursor-grabbing">
-        <img v-if="media.type === 'image'" :class="`number-slide${index + 1}`" :src="media.url"
-          class="!w-full !shrink-0 keen-slider__slide" />
-        <video autoplay controls muted v-else-if="media.type === 'video'" :class="`number-slide${index + 1}`"
-          :src="media.url" class="!w-full !shrink-0 keen-slider__slide" preload="metadata" />
+        <img
+          v-if="media.type === 'image'"
+          :class="`number-slide${index + 1}`"
+          :src="media.url"
+          class="!w-full !shrink-0 keen-slider__slide"
+        />
+        <video
+          autoplay
+          controls
+          playsinline
+          muted
+          v-else-if="media.type === 'video'"
+          :class="`number-slide${index + 1}`"
+          :src="media.url"
+          class="!w-full !shrink-0 keen-slider__slide"
+          preload="metadata"
+        />
       </div>
       <!-- BUTTONS PREV & NEXT  -->
-      <button @click="handlePrev"
-        class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -left-20 group-hover/img-slider:left-0 h-full w-[50px] bg-gradient-to-l from-[#000]/0 to-[#000]/35">
-        <div class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500 rotate-180">
+      <button
+        @click="handlePrev"
+        class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -left-20 group-hover/img-slider:left-0 h-full w-[50px] bg-gradient-to-l from-[#000]/0 to-[#000]/35"
+      >
+        <div
+          class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500 rotate-180"
+        >
           <img src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
         </div>
       </button>
       <button
-        class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -right-20 group-hover/img-slider:right-0 h-full w-[50px] bg-gradient-to-r from-[#000]/0 to-[#000]/35">
-        <div class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500">
-          <img @click="handleNext" src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
+        class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -right-20 group-hover/img-slider:right-0 h-full w-[50px] bg-gradient-to-r from-[#000]/0 to-[#000]/35"
+      >
+        <div
+          class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500"
+        >
+          <img
+            @click="handleNext"
+            src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg"
+            alt=""
+          />
         </div>
       </button>
       <!-- END BUTTONS PREV & NEXT  -->
     </div>
     <!-- END MAIN IMAGES SLIDERS -->
-    <div class="flex flex-row justify-center items-center tablet:gap-x-[5px] w-full px-3  h-[57px]">
-      <div class="h-full flex justify-center items-center">
-        <button @click="handlePrev"
-          class="rounded-full cursor-pointer size-[2rem] tablet:size-[3rem] bg-[#fff]/20 flex justify-center items-center">
-          <img class="w-[5px] rotate-180" src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
+    <div class="grid grid-cols-12 gap-x-2 justify-between items-center w-full px-0 h-[57px]">
+      <div class="col-span-2 tablet:col-span-1 justify-center flex items-center">
+        <button
+          @click="handlePrev"
+          class="rounded-full cursor-pointer size-[2rem] tablet:size-[3rem] bg-[#fff]/20 flex justify-center items-center"
+        >
+          <img
+            class="w-[5px] rotate-180"
+            src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg"
+            alt=""
+          />
         </button>
       </div>
 
       <!-- THUMBNAIL NAVIGATION -->
-      <div ref="thumbnail"
-        class="tablet:gap-x-3 gap-x-1 tablet:h-[57px] snap-x snap-mandatory keen-slider thumbnail px-[10rem] flex max-w--[7rem]   w-full overflow-x-hidden   no-scrollbar">
+      <div
+        ref="thumbnail"
+        class="tablet:gap-x-3 col-span-8 tablet:col-span-10 gap-x-1 tablet:h-[57px] snap-x snap-mandatory keen-slider thumbnail px-[3rem] flex min-w-full overflow-hidden no-scrollbar"
+      >
         <div
-          class="!snap-start  keen-slider__slide border-[2px] group cursor-pointer p-0   shrink-0   items-center flex border-[#fff]/0  checked:border-[#fff] brightness-[.40] hover:brightness-100  rounded-sm"
-          v-for="(media, index) in game" :class="`number-slide${index + 1}`" :key="index">
-          <img v-if="media.type === 'image'" :src="media.url" alt=""
-            class="object-cover w-full  snap-center group-checked:scale-110 transition-all duration-300" />
-          <video v-else-if="media.type === 'video'" :src="media.url" :autoplay="false" :controls="false"
-            controlslist="nodownload noremoteplayback" disablepictureinpicture
-            class="object-cover w-full h-full snap-center group-checked:scale-110 transition-all duration-300" />
+          class="!snap-start keen-slider__slide border-[2px] group cursor-pointer p-0 shrink-0 items-center flex border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100 rounded-sm"
+          v-for="(media, index) in game"
+          :class="`number-slide${index + 1}`"
+          :key="index"
+        >
+          <img
+            v-if="media.type === 'image'"
+            :src="media.url"
+            alt=""
+            class="object-cover w-full snap-center group-checked:scale-110 transition-all duration-300"
+          />
+          <video
+            v-else-if="media.type === 'video'"
+            :src="media.url"
+            :autoplay="false"
+            :controls="false"
+            controlslist="nodownload noremoteplayback"
+            disablepictureinpicture
+            class="object-cover w-full h-full snap-center group-checked:scale-110 transition-all duration-300"
+          />
         </div>
       </div>
       <!-- END THUMBNAIL NAVIGATION -->
 
-      <div class="h-full items-center justify-center flex">
-        <button @click="handleNext"
-          class="rounded-full cursor-pointer size-[2rem] tablet:size-[3rem] bg-[#fff]/20 flex justify-center items-center">
-          <img class="w-[5px]" src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
+      <div class="col-span-2 tablet:col-span-1 justify-center flex items-center">
+        <button
+          @click="handleNext"
+          class="rounded-full cursor-pointer size-[2rem] tablet:size-[3rem] bg-[#fff]/20 flex justify-center items-center"
+        >
+          <img
+            class="w-[5px]"
+            src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg"
+            alt=""
+          />
         </button>
       </div>
     </div>
