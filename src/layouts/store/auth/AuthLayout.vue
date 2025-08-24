@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header-auth :headerTitle="route.meta.title"></header-auth>
+    <header-auth></header-auth>
     <router-view></router-view>
     <footer-store></footer-store>
   </div>
