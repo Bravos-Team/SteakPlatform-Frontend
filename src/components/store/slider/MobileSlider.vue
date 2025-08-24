@@ -10,7 +10,7 @@
         :class="`number-slide${index + 1}`"
         class="keen-slider__slide tablet:min-w-[40rem] tablet:w-full p-3 snap-center rounded-sm overflow-hidden shrink-0 h-[27rem] tablet:h-[40rem] flex"
       >
-        <img :src="game.background" alt="" class="object-cover h-full w-full rounded-sm" />
+        <img :src="game.thumbnail" alt="" class="object-cover h-full w-full rounded-sm" />
       </div>
     </div>
 
@@ -83,7 +83,7 @@ const props = defineProps<{
     prices: number
     status: number
     img: string
-    background: string
+    thumbnail: string
   }[]
 }>()
 </script>

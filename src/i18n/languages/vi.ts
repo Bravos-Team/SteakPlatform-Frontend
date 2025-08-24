@@ -147,6 +147,7 @@ export default {
           has_been_removed_from_wishlist: 'đã được xóa khỏi danh sách mong muốn',
           has_been_removed_from_wishlist_success: 'đã được xóa khỏi danh sách mong muốn',
           already_in_cart: 'đã có trong giỏ hàng',
+          already_in_wishlist: 'đã có trong danh sách mong muốn',
           add_to_cart_error: 'Không thể thêm vào giỏ hàng',
           remove_from_cart_success: 'Đã xóa khỏi giỏ hàng',
           remove_all_from_cart: 'Xóa tất cả khỏi giỏ hàng',
@@ -499,4 +500,6 @@ export default {
     },
   },
   newLatest: 'Mới',
+  alreadyInCart: 'Đã có trong giỏ hàng',
+  alreadyInWishlist: 'Đã có trong danh sách mong muốn',
 }

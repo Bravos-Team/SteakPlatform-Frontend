@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import CurrencyUtils from '@/services/common/CurrencyUtils'
 import { GAME_ITEM } from '@/types/store/game'
-import { PropType } from 'vue'
+import { computed, PropType } from 'vue'
 import { useMutateAddToCart } from '@/hooks/store/cart/useUserCart'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
@@ -54,7 +54,11 @@ import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
+import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
+import { useGetUserWishlist, useMutateAddToWishlist } from '@/hooks/store/wishlist/useWishlist'
 const { isPending: isAddToCartPending, mutateAsync: mutateAddToCart } = useMutateAddToCart()
+
+const { data: userWishlistData, refetch: refetchUserWishlist } = useGetUserWishlist(false)
 
 const props = defineProps({
   game: {
@@ -64,6 +68,21 @@ const props = defineProps({
 
 const handleAddToCart = async (gameId: bigint, name: string) => {
   try {
+    if (useUserProfilesStores().getAccessRight()) {
+      await refetchUserWishlist()
+      let isAlreadyHaveInWishlist = false
+      if (userWishlistData.value)
+        isAlreadyHaveInWishlist = userWishlistData.value.data.some(
+          (item: any) => item.id === props.game?.id,
+        )
+      if (isAlreadyHaveInWishlist) {
+        toastErrorNotificationPopup(
+          `${t('title.pages.cart.actions.add_to_cart_error')}`,
+          t(`${name} ${t('title.pages.cart.actions.already_in_wishlist')}`),
+        )
+        return
+      }
+    }
     await mutateAddToCart(gameId)
     toastSuccessNotificationPopup(
       t('title.pages.cart.actions.add_to_cart_success'),
