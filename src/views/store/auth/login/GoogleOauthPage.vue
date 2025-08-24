@@ -36,6 +36,8 @@ onBeforeMount(async () => {
   const deviceInfo = await generateDeviceInfo()
   const state = route.query.state as string
   if (!state) router.push({ name: 'Login' })
+  await Promise.resolve([deviceId, deviceInfo])
+  await new Promise((resolve) => setTimeout(resolve, 3000))
   try {
     const response = await verifyOauthUser({
       state,
