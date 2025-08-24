@@ -10,7 +10,7 @@
     <form @submit.prevent="handleSubmission" novalidate class="w-full max-w-md mx-auto space-y-4">
       <div class="flex flex-col gap-y-1">
         <p class="text-sm font-bold text-gray-500 dark:text-gray-400 mb-0.5">
-          {{ $t('auth.informations.username_and_password') }}
+          {{ $t('auth.informations.username') }}
         </p>
         <input
           type="text"

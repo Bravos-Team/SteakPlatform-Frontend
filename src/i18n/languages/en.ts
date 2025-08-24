@@ -3,6 +3,7 @@ export default {
     informations: {
       username_and_password: 'Username and Password',
       username_and_password_placeholder: 'Enter username or email...',
+      username: 'Username',
       password: 'Password',
       password_placeholder: 'Enter password...',
       forgot_password: 'Forgot password',
@@ -483,4 +484,5 @@ export default {
       description_3: 'Kick it in style with new Vans Kicks!',
     },
   },
+  newLatest: 'New latest',
 }

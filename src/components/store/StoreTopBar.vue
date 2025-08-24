@@ -288,7 +288,7 @@
                         </router-link>
                       </dropdown-menu-item>
                       <dropdown-menu-item class="cursor-pointer">
-                        <button @click="handleLogout" class="w-full h-full">
+                        <button @click="handleLogout" class="w-full h-full flex gap-x-2">
                           <LoaderCircle v-if="isLogoutPending" class="animate-spin" />
                           <LogOut v-else class="text-white" />
                           {{ $t('auth.logout') }}
