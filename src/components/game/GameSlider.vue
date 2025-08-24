@@ -70,31 +70,33 @@
       </div>
 
       <!-- THUMBNAIL NAVIGATION -->
-      <div
-        ref="thumbnail"
-        class="tablet:gap-x-3 col-span-8 tablet:col-span-10 gap-x-1 tablet:h-[57px] snap-x snap-mandatory keen-slider thumbnail px-[3rem] flex min-w-full overflow-hidden no-scrollbar"
-      >
+      <div class="col-span-8 tablet:col-span-10">
         <div
-          class="!snap-start keen-slider__slide border-[2px] group cursor-pointer p-0 shrink-0 items-center flex border-[#fff]/0 checked:border-[#fff] brightness-[.40] hover:brightness-100 rounded-sm"
-          v-for="(media, index) in game"
-          :class="`number-slide${index + 1}`"
-          :key="index"
+          ref="thumbnail"
+          class="tablet:gap-x-1 !px-10 flex flex-row !shrink gap-x-1 tablet:h-[57px] snap-x snap-mandatory keen-slider thumbnail no-scrollbar"
         >
-          <img
-            v-if="media.type === 'image'"
-            :src="media.url"
-            alt=""
-            class="object-cover w-full snap-center group-checked:scale-110 transition-all duration-300"
-          />
-          <video
-            v-else-if="media.type === 'video'"
-            :src="media.url"
-            :autoplay="false"
-            :controls="false"
-            controlslist="nodownload noremoteplayback"
-            disablepictureinpicture
-            class="object-cover w-full h-full snap-center group-checked:scale-110 transition-all duration-300"
-          />
+          <div
+            class="!overflow-hidden max-w-[10px] !w-[3rem] !snap-start keen-slider__slide border-[2px] group cursor-pointer p-0 items-center border-[#fff]/0 checked:border-[#fff] bg-white/8 brightness-[.40] hover:brightness-100 rounded-sm"
+            v-for="(media, index) in game"
+            :class="`number-slide${index + 1}`"
+            :key="index"
+          >
+            <img
+              v-if="media.type === 'image'"
+              :src="media.url"
+              alt=""
+              class="object-cover w-full snap-center transition-all duration-300"
+            />
+            <video
+              v-else-if="media.type === 'video'"
+              :src="media.url"
+              :autoplay="false"
+              :controls="false"
+              controlslist="nodownload noremoteplayback"
+              disablepictureinpicture
+              class="object-cover w-full h-full snap-center group-checked:scale-110 transition-all duration-300"
+            />
+          </div>
         </div>
       </div>
       <!-- END THUMBNAIL NAVIGATION -->
@@ -164,7 +166,8 @@ const ThumbnailPlugin = (main: any) => {
     const addClickEvents = () => {
       slider.slides.forEach((slide: any, index: any) => {
         slide.addEventListener('click', () => {
-          main.value.moveToIdx(index, true, { duration: 200, easing: (t: number) => t })
+          // main.value.moveToIdx(index, true, { duration: 200, easing: (t: number) => t })
+          main.value.moveToIdx(index)
         })
       })
     }
@@ -176,11 +179,7 @@ const ThumbnailPlugin = (main: any) => {
         removeActive()
         const next = main.value.animator.targetIdx || 0
         addActive(main.value.track.absToRel(next))
-
-        if (currentIndex.value == 3) {
-          slider.moveToIdx(Math.min(slider.track.details.maxIdx, next))
-          currentIndex.value = 0
-        }
+        slider.moveToIdx(Math.min(slider.track.details.maxIdx, next))
       })
     })
   }
@@ -212,7 +211,8 @@ const handlePrev = () => {
   }
 }
 const handleNext = () => {
-  if (currentIndex.value <= 3) {
+  console.log(currentIndex.value)
+  if (currentIndex.value < 3) {
     currentIndex.value++
   } else {
     currentIndex.value = 0

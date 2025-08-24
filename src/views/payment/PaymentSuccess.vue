@@ -15,7 +15,9 @@
       <h1 class="text-2xl font-bold text-green-600 mb-2 text-wrap">
         {{ $t('title.pages.payment_message.success.title') }} !
       </h1>
-      <p class="text-gray-600 mb-6">{{ $t('title.pages.payment_message.success.description') }}</p>
+      <p class="text-gray-600 text-wrap mb-6">
+        {{ $t('title.pages.payment_message.success.description') }}
+      </p>
       <div class="flex items-center justify-between text-black mb-6" v-if="route.params?.orderId">
         <span>Order Id: </span>
         <span>{{ route?.params?.orderId }}</span>

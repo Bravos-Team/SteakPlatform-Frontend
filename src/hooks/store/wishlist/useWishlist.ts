@@ -9,11 +9,12 @@ import {
 } from '@/apis/store/wishlist/wishlist'
 import { CART_STORE_QUERY_KEYS } from '@/hooks/constants/store/cart-key'
 
-export const useGetUserWishlist = () => {
+export const useGetUserWishlist = (isEnabled?: boolean) => {
   return useQuery({
     queryKey: WISH_LIST_QUERY_KEYS.USER,
     queryFn: async ({ signal }) => await getMyWishlist(signal),
     retry: 1,
+    enabled: isEnabled ?? true,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     staleTime: 1000 * 60 * 60,
