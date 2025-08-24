@@ -230,8 +230,6 @@ import { GAME_GENRES_AND_TAG_TYPE } from '@/types/game/gameDetails/GameDetailsTy
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Label } from '@/components/ui/label'
 
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-
 import {
   NumberField,
   NumberFieldContent,
@@ -243,6 +241,7 @@ import Button from '@/components/ui/button/Button.vue'
 
 const props = defineProps<{
   isFiltering: boolean
+  isResetFilter: boolean
 }>()
 const { data: genres } = useGameGenresQuery()
 const { data: tags } = useGameTagsQuery()
@@ -276,9 +275,9 @@ const selectFilterOptions = ref<any>([
     options: [
       { value: '0', label: 'Free' },
       { value: '1', label: 'Paid' },
-      { value: '5750000', label: 'Under ₫575,000' },
-      { value: '11500000', label: 'Under ₫1,150,000' },
-      { value: '23000000', label: 'Under ₫2,300,000' },
+      { value: '575000', label: 'Under ₫575,000' },
+      { value: '1150000', label: 'Under ₫1,150,000' },
+      { value: '2300000', label: 'Under ₫2,300,000' },
       { value: '100000', label: '₫100,000 and above' },
       { value: '200000', label: '₫200,000 and above' },
       { value: '300000', label: '₫300,000 and above' },
@@ -357,12 +356,12 @@ const filterMinMax = (value: string) => {
       return emit('update:price', { min: 0, max: 0 })
     case '1':
       return emit('update:price', { min: 0.1, max: 99999999999999 })
-    case '5750000':
-      return emit('update:price', { min: 0.1, max: 5750000 })
-    case '11500000':
-      return emit('update:price', { min: 0.1, max: 11500000 })
-    case '23000000':
-      return emit('update:price', { min: 0.1, max: 23000000 })
+    case '575000':
+      return emit('update:price', { min: 0.1, max: 575000 })
+    case '1150000':
+      return emit('update:price', { min: 0.1, max: 1150000 })
+    case '2300000':
+      return emit('update:price', { min: 0.1, max: 2300000 })
     case '100000':
       return emit('update:price', { min: 100000, max: 99999999999999 })
     case '200000':
@@ -389,4 +388,16 @@ watch(tags, () => {
     label: tag.name,
   }))
 })
+watch(
+  () => props.isResetFilter,
+  () => {
+    minValue.value = 0
+    maxValue.value = 0
+    priceSelected.value = undefined
+    genresSelected.value = []
+    tagsSelected.value = []
+    sortSelected.value = ''
+  },
+  { immediate: true },
+)
 </script>

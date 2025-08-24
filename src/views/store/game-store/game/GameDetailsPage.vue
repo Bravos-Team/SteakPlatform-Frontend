@@ -290,11 +290,11 @@
       </div>
     </div>
     <!-- END SUB DETAILS -->
-    <div class="h-[15px] mt-[24px] mb-[90px] pt-[28px] w-full border-t-1 border-[#ffffffa6]">
+    <!-- <div class="h-[15px] mt-[24px] mb-[90px] pt-[28px] w-full border-t-1 border-[#ffffffa6]">
       <span class="before:content-['*_'] text-wrap"
         >The lowest price offered on The Epic Games Store in the last 30 days before discount
       </span>
-    </div>
+    </div> -->
   </div>
 </template>
 

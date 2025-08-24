@@ -61,12 +61,12 @@
         </button>
         <button
           class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"
-          v-if="isAlreadyHaveInCart"
+          v-if="isAlreadyHaveInCart && !isAlreadyHaveInWishlist"
         >
-          <span> Already in Cart</span>
+          <span> {{ $t('alreadyInCart') }}</span>
         </button>
         <button
-          v-else
+          v-else-if="!isAlreadyHaveInWishlist"
           @click="handleAddToCart(rightContentsData.details.id)"
           :disabled="rightContentsData.isOwned"
           :class="{
@@ -81,10 +81,14 @@
         </button>
 
         <button
-          v-if="isAlreadyHaveInWishlist && useUserProfilesStores().getAccessRight()"
+          v-if="
+            isAlreadyHaveInWishlist &&
+            useUserProfilesStores().getAccessRight() &&
+            !isAlreadyHaveInCart
+          "
           class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"
         >
-          Already in Wishlist
+          <span> {{ $t('alreadyInWishlist') }}</span>
         </button>
         <button
           v-else-if="!useUserProfilesStores().getAccessRight()"
@@ -93,7 +97,7 @@
           Login to add to Wishlist
         </button>
         <button
-          v-else
+          v-else-if="!isAlreadyHaveInCart"
           @click="handleAddToWishlist(rightContentsData.details.id)"
           :disabled="rightContentsData.isOwned"
           :class="{
@@ -173,14 +177,12 @@ import {
   toastErrorNotificationPopup,
   toastSuccessNotificationPopup,
 } from '@/composables/toast/toastNotificationPopup'
-import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
 import { useRouter } from 'vue-router'
 import { useDebounceFn } from '@vueuse/core'
 import { useMutateAddToCart, useUserCartList } from '@/hooks/store/cart/useUserCart'
 import { useMutateAddToWishlist, useGetUserWishlist } from '@/hooks/store/wishlist/useWishlist'
 import { LoaderCircle } from 'lucide-vue-next'
 import { computed } from 'vue'
-import { useMutateRenewRefreshToken } from '@/hooks/store/auth/useAuthentications'
 import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
 const { isPending: isMutateAddToCartPending, mutateAsync: mutateAsyncAddToCart } =
   useMutateAddToCart()
@@ -188,8 +190,6 @@ const { isPending: isMutateAddToWishlistPending, mutateAsync: mutateAsyncAddToWi
   useMutateAddToWishlist()
 const { data: userWishlistData } = useGetUserWishlist()
 const { data: userCartListData } = useUserCartList()
-const { isPending: isRenewUserRefetchToken, mutateAsync: mutateAsyncRenewUserRefetchToken } =
-  useMutateRenewRefreshToken()
 
 const handleAddToCart = useDebounceFn(async (id: bigint) => {
   try {

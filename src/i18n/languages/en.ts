@@ -171,6 +171,7 @@ export default {
           remove_all_from_wishlist_error: 'Unable to remove all from wishlist',
           has_been_removed_from_wishlist_success: 'has been removed from the wishlist successfully',
           already_in_cart: 'is already in the cart',
+          already_in_wishlist: 'is already in the wishlist',
           add_to_cart_error: 'Unable to add to cart',
           remove_from_cart_success: 'Removed from cart successfully',
           remove_from_cart_error: 'Unable to remove from cart',
@@ -485,4 +486,6 @@ export default {
     },
   },
   newLatest: 'New latest',
+  alreadyInCart: 'Already in Cart',
+  alreadyInWishlist: 'Already in Wishlist',
 }

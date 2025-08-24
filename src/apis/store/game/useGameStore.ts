@@ -39,3 +39,12 @@ export const getGameTags = async (signal?: AbortSignal) =>
 
 export const postToGetGameFiltered = async (filters?: DISCOVER_GAME_FILTERS) =>
   await SteakApi.post('/store/public/games/filter', filters)
+
+export const getGamesTrendingByDay = async (signal: AbortSignal) =>
+  await SteakApi.get('/store/public/games/daily-trending', { signal })
+
+export const getGamesTrendingByWeek = async (signal: AbortSignal) =>
+  await SteakApi.get('/store/public/games/weekly-trending', { signal })
+
+export const getGamesTrendingByMonth = async (signal: AbortSignal) =>
+  await SteakApi.get('/store/public/games/monthly-trending', { signal })

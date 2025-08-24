@@ -103,7 +103,7 @@
                 {{ $t('navigation.store') }}
               </router-link>
 
-              <a
+              <!-- <a
                 href=""
                 class="h-full flex items-center text-nowrap hover:text-gray-300 duration-300 transition-all hover:bg-gray-800/80 px-3"
                 >{{ $t('navigation.hub') }}</a
@@ -113,15 +113,15 @@
                 class="hover:text-gray-300 flex text-nowrap items-center h-full duration-300 transition-all hover:bg-gray-800/80 px-3"
                 >{{ $t('navigation.community') }}</a
               >
-              <router-link
-                :to="{ name: 'SupportCenter' }"
-                class="px-3 hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80"
-                >{{ $t('navigation.help') }}</router-link
-              >
               <a
                 href=""
                 class="hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80 px-3"
                 >{{ $t('navigation.about') }}</a
+              > -->
+              <router-link
+                :to="{ name: 'SupportCenter' }"
+                class="px-3 hover:text-gray-300 text-nowrap flex items-center duration-300 h-full transition-all hover:bg-gray-800/80"
+                >{{ $t('navigation.help') }}</router-link
               >
             </div>
             <!-- END NAVIGATION -->
