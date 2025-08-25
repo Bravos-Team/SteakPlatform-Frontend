@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full overflow-x-auto">
+  <div class="w-full overflow-x-auto no-scrollbar">
     <table class="table w-full border-spacing-y-0 border-separate overflow-x-auto">
       <caption class="caption-bottom text-white/50 font-light text-sm py-3">
         Ticket Management Table: I don't know what to say...
