@@ -155,6 +155,14 @@ const refetchCacheData = async (response: any) => {
     await queryClient.setQueryData(queryKey, response)
     gameFilteredList.value = response
   })
+  while (
+    filters.value.page > 1 &&
+    gameFilteredList.value &&
+    gameFilteredList.value?.content.length < 1
+  ) {
+    filters.value.page -= 1
+    await nextTick()
+  }
 }
 
 const handleResetFilter = useDebounceFn(async (value: boolean) => {
@@ -177,6 +185,9 @@ const handleResetFilter = useDebounceFn(async (value: boolean) => {
 }, 200)
 
 const resetFilters = () => {
+  queryClient.invalidateQueries({
+    queryKey: GAME_STORE_LIST_QUERY_KEYS.DISCOVER_GAMES(filters),
+  })
   filters.value = {
     page: 1,
     pageSize: 12,
