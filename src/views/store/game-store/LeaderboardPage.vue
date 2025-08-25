@@ -1,6 +1,6 @@
 <template>
   <div class="w-full mx-auto p-8 min-h-screen text-white">
-    <div class="flex justify-end w-full gap-2 mb-4 p-2 rounded-2xl">
+    <div class="flex flex-col tablet:flex-row justify-end w-full gap-2 mb-4 p-2 rounded-2xl">
       <button
         v-for="tab in timeTabs"
         :key="tab.value"
@@ -50,7 +50,7 @@
           :to="{ name: 'game-details', params: { id: game.id } }"
           v-for="(game, index) in sortedGames"
           :key="game.id"
-          class="flex items-center p-5 rounded-xs border transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl relative overflow-hidden group"
+          class="flex flex-wrap items-center p-5 rounded-xs border transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl relative overflow-hidden group"
           :class="[
             index === 0
               ? 'bg-gradient-to-r from-yellow-500/10 to-yellow-600/5 border-yellow-500/30 hover:border-yellow-400'
@@ -87,7 +87,9 @@
           </div>
 
           <!-- Game Thumbnail -->
-          <div class="w-26 h-16 rounded-xl overflow-hidden mr-5 flex-shrink-0">
+          <div
+            class="w-16 tablet:w-26 h-12 tablet:h-16 rounded-md overflow-hidden mr-5 flex-shrink-0"
+          >
             <img
               :src="game.thumbnail"
               :alt="game.name"
@@ -131,6 +133,8 @@ import {
   useQueryGamesByWeeks,
   useQueryGamesByMonths,
 } from '@/hooks/store/game/useGameStore'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const activeTab = ref('days')
 const leaderBoardGamesData = ref([])
@@ -151,11 +155,11 @@ const {
   refetch: refetchGamesByMonths,
 } = useQueryGamesByMonths(false)
 
-const timeTabs = [
-  { value: 'days', label: 'Last 7 Days' },
-  { value: 'weeks', label: 'Last 4 Weeks' },
-  { value: 'months', label: 'Last 6 Months' },
-]
+const timeTabs = computed(() => [
+  { value: 'days', label: t('lastDays') },
+  { value: 'weeks', label: t('lastWeeks') },
+  { value: 'months', label: t('lastMonths') },
+])
 
 const isLoading = computed(() => {
   switch (activeTab.value) {
@@ -175,7 +179,9 @@ const sortedGames = computed(() => {
     return []
   }
 
-  return [...leaderBoardGamesData.value].sort((a, b) => b.growthRate - a.growthRate).slice(0, 10)
+  return [...leaderBoardGamesData.value]
+    .sort((a: any, b: any) => b.growthRate - a.growthRate)
+    .slice(0, 10)
 })
 
 const handleTabChange = async (tabValue: string) => {
@@ -219,7 +225,7 @@ const formatGrowthRate = (rate: number) => {
 
 const getGrowthWidth = (rate: number) => {
   if (sortedGames.value.length === 0) return '0%'
-  const maxRate = Math.max(...sortedGames.value.map((g) => Math.abs(g.growthRate)))
+  const maxRate = Math.max(...sortedGames.value.map((g: any) => Math.abs(g.growthRate)))
   if (maxRate === 0) return '0%'
   const width = (Math.abs(rate) / maxRate) * 100
   return `${Math.min(width, 100)}%`

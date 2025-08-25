@@ -191,12 +191,12 @@
           </div>
         </RadioGroup>
 
-        <div class="flex flex-col gap-x-3 w-full tablet:w-fit">
+        <label for="date" class="flex flex-col gap-x-3 w-full tablet:w-fit">
           <span>{{ $t('dateOfBirth') }}:</span>
-          <Input v-model:model-value="profile.birthDate" type="date" />
+          <Input name="date" v-model:model-value="profile.birthDate" />
           <!-- <DatePicker :message="'Change your birth date successfully'" :placeholder="'Select your birth date'"
             v-model:emit-estimated-release-date="birthDateSelected" /> -->
-        </div>
+        </label>
       </div>
 
       <div class="flex flex-row gap-y-2 justify-end">
@@ -251,7 +251,6 @@ import {
 } from '@/hooks/user/useUserUploadFile'
 import Input from '@/components/ui/input/Input.vue'
 import { QueryClient } from '@tanstack/vue-query'
-import { USER_PROFILE_QUERY_KEY } from '@/hooks/constants/user/userProfile-key'
 const { compressImage } = useImageCompressor()
 const { mutateAsync: mutateUpdateUserProfile, isPending: isUpdateUserProfilePending } =
   useMutateUpdateUserProfile()
@@ -321,9 +320,20 @@ const selectedAvatar = async (event: Event) => {
 const isUpdating = ref(false)
 const urlAssigned = ref<string>('')
 const queryClient = new QueryClient()
+
 const handleUpdateProfile = useDebounceFn(async () => {
   isUpdating.value = true
+  console.log('updating...')
   try {
+    let validDate
+    if (profile.value.birthDate) {
+      validDate = new Date(profile.value.birthDate as string)
+      if (isNaN(validDate!.getTime())) {
+        profile.value.birthDate = ''
+        toastErrorNotificationPopup(t('invalidDateOfBirth'), t('pleaseEnterValidDateOfBirth'))
+        return
+      }
+    }
     if (previewAvatar.value.file_instance) {
       const presignUrlRes = await mutateAsyncGetPresignUrl({
         fileName: previewAvatar.value.file_instance.name,

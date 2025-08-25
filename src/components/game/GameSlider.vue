@@ -40,16 +40,13 @@
         </div>
       </button>
       <button
+        @click="handleNext"
         class="cursor-pointer absolute opacity-0 group-hover/img-slider:opacity-100 transition-all flex justify-center items-center duration-500 -right-20 group-hover/img-slider:right-0 h-full w-[50px] bg-gradient-to-r from-[#000]/0 to-[#000]/35"
       >
         <div
           class="w-[15px] opacity-0 group-hover/img-slider:opacity-100 transition-all duration-500"
         >
-          <img
-            @click="handleNext"
-            src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg"
-            alt=""
-          />
+          <img src="https://ccdn.steak.io.vn/assets-arrow-right-white-ico.svg" alt="" />
         </div>
       </button>
       <!-- END BUTTONS PREV & NEXT  -->

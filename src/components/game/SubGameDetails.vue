@@ -57,7 +57,7 @@
           @click="handleCheckout"
           class="py-[12px] px-[20px] align-middle bg-[#26bbff] hover:bg-[#61cdff] text-black rounded-[10px] flex justify-center items-center"
         >
-          {{ $t('features.buttons.buy_now') }}
+          {{ $t('buyNow') }}
         </button>
         <button
           class="py-[12px] px-[20px] align-middle bg-[#ffffff59]/30 cursor-not-allowed text-white rounded-[10px] flex justify-center items-center"

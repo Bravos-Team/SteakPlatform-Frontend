@@ -9,6 +9,19 @@ export default {
       forgot_password: 'Forgot password',
       isLogin: 'Logging in...',
       user: {
+        account: {
+          children: {
+            settings: 'Account Settings',
+            passwordAndSecurity: 'Password and Security',
+          },
+          router: {
+            settings: {
+              title: 'Account Settings',
+              descriptions: 'Manage your account settings',
+              profile_informations: 'Profile Information',
+            },
+          },
+        },
         profile: {
           title: 'Your Profile',
         },
@@ -508,4 +521,35 @@ export default {
   failedAddToWishlist: 'Failed to Add to Wishlist',
   addedToCartSuccessfully: 'Added to Cart Successfully',
   leaderBoardGames: 'Leaderboard Games',
+  lastDays: 'Last Days',
+  lastWeeks: 'Last Weeks',
+  lastMonths: 'Last Months',
+  invalidDateOfBirth: 'Invalid Date of Birth',
+  pleaseEnterValidDateOfBirth: 'Please enter a valid date of birth.',
+  close: 'Close',
+  contactSupport: 'Contact Support',
+  chooseValidMethod: 'Choose a valid contact method',
+  hotline: 'Hotline',
+  paymentFailed: 'Payment failed.',
+  checkoutFailed: 'Checkout failed. Please try again later.',
+  backHome: 'Back to Home Store',
+  time: 'Time',
+  buyNow: 'Buy Now',
+  paymentSuccess: 'Payment successful',
+  paymentSuccessDescriptions:
+    'Your payment was processed successfully. Thank you for your purchase!',
+  isVerifyLoginWithGithub: 'Verifying GitHub login...',
+  VerifyLoginWithGithubDescriptions: 'Please wait a moment while we verify your information.',
+  connectWithGithub: 'Connect with GitHub',
+  verifyLoginWithGithub: 'Verify Login with GitHub',
+  loginDone: 'Login successful!',
+  secureAndPrivate: 'Secure and Private',
+  secureAndPrivateDescriptions:
+    'Your information is encrypted and protected according to the highest security standards.',
+  cancelLogin: 'Cancel Login',
+  isVerifyLoginWithGoogle: 'Verifying Google login...',
+  VerifyLoginWithGoogleDescriptions: 'Please wait a moment while we verify your information.',
+  connectWithGoogle: 'Connect with Google',
+  verifyLoginWithGoogle: 'Verify Login with Google',
+  pleaseWaitASeconds: 'Please wait a moment...',
 }

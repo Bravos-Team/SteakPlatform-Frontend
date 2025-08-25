@@ -8,6 +8,7 @@ const authRoutes: RouteRecordRaw = {
   meta: {
     middleware: [guest],
     group: 'user',
+    deniedAccessExceptOauth: true,
   },
   children: [
     {
@@ -57,6 +58,14 @@ const authRoutes: RouteRecordRaw = {
         title: 'Đăng nhập Google',
       },
       component: () => import('@/views/store/auth/login/GoogleOauthPage.vue'),
+    },
+    {
+      path: '/oauth2/github',
+      name: 'GithubOauth',
+      meta: {
+        title: 'Đăng nhập Github',
+      },
+      component: () => import('@/views/store/auth/login/GithubOauthPage.vue'),
     },
   ],
 }
