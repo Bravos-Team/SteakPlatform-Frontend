@@ -103,9 +103,18 @@
           <img v-else :src="'https://ccdn.steak.io.vn/google-ico.svg'" class="h-6" />
         </button>
         <button
-          class="flex items-center justify-center h-12 border border-black w-full bg-[#65a8ff] dark:bg-[#1877f2] rounded-lg"
+          :class="{ 'opacity-50': isRedirectGithubAuth }"
+          :disabled="isRedirectGithubAuth"
+          type="button"
+          @click.prevent="handleLoginWithGithub"
+          class="flex items-center justify-center h-12 border border-black dark:border-white/10 bg-gray-400 w-full dark:bg-gray-900 rounded-lg"
         >
-          <img :src="'https://ccdn.steak.io.vn/assets-facebook-ico.svg'" class="h-6" alt="logo" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64">
+            <path
+              fill="currentColor"
+              d="M32 0C14 0 0 14 0 32c0 21 19 30 22 30c2 0 2-1 2-2v-5c-7 2-10-2-11-5c0 0 0-1-2-3c-1-1-5-3-1-3c3 0 5 4 5 4c3 4 7 3 9 2c0-2 2-4 2-4c-8-1-14-4-14-15q0-6 3-9s-2-4 0-9c0 0 5 0 9 4c3-2 13-2 16 0c4-4 9-4 9-4c2 7 0 9 0 9q3 3 3 9c0 11-7 14-14 15c1 1 2 3 2 6v8c0 1 0 2 2 2c3 0 22-9 22-30C64 14 50 0 32 0"
+            />
+          </svg>
         </button>
         <div class="flex items-center justify-center">
           <router-link :to="{ name: 'PublisherAuthLogin' }" class="underline text-sky-400">{{
@@ -157,13 +166,31 @@ const { data: userStateData, refetch: refetchUserState } = useQueryUserStateOaut
 const router = useRouter()
 
 const isRedirectGoogleAuth = ref<boolean>(false)
+const isRedirectGithubAuth = ref<boolean>(false)
+
+const handleLoginWithGithub = async () => {
+  isRedirectGithubAuth.value = true
+  try {
+    await refetchUserState()
+    if (userStateData.value?.data)
+      window.location.href = `https://github.com/login/oauth/authorize?state=${userStateData.value.data}&client_id=Ov23liPEBbLnKzQaZFEu&scope=read:user,user:email`
+  } catch (err: any) {
+    console.log(err)
+  } finally {
+    isRedirectGithubAuth.value = false
+  }
+}
+
 const handleLoginWithGoogle = async () => {
+  isRedirectGoogleAuth.value = true
   try {
     await refetchUserState()
     if (userStateData.value?.data)
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=883621312062-am30qorbrhj1kuicpulr8bjq02uh385c.apps.googleusercontent.com&response_type=code&scope=profile%20email&state=${userStateData.value.data}&redirect_uri=https://steak.io.vn/oauth2/google`
   } catch (err: any) {
     console.log(err)
+  } finally {
+    isRedirectGoogleAuth.value = false
   }
 }
 

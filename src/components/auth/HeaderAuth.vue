@@ -12,6 +12,7 @@
           alt="Logo header"
         />
         <div class="bg-black dark:bg-white w-0.5 h-8 ms-3"></div>
+        <span class="font-bold text-xl"> Steak</span>
       </router-link>
 
       <div class="laptop:flex hidden absolute right-70">

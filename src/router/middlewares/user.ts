@@ -2,7 +2,6 @@ import { MiddlewareContext } from '@/types/router/middleware'
 import { renewUserRefreshToken } from '@/apis/user/authUser'
 
 const user = async ({ next, checkAccess }: MiddlewareContext) => {
-  console.log('check:', checkAccess.user)
   if (!checkAccess.user) {
     try {
       const response = await renewUserRefreshToken()
