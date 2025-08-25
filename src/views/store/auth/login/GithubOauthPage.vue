@@ -66,7 +66,7 @@
 
           <div class="flex items-center text-sm">
             <div
-              :class="{ '!bg-white': isResolvingLogin }"
+              :class="{ '!bg-white': isDoneVerify }"
               class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-white mr-3 flex-shrink-0"
             >
               <div
