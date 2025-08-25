@@ -19,7 +19,7 @@
 
         <div class="flex items-center text-sm">
           <div
-            :class="{ '!bg-white': isResolvingLogin }"
+            :class="{ '!bg-white': isDoneVerify }"
             class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-white mr-3 flex-shrink-0"
           >
             <div
@@ -78,47 +78,52 @@ const router = useRouter()
 const isResolvingLogin = ref(false)
 const isDoneVerify = ref(false)
 const isDoneLogin = ref(false)
-// onBeforeMount(async () => {
-//   isResolvingLogin.value = true
-//   const code = route.query.code as string
-//   const deviceId = await generateDeviceId()
-//   const deviceInfo = await generateDeviceInfo()
-//   const state = route.query.state as string
-//   if (!state) router.push({ name: 'Login' })
-//   await Promise.resolve([deviceId, deviceInfo])
-//   await new Promise((resolve) => setTimeout(resolve, 1000))
-//   isDoneVerify.value = true
-//   try {
-//     const response = await verifyOauthUser({
-//       state,
-//       code,
-//       deviceId,
-//       deviceInfo,
-//       provider: 'google',
-//     })
-//     if (response.status === 200) {
-//       toastSuccessNotificationPopup(
-//         'Login successful',
-//         `Welcome back! ${response.data.displayName}`,
-//       )
-//       isDoneLogin.value = true
-//       ;(window as any).api?.login(response.data)
-//       await router.push({ name: 'store-home' })
-//       return
-//     } else {
-//       toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
-//       await router.push({ name: 'Login' })
-//     }
-//   } catch (err: any) {
-//     console.log('Oauth Error: ', err)
-//     toastErrorNotificationPopup('Login failed', err.response?.data?.detail)
-//     await router.push({ name: 'Login' })
-//   } finally {
-//     isResolvingLogin.value = false
-//     isDoneVerify.value = false
-//     isDoneLogin.value = false
-//   }
-// })
+onBeforeMount(async () => {
+  isResolvingLogin.value = true
+  const code = route.query.code as string
+  const deviceId = await generateDeviceId()
+  const deviceInfo = await generateDeviceInfo()
+  const state = route.query.state as string
+
+  if (!state) {
+    router.push({ name: 'Login' })
+    return
+  }
+
+  await Promise.resolve([deviceId, deviceInfo])
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+  isDoneVerify.value = true
+  try {
+    const response = await verifyOauthUser({
+      state,
+      code,
+      deviceId,
+      deviceInfo,
+      provider: 'google',
+    })
+    if (response.status === 200) {
+      toastSuccessNotificationPopup(
+        'Login successful',
+        `Welcome back! ${response.data.displayName}`,
+      )
+      isDoneLogin.value = true
+      ;(window as any).api?.login(response.data)
+      await router.push({ name: 'store-home' })
+      return
+    } else {
+      toastErrorNotificationPopup('Login failed', 'Please check your username or password.')
+      await router.push({ name: 'Login' })
+    }
+  } catch (err: any) {
+    console.log('Oauth Error: ', err)
+    toastErrorNotificationPopup('Login failed', err.response?.data?.detail)
+    await router.push({ name: 'Login' })
+  } finally {
+    isResolvingLogin.value = false
+    isDoneVerify.value = false
+    isDoneLogin.value = false
+  }
+})
 </script>
 
 <style scoped>
