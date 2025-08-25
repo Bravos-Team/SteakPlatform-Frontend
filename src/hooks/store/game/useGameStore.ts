@@ -126,11 +126,12 @@ export const useMutateToGetDiscoverGameFiltered = () => {
   }
 }
 
-export const useQueryGamesByDays = () => {
+export const useQueryGamesByDays = (isEnabled: boolean) => {
   return useQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.TRENDING_DAYS,
     queryFn: async ({ signal }) => await getGamesTrendingByDay(signal),
     staleTime: getMillisecondsUntilNextDay(),
+    enabled: isEnabled ?? true,
   })
 }
 
@@ -143,10 +144,11 @@ export const useQueryGamesByWeeks = (isEnabled: boolean) => {
   })
 }
 
-export const useQueryGamesByMonths = () => {
+export const useQueryGamesByMonths = (isEnabled: boolean) => {
   return useQuery({
     queryKey: GAME_STORE_LIST_QUERY_KEYS.TRENDING_MONTHS,
     queryFn: async ({ signal }) => await getGamesTrendingByMonth(signal),
     staleTime: getMillisecondsUntilNextMonth(),
+    enabled: isEnabled ?? true,
   })
 }

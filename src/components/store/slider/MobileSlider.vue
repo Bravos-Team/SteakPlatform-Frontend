@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-y-3 w-full">
+  <div v-if="gameSliders.length" class="flex flex-col gap-y-3 w-full">
     <div
       ref="container"
       class="keen-slider cursor-grab snap-mandatory overflow-auto flex lg:w-[935px] xl:w-[1134px] snap-x xl:h-[638px] lg:h-[525px] no-scrollbar bg-gray-transparent"
@@ -78,11 +78,11 @@ const props = defineProps<{
   gameSliders: {
     id: number
     name: string
-    logo: string
-    message: string
-    prices: number
-    status: number
-    img: string
+    logo?: string
+    message?: string
+    prices?: number
+    status?: number
+    img?: string
     thumbnail: string
   }[]
 }>()

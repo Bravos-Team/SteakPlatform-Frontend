@@ -184,18 +184,20 @@ import { useMutateAddToWishlist, useGetUserWishlist } from '@/hooks/store/wishli
 import { LoaderCircle } from 'lucide-vue-next'
 import { computed } from 'vue'
 import { useUserProfilesStores } from '@/stores/user/useUserProfiles'
+import { useI18n } from 'vue-i18n'
 const { isPending: isMutateAddToCartPending, mutateAsync: mutateAsyncAddToCart } =
   useMutateAddToCart()
 const { isPending: isMutateAddToWishlistPending, mutateAsync: mutateAsyncAddToWishlist } =
   useMutateAddToWishlist()
 const { data: userWishlistData } = useGetUserWishlist()
 const { data: userCartListData } = useUserCartList()
+const { t } = useI18n()
 
 const handleAddToCart = useDebounceFn(async (id: bigint) => {
   try {
     const response = await mutateAsyncAddToCart(id)
     if (response.status === 200) {
-      toastSuccessNotificationPopup('Added to cart successfully', '')
+      toastSuccessNotificationPopup(t('addedToCartSuccessfully'), '')
     }
   } catch (err: any) {
     console.log(err)
@@ -206,10 +208,10 @@ const handleAddToWishlist = useDebounceFn(async (id: bigint) => {
   try {
     const response = await mutateAsyncAddToWishlist(id)
     if (response.status === 200) {
-      toastSuccessNotificationPopup('Added to wishlist successfully', '')
+      toastSuccessNotificationPopup(t('addToWishlistSuccessfully'), '')
     }
   } catch (err: any) {
-    toastErrorNotificationPopup('Failed to add to wishlist', err.response.data.detail)
+    toastErrorNotificationPopup(t('failedAddToWishlist'), err.response.data.detail)
     console.log(err)
   }
 }, 200)
