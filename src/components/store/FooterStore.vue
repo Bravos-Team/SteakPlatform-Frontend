@@ -45,15 +45,15 @@
     <section class="flex flex-col gap-y-3 justify-between">
       <div class="flex flex-col justify-ween gap-[40px] w-full">
         <span class="text-[12px] text-[#ffffffa6] text-wrap"
-          >© 2025, Epic Games, Inc. All rights reserved. Epic, Epic Games, the Epic Games logo,
+          >© 2025, Steak Games, Inc. All rights reserved. Steak, Steak Games, the Steak Games logo,
           Fortnite, the Fortnite logo, Unreal, Unreal Engine, the Unreal Engine logo, Unreal
-          Tournament, and the Unreal Tournament logo are trademarks or registered trademarks of Epic
-          Games, Inc. in the United States of America and elsewhere. Other brands or product names
-          are the trademarks of their respective owners. Our websites may contain links to other
-          sites and resources provided by third parties. These links are provided for your
-          convenience only. Epic Games has no control over the contents of those sites or resources,
-          and accepts no responsibility for them or for any loss or damage that may arise from your
-          use of them.</span
+          Tournament, and the Unreal Tournament logo are trademarks or registered trademarks of
+          Steak Games, Inc. in the United States of America and elsewhere. Other brands or product
+          names are the trademarks of their respective owners. Our websites may contain links to
+          other sites and resources provided by third parties. These links are provided for your
+          convenience only. Steak Games has no control over the contents of those sites or
+          resources, and accepts no responsibility for them or for any loss or damage that may arise
+          from your use of them.</span
         >
         <div class="flex gap-y-[8px] gap-x-[24px] flex-wrap">
           <span class="text-[12px] text-[#ffffffa6]">Terms of Service</span>
@@ -93,7 +93,7 @@ const footerContentColumns = [
   {
     title: 'Marketplaces',
     items: [
-      'Epic Games Store',
+      'Steak Games Store',
       'Fab',
       'Sketchfab',
       'ArtStation',
@@ -116,7 +116,7 @@ const footerContentColumns = [
   {
     title: 'Online Services',
     items: [
-      'Epic Online Services',
+      'Steak Online Services',
       'Kids Web Services',
       'Services Agreement',
       'Acceptable Use Policy',
@@ -135,12 +135,12 @@ const footerContentColumns = [
       'MegaGrants',
       'Support-A-Creator',
       'Creator Agreement',
-      'Distribute on Epic Games',
+      'Distribute on Steak Games',
       'Unreal Engine Branding Guidelines',
       'Fan Art Policy',
       'Community Rules',
       'EU Digital Services Act Inquiry',
-      'Epic Pro Support',
+      'Steak Pro Support',
     ],
   },
 ]
