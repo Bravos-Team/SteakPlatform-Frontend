@@ -1,10 +1,10 @@
 <template>
   <tooltip-provider>
     <tickets-request-managements-header />
-    <div class="py-3 desktop-xl:px-[20rem]">
-      <div class="bg-[#72757e]/10 relative">
-        <div class="w-full h-[2.5rem] bg-[#141414]/60 flex justify-between px-3">
-          <div class="flex items-center gap-2">
+    <div class="py-3 px-[2rem] desktop-xl:px-[20rem]">
+      <div id="boxChatContainer" class="bg-[#72757e]/10 relative">
+        <div class="w-full py-2 min-h-[2.5rem] bg-[#141414]/60 flex justify-between px-3">
+          <div class="flex flex-wrap items-center gap-2">
             <button @click="previousPage" class="group cursor-pointer">
               <Undo class="group-hover:-translate-y-[2px] transition-all duration-200" />
             </button>
@@ -14,7 +14,7 @@
           </div>
           <div class="flex gap-x-2 items-center">
             <span
-              v-if="isClosed"
+              v-if="!isClosed"
               class="px-3 py-1 border-2 border-dashed border-white/50 rounded-full text-sm font-black bg-green-400/50 text-white"
               >Open</span
             >
@@ -24,13 +24,14 @@
               class="px-3 py-1 border-2 border-dashed border-white/50 rounded-full text-sm font-black bg-red-400/50 text-white"
               >Closed</span
             >
-            <tooltip v-if="isClosed">
+            <tooltip v-if="!isClosed">
               <tooltip-trigger as-child>
                 <button
-                  @click="isClosed = !isClosed"
+                  @click="handleCloseTicket"
                   class="cursor-pointer group px-1 bg-white/10 hover:bg-white/30 rounded-full py-1"
                 >
-                  <LockOpen />
+                  <LockOpen v-if="!isClosing" />
+                  <LoaderCircle v-else class="animate-spin" />
                 </button>
               </tooltip-trigger>
               <tooltip-content> Click to close this ticket </tooltip-content>
@@ -74,7 +75,10 @@
                   :key="video"
                   :src="video"
                   autoplay
+                  muted
+                  playsinline="true"
                 ></video>
+                <div id="newChat" class="bg-white flex"></div>
               </div>
               <div class="text-xs text-gray-500 mt-1 text-right">{{ reply.repliedAt }}</div>
             </div>
@@ -113,9 +117,9 @@
 
 <script lang="ts" setup>
 import TicketsRequestManagementsHeader from '@/components/help/tickets/TicketsRequestManagementsHeader.vue'
-import { Lock, LockOpen, SendHorizontal, Undo } from 'lucide-vue-next'
+import { LoaderCircle, Lock, LockOpen, SendHorizontal, Undo } from 'lucide-vue-next'
 import { Tooltip, TooltipProvider, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 
 const reply = ref('')
 
@@ -128,7 +132,7 @@ const repliesData = ref([
       role: 'submitter',
       id: 123812812,
     },
-    content: 'Vì hình ảnh game của tôi bị xóa đi?',
+    content: 'Vì sao hình ảnh game của tôi bị xóa đi?',
     attachments: ['https://ccdn.steak.io.vn/anVtcC1zY2FyZQ%3D%3D.jpeg'],
     repliedAt: '14-12-2005',
   },
@@ -197,9 +201,16 @@ const repliesData = ref([
 const previousPage = () => {
   window.history.back()
 }
-const isClosed = ref(true)
+const isClosed = ref(false)
+const isClosing = ref(false)
+const handleCloseTicket = async () => {
+  isClosing.value = true
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+  isClosed.value = true
+  isClosing.value = false
+}
 
-const submitSendReply = () => {
+const submitSendReply = async () => {
   if (reply.value.trim() === '') return
   repliesData.value.push({
     id: Date.now(),
@@ -213,6 +224,17 @@ const submitSendReply = () => {
     attachments: [],
     repliedAt: new Date().toLocaleDateString(),
   })
+
+  await nextTick(() => {
+    const chatContainer = document.querySelector('#boxChatContainer .overflow-auto')
+    if (chatContainer) {
+      chatContainer.scrollTo({
+        behavior: 'smooth',
+        top: chatContainer.scrollHeight,
+      })
+    }
+  })
+
   reply.value = ''
 }
 </script>
