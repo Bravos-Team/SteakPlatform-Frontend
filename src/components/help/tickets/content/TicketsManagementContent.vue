@@ -1,6 +1,6 @@
 <template>
   <tooltip-provider>
-    <div class="desktop-xl:px-[5rem] desktop-xl:py-[2rem] flex gap-y-5 flex-col">
+    <div class="desktop-xl:px-[5rem] desktop-xl:py-[2rem] flex gap-y-5 px-[1rem] flex-col">
       <!-- TITLE -->
       <div class="flex flex-col">
         <div class="flex gap-x-2">

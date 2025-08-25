@@ -9,18 +9,21 @@ import {
   Store,
   Users2,
 } from 'lucide-vue-next'
+import { computed } from 'vue'
 export type SupportCardContentType = {
   icon: LucideIcon
   name: string
   descriptions: string
   link: string
 }
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
-export const supportCardContentDatas: SupportCardContentType[] = [
+export const supportCardContentDatas = computed(() => [
   {
     icon: Sparkles,
-    name: 'Getting Started',
-    descriptions: 'Learn how to set up your account and start playing your first game.',
+    name: t('gettingStarted'),
+    descriptions: t('gettingStartedDescriptions'),
     link: '/help/getting-started',
   },
   {
@@ -42,7 +45,7 @@ export const supportCardContentDatas: SupportCardContentType[] = [
     link: '/help/security',
   },
   {
-    icon: UserRoundCog, // Biểu tượng user
+    icon: UserRoundCog,
     name: 'Account Settings',
     descriptions: 'Update your profile, password, and email preferences.',
     link: '/help/account-settings',
@@ -65,4 +68,4 @@ export const supportCardContentDatas: SupportCardContentType[] = [
     descriptions: 'Understand what is and isn’t allowed in the community.',
     link: '/help/community-guidelines',
   },
-]
+])

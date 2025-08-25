@@ -34,9 +34,10 @@
 
     <div class="flex z-1 flex-col gap-y-5 tablet:gap-y-15 px-3 py-1 items-center text-white">
       <div class="flex gap-y-3 flex-col items-center">
-        <span class="font-medium text-xl tablet:text-3xl">Welcome to the help center</span>
-        <span class="font-black text-4xl laptop:text-7xl after:content-['__?'] after:text-[#2cb67d]"
-          >HOW CAN WE HELP</span
+        <span class="font-medium text-xl tablet:text-3xl">{{ $t('welcomeToTheHelpCenter') }}</span>
+        <span
+          class="font-black text-4xl laptop:text-7xl after:content-['__?'] after:text-[#2cb67d]"
+          >{{ $t('howCanWeHelp') }}</span
         >
       </div>
 
@@ -57,25 +58,27 @@
                 @focus="isForcused = true"
                 @blur="isForcused = false"
                 class="w-full z-1 bg-transparent border-none outline-none text-white placeholder:text-white/50"
-                placeholder="Search for help articles..."
+                :placeholder="$t('searchForhelpArticle')"
               />
             </label>
           </div>
           <button
-            class="font-black rounded-r-full px-3 bg-[#2cb67d]/80 min-h-full border-l-0 cursor-pointer"
+            class="font-black rounded-r-full w-fit px-6 bg-[#2cb67d]/80 min-h-full border-l-0 cursor-pointer"
           >
-            Search
+            {{ $t('search') }}
           </button>
         </div>
 
         <div class="flex flex-col tablet:flex-row gap-x-3 px-10">
-          <span class="font-bold text-nowrap">Popular Searches:</span>
+          <span class="font-bold text-nowrap"> {{ $t('popularSearches') }}:</span>
           <div class="w-full flex flex-col tablet:flex-row text-pretty gap-x-2">
-            <a :href="link" class="underline text-white/70 font-medium">How to play?</a>
-            <a :href="link" class="underline text-white/70 font-medium">Can I upload my game?</a>
-            <a :href="link" class="underline text-white/70 font-medium"
-              >How Can I Receive Payment</a
-            >
+            <a :href="link" class="underline text-white/70 font-medium">{{ $t('howToPlay') }}</a>
+            <a :href="link" class="underline text-white/70 font-medium">{{
+              $t('canIUploadMyGame')
+            }}</a>
+            <a :href="link" class="underline text-white/70 font-medium">{{
+              $t('howCanIReceivePayment')
+            }}</a>
           </div>
         </div>
       </div>
