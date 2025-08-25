@@ -104,6 +104,7 @@
               'cursor-pointer': !isFiltering,
             }"
             :disabled="isFiltering"
+            @click="handleRemovePriceFilter(option.label)"
             class="w-full h-full border-y-[1px] flex justify-between p-3 bg-white text-black"
             v-else-if="priceSelected === option.value && filter.key === 'price'"
           >
@@ -268,6 +269,10 @@ const collapsOpen = ref<Record<string, boolean>>({
   tags: false,
   sortBy: false,
 })
+const handleRemovePriceFilter = () => {
+  priceSelected.value = undefined
+  emit('update:price', {})
+}
 const selectFilterOptions = ref<any>([
   {
     title: 'Price',
