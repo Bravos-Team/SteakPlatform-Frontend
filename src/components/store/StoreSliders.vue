@@ -4,36 +4,45 @@
       <!-- LAPTOP SLIDER -->
       <div class="hidden laptop:flex w-10/12 overflow-hidden rounded-3xl bg-gray-200/5">
         <div
-          class="!min-w-[10rem] !min-h-full keen-slider cursor-grab active:cursor-grabbing"
+          v-if="gamesByWeekData"
+          class="!min-w-[10rem] !min-h-[32rem] keen-slider cursor-grab active:cursor-grabbing"
           ref="container"
         >
-          <img
-            v-for="(game, index) in gameSliders"
-            :key="game.id"
-            :src="game.background"
-            class="object-cover !h-full !w-full keen-slider__slide"
+          <router-link
+            v-for="(game, index) in gamesByWeekData"
+            :to="{ name: 'game-details', params: { id: game.id } }"
             :class="`number-slide${index + 1}`"
-          />
+            class="keen-slider__slide !p-0 !m-0 h-full"
+          >
+            <img :key="game.id" :src="game.thumbnail" class="object-cover !h-full !w-full" />
+          </router-link>
         </div>
       </div>
       <!-- END LAPTOP SLIDER -->
 
       <!-- MOBILE SLIDER -->
-      <mobile-slider class="laptop:hidden flex" :gameSliders="gameSliders" />
+      <mobile-slider
+        class="laptop:hidden flex"
+        v-if="gamesByWeekData"
+        :gameSliders="gamesByWeekData"
+      />
       <!-- END MOBILE SLIDER -->
 
       <!-- SUB SLIDER BAR-->
       <div
+        v-if="gamesByWeekData"
         class="lg:w-[180px] lg:!min-h-full !hidden gap-y-5 justify-between laptop:!flex laptop:!flex-col thumbnail-list"
       >
         <div
-          v-for="(game, index) in gameSliders"
+          v-for="(game, index) in gamesByWeekData"
           :key="game.id"
           class="thumbnail-item flex flex-row justify-start items-center px-3 py-2 rounded-md cursor-pointer transition-all duration-300 ease-in-out"
           :class="{ active: currentSlideIndex === index }"
           @click="goToSlide(index)"
         >
-          <img :src="game.img" alt="" class="w-10 min-h-full rounded-md object-cover" />
+          <div class="w-[2rem] h-[3rem] rounded-sm overflow-hidden">
+            <img :src="game.thumbnail" alt="" class="w-full min-h-full object-cover" />
+          </div>
           <p class="text-white text-sm font-medium truncate flex-1 ml-3">{{ game.name }}</p>
         </div>
       </div>
@@ -43,10 +52,24 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onUnmounted, PropType, ref } from 'vue'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/vue.es'
 import MobileSlider from '@/components/store/slider/MobileSlider.vue'
+
+const props = defineProps({
+  games: {
+    type: Array as PropType<
+      Array<{ id: number; name: string; thumbnail: string; growthRate: number }>
+    >,
+    required: true,
+  },
+})
+
+const gamesByWeekData = computed(() => {
+  let gamesSorted = JSON.parse(JSON.stringify(props.games))
+  return gamesSorted.sort((a: any, b: any) => b.growthRate - a.growthRate) || []
+})
 
 const animation = { duration: 300, easing: (t: number) => t }
 let autoplayTimeout: NodeJS.Timeout | null = null
@@ -170,7 +193,6 @@ const gameSliders = ref([
   },
 ])
 
-// Cleanup autoplay timeout khi component bị destroy
 onUnmounted(() => {
   if (autoplayTimeout) {
     clearTimeout(autoplayTimeout)
@@ -180,6 +202,9 @@ onUnmounted(() => {
 await nextTick()
 </script>
 
+<style scoped>
+@import url('keen-slider/keen-slider.css');
+</style>
 <style scoped>
 body {
   margin: 0;

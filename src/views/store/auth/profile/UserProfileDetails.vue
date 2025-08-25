@@ -56,7 +56,7 @@
         <div class="flex flex-col gap-y-1 w-full col-span-12 tablet:col-span-6">
           <div class="grid grid-cols-12 gap-x-2">
             <div class="flex flex-col gap-y-1 col-span-11">
-              <label for="displayName">Display Name:</label>
+              <label for="displayName">{{ $t('displayName') }}:</label>
               <input
                 type="text"
                 id="displayName"
@@ -118,7 +118,7 @@
         <div class="flex flex-col gap-y-1 w-full tablet:col-span-6 col-span-12">
           <div class="grid grid-cols-12 gap-x-2">
             <div class="flex flex-col gap-y-1 col-span-11">
-              <label for="bio">Bio:</label>
+              <label for="bio">{{ $t('bio') }}:</label>
               <input
                 type="text"
                 id="bio"
@@ -182,17 +182,17 @@
           <div class="flex gap-x-3 items-center">
             <div class="flex gap-x-2 items-center">
               <radio-group-item id="female" value="false"></radio-group-item>
-              <span>Female</span>
+              <span>{{ $t('female') }}</span>
             </div>
             <div class="flex gap-x-2 items-center">
               <radio-group-item id="male" value="true"></radio-group-item>
-              <span>Male</span>
+              <span>{{ $t('male') }}</span>
             </div>
           </div>
         </RadioGroup>
 
         <div class="flex flex-col gap-x-3 w-full tablet:w-fit">
-          <span>Date of Birth:</span>
+          <span>{{ $t('dateOfBirth') }}:</span>
           <Input v-model:model-value="profile.birthDate" type="date" />
           <!-- <DatePicker :message="'Change your birth date successfully'" :placeholder="'Select your birth date'"
             v-model:emit-estimated-release-date="birthDateSelected" /> -->
@@ -210,7 +210,7 @@
           class="bg-white/90 hover:bg-white transition-colors duration-250 text-black w-fit px-6 py-2 rounded-md"
         >
           <LoaderCircle v-if="isUpdating" class="animate-spin" />
-          <span v-else> Save</span>
+          <span v-else> {{ $t('save') }}</span>
         </button>
       </div>
     </div>

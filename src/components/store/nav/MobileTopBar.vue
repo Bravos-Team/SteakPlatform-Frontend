@@ -49,10 +49,10 @@
               <div class="mx-auto w-full">
                 <drawer-title class="hidden">Menu</drawer-title>
                 <drawer-header
-                  class="text-3xl font-extrabold py-0 w-full flex justify-between flex-row"
+                  class="text-3xl font-extrabold py-0 w-full flex justify-between flex-col tablet:flex-row"
                 >
                   <span>{{ $t('menu.base') }}</span>
-                  <div>
+                  <div class="">
                     <router-link
                       @click="openDrawer = false"
                       v-if="!useUserProfilesStores().getAccessRight()"
@@ -63,14 +63,22 @@
                     </router-link>
                     <div
                       v-else
-                      class="flex items-center gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm"
+                      class="truncate items-center text-wrap gap-x-2 text-lg cursor-pointer h-full font-black bg-white/10 px-6 py-1 rounded-sm"
                     >
                       {{ useUserProfilesStores().getAccessRight() }}
                     </div>
                   </div>
                 </drawer-header>
                 <drawer-description class="hidden"> </drawer-description>
-                <drawer-footer class="flex flex-col gap-y-2">
+                <drawer-footer class="flex flex-col gap-y-2 text-pretty">
+                  <router-link
+                    @click="openDrawer = false"
+                    class="w-full flex justify-between text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                    :to="{ name: 'store-home' }"
+                  >
+                    <span> {{ $t('navigation.store') }}</span>
+                    <Store />
+                  </router-link>
                   <router-link
                     v-if="useUserProfilesStores().getAccessRight()"
                     :to="{ name: 'UserProfiles' }"
@@ -80,26 +88,42 @@
                     <span class="text-center align-middle">
                       {{ $t('auth.informations.user.profile.title') }}</span
                     >
-                    <UserStar class="text-white" />
+                    <User class="text-white" />
+                  </router-link>
+                  <router-link
+                    v-if="useUserProfilesStores().getAccessRight()"
+                    :to="{ name: 'CartManagementPage' }"
+                    @click="openDrawer = false"
+                    class="flex justify-between gap-x-2 items-center w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                  >
+                    <span> {{ $t('title.store.cart') }}</span>
+                    <ShoppingBag class="text-white" />
+                  </router-link>
+                  <router-link
+                    v-if="useUserProfilesStores().getAccessRight()"
+                    :to="{ name: 'WishlistManagementPage' }"
+                    @click="openDrawer = false"
+                    class="flex justify-between gap-x-2 items-center w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                  >
+                    <span> {{ $t('title.store.wishlist') }}</span>
+                    <ShoppingBasket class="text-white" />
                   </router-link>
                   <router-link
                     @click="openDrawer = false"
-                    class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
-                    :to="{ name: 'store-home' }"
-                    >{{ $t('navigation.store') }}</router-link
-                  >
-                  <router-link
-                    @click="openDrawer = false"
-                    class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                    class="w-full flex justify-between text-wrap text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'PublisherDashboard' }"
-                    >{{ $t('navigation.development_workspace') }}</router-link
                   >
+                    <span> {{ $t('navigation.development_workspace') }}</span>
+                    <UserStar />
+                  </router-link>
                   <router-link
                     @click="openDrawer = false"
-                    class="w-full text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
+                    class="w-full flex justify-between text-lg font-mono bg-white/5 px-3 py-1 rounded-xs hover:bg-white/10 focus:bg-white/20"
                     :to="{ name: 'SupportCenter' }"
-                    >{{ $t('navigation.help') }}</router-link
                   >
+                    <span> {{ $t('navigation.help') }}</span>
+                    <BadgeInfo />
+                  </router-link>
                   <button
                     :class="{
                       '!cursor-not-allowed opacity-50': !invalidDevice,
@@ -107,9 +131,10 @@
                     }"
                     :disabled="!invalidDevice"
                     @click="handleRedirectDownload"
-                    class="w-full text-lg text-start font-mono bg-blue-300/20 px-3 py-1 rounded-xs hover:bg-blue-400/30 transition-all duration-300 font-black cursor-pointer"
+                    class="w-full flex justify-between text-lg text-start font-mono bg-blue-300/20 px-3 py-1 rounded-xs hover:bg-blue-400/30 transition-all duration-300 font-black cursor-pointer"
                   >
-                    {{ $t('Download') }}
+                    <span> {{ $t('download') }}</span>
+                    <Download />
                   </button>
                   <button
                     v-if="useUserProfilesStores().getAccessRight()"
@@ -143,7 +168,17 @@ import {
 } from '@/components/ui/drawer'
 import LanguagesOption from '@/components/common/LanguagesOption.vue'
 import { getCookie, removeCookie } from '@/utils/cookies/cookie-utils'
-import { LoaderCircle, LogOut, UserStar } from 'lucide-vue-next'
+import {
+  BadgeInfo,
+  Download,
+  LoaderCircle,
+  LogOut,
+  ShoppingBag,
+  ShoppingBasket,
+  Store,
+  User,
+  UserStar,
+} from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import {
   toastErrorNotificationPopup,

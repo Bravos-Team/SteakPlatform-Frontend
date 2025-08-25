@@ -1,47 +1,80 @@
 <template>
   <div v-if="isLoadingGames"></div>
-  <div v-if="gameCollaboratorsList.length > 0 && !isLoadingGames"
-    class="flex gap-x-3 w-full bg-white/3 h-full p-3 flex-col gap-y-3">
+  <div
+    v-if="gameCollaboratorsList.length > 0 && !isLoadingGames"
+    class="flex gap-x-3 w-full bg-white/3 h-full p-3 flex-col gap-y-3"
+  >
     <div class="flex justify-between items-center gap-x-3 flex-wrap">
       <div class="flex gap-x-2 items-end justify-between w-full flex-wrap text-pretty">
         <span class="font-black text-xl tablet:text-3xl">{{ titleCompo }}</span>
-        <router-link class="underline hover:text-gray-400 text-gray-300/50 font-medium  transition-colors duration-200"
-          :to="'#'">view
-          all</router-link>
+        <router-link
+          class="underline hover:text-gray-400 text-gray-300/50 font-medium transition-colors duration-200"
+          :to="'#'"
+          >{{ $t('viewAll') }}</router-link
+        >
       </div>
 
-      <div class="flex gap-x-2 justify-between w-full">
-        <button @click="prevSlide" :disabled="currentIndex === 0" :class="{
-          'cursor-pointer': !(currentIndex === 0),
-          'cursor-not-allowed': currentIndex === 0
-        }"
-          class="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+      <div class="flex gap-x-2 justify-end tablet:justify-start w-full">
+        <button
+          @click="prevSlide"
+          :disabled="currentIndex === 0"
+          :class="{
+            'cursor-pointer': !(currentIndex === 0),
+            'cursor-not-allowed': currentIndex === 0,
+          }"
+          class="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+        >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            ></path>
           </svg>
         </button>
 
-        <button :class="{
-          'cursor-pointer': !(currentIndex >= maxIndex),
-          'cursor-not-allowed': currentIndex >= maxIndex
-        }" @click="nextSlide" :disabled="currentIndex >= maxIndex"
-          class="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+        <button
+          :class="{
+            'cursor-pointer': !(currentIndex >= maxIndex),
+            'cursor-not-allowed': currentIndex >= maxIndex,
+          }"
+          @click="nextSlide"
+          :disabled="currentIndex >= maxIndex"
+          class="p-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+        >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            ></path>
           </svg>
         </button>
       </div>
     </div>
 
     <div class="relative overflow-hidden">
-      <div ref="carouselContainer" class="flex gap-x-3 tablet:gap-x-6 transition-transform duration-500 ease-in-out"
-        :style="{ transform: `translateX(-${translateX}px)` }">
-        <router-link :to="{ name: 'game-details', params: { id: game.id } }"
+      <div
+        ref="carouselContainer"
+        class="flex gap-x-3 tablet:gap-x-6 transition-transform duration-500 ease-in-out"
+        :style="{ transform: `translateX(-${translateX}px)` }"
+      >
+        <router-link
+          :to="{ name: 'game-details', params: { id: game.id } }"
           class="snap-start min-w-[15rem] max-w-[20rem] flex flex-col bg-white/5 overflow-hidden rounded-xs h-full transition-all duration-300"
-          :class="{ 'scale-100': isActiveCard(index) }" v-for="(game, index) in gameCollaboratorsList" :key="game.id">
+          :class="{ 'scale-100': isActiveCard(index) }"
+          v-for="(game, index) in gameCollaboratorsList"
+          :key="game.id"
+        >
           <div class="w-full overflow-hidden">
-            <img :class="{ 'scale-100': isActiveCard(index), 'scale-120': !isActiveCard(index) }" :src="game.thumbnail"
-              :alt="game.name" class="w-full object-contain transition-transform duration-300" />
+            <img
+              :class="{ 'scale-100': isActiveCard(index), 'scale-120': !isActiveCard(index) }"
+              :src="game.thumbnail"
+              :alt="game.name"
+              class="w-full object-contain transition-transform duration-300"
+            />
           </div>
 
           <div class="p-4 flex flex-col gap-y-1 h-[8rem]">
@@ -57,9 +90,13 @@
     </div>
 
     <div class="flex justify-center gap-x-2 mt-4">
-      <button v-for="(dot, index) in Math.ceil(gameCollaboratorsList.length / itemsPerView)" :key="index"
-        @click="goToSlide(index)" class="w-2 h-2 rounded-full transition-all duration-300"
-        :class="Math.floor(currentIndex / itemsPerView) === index ? 'bg-white/60' : 'bg-white/30'"></button>
+      <button
+        v-for="(dot, index) in Math.ceil(gameCollaboratorsList.length / itemsPerView)"
+        :key="index"
+        @click="goToSlide(index)"
+        class="w-2 h-2 rounded-full transition-all duration-300"
+        :class="Math.floor(currentIndex / itemsPerView) === index ? 'bg-white/60' : 'bg-white/30'"
+      ></button>
     </div>
   </div>
 </template>
@@ -71,24 +108,24 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 const props = defineProps({
   gameCollaboratorsList: {
     type: Array,
-    required: true
+    required: true,
   },
   titleCompo: {
     type: String,
-    required: true
-  }
-  , isLoadingGames: {
+    required: true,
+  },
+  isLoadingGames: {
     type: Boolean,
-    default: false
+    default: false,
   },
   relatedWith: {
     type: String,
-    default: ''
+    default: '',
   },
   routeName: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 })
 
 const currentIndex = ref(0)
@@ -133,7 +170,6 @@ const isActiveCard = (index) => {
 
 const autoSlideInterval = ref(null)
 
-
 const stopAutoSlide = () => {
   if (autoSlideInterval.value) {
     clearInterval(autoSlideInterval.value)
@@ -173,14 +209,14 @@ const touchEnd = ref({ x: 0, y: 0 })
 const handleTouchStart = (event) => {
   touchStart.value = {
     x: event.touches[0].clientX,
-    y: event.touches[0].clientY
+    y: event.touches[0].clientY,
   }
 }
 
 const handleTouchEnd = (event) => {
   touchEnd.value = {
     x: event.changedTouches[0].clientX,
-    y: event.changedTouches[0].clientY
+    y: event.changedTouches[0].clientY,
   }
 
   const deltaX = touchStart.value.x - touchEnd.value.x

@@ -1,11 +1,6 @@
 <template>
   <div id="containerBoxes">
-    <store-searching-bar
-      :cart-items="userCartData?.data?.items"
-      :is-fetching-cart="isUserCartFetching"
-    ></store-searching-bar>
-
-    <store-sliders></store-sliders>
+    <store-sliders :games="gamesByWeek?.data" v-if="gamesByWeek?.data"></store-sliders>
 
     <div class="pt-6 flex flex-col gap-y-6">
       <!-- GAME COMING SOON -->
@@ -75,7 +70,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import GameCard from '@/components/store/GameCard.vue'
 import StoreSearchingBar from '@/components/store/StoreSearchingBar.vue'
-import { useUserCartList } from '@/hooks/store/cart/useUserCart'
 import {
   useGameCommingSoonQuery,
   useGameStoreInfiniteQueryList,
@@ -85,9 +79,10 @@ import {
 import CollaboratorsBar from '@/components/common/CollaboratorsBar.vue'
 import { GAME_STORE_LIST_QUERY_PARAMS } from '@/types/game/store/Game'
 import { LoaderCircle } from 'lucide-vue-next'
+import { useQueryGamesByWeeks } from '@/hooks/store/game/useGameStore'
+const { data: gamesByWeek, isFetching: isGamesByWeekFetching } = useQueryGamesByWeeks(true)
 
 const { data: gameComingSoonData, isFetching: isGameComingSoonFetching } = useGameCommingSoonQuery()
-const { data: userCartData, isFetching: isUserCartFetching } = useUserCartList()
 const { data: gameNewestReleasesData, isFetching: isGameNewestReleasesFetching } =
   useGameNewestReleasesQuery()
 const { data: topPlayedGamesData, isFetching: isTopPlayedGamesFetching } = useTopPlayedGamesQuery()

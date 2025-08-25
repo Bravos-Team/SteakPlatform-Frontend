@@ -4,7 +4,6 @@ import { renewUserRefreshToken } from '@/apis/user/authUser'
 const user = async ({ next, checkAccess }: MiddlewareContext) => {
   console.log('check:', checkAccess.user)
   if (!checkAccess.user) {
-    console.log('check:', checkAccess.user)
     try {
       const response = await renewUserRefreshToken()
       if (response.status === 200) {

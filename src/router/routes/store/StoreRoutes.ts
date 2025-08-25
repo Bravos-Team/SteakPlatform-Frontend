@@ -22,17 +22,29 @@ const storeRoutes: RouteRecordRaw = {
       path: 'discover',
       name: 'DiscoverGamesStore',
       component: () => import('@/views/store/game-store/DiscoverPage.vue'),
+      meta: {},
+    },
+    {
+      path: 'leaderboard',
+      name: 'LeaderboardGamesStore',
+      component: () => import('@/views/store/game-store/LeaderboardPage.vue'),
     },
     {
       path: 'game/details/:id',
       name: 'game-details',
       component: () => import('@/views/store/game-store/game/GameDetailsPage.vue'),
+      meta: {
+        hideSearchBar: 'true',
+      },
     },
 
     {
       path: '/cart',
       name: 'CartManagementPage',
       component: () => import('@/views/cart/CartManagementPage.vue'),
+      meta: {
+        hideSearchBar: 'true',
+      },
     },
     {
       path: '/wishlist',
@@ -41,6 +53,7 @@ const storeRoutes: RouteRecordRaw = {
       meta: {
         middleware: [user],
         group: 'user',
+        hideSearchBar: 'true',
       },
     },
     {
@@ -58,12 +71,16 @@ const storeRoutes: RouteRecordRaw = {
       meta: {
         middleware: [user],
         group: 'user',
+        hideSearchBar: 'true',
       },
     },
     {
       path: '/download',
       name: 'DownloadApplicationPage',
       component: () => import('@/views/download/DownloadRedirectPage.vue'),
+      meta: {
+        hideSearchBar: 'true',
+      },
     },
   ],
 }
